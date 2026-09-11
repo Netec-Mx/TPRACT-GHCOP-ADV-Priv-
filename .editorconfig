@@ -1,0 +1,32 @@
+# Configuracion de estilo compartida del repositorio del taller.
+# Referencia: https://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# Java y C#: cuatro espacios.
+[*.{java,cs}]
+indent_size = 4
+
+# Marcado y configuracion: dos espacios.
+[*.{md,markdown,json,jsonc,yml,yaml,xml,csproj,props,targets,html,css,js,ts}]
+indent_size = 2
+
+# Markdown: dos espacios al final significan salto de linea, no se recortan.
+[*.{md,markdown}]
+trim_trailing_whitespace = false
+
+# Los archivos de Makefile exigen tabulacion real.
+[Makefile]
+indent_style = tab
+
+# Los scripts de shell y PowerShell mantienen cuatro espacios.
+[*.{sh,ps1,psm1}]
+indent_size = 4

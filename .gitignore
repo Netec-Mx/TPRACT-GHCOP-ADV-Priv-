@@ -1,0 +1,108 @@
+# ---------- Java: Maven y Gradle ----------
+target/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.gradle/
+gradle-app.setting
+.gradletasknamecache
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# ---------- .NET ----------
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]64/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.nupkg
+*.snupkg
+TestResults/
+[Tt]est[Rr]esult*/
+*.coverage
+*.coveragexml
+.vs/
+
+# ---------- Node ----------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+.npm/
+dist/
+coverage/
+*.tsbuildinfo
+
+# ---------- Variables de entorno ----------
+# Se ignora todo archivo de entorno salvo los de ejemplo.
+.env
+.env.*
+!.env.ejemplo
+!.env.*.ejemplo
+!*.env.ejemplo
+
+# ---------- Configuracion local de editores ----------
+# Se ignora la configuracion local de VS Code, pero se versionan los archivos
+# compartidos del taller. La exclusion usa .vscode/* y no .vscode/ porque git no
+# desciende a un directorio excluido y las negaciones no tendrian efecto.
+.vscode/*
+!.vscode/extensions.json
+!.vscode/mcp.json
+.idea/
+*.iml
+*.ipr
+*.iws
+.fleet/
+.eclipse/
+.settings/
+.project
+.classpath
+.metadata/
+*.swp
+*.swo
+
+# ---------- Archivos de sistema ----------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
+
+# ---------- Salidas locales del taller ----------
+*.log
+tmp/
