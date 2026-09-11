@@ -42,11 +42,14 @@ En macOS o Linux:
 bash scripts/verificar-ambiente.sh
 ```
 
-En Windows, desde PowerShell:
+En Windows, desde Git Bash:
 
-```powershell
-pwsh -File scripts/verificar-ambiente.ps1
+```bash
+bash scripts/verificar-ambiente.sh
 ```
+
+Git Bash viene incluido en Git para Windows, que ya es un requisito del ambiente. No hace
+falta instalar ningún intérprete adicional.
 
 Si el script reporta requisitos faltantes, revisa [docs/00-setup-ambiente.md](docs/00-setup-ambiente.md)
 antes de continuar. Los problemas conocidos y su solución están en

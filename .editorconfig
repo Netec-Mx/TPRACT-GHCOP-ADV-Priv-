@@ -27,6 +27,6 @@ trim_trailing_whitespace = false
 [Makefile]
 indent_style = tab
 
-# Los scripts de shell y PowerShell mantienen cuatro espacios.
-[*.{sh,ps1,psm1}]
+# Los scripts de shell mantienen cuatro espacios.
+[*.sh]
 indent_size = 4

@@ -1,0 +1,44 @@
+# Normalizacion de finales de linea del repositorio.
+#
+# Los scripts deben llegar al disco con LF en todos los sistemas. Un script con CRLF
+# falla en Git Bash con un mensaje que no menciona la causa real, y es el error mas
+# frecuente al clonar este repositorio en Windows. El sintoma y su solucion estan en
+# docs/02-troubleshooting.md.
+
+# Por defecto, git decide si un archivo es texto y normaliza a LF en el repositorio.
+* text=auto eol=lf
+
+# Los scripts se fuerzan a LF de forma explicita, sin depender de la deteccion.
+*.sh text eol=lf
+scripts/** text eol=lf
+
+# Documentacion y configuracion del taller, siempre LF.
+*.md text eol=lf
+*.editorconfig text eol=lf
+*.gitattributes text eol=lf
+*.gitignore text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.xml text eol=lf
+
+# Codigo de los escenarios. Llegan en SPEC-002 y SPEC-003.
+*.java text eol=lf
+*.cs text eol=lf
+*.csproj text eol=lf
+*.props text eol=lf
+*.targets text eol=lf
+*.ts text eol=lf
+*.js text eol=lf
+
+# Archivos binarios, sin normalizacion.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.jar binary
+*.class binary
+*.dll binary
+*.exe binary
