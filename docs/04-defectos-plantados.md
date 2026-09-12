@@ -7,7 +7,60 @@ El código de `escenario/` tiene defectos introducidos a propósito. Este docume
 cuáles son, dónde están exactamente y qué laboratorio se apoya en cada uno.
 
 Las ubicaciones corresponden a la implementación Java de SPEC-002. La implementación .NET
-de SPEC-003 debe replicar los mismos diez defectos en los archivos equivalentes.
+de SPEC-003 replica los mismos diez defectos en los archivos equivalentes.
+
+## Mapeo entre los dos escenarios
+
+Un archivo de un escenario tiene exactamente un equivalente en el otro. Un participante que
+abra ambos proyectos reconoce la correspondencia sin explicación.
+
+| Java (`escenario/java/src/main/java/pe/pasarelaandina/`) | .NET (`escenario/dotnet/LiquidacionComercios/`) |
+|---|---|
+| `AplicacionLiquidacion.java` | `AplicacionLiquidacion.cs` |
+| `modelo/Comercio.java` | `Modelo/Comercio.cs` |
+| `modelo/PlanComisiones.java` | `Modelo/PlanComisiones.cs` |
+| `modelo/TramoComision.java` | `Modelo/TramoComision.cs` |
+| `modelo/Transaccion.java` | `Modelo/Transaccion.cs` |
+| `modelo/Contracargo.java` | `Modelo/Contracargo.cs` |
+| `modelo/Liquidacion.java` | `Modelo/Liquidacion.cs` |
+| `modelo/DetalleLiquidacion.java` | `Modelo/DetalleLiquidacion.cs` |
+| Los seis enums, un archivo cada uno | `Modelo/Enumeraciones.cs`, los seis juntos |
+| `repositorio/RepositorioMemoria.java` | `Repositorio/RepositorioMemoria.cs` |
+| `repositorio/CargadorDatos.java` | `Repositorio/CargadorDatos.cs` |
+| `calculo/CalculadoraLiquidacion.java` | `Calculo/CalculadoraLiquidacion.cs` |
+| `calculo/CalculadoraComision.java` | `Calculo/CalculadoraComision.cs` |
+| `calculo/SimuladorComision.java` | `Calculo/SimuladorComision.cs` |
+| `calculo/UtilidadesFecha.java` | `Calculo/UtilidadesFecha.cs` |
+| `reporte/FormateadorReporte.java` | `Reporte/FormateadorReporte.cs` |
+| `util/ValidadorFormato.java` | `Util/ValidadorFormato.cs` |
+| — | `Util/CompatibilidadJava.cs` |
+
+Las dos únicas asimetrías son deliberadas. Los seis enums de Java viven en un solo archivo
+en .NET, porque C# no exige un archivo por tipo. Y `CompatibilidadJava.cs` **no tiene
+equivalente en Java**: existe solo para que .NET reproduzca la aritmética de Java. Está
+explicada en HALLAZGO-03 de [`03-hallazgos.md`](03-hallazgos.md).
+
+Las pruebas siguen el mismo mapeo: `ComercioTest` con `ComercioPruebas`, `TransaccionTest`
+con `TransaccionPruebas`, `ValidadorFormatoTest` con `ValidadorFormatoPruebas`. Veinte
+pruebas en cada escenario, igual de triviales en ambos.
+
+## Ubicación de los defectos en .NET
+
+| ID | Java | .NET |
+|---|---|---|
+| DEF-01 | Transversal, `double` en el modelo | Transversal, `double` en el modelo |
+| DEF-02 | `CalculadoraLiquidacion.java:81`, 282 líneas | `CalculadoraLiquidacion.cs:79`, 303 líneas |
+| DEF-03 | `CalculadoraLiquidacion:172` (3.0) y `CalculadoraComision:54` (3.5) | `CalculadoraLiquidacion.cs:172` (3.0) y `CalculadoraComision.cs:62` (3.5) |
+| DEF-04 | `Date` y `Calendar` sin zona | `DateTime` sin `DateTimeKind`, sin `DateTimeOffset` |
+| DEF-05 | 20 pruebas triviales en `src/test/` | 20 pruebas triviales en `LiquidacionComercios.Pruebas/` |
+| DEF-06 | 25 `System.out.println` en la clase de cálculo | 25 `Console.WriteLine` en la clase de cálculo |
+| DEF-07 | 6 `catch` vacíos | 4 `catch (Exception)` vacíos en `CargadorDatos.cs`, más los de cierre |
+| DEF-08 | `CalculadoraComision:18` (`<=`) contra `CalculadoraLiquidacion:146` (`<`) | `CalculadoraComision.cs:25` (`<=`) contra `CalculadoraLiquidacion.cs:145` (`<`) |
+| DEF-09 | `ObtenerMontoNeto`, `BuscarComerciosActivos`, `ValidarTransaccion` | Los tres equivalentes, con los mismos nombres |
+| DEF-10 | 3 comentarios falsos | Los mismos 3, traducidos |
+
+DEF-08 y DEF-09 producen exactamente la misma consecuencia observable en ambos escenarios:
+los tres bordes de tramo divergen igual, y `CM0031` aparece liquidado estando suspendido.
 
 ## Principio de diseño
 

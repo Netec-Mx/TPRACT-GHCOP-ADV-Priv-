@@ -208,3 +208,174 @@ checklist de revisión humana. La evidencia cruda, preparada para proyectar, est
 
 También se menciona en el capítulo 3, al tratar lo que un agente hace por iniciativa propia
 sin que nadie se lo pida.
+
+---
+
+## HALLAZGO-03. Java y .NET no formatean igual los mismos números
+
+| Campo | Valor |
+|---|---|
+| Detectado en | SPEC-003, antes de escribir el escenario .NET |
+| Componente | Equivalencia entre los dos escenarios |
+| Severidad | Alta si no se controla. Rompe la comparación sin que nada falle |
+| Estado | Resuelto en `Util/CompatibilidadJava.cs` del escenario .NET |
+
+### Qué pasaba
+
+SPEC-003 advertía sobre una divergencia conocida: `Math.Round` de .NET usa redondeo
+bancario y `Math.round` de Java no. Al medirlo apareció una **segunda** divergencia que no
+estaba prevista y que es más difícil de ver, porque no está en el cálculo sino en la
+impresión.
+
+`String.format("%.2f", v)` de Java y `v.ToString("F2")` de .NET **no producen el mismo
+texto para el mismo double**:
+
+| Valor | Java `%.2f` | .NET `F2` |
+|---|---|---|
+| 137.825 | `137.83` | `137.82` |
+| 957.185 | `957.19` | `957.18` |
+| 2.675 | `2.68` | `2.67` |
+| 0.125 | `0.13` | `0.12` |
+
+Sobre un barrido de 6016 valores, `ToString("F2")` difería de Java en **497 casos**.
+
+### Causa raíz
+
+Los dos formateadores parten de números distintos.
+
+Java formatea sobre la **representación decimal más corta** que reconstruye el double, la
+misma que produce `Double.toString`. Para 137.825 esa representación es exactamente
+`137.825`, y al redondear medio hacia arriba da `137.83`.
+
+.NET, desde .NET Core 3.0, formatea sobre el **valor IEEE exacto**. El double más cercano a
+137.825 es 137.824999999999988631316227838397, que redondeado da `137.82`.
+
+Ninguno de los dos está mal. Responden preguntas distintas: Java formatea el número que el
+programador escribió, .NET formatea el número que la máquina guardó.
+
+Lo mismo ocurre con el redondeo aritmético, por el motivo que el spec ya anticipaba:
+`Math.Round(v, 2)` redondea al par más cercano en los puntos medios.
+
+### Corrección aplicada
+
+`Util/CompatibilidadJava.cs` del escenario .NET replica las dos semánticas de Java:
+
+```csharp
+// Redondeo: equivalente de Math.round(valor * 100.0) / 100.0
+return Math.Floor(valor * 100.0 + 0.5) / 100.0;
+
+// Formateo: equivalente de String.format("%.2f", valor)
+decimal representacionCorta = decimal.Parse(
+    valor.ToString("R", Invariante), NumberStyles.Float, Invariante);
+return Math.Round(representacionCorta, 2, MidpointRounding.AwayFromZero)
+           .ToString("F2", Invariante);
+```
+
+El paso por `"R"` obtiene la representación corta, que es el punto de partida de Java.
+Sobre esa cadena se aplica el redondeo medio hacia arriba.
+
+Verificado sobre los mismos 6016 valores: **0 diferencias** en ambas funciones.
+
+### Alcance real, medido y no supuesto
+
+Con los datos actuales del escenario, esta protección **no cambia ningún resultado
+observable**. Sobre los 382 valores que el programa formatea de verdad en una ejecución
+completa, las tres variantes coinciden y los dos redondeos también.
+
+La razón es que los valores que se imprimen son acumulados de punto flotante, y un
+acumulado casi nunca cae sobre el double cuya representación corta es un punto medio
+exacto. Los casos que divergen aparecen con literales como `137.825`, no con sumas.
+
+Esto se dice de forma explícita para no incurrir en cobertura falsa: la comparación de
+escenarios pasa igual sin la clase. Se mantiene porque el riesgo está medido, porque los
+laboratorios modifican ese cálculo y porque los datos pueden regenerarse.
+
+### Reglas derivadas
+
+**Redondear y formatear son operaciones distintas y divergen por separado.** Alinear el
+redondeo entre dos plataformas no alinea la impresión. Hay que verificar las dos.
+
+**Una equivalencia entre plataformas se mide antes de escribir el código, no después.**
+Medir las divergencias primero permitió que las dos implementaciones coincidieran byte a
+byte en el primer intento. Descubrirlas depurando una diferencia de un centavo habría
+costado mucho más.
+
+**Una protección que hoy no cambia nada no es prueba de que sobre.** Tampoco es prueba de
+que sirva. Hay que decir cuál de las dos cosas se verificó.
+
+### Dónde aplica esto en el taller
+
+Sirve en el capítulo 5 para discutir qué significa que dos implementaciones sean
+equivalentes y por qué "produce lo mismo" necesita una definición verificable. También es
+un buen ejemplo de algo que un asistente resuelve mal si se le pide traducir código de un
+lenguaje a otro sin decirle que la salida tiene que coincidir exactamente.
+
+---
+
+## HALLAZGO-04. El escenario Java cambia sus números según el idioma de la máquina
+
+| Campo | Valor |
+|---|---|
+| Detectado en | SPEC-003, al probar el comportamiento bajo distintas culturas |
+| Componente | Escenario Java, impresión de montos |
+| Severidad | Alta para el dictado. Rompe la comparación en clase |
+| Estado | **Sin corregir.** Reportado para decisión del Product Owner |
+
+### Qué pasa
+
+El escenario Java usa `String.format("%.2f", monto)` sin indicar `Locale`, de modo que toma
+el idioma configurado en la máquina virtual. Con un idioma que usa coma decimal, los montos
+salen con coma:
+
+```
+$ java -Duser.language=es -Duser.country=ES -jar target/liquidacion-comercios.jar
+  Total transado           : S/ 26074,08
+  Total comisiones         : S/ 727,34
+```
+
+El checksum de la salida cambia de `61f2c13f` a `cffb6271`.
+
+Lo mismo ocurre con `-Duser.language=de`. En macOS la variable `LC_ALL` no alcanza para
+provocarlo, pero la propiedad de la JVM sí, y una imagen de Windows en español lo produce
+sin que nadie fuerce nada.
+
+### La asimetría es el problema
+
+El escenario **.NET está protegido**: fija `CultureInfo.InvariantCulture` de forma explícita
+al arrancar, declara `InvariantGlobalization` en el proyecto y pasa la cultura invariante en
+cada formateo. Verificado bajo `es_ES`, `de_DE`, `fr_FR` y `ru_RU`: el checksum no se mueve.
+
+El escenario **Java no tiene ninguna de esas tres protecciones**.
+
+O sea que en una máquina virtual en español el participante Java vería `S/ 26074,08` y el
+participante .NET `S/ 26074.08`, sobre los mismos datos. Es exactamente el escenario que
+SPEC-003 quiere evitar: la clase se desvía a depurar la diferencia.
+
+### Por qué no se corrigió
+
+No es un defecto plantado: no está en el catálogo de `04-defectos-plantados.md`.
+
+Y SPEC-003 prohíbe modificar el escenario Java salvo la reubicación de datos. La regla del
+proyecto para un defecto no intencional es reportarlo y no tocarlo, así que queda aquí
+registrado para que el Product Owner decida.
+
+`comparar-escenarios.sh` **sí detecta la situación** cuando ocurre: probado bajo `es_ES`
+contra un escenario sin protección, reporta 724 líneas distintas y retorna 1.
+
+### Opciones para resolverlo
+
+1. **Corregir Java**, pasando `Locale.ROOT` a cada `String.format`. Es lo correcto, y
+   requiere un spec que autorice tocar el escenario.
+2. **Fijar el idioma al ejecutar**, con `-Duser.language=en` en el script y en las
+   instrucciones de laboratorio. No arregla el código, y falla si alguien lo ejecuta a mano.
+3. **Dejarlo y usarlo en clase.** Es un defecto realista y didáctico, pero entonces hay que
+   plantarlo también en .NET, porque hoy la asimetría es involuntaria.
+
+La tercera tiene mérito pedagógico, pero decidirlo es del Product Owner.
+
+### Regla derivada
+
+**El formateo de números depende del idioma de la máquina, y eso es un defecto de
+portabilidad aunque el cálculo esté perfecto.** Todo programa que imprima montos para ser
+comparados, exportados o parseados por otro sistema debe fijar su cultura de forma
+explícita. No alcanza con que funcione en la máquina del que lo escribió.

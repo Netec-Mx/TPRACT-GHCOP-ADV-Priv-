@@ -19,7 +19,9 @@ import pe.pasarelaandina.repositorio.RepositorioMemoria;
 public class AplicacionLiquidacion {
 
     private static final String PERIODO_POR_DEFECTO = "2026-06";
-    private static final String DIRECTORIO_POR_DEFECTO = "datos";
+    // Los datos son compartidos con el escenario .NET y viven un nivel mas arriba,
+    // en escenario/datos, para que ninguno de los dos proyectos sea su dueño.
+    private static final String DIRECTORIO_POR_DEFECTO = "../datos";
 
     public static void main(String[] args) {
 

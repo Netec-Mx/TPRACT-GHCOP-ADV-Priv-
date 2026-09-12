@@ -77,12 +77,46 @@ mvn test
 
 ### .NET
 
-Pendiente. Llega en SPEC-003.
+Desde `escenario/dotnet/`:
+
+```bash
+dotnet build LiquidacionComercios -c Release
+dotnet LiquidacionComercios/bin/Release/net8.0/LiquidacionComercios.dll
+```
+
+Se puede indicar otro periodo y otro directorio de datos:
+
+```bash
+dotnet LiquidacionComercios/bin/Release/net8.0/LiquidacionComercios.dll 2026-05 ../datos
+```
+
+Para correr solo las pruebas:
+
+```bash
+dotnet test LiquidacionComercios.Pruebas
+```
+
+Cada escenario se ejecuta **desde su propio directorio**, porque la ruta a los datos
+compartidos es relativa y la misma en ambos.
+
+### Comprobar que ambos coinciden
+
+Los dos escenarios deben producir exactamente la misma salida. Hay un script que lo
+verifica:
+
+```bash
+bash scripts/comparar-escenarios.sh
+```
+
+Termina en cero si las salidas son idénticas y en uno si difieren, mostrando en qué línea.
+Si vas a modificar uno de los dos escenarios durante un laboratorio, este script te dice si
+te alejaste del otro.
 
 ## Datos de ejemplo
 
-Los datos viven en `java/datos/` como archivos de texto plano separados por punto y coma,
-con una línea de encabezado. No hay base de datos: todo se carga en memoria al arrancar.
+Los datos viven en `escenario/datos/` como archivos de texto plano separados por punto y
+coma, con una línea de encabezado. Están fuera de `java/` y de `dotnet/` a propósito: son de
+los dos y de ninguno. No hay base de datos: todo se carga en memoria al arrancar.
 
 | Archivo | Contenido |
 |---|---|
@@ -94,8 +128,9 @@ con una línea de encabezado. No hay base de datos: todo se carga en memoria al 
 Los periodos cubiertos son 2026-04, 2026-05 y 2026-06. El periodo por omisión del
 ejecutable es **2026-06**.
 
-Los mismos archivos alimentan la implementación .NET, de modo que ambas deben producir
-resultados idénticos.
+Los mismos archivos alimentan las dos implementaciones, que producen resultados idénticos
+hasta el último centavo. Eso está verificado por `scripts/comparar-escenarios.sh` y no es
+una aspiración: es un criterio que se comprueba.
 
 ## Antes de empezar a trabajar
 

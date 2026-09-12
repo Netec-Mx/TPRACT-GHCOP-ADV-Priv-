@@ -106,3 +106,6 @@ $RECYCLE.BIN/
 # ---------- Salidas locales del taller ----------
 *.log
 tmp/
+
+# ---------- Salidas de comparacion de escenarios ----------
+escenario/*/salida-*.txt
