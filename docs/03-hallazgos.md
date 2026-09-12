@@ -106,3 +106,105 @@ Es material directo para el capítulo 5, cuando se discute revisión asistida y 
 revisión humana. Un asistente propone con naturalidad la versión defectuosa de este código:
 es plausible, compila y pasa en el camino feliz. Lo que la descarta no es leerla, es
 probarla al revés.
+
+---
+
+## HALLAZGO-02. Un escáner de seguridad denunció los defectos plantados
+
+| Campo | Valor |
+|---|---|
+| Detectado en | SPEC-002, revisión automática posterior al commit `171478c` |
+| Componente | Escenario Java completo |
+| Severidad | Ninguna en cuanto a seguridad. Alta en cuanto a riesgo de proceso |
+| Estado | Sin corrección. Los hallazgos son intencionales y el código quedó intacto |
+
+### Qué ocurrió
+
+Una revisión de seguridad automática se ejecutó sobre el commit del escenario **sin que
+nadie la solicitara**, y reportó tres hallazgos.
+
+Dos de ellos corresponden a defectos plantados a propósito, documentados con archivo y
+número de línea en `04-defectos-plantados.md` desde antes de que el escáner corriera.
+
+No se modificó ningún archivo.
+
+### Qué reportó
+
+Salida literal:
+
+```
+Commit security review found 3 issues:
+  authorization-bypass in escenario/java/src/main/java/pe/pasarelaandina/repositorio/RepositorioMemoria.java;
+  parser-differential in escenario/java/src/main/java/pe/pasarelaandina/calculo/SimuladorComision.java;
+  +1 more
+```
+
+El tercer hallazgo llegó contabilizado pero sin detalle, de modo que no se puede afirmar
+cuál era. Por descarte corresponde a DEF-07 o a DEF-01, pero eso es inferencia y no consta.
+
+### Qué eran en realidad
+
+| Hallazgo | Archivo señalado | Defecto plantado |
+|---|---|---|
+| `authorization-bypass` | `RepositorioMemoria.java` | **DEF-09.** `buscarComerciosActivos()` devuelve todos los comercios sin filtrar por estado |
+| `parser-differential` | `SimuladorComision.java` | **DEF-08.** Dos implementaciones del tramo que divergen en el borde superior, `<=` contra `<` |
+| tercero, sin detalle | — | No consta |
+
+### Por qué no son vulnerabilidades
+
+Verificación de la superficie de ataque del escenario completo:
+
+```
+-- Entrada de red / sockets / HTTP --          ninguna
+-- SQL / JDBC --                               ninguna
+-- Deserializacion --                          ninguna
+-- Ejecucion de procesos --                    ninguna
+-- Reflexion / carga dinamica --               ninguna
+-- Autenticacion / autorizacion / sesiones --  ninguna
+```
+
+El escenario es un proceso por lotes que lee cuatro archivos de texto del propio
+repositorio y escribe por consola. No recibe entrada de terceros, no abre puertos, no
+consulta bases de datos y no ejecuta nada externo.
+
+### Por qué el escáner se equivocó sin equivocarse
+
+El hallazgo de `authorization-bypass` es **correcto en un sentido e incorrecto en otro**, y
+la distinción es la lección de este registro.
+
+Es correcto en que el método no hace lo que su nombre promete. `buscarComerciosActivos()`
+se llama así y devuelve todos los comercios, incluidos los suspendidos. Eso es un defecto
+real, con consecuencia funcional observable: `CM0031` está suspendido y aparece liquidado.
+
+Es incorrecto en que **no existe control de acceso en este sistema**. No hay usuarios, ni
+sesiones, ni roles, ni privilegios que eludir. El escáner infirió un dominio de seguridad a
+partir del nombre del método, porque «activo» y «filtrar» se parecen a lo que en otros
+sistemas sería una comprobación de permisos.
+
+O sea: detectó correctamente una discrepancia entre nombre y comportamiento, y la clasificó
+en una categoría que aquí no aplica.
+
+### Reglas derivadas
+
+**Un hallazgo técnicamente correcto puede ser contextualmente equivocado.** La validez
+técnica de un hallazgo y su pertinencia son dos preguntas distintas, y responder bien la
+primera no dice nada sobre la segunda.
+
+**Ninguna herramienta de análisis conoce el propósito del código que revisa.** El escáner
+no podía saber que este repositorio es material de capacitación y que los defectos son el
+producto. Esa información no está en el código: está en `AGENTS.md`, que el escáner no lee,
+y en la cabeza de quien encargó el trabajo.
+
+**La decisión de aplicar o descartar un hallazgo no es delegable a quien lo reporta.**
+Requiere criterio humano sobre el contexto. Un agente que hubiera actuado sobre estos tres
+hallazgos habría destruido dos laboratorios del capítulo 5 con la mejor de las intenciones
+y un informe impecable.
+
+### Dónde aplica esto en el taller
+
+Es el caso central del capítulo 5, en la parte de revisión asistida de pull requests y
+checklist de revisión humana. La evidencia cruda, preparada para proyectar, está en
+[`casos-de-clase/caso-01-escaner-vs-defectos-plantados.md`](casos-de-clase/caso-01-escaner-vs-defectos-plantados.md).
+
+También se menciona en el capítulo 3, al tratar lo que un agente hace por iniciativa propia
+sin que nadie se lo pida.

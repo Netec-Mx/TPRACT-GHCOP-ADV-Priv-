@@ -18,6 +18,36 @@ una sola excepción deliberada: los errores de redondeo de DEF-01, que son el pu
 ejercicio. Esa combinación es lo que hace creíble el escenario, porque es exactamente lo
 que los participantes tienen en producción.
 
+## Advertencia sobre los datos de ejemplo
+
+**Los datos fueron generados con un generador determinista de semilla fija `20260911`, que
+no está versionado en este repositorio.**
+
+Las transacciones **`TX002035`, `TX002036` y `TX002037`**, al final de
+`transacciones.txt`, no son aleatorias. Se eligieron por búsqueda, una por una, para que el
+acumulado de comisiones de su comercio caiga exactamente sobre un punto medio y el error de
+punto flotante sobreviva al redondeo final. Son las que hacen visible a DEF-01.
+
+Los datos originales **no** producían ninguna diferencia visible: el error existía pero el
+redondeo a dos decimales lo absorbía siempre.
+
+Consecuencias prácticas:
+
+- **Si alguien regenera los datos, DEF-01 deja de ser demostrable** y el laboratorio que se
+  apoya en él pierde su caso. El resto del escenario seguiría funcionando, así que el
+  problema no se notaría hasta estar frente a la sala.
+- **Si alguien borra o edita esas tres transacciones**, ocurre lo mismo.
+- Cualquier cambio en la fórmula de cálculo desplaza los acumulados y también puede
+  anularlas. Ya pasó una vez: al corregir el tope del recargo por cuotas de 3,5 a 3,0 hubo
+  que verificar que los tres casos sobrevivieran.
+
+Si hace falta regenerar los datos, hay que volver a buscar los montos que producen la
+diferencia y actualizar la tabla de DEF-01 con los nuevos valores. No basta con correr el
+generador de nuevo.
+
+Los mismos archivos alimentan al escenario .NET, de modo que tampoco se pueden tocar sin
+romper la equivalencia entre ambas implementaciones.
+
 ## Tabla resumen
 
 | ID | Defecto | Ubicación principal | Laboratorio |

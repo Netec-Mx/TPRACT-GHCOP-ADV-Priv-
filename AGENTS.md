@@ -81,6 +81,28 @@ actividad completa perdida frente a los participantes.
 Si detectas un defecto que crees que no fue plantado a propósito, no lo toques: repórtalo
 en tu respuesta y sigue con la tarea.
 
+### Este repositorio va a producir hallazgos, y son esperados
+
+Cualquier herramienta de análisis estático, linter, escáner de seguridad o revisión
+automática que se ejecute sobre `escenario/` **va a reportar problemas**. Es inevitable y no
+es un error de la herramienta: los problemas están ahí a propósito.
+
+Ya ocurrió. Una revisión de seguridad automática se ejecutó sobre el escenario sin que
+nadie la pidiera y reportó tres hallazgos, dos de los cuales eran defectos plantados y
+documentados de antemano.
+
+**Esos hallazgos no se corrigen.** Tampoco se silencian con anotaciones, supresiones ni
+archivos de configuración que los oculten: el laboratorio necesita que el problema siga
+siendo visible para quien abra el archivo.
+
+Si una herramienta te reporta algo sobre `escenario/`, antes de tocar nada consulta
+[`docs/04-defectos-plantados.md`](docs/04-defectos-plantados.md), que lista los diez
+defectos intencionales con su archivo y su número de línea. Si el hallazgo corresponde a
+uno de ellos, se deja como está y se informa que es intencional.
+
+Si encuentras algo que **no** está en ese catálogo, tampoco lo corrijas por tu cuenta:
+repórtalo y sigue con la tarea. Puede ser un defecto no intencional que haya que revisar.
+
 ## Convenciones del repositorio
 
 Idioma. Todo el contenido va en español neutro. Los nombres de archivo y directorio van en
