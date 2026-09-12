@@ -231,13 +231,32 @@ fi
 # Normalizacion
 # ---------------------------------------------------------------------------
 
-# Se normalizan dos cosas y nada mas:
-#   - los retornos de carro, porque en Git Bash sobre Windows una de las dos plataformas
-#     puede emitirlos y eso no es una diferencia de calculo;
-#   - una eventual marca de tiempo de generacion, que por definicion difiere entre dos
-#     ejecuciones y no dice nada sobre la equivalencia.
+# Se normalizan tres cosas y nada mas:
+#
+#   1. Los retornos de carro, porque en Git Bash sobre Windows una de las dos plataformas
+#      puede emitirlos y eso no es una diferencia de calculo.
+#
+#   2. Una eventual marca de tiempo de generacion, que por definicion difiere entre dos
+#      ejecuciones y no dice nada sobre la equivalencia.
+#
+#   3. Los avisos que la maquina virtual de Java escribe en la salida de error estandar
+#      cuando estan definidas JAVA_TOOL_OPTIONS, _JAVA_OPTIONS o JDK_JAVA_OPTIONS. Esas
+#      variables son habituales en entornos corporativos, donde se usan para agentes de
+#      monitoreo o para la configuracion de proxy, y la JVM anuncia que las tomo antes de
+#      que el programa escriba una sola linea. Sin este filtro el comparador reporta una
+#      diferencia aunque los dos escenarios sean correctos.
+#
+# El tercer filtro es deliberadamente estrecho. Solo descarta lineas que empiezan con el
+# texto exacto que emite la JVM, anclado al inicio de linea. Se comprobo que ninguna de las
+# 554 lineas de la salida del programa empieza asi. No se filtra por palabras sueltas ni
+# por patrones amplios, porque un filtro generoso puede tragarse una diferencia real y eso
+# seria peor que el problema que resuelve.
+readonly PATRON_AVISOS_JVM='^(Picked up (JAVA_TOOL_OPTIONS|_JAVA_OPTIONS|JAVA_OPTIONS):|NOTE: Picked up JDK_JAVA_OPTIONS:)'
+
 normalizar() {
-    tr -d '\r' < "$1" | sed "s/$PATRON_MARCA_TIEMPO/MARCA-DE-TIEMPO/g" > "$2"
+    tr -d '\r' < "$1" \
+        | grep -vE "$PATRON_AVISOS_JVM" \
+        | sed "s/$PATRON_MARCA_TIEMPO/MARCA-DE-TIEMPO/g" > "$2"
 }
 
 normalizar "$salida_java" "$normal_java"

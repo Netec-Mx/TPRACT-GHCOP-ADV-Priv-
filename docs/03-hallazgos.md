@@ -428,6 +428,23 @@ extremo, incluidas `ar-SA` y `th-TH`.
 Quitando la protección en una copia y ejecutando bajo `es-ES`, el script vuelve a reportar
 **724 líneas distintas** y retorna 1.
 
+### Nota: una afirmación mía sobre DEF-04 que resultó incorrecta
+
+Al verificar que el cambio no había tocado DEF-04 escribí que los checksums bajo distintas
+zonas horarias debían ser distintos, y salieron iguales. La afirmación estaba mal.
+
+Compilé el código anterior al cambio y comprobé que **ya se comportaba igual**: la zona
+horaria no altera la salida de este escenario, ni antes ni después de SPEC-003-A.
+
+La razón es que el parseo de las fechas de las transacciones y el cálculo de los límites
+del periodo usan los dos la zona por defecto, de modo que se desplazan juntos y se
+compensan. DEF-04 sigue siendo un defecto real de diseño —API obsoleta, sin zona explícita,
+frágil ante cualquier cambio que rompa esa simetría— pero no produce diferencia observable
+con estos datos.
+
+Queda registrado porque una verificación que se apoya en una expectativa equivocada no
+verifica nada, aunque el resultado final sea correcto.
+
 ### Por qué no se convirtió en defecto plantado
 
 Se evaluó dejarlo como defecto didáctico y se descartó. Un defecto que hace que dos
@@ -449,3 +466,12 @@ al menos un idioma con otros dígitos y uno con otro calendario.
 **Una configuración regional puede cambiar el resultado del cálculo, no solo su
 impresión.** El caso del calendario budista desplazó el periodo de liquidación quinientos
 años. Un defecto de este tipo no se encuentra revisando el formateo.
+
+**Una verificación de comportamiento frente al entorno debe elegir casos que ejerciten
+dimensiones distintas del problema, no variantes de la misma dimensión.** Diez idiomas
+europeos prueban una sola cosa: el separador decimal. Cuatro idiomas bien elegidos prueban
+cuatro cosas distintas. Al pedir una verificación, la pregunta útil no es cuántos casos se
+probaron sino cuántas dimensiones cubren.
+
+El episodio completo, con las cuatro salidas literales, está preparado para clase en
+[`casos-de-clase/caso-02-configuracion-regional.md`](casos-de-clase/caso-02-configuracion-regional.md).
