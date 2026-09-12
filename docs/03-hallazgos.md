@@ -319,7 +319,7 @@ lenguaje a otro sin decirle que la salida tiene que coincidir exactamente.
 | Detectado en | SPEC-003, al probar el comportamiento bajo distintas culturas |
 | Componente | Escenario Java, impresión de montos |
 | Severidad | Alta para el dictado. Rompe la comparación en clase |
-| Estado | **Sin corregir.** Reportado para decisión del Product Owner |
+| Estado | **Corregido en SPEC-003-A.** Se aprobó la opción 1 |
 
 ### Qué pasa
 
@@ -351,31 +351,101 @@ O sea que en una máquina virtual en español el participante Java vería `S/ 26
 participante .NET `S/ 26074.08`, sobre los mismos datos. Es exactamente el escenario que
 SPEC-003 quiere evitar: la clase se desvía a depurar la diferencia.
 
-### Por qué no se corrigió
+### Alcance real, mayor de lo que parecía
 
-No es un defecto plantado: no está en el catálogo de `04-defectos-plantados.md`.
+Al corregirlo aparecieron **tres** aspectos distintos de la configuración regional, no uno.
+Los dos últimos no estaban en el registro inicial.
 
-Y SPEC-003 prohíbe modificar el escenario Java salvo la reubicación de datos. La regla del
-proyecto para un defecto no intencional es reportarlo y no tocarlo, así que queda aquí
-registrado para que el Product Owner decida.
+**1. El separador decimal.** Es el que se había detectado. Con `es-ES` o `de-DE` los montos
+salen con coma.
 
-`comparar-escenarios.sh` **sí detecta la situación** cuando ocurre: probado bajo `es_ES`
-contra un escenario sin protección, reporta 724 líneas distintas y retorna 1.
+**2. Los dígitos.** Con `ar-SA` no cambia el separador: cambian las cifras.
 
-### Opciones para resolverlo
+```
+  Total transado           : S/ ٢٦٠٧٤٫٠٨
+```
 
-1. **Corregir Java**, pasando `Locale.ROOT` a cada `String.format`. Es lo correcto, y
-   requiere un spec que autorice tocar el escenario.
-2. **Fijar el idioma al ejecutar**, con `-Duser.language=en` en el script y en las
-   instrucciones de laboratorio. No arregla el código, y falla si alguien lo ejecuta a mano.
-3. **Dejarlo y usarlo en clase.** Es un defecto realista y didáctico, pero entonces hay que
-   plantarlo también en .NET, porque hoy la asimetría es involuntaria.
+La columna de cuotas del detalle también, porque `%8d` se ve afectado igual.
 
-La tercera tiene mérito pedagógico, pero decidirlo es del Product Owner.
+**3. El calendario, que altera el cálculo y no solo la impresión.** Con la máquina en
+tailandés, `Calendar.getInstance()` no devuelve un calendario gregoriano:
+
+```
+Locale por defecto : th_TH
+Clase de Calendar  : sun.util.BuddhistCalendar
+getTime()          : Sun Jun 01 00:00:00 CLT 1483
+```
+
+Al establecer el año 2026 sobre un calendario budista, el programa calcula sobre el año
+gregoriano **1483**, y el periodo de liquidación queda desplazado quinientos años:
+
+```
+  Desde: 01/06/1483 00:00
+  Hasta: 30/06/1483 23:59
+```
+
+Esto no es un problema de formato. Cambia los datos que entran al cálculo.
+
+Apareció además un cuarto aspecto, el juego de caracteres: bajo `th-TH` la JVM elige una
+codificación de salida que no tiene la letra ñ, y `Representaciones Breña S.R.L.` sale
+impreso como `Bre?a`.
+
+### Corrección aplicada
+
+Se aprobó la opción 1. La decisión vive en `util/ConfiguracionRegional.java`, que es el
+espejo de `Util/CompatibilidadJava.cs` del escenario .NET y lleva la misma advertencia de
+no revertir.
+
+| Punto | Antes | Después |
+|---|---|---|
+| Montos y tablas | `String.format("%.2f", v)` | `String.format(REGION_DE_SALIDA, "%.2f", v)` |
+| Fechas | `new SimpleDateFormat(patron)` | `new SimpleDateFormat(patron, REGION_DE_SALIDA)` |
+| Calendario | `Calendar.getInstance()` | `Calendar.getInstance(REGION_DE_SALIDA)` |
+| Codificación | heredada del sistema | `System.setOut(...)` con UTF-8 explícito |
+
+`Locale.ROOT` es el neutro de Java, igual que la cultura invariante lo es de .NET.
+
+**La zona horaria no se tocó.** Se usa el constructor de `Calendar` que solo recibe
+configuración regional, de modo que la zona sigue siendo la del sistema y no aparece
+mencionada en el código. DEF-04 queda textualmente igual, y se comprobó que su
+comportamiento observable es idéntico antes y después del cambio.
+
+### Evidencia
+
+Checksum de la salida Java bajo diez configuraciones, medido por redirección a archivo:
+
+| Configuración | Checksum | `Breña` |
+|---|---|---|
+| por defecto | `61f2c13f` | 3 |
+| es-ES, de-DE, fr-FR | `61f2c13f` | 3 |
+| ar-SA | `61f2c13f` | 3 |
+| th-TH | `61f2c13f` | 3 |
+| hi-IN, ja-JP, ru-RU, tr-TR, zh-CN | `61f2c13f` | 3 |
+
+`comparar-escenarios.sh` retorna cero en las seis configuraciones probadas de extremo a
+extremo, incluidas `ar-SA` y `th-TH`.
+
+Quitando la protección en una copia y ejecutando bajo `es-ES`, el script vuelve a reportar
+**724 líneas distintas** y retorna 1.
+
+### Por qué no se convirtió en defecto plantado
+
+Se evaluó dejarlo como defecto didáctico y se descartó. Un defecto que hace que dos
+participantes vean números distintos sobre los mismos datos no enseña nada: arruina la
+comparación en sala y desvía la clase a depurar el entorno.
 
 ### Regla derivada
 
-**El formateo de números depende del idioma de la máquina, y eso es un defecto de
-portabilidad aunque el cálculo esté perfecto.** Todo programa que imprima montos para ser
-comparados, exportados o parseados por otro sistema debe fijar su cultura de forma
-explícita. No alcanza con que funcione en la máquina del que lo escribió.
+**Todo programa cuya salida se vaya a comparar entre implementaciones debe fijar su
+configuración regional de forma explícita, porque el entorno de ejecución es una entrada
+del programa aunque no aparezca en su firma.** No alcanza con que funcione en la máquina
+del que lo escribió.
+
+**La configuración regional no es solo el separador decimal.** Son al menos cuatro cosas:
+el separador, los dígitos, el calendario y el juego de caracteres. Las dos últimas no se
+detectan probando con español y alemán, que es lo que uno prueba primero. Hay que incluir
+al menos un idioma con otros dígitos y uno con otro calendario.
+
+**Una configuración regional puede cambiar el resultado del cálculo, no solo su
+impresión.** El caso del calendario budista desplazó el periodo de liquidación quinientos
+años. Un defecto de este tipo no se encuentra revisando el formateo.

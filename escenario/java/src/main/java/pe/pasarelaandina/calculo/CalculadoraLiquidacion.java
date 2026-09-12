@@ -18,6 +18,7 @@ import pe.pasarelaandina.modelo.TramoComision;
 import pe.pasarelaandina.modelo.Transaccion;
 import pe.pasarelaandina.repositorio.CargadorDatos;
 import pe.pasarelaandina.repositorio.RepositorioMemoria;
+import pe.pasarelaandina.util.ConfiguracionRegional;
 
 /**
  * Proceso de cierre mensual.
@@ -91,7 +92,8 @@ public class CalculadoraLiquidacion {
         Date inicioPeriodo = utilidadesFecha.inicioDePeriodo(periodo);
         Date finPeriodo = utilidadesFecha.finDePeriodo(periodo);
 
-        SimpleDateFormat formatoSalida = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat formatoSalida =
+                new SimpleDateFormat("dd/MM/yyyy HH:mm", ConfiguracionRegional.REGION_DE_SALIDA);
 
         System.out.println("==========================================================");
         System.out.println("  PASARELA ANDINA - LIQUIDACION DE COMERCIOS");
@@ -362,7 +364,7 @@ public class CalculadoraLiquidacion {
     }
 
     private String formatearMonto(double monto) {
-        return String.format("%.2f", monto);
+        return String.format(ConfiguracionRegional.REGION_DE_SALIDA, "%.2f", monto);
     }
 
     public double getAcumuladoGeneralTransado() {

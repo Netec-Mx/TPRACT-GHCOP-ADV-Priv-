@@ -4,6 +4,7 @@ import java.util.List;
 
 import pe.pasarelaandina.modelo.DetalleLiquidacion;
 import pe.pasarelaandina.modelo.Liquidacion;
+import pe.pasarelaandina.util.ConfiguracionRegional;
 
 /**
  * Arma la representacion en texto de las liquidaciones para su revision.
@@ -60,7 +61,8 @@ public class FormateadorReporte {
         texto.append(" - ").append(liquidacion.getRazonSocial()).append("\n");
         texto.append("  Periodo ").append(liquidacion.getPeriodo()).append("\n");
         texto.append(SEPARADOR).append("\n");
-        texto.append(String.format("  %-12s %12s %10s %10s %8s%n",
+        texto.append(String.format(ConfiguracionRegional.REGION_DE_SALIDA,
+                "  %-12s %12s %10s %10s %8s%n",
                 "TRANSACCION", "MONTO", "COMISION", "RECARGO", "CUOTAS"));
 
         int impresas = 0;
@@ -71,7 +73,8 @@ public class FormateadorReporte {
                      .append(" lineas mas\n");
                 break;
             }
-            texto.append(String.format("  %-12s %12s %10s %10s %8d%n",
+            texto.append(String.format(ConfiguracionRegional.REGION_DE_SALIDA,
+                    "  %-12s %12s %10s %10s %8d%n",
                     linea.getIdTransaccion(),
                     monto(linea.getMontoTransaccion()),
                     monto(linea.getComisionTotal()),
@@ -85,6 +88,6 @@ public class FormateadorReporte {
     }
 
     private String monto(double valor) {
-        return String.format("%.2f", valor);
+        return String.format(ConfiguracionRegional.REGION_DE_SALIDA, "%.2f", valor);
     }
 }

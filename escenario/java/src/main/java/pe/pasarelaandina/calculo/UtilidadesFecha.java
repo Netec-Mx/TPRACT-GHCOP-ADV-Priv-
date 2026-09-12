@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import pe.pasarelaandina.util.ConfiguracionRegional;
+
 /**
  * Manejo de fechas del proceso de liquidacion.
  *
@@ -16,8 +18,26 @@ public class UtilidadesFecha {
     private static final String FORMATO_FECHA_HORA = "yyyy-MM-dd HH:mm:ss";
     private static final String FORMATO_FECHA = "yyyy-MM-dd";
 
+    /**
+     * Devuelve un calendario con la configuracion regional fijada.
+     *
+     * Sin fijarla, Calendar.getInstance() usa la de la maquina, y hay idiomas cuyo
+     * calendario por omision no es el gregoriano. Con la maquina en tailandes devuelve
+     * un BuddhistCalendar, de modo que al establecer el año 2026 el programa calcula
+     * sobre el año 1483 y el periodo de liquidacion queda completamente desplazado.
+     * Eso no es un problema de formato: cambia los datos que entran al calculo.
+     *
+     * Se usa el constructor que solo recibe la configuracion regional. La zona horaria
+     * sigue siendo la del sistema, igual que antes y sin mencionarla aqui: ese es un
+     * defecto plantado (DEF-04) y no se corrige.
+     */
+    private Calendar calendarioDeTrabajo() {
+        return Calendar.getInstance(ConfiguracionRegional.REGION_DE_SALIDA);
+    }
+
     public Date parsearFechaHora(String texto) {
-        SimpleDateFormat formato = new SimpleDateFormat(FORMATO_FECHA_HORA);
+        SimpleDateFormat formato =
+                new SimpleDateFormat(FORMATO_FECHA_HORA, ConfiguracionRegional.REGION_DE_SALIDA);
         try {
             return formato.parse(texto);
         } catch (ParseException e) {
@@ -26,7 +46,8 @@ public class UtilidadesFecha {
     }
 
     public Date parsearFecha(String texto) {
-        SimpleDateFormat formato = new SimpleDateFormat(FORMATO_FECHA);
+        SimpleDateFormat formato =
+                new SimpleDateFormat(FORMATO_FECHA, ConfiguracionRegional.REGION_DE_SALIDA);
         try {
             return formato.parse(texto);
         } catch (ParseException e) {
@@ -38,14 +59,16 @@ public class UtilidadesFecha {
         if (fecha == null) {
             return "";
         }
-        return new SimpleDateFormat(FORMATO_FECHA_HORA).format(fecha);
+        return new SimpleDateFormat(FORMATO_FECHA_HORA,
+                ConfiguracionRegional.REGION_DE_SALIDA).format(fecha);
     }
 
     public String formatearFecha(Date fecha) {
         if (fecha == null) {
             return "";
         }
-        return new SimpleDateFormat(FORMATO_FECHA).format(fecha);
+        return new SimpleDateFormat(FORMATO_FECHA,
+                ConfiguracionRegional.REGION_DE_SALIDA).format(fecha);
     }
 
     /**
@@ -55,7 +78,7 @@ public class UtilidadesFecha {
         int anio = Integer.parseInt(periodo.substring(0, 4));
         int mes = Integer.parseInt(periodo.substring(5, 7));
 
-        Calendar calendario = Calendar.getInstance();
+        Calendar calendario = calendarioDeTrabajo();
         calendario.set(Calendar.YEAR, anio);
         calendario.set(Calendar.MONTH, mes - 1);
         calendario.set(Calendar.DAY_OF_MONTH, 1);
@@ -73,7 +96,7 @@ public class UtilidadesFecha {
         int anio = Integer.parseInt(periodo.substring(0, 4));
         int mes = Integer.parseInt(periodo.substring(5, 7));
 
-        Calendar calendario = Calendar.getInstance();
+        Calendar calendario = calendarioDeTrabajo();
         calendario.set(Calendar.YEAR, anio);
         calendario.set(Calendar.MONTH, mes - 1);
         calendario.set(Calendar.DAY_OF_MONTH, calendario.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -104,9 +127,9 @@ public class UtilidadesFecha {
             return 0;
         }
 
-        Calendar calendarioDesde = Calendar.getInstance();
+        Calendar calendarioDesde = calendarioDeTrabajo();
         calendarioDesde.setTime(desde);
-        Calendar calendarioHasta = Calendar.getInstance();
+        Calendar calendarioHasta = calendarioDeTrabajo();
         calendarioHasta.setTime(hasta);
 
         int anios = calendarioHasta.get(Calendar.YEAR) - calendarioDesde.get(Calendar.YEAR);
@@ -123,7 +146,7 @@ public class UtilidadesFecha {
         if (fecha == null) {
             return "";
         }
-        Calendar calendario = Calendar.getInstance();
+        Calendar calendario = calendarioDeTrabajo();
         calendario.setTime(fecha);
         int anio = calendario.get(Calendar.YEAR);
         int mes = calendario.get(Calendar.MONTH) + 1;
