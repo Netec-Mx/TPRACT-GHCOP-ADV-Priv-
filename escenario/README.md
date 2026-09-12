@@ -1,24 +1,108 @@
-# Escenarios del taller
+# Escenario: Pasarela Andina
 
-> **Archivo marcador.** El dominio funcional del escenario, su alcance, los defectos que
-> se plantan en él y la implementación en Java se definen en **SPEC-002**. La
-> implementación equivalente en .NET llega en **SPEC-003**. Los directorios `java/` y
-> `dotnet/` están vacíos por ahora.
+Sistema de liquidación de comisiones de una procesadora de pagos ficticia. Es la base de
+código sobre la que se trabaja durante todo el taller.
 
-Este directorio contendrá dos implementaciones equivalentes del mismo dominio, una en Java
-y otra en .NET, para que un participante de cada stack haga el mismo ejercicio en su
-lenguaje.
+El escenario existe en dos implementaciones equivalentes, una en Java y otra en .NET, que
+resuelven el mismo dominio con las mismas reglas y leen los mismos datos. Un participante
+de cada stack hace el mismo ejercicio en su propio lenguaje y ambos pueden comparar
+resultados en sala.
 
-## Advertencia sobre el código de este directorio
+> Pasarela Andina no corresponde a ninguna institución real. Los comercios, montos y
+> transacciones son generados.
 
-El código que llegará aquí contiene defectos introducidos a propósito. Son el material de
-trabajo de los laboratorios, no errores por corregir.
+## Qué hace el sistema
 
-No los corrijas por iniciativa propia, ni tú ni ningún agente que ejecutes sobre este
-directorio. La regla completa y su fundamento están en [`AGENTS.md`](../AGENTS.md).
+Pasarela Andina procesa las ventas de los comercios afiliados a su plataforma. Al cierre
+de cada mes calcula cuánto le corresponde cobrar a cada comercio por concepto de
+comisiones, le descuenta los contracargos del periodo, aplica las retenciones que
+correspondan y produce una liquidación con el monto neto a pagar.
 
-## Pendiente
+Todos los montos están en soles peruanos con dos decimales. El huso horario de referencia
+es América Lima.
 
-- [ ] Definir el dominio funcional y el catálogo de defectos plantados (SPEC-002)
-- [ ] Implementar `escenario/java/` (SPEC-002)
-- [ ] Implementar `escenario/dotnet/` (SPEC-003)
+## Entidades
+
+| Entidad | Qué representa |
+|---|---|
+| Comercio | Afiliado a la plataforma, con su plan de comisiones asignado |
+| Plan de comisiones | Tarifario por tramos, con monto fijo por transacción y tope mensual |
+| Transacción | Una venta autorizada a través de la pasarela |
+| Contracargo | Desconocimiento de un cargo por parte del tarjetahabiente |
+| Liquidación | Resultado del cierre mensual para un comercio |
+
+## Reglas de negocio
+
+Estas son las reglas que el sistema debe cumplir. Son la verdad funcional del dominio y
+conviene tenerlas a mano durante los laboratorios.
+
+1. La comisión de una transacción se calcula aplicando el porcentaje del tramo que
+   corresponde a su monto, más el monto fijo por transacción.
+2. Los tramos **no son acumulativos**. El monto completo de la transacción se multiplica
+   por el porcentaje del tramo en que cae.
+3. Las transacciones en cuotas tienen un recargo del 0,5 % adicional por cada cuota sobre
+   la primera, con un máximo de 3 %.
+4. Las transacciones anuladas no generan comisión.
+5. Los contracargos aprobados se descuentan del periodo en que se aprueban, no del
+   periodo de la transacción original.
+6. Si el total de comisiones del mes supera el tope del plan, se cobra el tope.
+7. Un comercio con menos de seis meses de afiliación tiene una retención de garantía del
+   5 % sobre el monto neto.
+8. El periodo de liquidación va desde el primer día del mes a las 00:00:00 hasta el último
+   día a las 23:59:59, en hora de Lima.
+9. Todo monto en soles se redondea a dos decimales, medio hacia arriba.
+
+## Cómo se ejecuta
+
+### Java
+
+Desde `escenario/java/`:
+
+```bash
+mvn clean package
+java -jar target/liquidacion-comercios.jar
+```
+
+Se puede indicar otro periodo y otro directorio de datos:
+
+```bash
+java -jar target/liquidacion-comercios.jar 2026-05 datos
+```
+
+Para correr solo las pruebas:
+
+```bash
+mvn test
+```
+
+### .NET
+
+Pendiente. Llega en SPEC-003.
+
+## Datos de ejemplo
+
+Los datos viven en `java/datos/` como archivos de texto plano separados por punto y coma,
+con una línea de encabezado. No hay base de datos: todo se carga en memoria al arrancar.
+
+| Archivo | Contenido |
+|---|---|
+| `planes.txt` | 4 planes de comisiones con sus tramos |
+| `comercios.txt` | 40 comercios afiliados |
+| `transacciones.txt` | 2.037 transacciones en tres periodos mensuales |
+| `contracargos.txt` | 30 contracargos en distintos estados |
+
+Los periodos cubiertos son 2026-04, 2026-05 y 2026-06. El periodo por omisión del
+ejecutable es **2026-06**.
+
+Los mismos archivos alimentan la implementación .NET, de modo que ambas deben producir
+resultados idénticos.
+
+## Antes de empezar a trabajar
+
+Este código es material de un taller y tiene características que fueron elegidas a
+propósito para que haya algo que hacer durante los laboratorios. No lo tomes como un
+ejemplo de buenas prácticas ni te adelantes a arreglar lo que te parezca mejorable.
+
+Cada laboratorio te va a decir exactamente sobre qué trabajar. Haz eso y nada más. La
+explicación completa está en [`AGENTS.md`](../AGENTS.md), en la raíz del repositorio, y
+también aplica a cualquier agente que ejecutes sobre este directorio.

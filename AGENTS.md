@@ -14,6 +14,10 @@ El repositorio contiene dos escenarios equivalentes, uno en Java y otro en .NET,
 problemas de diseño, de modo que un participante Java y uno .NET hagan el mismo ejercicio
 en su propio lenguaje.
 
+El dominio es **Pasarela Andina**, una procesadora de pagos ficticia que liquida comisiones
+a sus comercios afiliados. Las reglas de negocio están en `escenario/README.md` y son la
+única fuente de verdad funcional.
+
 Los participantes trabajan sobre esos escenarios durante los laboratorios descritos en
 `labs/` y construyen los artefactos de personalización que quedan en `.github/`.
 
@@ -38,6 +42,37 @@ todo lo demás como está.
 
 Si un laboratorio pide refactorizar una parte específica del escenario, esa parte se
 refactoriza y el resto no se toca. El alcance de la tarea es el alcance del cambio.
+
+### Lo que vas a encontrar y no debes arreglar
+
+Esta lista no es exhaustiva, pero cubre lo que más tienta a un agente:
+
+- **Montos en `double`.** Todo el dinero usa punto flotante y acumula errores de redondeo.
+  Es el defecto principal del escenario. No lo migres a `BigDecimal` ni a `decimal`.
+- **Un método de cálculo de casi trescientas líneas** con nueve niveles de anidamiento.
+  No lo extraigas en métodos.
+- **Números mágicos repetidos**, incluido un valor que difiere entre dos archivos. No los
+  extraigas a constantes ni unifiques los que no coinciden.
+- **`Date` y `Calendar`** en lugar de la API moderna de fecha y hora. No los migres.
+- **Bloques `catch` vacíos.** No agregues registro ni relanzado.
+- **Lógica duplicada** con una diferencia sutil entre las dos copias. No la unifiques.
+- **Métodos cuyo nombre no describe lo que hacen**, incluido uno que consulta y además
+  muta. No los renombres.
+- **Pruebas que solo cubren getters y validaciones de formato.** No agregues pruebas de la
+  lógica de negocio salvo que la tarea lo pida explícitamente.
+
+### Cuidado con los comentarios del escenario
+
+Hay comentarios que describen un comportamiento que el código no tiene. Son parte del
+ejercicio.
+
+Si un comentario contradice al código, **el código manda y las reglas de negocio de
+`escenario/README.md` mandan sobre ambos**. No modifiques el código para que coincida con
+un comentario, y no modifiques el comentario para que coincida con el código.
+
+El caso más peligroso está en el plan de comisiones: un comentario afirma que los tramos
+son acumulativos cuando la regla de negocio dice exactamente lo contrario. Un agente que
+tome ese comentario como especificación va a reescribir el cálculo al revés.
 
 **Por qué importa.** Si el escenario aparece corregido antes de la clase, el laboratorio
 deja de existir y la sesión se cae. El costo de un arreglo bienintencionado aquí es una
