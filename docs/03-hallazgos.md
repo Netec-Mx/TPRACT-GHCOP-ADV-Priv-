@@ -475,3 +475,190 @@ probaron sino cuántas dimensiones cubren.
 
 El episodio completo, con las cuatro salidas literales, está preparado para clase en
 [`casos-de-clase/caso-02-configuracion-regional.md`](casos-de-clase/caso-02-configuracion-regional.md).
+
+---
+
+## HALLAZGO-05. El verificador reprobaba cualquier ambiente, correcto o no
+
+| Campo | Valor |
+|---|---|
+| Detectado en | Validación del Product Owner sobre la máquina virtual del cliente |
+| Componente | Script de verificación de ambiente, comprobación de Copilot en Visual Studio Code |
+| Severidad | Alta. Reprobaba toda máquina y no detectaba la única falla real que tenía la del cliente |
+| Estado | Corregido en SPEC-001-C |
+
+### Qué pasaba
+
+La máquina virtual del cliente tenía todas las versiones por encima del mínimo y la
+conectividad a Copilot completa. El verificador la reprobó igual:
+
+```
+== Extensiones de GitHub Copilot ==
+  [FALLA] Extension github.copilot no esta instalada en Visual Studio Code
+  [FALLA] Extension github.copilot-chat no esta instalada en Visual Studio Code
+```
+
+La comprobación buscaba las dos extensiones en la salida de `code --list-extensions`. Esa
+salida no las iba a contener nunca, en ninguna máquina:
+
+- **`GitHub.copilot` está descontinuada.** Era la extensión de las sugerencias en línea
+  cuando Copilot estaba repartido en dos. Su función la entrega hoy Copilot Chat. En el
+  marketplace sigue publicada, congelada en la versión 1.388.0 del 24 de octubre de 2025, e
+  intentar instalarla falla con un error de dependencia.
+- **`GitHub.copilot-chat` viene integrada en el editor** desde Visual Studio Code 1.116,
+  publicado el 15 de abril de 2026. Una extensión integrada no aparece en
+  `code --list-extensions`, ni siquiera cuando está habilitada.
+
+Se comprobó sobre un perfil con Copilot Chat habilitada: la lista sale vacía.
+
+Y la máquina sí tenía un problema, que el verificador no veía: Copilot Chat estaba
+**deshabilitada**. Sin sugerencias, sin canal de salida y sin ninguna señal clara del
+editor. Era lo único que había que detectar.
+
+### Cómo llegó ahí
+
+La comprobación nació en SPEC-001 como aviso, no como falla. SPEC-001-B la convirtió en
+falla, con el argumento razonable de que un puesto con el editor y sin Copilot no sirve
+para el taller. SPEC-001-B se escribió el 11 de septiembre de 2026, casi cinco meses
+**después** de que Copilot pasara a venir integrado.
+
+O sea que el criterio no quedó obsoleto con el tiempo: nació obsoleto. Se escribió con lo
+que se sabía de Copilot, no con lo que Copilot era ese día, y nadie lo contrastó con la
+documentación vigente.
+
+Hubo una segunda oportunidad de verlo y también se perdió. En SPEC-004-A, la instrucción
+de calibración para el Product Owner dice que el verificador «hoy reprueba por estas dos
+extensiones, y no es un falso positivo». Era un falso positivo. Se afirmó sin comprobarlo.
+
+### Por qué la máquina llegó con Copilot deshabilitado
+
+No está en la documentación. Está en el código del editor, versión 1.138: la primera vez
+que se abre Visual Studio Code con un perfil de usuario, si Copilot todavía no está
+configurado, el editor **deshabilita por su cuenta** la extensión integrada. Deja una marca
+en el perfil para no repetir esa decisión en los arranques siguientes.
+
+En una máquina virtual, cada participante entra con su usuario, y su perfil nace así. Si
+las doce máquinas llegan como llegó la validada, la primera sesión empieza con doce
+personas sin Copilot y sin un mensaje que diga por qué.
+
+No se pudo reproducir un primer arranque en limpio: el editor no levanta con interfaz
+gráfica desde el entorno donde se construyó esta corrección. La conclusión se apoya en el
+código fuente del editor instalado y en el estado real de un perfil deshabilitado, no en
+una ejecución observada de principio a fin.
+
+### La señal elegida
+
+Visual Studio Code no ofrece una forma de consultar desde la línea de comandos si las
+funciones de IA están activas. Se revisó la referencia de la línea de comandos y la de
+ajustes de IA: no hay opción ni comando para eso.
+
+El estado vive en dos lugares, y el editor los mantiene sincronizados:
+
+| Lugar | Qué guarda | Dónde |
+|---|---|---|
+| Ajuste `chat.disableAIFeatures` | La decisión de apagar la IA. Por omisión `false`. Solo admite nivel de usuario y de espacio de trabajo, no política de empresa | `settings.json` de usuario y `.vscode/settings.json` |
+| Lista de extensiones deshabilitadas | Si `github.copilot-chat` está apagada | Clave `extensionsIdentifiers/disabled` de `User/globalStorage/state.vscdb`, que es SQLite |
+
+Los botones del panel de extensiones confirman el acoplamiento: **Enable AI Features** sobre
+la extensión integrada cambia el ajuste a `false`, y el editor habilita la extensión en
+respuesta. Al revés, habilitar la extensión deja el ajuste en `false`.
+
+Revisar solo el ajuste habría dado verde en la máquina del cliente, porque ahí el ajuste no
+estaba tocado: lo que estaba apagado era la extensión. Revisar solo la extensión no habría
+visto un `.vscode/settings.json` que apague la IA en el repositorio. Se revisan los dos.
+
+La base SQLite se lee con `node:sqlite`, incluido en Node.js desde la versión 22.5. Node ya
+era requisito obligatorio del ambiente, y Git para Windows no trae cliente de SQLite.
+
+### El riesgo de la señal elegida, y cómo se acotó
+
+Leer el almacenamiento interno de un producto es frágil. Si una versión futura del editor
+renombra la clave, el script no encontraría la lista de deshabilitadas y concluiría que no
+hay ninguna. Aprobaría en silencio, que es justo el defecto que este hallazgo registra.
+
+Para que ese cambio produzca rojo y no verde, el script exige un testigo: la marca
+`builtinChatExtensionEnablementMigration`, que el editor escribe en todo perfil donde
+evaluó la extensión integrada. Si falta, reprueba con un mensaje que dice que el formato
+cambió y que el script debe revisarse.
+
+La regla general del gate es la misma en todos los casos: si no puede leer algo, reprueba y
+dice qué no pudo leer. No aprueba nunca a ciegas.
+
+### Evidencia
+
+Veintiún casos armados sobre copias de un perfil real, sin tocar el original, más una
+copia del script en un repositorio temporal para probar la configuración del espacio de
+trabajo:
+
+| Debe aprobar | Resultado |
+|---|---|
+| Copilot habilitada, sin ajuste | 0 |
+| Lista de deshabilitadas con otras extensiones | 0 |
+| Ajuste en `false` con coma final | 0 |
+| Ajuste solo comentado, una URL con `//` y una coma dentro de cadenas | 0 |
+| Usuario en `true`, espacio de trabajo en `false`, que prevalece | 0 |
+| Perfiles adicionales, con aviso | 0 |
+| `settings.json` con marca BOM de Windows | 0 |
+
+| Debe reprobar | Resultado |
+|---|---|
+| Copilot Chat en la lista de deshabilitadas, que es el estado de la máquina del cliente | 1 |
+| Lo mismo con el identificador en mayúsculas | 1 |
+| Ajuste de usuario en `true` | 1 |
+| Ajuste en `true` y extensión deshabilitada | 1 |
+| Espacio de trabajo en `true` | 1 |
+| `settings.json` ilegible, de usuario o de espacio de trabajo | 1 |
+| Ajuste con tipo equivocado, `"true"` como texto | 1 |
+| Perfil inexistente | 1 |
+| Perfil sin base de estado | 1 |
+| Base de estado corrupta | 1 |
+| Lista de deshabilitadas con formato inesperado | 1 |
+| Perfil sin testigo de formato | 1 |
+| Versión futura simulada: clave renombrada y Copilot deshabilitada | 1 |
+
+Además, un perfil real con Copilot Chat deshabilitada, sin fabricar nada, reprueba con
+código 1.
+
+Para comprobar que la batería muerde, se rompió el gate tres veces a propósito:
+
+| Defecto introducido | Casos que lo detectan |
+|---|---|
+| La rama de extensión deshabilitada deja de reprobar | Los dos casos de Copilot en la lista de deshabilitadas |
+| El lector de `settings.json` deja de quitar comentarios | El ajuste solo comentado, que pasa a reprobar un ambiente correcto |
+| Se quita el testigo de formato | Los dos casos de perfil sin testigo, que pasan a aprobar |
+
+El segundo mutante falla al revés, y es el más fácil de pasar por alto: un ajuste comentado
+en `settings.json`, como `// "chat.disableAIFeatures": true`, es habitual y no apaga nada.
+
+No se ejecutó en Windows. Las rutas del perfil en Git Bash y la conversión de rutas al
+pasarlas a Node se escribieron según la documentación y quedan por confirmar en la máquina
+virtual.
+
+### Reglas derivadas
+
+**Una comprobación sobre un producto de evolución rápida se verifica contra la
+documentación vigente el día que se escribe.** No contra lo que se sabía del producto. Este
+criterio se escribió cinco meses después del cambio que lo invalidaba.
+
+**Y se revisa cuando el producto cambia.** Una verificación desactualizada no falla en
+silencio: falla al revés, reprobando lo que está bien. En este caso hizo las dos cosas a la
+vez, porque reprobaba por una razón falsa y no veía la razón verdadera.
+
+**Cuando un gate reprueba algo que parece correcto, se sospecha de las dos partes.** Del
+ambiente y del gate. La afirmación «no es un falso positivo» se escribió sin comprobar el
+gate, y la comprobación tomaba un minuto: listar las extensiones de un perfil con Copilot
+funcionando.
+
+**Si la señal es interna al producto, el gate tiene que reprobar cuando la señal cambia de
+forma.** Leer un almacenamiento no documentado es aceptable solo si un cambio de formato
+produce rojo. Si produce verde, el gate es peor que no tenerlo.
+
+### Dónde aplica esto en el taller
+
+Es el caso gemelo de HALLAZGO-02 en el capítulo 5. Allí una herramienta reportó problemas
+donde no los había; aquí una herramienta reprobó algo que estaba bien. Las dos tratan lo
+mismo desde lados opuestos: una verificación automática hereda las suposiciones de quien la
+escribió y del momento en que la escribió.
+
+La evidencia preparada para proyectar está en
+[`casos-de-clase/caso-03-verificacion-obsoleta.md`](casos-de-clase/caso-03-verificacion-obsoleta.md).

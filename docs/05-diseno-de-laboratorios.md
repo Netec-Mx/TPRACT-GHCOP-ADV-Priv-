@@ -306,7 +306,29 @@ que nombra el concepto —el método de cálculo de la liquidación— sirve par
 La verificación de esta decisión es parte de la ejecución: si algún paso resulta ambiguo
 para uno de los dos stacks, se duplica y se justifica.
 
+## Latencia medida en la máquina virtual
+
+Este diseño se hizo suponiendo una latencia alta en la máquina virtual, que era lo previsto
+al inicio del proyecto y lo que todavía dicen `AGENTS.md` y `labs/README.md`. Esa suposición
+condicionaba sobre todo a los laboratorios de sugerencias en línea, que dependen de que la
+sugerencia aparezca mientras se escribe.
+
+La validación del Product Owner sobre la máquina virtual real, registrada en SPEC-001-C,
+dio otro resultado:
+
+- Las sugerencias cortas en línea responden con rapidez suficiente para trabajar.
+- Solo las generaciones largas tardan algunos segundos.
+
+La restricción de latencia resultó menos severa de lo previsto, y los laboratorios de
+sugerencias en línea **sí se pueden ejecutar** en la máquina virtual.
+
+El diseño de este documento no se modificó por este dato. El rediseño, si corresponde,
+llega en un spec aparte.
+
 ## Lo que este diseño deja pendiente
+
+**El dato de latencia no está incorporado al diseño.** La sección anterior lo registra; el
+rediseño que lo aproveche es un spec aparte.
 
 **lab-3-4 depende de SPEC-006.** Sus tres pasos están definidos, pero no se pueden probar
 de extremo a extremo hasta que exista el servidor MCP.

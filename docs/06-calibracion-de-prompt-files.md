@@ -7,21 +7,24 @@ antes de replicarlo treinta y tres veces.
 
 ## Antes de empezar
 
-Instalar en Visual Studio Code las dos extensiones:
+Copilot no se instala: viene integrado en Visual Studio Code. Lo que hay que confirmar es
+que las funciones de IA estén habilitadas, con el procedimiento de
+[`00-setup-ambiente.md`](00-setup-ambiente.md), sección «GitHub Copilot en Visual Studio
+Code».
 
-| Extensión | Identificador |
-|---|---|
-| GitHub Copilot | `GitHub.copilot` |
-| GitHub Copilot Chat | `GitHub.copilot-chat` |
+> **Corregido en SPEC-001-C.** Esta sección pedía instalar `GitHub.copilot` y
+> `GitHub.copilot-chat`, y afirmaba que la reprobación del verificador por esas dos
+> extensiones no era un falso positivo. Lo era. El detalle está en
+> [`03-hallazgos.md`](03-hallazgos.md), HALLAZGO-05.
 
-Para confirmar que el ambiente quedó listo, desde la raíz del repositorio:
+Para confirmar que el ambiente quedó listo, cerrar Visual Studio Code y, desde la raíz del
+repositorio:
 
 ```bash
 bash scripts/verificar-ambiente.sh
 ```
 
-Debe terminar en cero. Hoy reprueba por estas dos extensiones, y no es un falso positivo:
-es el mismo criterio que se le va a exigir a cada participante.
+Debe terminar en cero. Es el mismo criterio que se le va a exigir a cada participante.
 
 Abrir el repositorio como carpeta de trabajo en VS Code. Los prompt files se descubren
 desde `.github/prompts/`, que ya existe, y están habilitados por omisión: no hay que activar

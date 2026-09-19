@@ -45,8 +45,8 @@ puede seguir el taller sin quedar fuera.
 | Git | 2.40 | Clonar el repositorio y los laboratorios de revisión. Aporta además Git Bash, el intérprete de los scripts en Windows |
 | JDK | 21 (LTS) | Escenario Java |
 | SDK de .NET | 8.0 (LTS) | Escenario .NET |
-| Node.js | 22 (LTS) | Servidor MCP local del capítulo 3 |
-| Visual Studio Code | 1.95 | IDE principal del taller |
+| Node.js | 22 (LTS) | Servidor MCP local del capítulo 3, y lectura del perfil del editor en el script de verificación |
+| Visual Studio Code | 1.116 | IDE principal del taller. Es la primera versión que trae GitHub Copilot integrado |
 | curl | Cualquiera | Comprobación de conectividad. Viene con Git para Windows, macOS y Linux |
 
 Apache Maven 3.9 se comprueba como recomendado en este punto del proyecto. Pasará a
@@ -70,16 +70,69 @@ meses del fin de soporte.
 Solo se necesita el stack del lenguaje que usará cada participante, pero si la imagen es
 única para todo el grupo debe traer ambos.
 
-### Extensiones de Visual Studio Code
+### GitHub Copilot en Visual Studio Code
 
-Deben venir instaladas en la imagen, no instalarse en clase. Las dos primeras no son
-opcionales: si la imagen trae Visual Studio Code sin ellas, el script de verificación
-reprueba el ambiente, porque un puesto así no sirve para este taller.
+Copilot no se instala. Desde la versión 1.116, publicada en abril de 2026, GitHub Copilot
+Chat viene integrada en Visual Studio Code como extensión del propio editor, y entrega
+todas las funciones de Copilot: chat, sugerencias en línea y agentes.
+
+Lo que sí hay que hacer es **habilitarla**, porque puede llegar deshabilitada. La primera
+vez que se abre Visual Studio Code con un perfil de usuario nuevo, si Copilot todavía no
+está configurado, el editor deshabilita la extensión integrada por su cuenta. En una
+máquina virtual eso le pasa a cada participante que entra con su usuario por primera vez.
+
+Mientras está deshabilitada no hay sugerencias en línea, no aparece el canal de salida de
+Copilot y el editor no da ninguna señal clara de por qué. La sesión de GitHub puede estar
+iniciada y el ambiente parece correcto.
+
+Para habilitarla:
+
+1. Abrir la vista de Extensiones (`Ctrl+Shift+X`).
+2. Escribir `@builtin copilot` en el buscador. El filtro `@builtin` muestra las extensiones
+   integradas, que no aparecen en la lista normal.
+3. Seleccionar **GitHub Copilot Chat**.
+4. Pulsar **Enable AI Features**. Con la interfaz en español el botón dice **Habilitar
+   características de IA**. Si el botón que aparece es **Enable** (**Habilitar**), pulsar
+   ese: el efecto es el mismo.
+5. Iniciar sesión en GitHub desde el icono de Copilot de la barra de estado.
+
+El botón del paso 4 no hace más que cambiar el ajuste `chat.disableAIFeatures` a `false`.
+Se puede hacer también desde la configuración (`Ctrl+,`), buscando ese ajuste y dejando la
+casilla desmarcada.
+
+Después, **cerrar Visual Studio Code por completo** antes de ejecutar el script de
+verificación. El editor no escribe el estado de las extensiones en disco en el momento en
+que cambia, y el script lo lee desde disco.
+
+### La extensión GitHub.copilot no se instala
+
+`GitHub.copilot` era la extensión de las sugerencias en línea cuando Copilot estaba
+repartido en dos extensiones. Está descontinuada: esa función la entrega hoy Copilot Chat,
+y si el editor encuentra la extensión antigua instalada, la deshabilita con el mensaje
+*All GitHub Copilot functionality is now being served from the GitHub Copilot Chat
+extension*. En el marketplace sigue publicada, pero su última versión, la 1.388.0, es del
+24 de octubre de 2025.
+
+Intentar instalarla falla, y el error no dice por qué:
+
+```
+Installing extension 'github.copilot'...
+Error while installing extension github.copilot-chat: Extension 'github.copilot-chat' is a
+built-in extension with version '0.66.0' and cannot be downgraded to version '0.48.1'.
+Failed Installing Extensions: github.copilot-chat
+```
+
+La razón es que `GitHub.copilot` es un paquete que arrastra a `GitHub.copilot-chat`, y la
+versión publicada en el marketplace es anterior a la que viene integrada en el editor. Los
+números de versión cambian con cada actualización de Visual Studio Code, pero el error es
+el mismo. No hay nada que resolver: la extensión no hace falta.
+
+### Otras extensiones
+
+Deben venir instaladas en la imagen, no instalarse en clase.
 
 | Extensión | Identificador |
 |---|---|
-| GitHub Copilot | `GitHub.copilot` |
-| GitHub Copilot Chat | `GitHub.copilot-chat` |
 | Extension Pack for Java | `vscjava.vscode-java-pack` |
 | C# Dev Kit | `ms-dotnettools.csdevkit` |
 
@@ -174,8 +227,37 @@ Opciones disponibles:
 | Opción | Efecto |
 |---|---|
 | `--sin-red` | Omite las comprobaciones de conectividad. Útil para validar la imagen antes de conectarla a la red del cliente. |
+| `--perfil-vscode <dir>` | Directorio de datos de usuario de Visual Studio Code, cuando no es el de la instalación por omisión: modo portable o `--user-data-dir`. |
 | `--ayuda` | Muestra el uso y termina. |
 | `--version` | Muestra la versión del script y termina. |
+
+### Cómo comprueba que Copilot está habilitado
+
+Visual Studio Code no tiene una opción de línea de comandos que diga si las funciones de
+IA están activas, y `code --list-extensions` no lista las extensiones integradas. El
+script lee el perfil del usuario directamente, en los dos lugares donde el editor guarda
+ese estado:
+
+- El ajuste `chat.disableAIFeatures`, en la configuración de usuario y en
+  `.vscode/settings.json` del repositorio, si existe.
+- La lista de extensiones deshabilitadas del perfil, que vive en una base SQLite dentro de
+  `User/globalStorage/state.vscdb`. La lee con el módulo `node:sqlite` de Node.js, de modo
+  que no hace falta instalar un cliente de SQLite.
+
+Reprueba si cualquiera de los dos indica que Copilot está deshabilitado, y también si no
+puede leerlos. No aprueba nunca a ciegas.
+
+El perfil se busca en `%APPDATA%\Code` en Windows, en
+`~/Library/Application Support/Code` en macOS y en `~/.config/Code` en Linux.
+
+Tiene tres límites conocidos:
+
+- **Hay que cerrar Visual Studio Code antes de ejecutarlo** si se acaba de cambiar el
+  estado. El editor guarda en disco con retraso, y el script lee lo que hay en disco.
+- **Solo revisa el perfil por omisión.** Si el editor tiene perfiles adicionales, el
+  script lo advierte.
+- **No comprueba la sesión de GitHub ni la licencia.** Eso se confirma abriendo el chat y
+  pidiendo cualquier respuesta, como indica la sección 4.
 
 Si al ejecutarlo en Windows aparece un error que menciona `\r` o `$'\r': command not
 found`, el problema son los finales de línea y está resuelto en
