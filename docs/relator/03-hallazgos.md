@@ -662,3 +662,73 @@ escribió y del momento en que la escribió.
 
 La evidencia preparada para proyectar está en
 [`casos-de-clase/caso-03-verificacion-obsoleta.md`](casos-de-clase/caso-03-verificacion-obsoleta.md).
+
+---
+
+## HALLAZGO-06. El diseño de laboratorios se construyó sobre un artefacto en retiro
+
+| Campo | Valor |
+|---|---|
+| Detectado en | SPEC-008, verificación de los comandos del chat en la documentación vigente |
+| Componente | Pasos invocables de los nueve laboratorios, diseñados como prompt files |
+| Severidad | Alta. Treinta y cuatro pasos dependían de un mecanismo que Visual Studio Code anunció que va a quitar |
+| Estado | Corregido en SPEC-009. Los pasos son skills y los prompt files de calibración se eliminaron |
+
+### Qué pasaba
+
+El diseño de laboratorios de SPEC-004 descomponía cada laboratorio en pasos invocables y
+cada paso era un prompt file en `.github/prompts/`. Se escribieron dos como calibración y
+el resto esperaba a que la calibración cerrara.
+
+Al verificar en SPEC-008 qué comandos del chat existían, la página de prompt files de
+Visual Studio Code, actualizada el 16 de septiembre de 2026, decía lo siguiente.
+
+- Los prompt files están descontinuados para las sesiones Agent Host, que no los cargan.
+- Siguen funcionando con el agente local, pero el agente local se va a eliminar en una
+  versión futura.
+- La recomendación oficial es migrarlos a skills.
+
+Visual Studio Code se actualiza solo en las máquinas virtuales y el taller ocurre semanas
+después de construir el material. Un paso que funciona el día de la prueba puede no
+aparecer el día de la clase.
+
+### Qué se hizo
+
+Cada paso se construyó como skill en `.github/skills/`, invocable por su nombre con la
+barra en el chat. Los dos prompt files de calibración se migraron conservando su
+contenido, con dos ajustes.
+
+- Aceptan los dos escenarios. Los originales eran uno de Java y otro de .NET.
+- Se quitaron las frases que anticipaban el hallazgo del participante. El prompt de 5.3
+  decía que probablemente aparecería una inconsistencia al probar los bordes, y el de 5.2
+  pedía no unificar el tope del recargo con el de otra clase. Las skills llegan al
+  repositorio de participantes y esas frases revelaban el ejercicio. La restricción se
+  mantuvo en forma general.
+
+Las skills traen un riesgo que los prompt files no tenían. Una skill puede cargarse sola
+cuando el agente la considera relevante, y una skill del laboratorio 5.2 cargada durante
+el 1.5 contamina el ejercicio. La documentación vigente ofrece el campo
+`disable-model-invocation: true`, que impide la carga automática y conserva la invocación
+con la barra. Todas las skills de laboratorio lo declaran, y `scripts/validar-skills.sh`
+reprueba la que no lo haga.
+
+Fuentes, consultadas el 27 de septiembre de 2026.
+
+- https://code.visualstudio.com/docs/agent-customization/prompt-files
+- https://code.visualstudio.com/docs/agent-customization/agent-skills
+
+### Reglas derivadas
+
+**Antes de construir sobre un tipo de artefacto, se verifica que no esté en retiro.** No
+alcanza con que funcione hoy. En un producto que se actualiza solo, lo que importa es si
+va a seguir existiendo el día en que se usa.
+
+**Lo que se entrega al participante se lee como si el participante fuera un agente.** Una
+restricción escrita para guiar al agente también la lee la persona, y si nombra el
+problema que el ejercicio quiere que descubra, el ejercicio desaparece.
+
+### Dónde aplica esto en el taller
+
+En el capítulo 2, al presentar los tipos de artefactos. La elección entre prompt file y
+skill no es de gusto: uno está en retiro y el otro no. Y en el capítulo 1, cuando se
+discute que Copilot cambia más rápido que la documentación interna de cualquier equipo.

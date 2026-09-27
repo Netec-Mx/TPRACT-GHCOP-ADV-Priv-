@@ -34,6 +34,7 @@ docs/02-troubleshooting.md
 scripts/verificar-ambiente.sh
 scripts/comparar-escenarios.sh
 scripts/reiniciar-lab.sh
+scripts/validar-skills.sh
 
 # Versiones para participantes de los archivos de la raiz
 scripts/publicacion/AGENTS-taller.md => AGENTS.md

@@ -2,6 +2,11 @@
 
 Instrucción de ejecución para el Product Owner. Corresponde a SPEC-004-A sección 2.2.
 
+> **Reemplazado en SPEC-009.** Los dos prompt files de esta calibración se migraron a
+> skills y se eliminaron. Ver HALLAZGO-06 en [`03-hallazgos.md`](03-hallazgos.md). La prueba
+> vigente en la máquina virtual está en [`07-protocolo-prueba-vm.md`](07-protocolo-prueba-vm.md).
+> Este documento se conserva como registro.
+
 Son dos prompt files. El objetivo no es que queden bien: es descubrir si el **molde** sirve
 antes de replicarlo treinta y tres veces.
 
