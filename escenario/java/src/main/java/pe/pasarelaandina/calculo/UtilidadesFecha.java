@@ -29,7 +29,7 @@ public class UtilidadesFecha {
      *
      * Se usa el constructor que solo recibe la configuracion regional. La zona horaria
      * sigue siendo la del sistema, igual que antes y sin mencionarla aqui: ese es un
-     * defecto plantado (DEF-04) y no se corrige.
+     * comportamiento que este metodo conserva sin cambios.
      */
     private Calendar calendarioDeTrabajo() {
         return Calendar.getInstance(ConfiguracionRegional.REGION_DE_SALIDA);

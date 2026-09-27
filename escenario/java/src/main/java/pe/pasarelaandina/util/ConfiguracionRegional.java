@@ -32,7 +32,7 @@ import java.util.Locale;
  * alguien lo ejecute en una VM en español.
  *
  * IMPORTANTE: esto fija la configuracion regional y nada mas. La zona horaria sigue
- * siendo la del sistema, que es un defecto plantado a proposito (DEF-04) y no se toca.
+ * siendo la del sistema: esta clase no la fija y el resto del codigo la toma de alli.
  */
 public final class ConfiguracionRegional {
 

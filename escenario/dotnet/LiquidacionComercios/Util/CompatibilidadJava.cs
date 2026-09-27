@@ -19,7 +19,7 @@ namespace Pe.PasarelaAndina.Util
     ///    Java usa Math.round(x * 100.0) / 100.0, que suma 0.5 y trunca hacia abajo.
     ///    Math.Round de .NET usa por omision redondeo bancario, que en los puntos medios
     ///    redondea al par mas cercano. Para 957.185 Java entrega 957.19 y .NET 957.18.
-    ///    Esa diferencia hace desaparecer los centavos de DEF-01.
+    ///    Esa diferencia cambia el ultimo centavo de los montos que caen en un punto medio.
     ///
     /// 2. FORMATEO A DOS DECIMALES.
     ///    String.format("%.2f", v) de Java formatea sobre la representacion decimal corta
