@@ -37,10 +37,10 @@ sala, porque se usan en el 5.2 y el 5.3.
 
 | Paso | Estimado | Observado en la verificación |
 |---|---|---|
-| 1 | 8 min | Ver el registro de verificación de SPEC-009 |
-| 2 | 10 min | Ver el registro de verificación de SPEC-009 |
-| 3 | 12 min | Ver el registro de verificación de SPEC-009 |
-| 4 | 10 min | Ver el registro de verificación de SPEC-009 |
+| 1 | 8 min | 41 s de agente, con compilación, pruebas y comparador |
+| 2 | 10 min | 39 s de agente |
+| 3 | 12 min | 92 s de agente. Recalculó los 39 comercios y encontró los tres centavos |
+| 4 | 10 min | 26 s de agente |
 
 ## Si alguien se atrasa
 

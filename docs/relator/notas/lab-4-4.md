@@ -34,11 +34,11 @@ El paso 3 prepara una copia para Confluence y lista lo que se pierde.
 
 | Paso | Estimado | Observado en la verificación |
 |---|---|---|
-| 1 | 10 min | Ver el registro de verificación de SPEC-009 |
-| 2 | 10 min | Ver el registro de verificación de SPEC-009 |
-| 3 | 8 min | Ver el registro de verificación de SPEC-009 |
+| 1 | 10 min | 53 s de agente |
+| 2 | 10 min | 41 s de agente |
+| 3 | 8 min | 55 s de agente |
 
-Es el laboratorio con menos holgura del taller, dos minutos. Si la sesión 4 viene
+En la verificación el agente documentó los tramos como no acumulativos, desde el código, y señaló el comentario. Con Copilot puede salir distinto. Es el laboratorio con menos holgura del taller, dos minutos. Si la sesión 4 viene
 atrasada, el paso 3 se muestra en pantalla en lugar de hacerlo.
 
 ## Si alguien se atrasa
