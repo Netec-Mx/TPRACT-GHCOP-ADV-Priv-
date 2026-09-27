@@ -1,0 +1,39 @@
+# Lista de inclusion del repositorio de participantes.
+#
+# Solo llega al repositorio de participantes lo que esta escrito aqui. Un archivo nuevo del
+# repositorio de construccion queda fuera hasta que alguien lo agregue a esta lista, que es
+# el error seguro. Una lista de exclusion haria lo contrario.
+#
+# Formato, una entrada por linea:
+#   ruta                   archivo o directorio, se publica en la misma ruta
+#   origen => destino      archivo que se publica con otro nombre
+#
+# Un directorio incluye todos los archivos versionados que contiene. Una entrada que no
+# existe hace fallar la publicacion.
+
+.editorconfig
+.gitattributes
+.gitignore
+
+# Artefactos de personalizacion de Copilot
+.github/copilot-instructions.md
+.github/instructions/
+.github/agents/
+.github/skills/
+
+# Codigo base, enunciados y servidor MCP
+escenario/
+labs/
+mcp/
+
+# Documentacion para el participante
+docs/00-setup-ambiente.md
+docs/02-troubleshooting.md
+
+# Scripts
+scripts/verificar-ambiente.sh
+scripts/comparar-escenarios.sh
+
+# Versiones para participantes de los archivos de la raiz
+scripts/publicacion/AGENTS-taller.md => AGENTS.md
+scripts/publicacion/README-taller.md => README.md

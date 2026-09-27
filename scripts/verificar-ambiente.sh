@@ -46,7 +46,7 @@ readonly DOMINIOS_RECOMENDADOS="copilot-telemetry.githubusercontent.com marketpl
 # Copilot en Visual Studio Code. Desde la version 1.116 es una extension integrada al
 # editor, no un paquete instalable, y puede estar deshabilitada por dos vias que el editor
 # mantiene sincronizadas: el ajuste chat.disableAIFeatures y la lista de extensiones
-# deshabilitadas del perfil. El detalle esta en docs/03-hallazgos.md, HALLAZGO-05.
+# deshabilitadas del perfil. Los sintomas y la solucion estan en docs/02-troubleshooting.md.
 readonly EXTENSION_COPILOT_INTEGRADA="github.copilot-chat"
 readonly AJUSTE_FUNCIONES_IA="chat.disableAIFeatures"
 

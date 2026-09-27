@@ -96,7 +96,7 @@ archivos de configuración que los oculten: el laboratorio necesita que el probl
 siendo visible para quien abra el archivo.
 
 Si una herramienta te reporta algo sobre `escenario/`, antes de tocar nada consulta
-[`docs/04-defectos-plantados.md`](docs/04-defectos-plantados.md), que lista los diez
+[`docs/relator/04-defectos-plantados.md`](docs/relator/04-defectos-plantados.md), que lista los diez
 defectos intencionales con su archivo y su número de línea. Si el hallazgo corresponde a
 uno de ellos, se deja como está y se informa que es intencional.
 

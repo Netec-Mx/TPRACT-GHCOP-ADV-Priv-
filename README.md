@@ -89,11 +89,19 @@ que lo completa.
 | Ruta | Contenido |
 |---|---|
 | `.github/` | Artefactos de personalización de Copilot: instrucciones, prompt files, agentes y skills |
-| `docs/` | Guía de ambiente, guía del relator y troubleshooting |
+| `docs/` | Guía de ambiente y troubleshooting, que también reciben los participantes |
+| `docs/relator/` | Material del relator. Nunca llega al repositorio de participantes |
 | `escenario/` | Código base de los escenarios Java y .NET usados en los laboratorios |
 | `labs/` | Enunciados de los nueve laboratorios |
 | `mcp/` | Servidor MCP local de demostración |
-| `scripts/` | Scripts de verificación de ambiente |
+| `scripts/` | Scripts de verificación, reinicio y publicación. `scripts/publicacion/` tiene la lista de inclusión del repositorio de participantes |
+
+## Repositorio de participantes
+
+Este es el repositorio de construcción y del relator. Los participantes clonan otro,
+`github-copilot-netec-taller`, que se genera desde este con `scripts/publicar-taller.sh`.
+Solo llega allá lo que figura en `scripts/publicacion/incluir.txt`, y el script se niega a
+publicar si encuentra material del relator en el contenido generado.
 
 ## Antes de tocar el código del escenario
 

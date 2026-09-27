@@ -307,7 +307,7 @@ garantía, en un archivo nuevo distinto del paso 1. Ahí aparece DEF-03. No tien
 asignado y no forma parte de la puesta en común.
 
 **Cruce con el caso 01.** El paso 3 es el momento de proyectar
-`docs/casos-de-clase/caso-01-escaner-vs-defectos-plantados.md`.
+`docs/relator/casos-de-clase/caso-01-escaner-vs-defectos-plantados.md`.
 
 **Independencia.** El paso 2 funciona sin el paso 1: si no hay pruebas nuevas, documenta la
 estrategia a partir de las reglas de negocio y de las pruebas existentes. El paso 3

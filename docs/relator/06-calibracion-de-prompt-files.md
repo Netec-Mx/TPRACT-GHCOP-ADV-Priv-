@@ -9,7 +9,7 @@ antes de replicarlo treinta y tres veces.
 
 Copilot no se instala: viene integrado en Visual Studio Code. Lo que hay que confirmar es
 que las funciones de IA estén habilitadas, con el procedimiento de
-[`00-setup-ambiente.md`](00-setup-ambiente.md), sección «GitHub Copilot en Visual Studio
+[`00-setup-ambiente.md`](../00-setup-ambiente.md), sección «GitHub Copilot en Visual Studio
 Code».
 
 > **Corregido en SPEC-001-C.** Esta sección pedía instalar `GitHub.copilot` y

@@ -5,7 +5,7 @@ lo resuelva solo, sin detener a todo el grupo.
 
 > **Documento en construcción.** Las entradas 1 y 2 están redactadas porque los problemas
 > ya se conocen y afectan al participante antes de empezar a trabajar. El resto del índice
-> son secciones previstas y se redactan en **SPEC-007**.
+> son secciones previstas que se completan antes del taller.
 
 ## 1. El script de verificación falla en Windows con un error que menciona `\r`
 
@@ -141,7 +141,7 @@ es el problema: es una pista falsa. El detalle está en
 
 ## Índice de las secciones pendientes
 
-> Pendiente de redacción (**SPEC-007**).
+> Pendiente de redacción.
 
 3. **Copilot no responde o no sugiere, con las funciones de IA habilitadas.** Licencia sin
    asignar, sesión caída en el IDE, política de organización que bloquea el chat o el
@@ -165,5 +165,5 @@ es el problema: es una pista falsa. El detalle está en
 ## Pendiente
 
 - [ ] Redactar las entradas pendientes del índice, 3 a 10, con síntoma, causa y solución
-      verificada (SPEC-007)
+      verificada
 - [ ] Incorporar los problemas que aparezcan durante el ensayo previo a la primera sesión
