@@ -1,4 +1,4 @@
-# Laboratorio 5.3. Pruebas y revisión asistida
+# Laboratorio 5.3. Estrategia de pruebas, documentación y checklist de revisión
 
 > **Enunciado marcador.** El título y la duración de este laboratorio son definitivos. Las
 > secciones de Prerrequisitos, Pasos, Resultado esperado y Criterios de revisión están sin
@@ -6,8 +6,9 @@
 
 ## Objetivo del laboratorio
 
-Definir una estrategia de pruebas para el cambio realizado, ejecutar una revisión
-asistida del pull request y aplicar el checklist de revisión humana.
+Cubrir con pruebas una parte de la lógica que hoy no tiene ninguna, documentar en Markdown
+la estrategia de pruebas y lo que las pruebas revelaron, y revisar el resultado con un
+checklist de revisión humana.
 
 ## Duración
 

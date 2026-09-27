@@ -118,8 +118,10 @@ crees directorios nuevos en el primer nivel sin que la tarea lo pida.
 
 ## Restricciones del ambiente de clase
 
-Los laboratorios se ejecutan en máquinas virtuales accedidas por escritorio remoto, con
-latencia alta. Eso condiciona lo que se puede proponer durante la clase:
+Los laboratorios se ejecutan en máquinas virtuales accedidas por escritorio remoto. La
+latencia medida es aceptable: las sugerencias cortas responden rápido y solo las
+generaciones largas tardan algunos segundos. Lo que condiciona la clase es el escritorio
+remoto y la necesidad de que todos los participantes obtengan resultados comparables:
 
 - Los participantes no tipean textos largos. Los prompts de laboratorio viven en archivos
   del repositorio y se invocan desde el editor.

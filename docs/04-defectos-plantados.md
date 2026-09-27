@@ -107,7 +107,7 @@ romper la equivalencia entre ambas implementaciones.
 |---|---|---|---|
 | DEF-01 | Dinero en punto flotante | Transversal, todo el modelo y el cálculo | 1.5, 5.2, 5.3 |
 | DEF-02 | Método monstruo de 282 líneas | `CalculadoraLiquidacion.java:81` | 1.5, 5.1, 5.2 |
-| DEF-03 | Números mágicos e inconsistentes | `CalculadoraLiquidacion.java`, `CalculadoraComision.java` | 2.5, 5.2 |
+| DEF-03 | Números mágicos e inconsistentes | `CalculadoraLiquidacion.java`, `CalculadoraComision.java` | 2.4, 5.2 |
 | DEF-04 | Fechas sin zona horaria | `UtilidadesFecha.java`, modelo completo | 1.5, 5.3 |
 | DEF-05 | Pruebas que no cubren lo que importa | `src/test/`, 20 pruebas triviales | 5.3 |
 | DEF-06 | Responsabilidades mezcladas | `CalculadoraLiquidacion.java` | 5.1, 5.2 |

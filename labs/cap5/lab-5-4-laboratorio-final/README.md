@@ -7,7 +7,9 @@
 ## Objetivo del laboratorio
 
 Consolidar todo lo construido durante el taller en un conjunto de activos reutilizables
-que el equipo pueda aplicar en sus repositorios reales desde el día siguiente.
+que el equipo pueda aplicar en sus repositorios reales desde el día siguiente. Uno de esos
+activos es un documento corto con la línea base de medición de adopción y la propuesta de
+presupuesto de créditos para el equipo.
 
 ## Duración
 

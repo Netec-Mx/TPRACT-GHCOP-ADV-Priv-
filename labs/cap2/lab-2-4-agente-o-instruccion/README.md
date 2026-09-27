@@ -1,4 +1,4 @@
-# Laboratorio 2.5. Construcción de los activos del equipo
+# Laboratorio 2.4. Creación de un agente local o una instrucción reutilizable
 
 > **Enunciado marcador.** El título y la duración de este laboratorio son definitivos. Las
 > secciones de Prerrequisitos, Pasos, Resultado esperado y Criterios de revisión están sin
@@ -6,13 +6,13 @@
 
 ## Objetivo del laboratorio
 
-Construir el conjunto de artefactos de personalización que el equipo se lleva a su
-trabajo: instrucciones de repositorio, instrucciones por ruta, prompt files, un agente
-personalizado y una skill reutilizable.
+Crear un agente local o una instrucción reutilizable para una tarea concreta del equipo,
+probar que Copilot lo aplica y dejarlo listo para que otro integrante lo use. El
+participante elige construir uno de los dos, no ambos.
 
 ## Duración
 
-60 minutos.
+45 minutos.
 
 ## Prerrequisitos
 

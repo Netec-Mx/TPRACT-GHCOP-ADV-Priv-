@@ -6,9 +6,9 @@
 
 ## Objetivo del laboratorio
 
-Mejorar un prompt de forma incremental y comparar los resultados que entregan los
-distintos modos de Copilot Chat sobre la misma tarea, para reconocer qué aporta cada
-elemento del prompt y cuándo conviene cada modo.
+Mejorar un prompt de forma incremental y usar los comandos del chat que existen en la
+versión vigente de Visual Studio Code, para reconocer qué aporta cada elemento del prompt y
+cuándo conviene un comando en lugar de un prompt escrito.
 
 ## Duración
 

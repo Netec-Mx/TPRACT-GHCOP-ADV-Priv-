@@ -3,19 +3,23 @@
 Los nueve laboratorios prácticos, en el orden en que se dictan. Cada uno tiene su
 enunciado completo en el README de su directorio.
 
-| Capítulo | Laboratorio | Nombre | Duración | Estado |
-|---|---|---|---|---|
-| 1 | lab-1-4 | Práctica guiada de mejora incremental de prompts | 30 min | Pendiente |
-| 1 | lab-1-5 | Análisis y mejora de un componente | 60 min | Pendiente |
-| 2 | lab-2-5 | Construcción de los activos del equipo | 60 min | Pendiente |
-| 3 | lab-3-4 | Servidor MCP local sin salida a internet | 30 min | Pendiente |
-| 4 | lab-4-4 | Generación de documentación Markdown | 30 min | Pendiente |
-| 5 | lab-5-1 | Preparación del escenario integrador | 45 min | Pendiente |
-| 5 | lab-5-2 | Refactorización y validación incremental | 45 min | Pendiente |
-| 5 | lab-5-3 | Pruebas y revisión asistida | 45 min | Pendiente |
-| 5 | lab-5-4 | Laboratorio final de activos reutilizables | 45 min | Pendiente |
+Cada laboratorio corresponde a un bloque práctico del temario contratado, con su mismo
+número y su misma duración.
 
-Tiempo total de laboratorio: 390 minutos de los 810 del taller.
+| Bloque | Laboratorio | Enunciado contratado | Duración | Estado |
+|---|---|---|---|---|
+| 1.4 | [`lab-1-4`](cap1/lab-1-4-practica-guiada/README.md) | Práctica guiada, mejora incremental de prompts y uso de comandos del chat | 30 min | Pendiente |
+| 1.5 | [`lab-1-5`](cap1/lab-1-5-analisis-componente/README.md) | Laboratorio, análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | 60 min | Pendiente |
+| 2.4 | [`lab-2-4`](cap2/lab-2-4-agente-o-instruccion/README.md) | Laboratorio, creación de un agente local o instrucción reutilizable para una tarea del equipo | 45 min | Pendiente |
+| 3.4 | [`lab-3-4`](cap3/lab-3-4-mcp-local/README.md) | Laboratorio, diseño de un caso de uso de MCP local seguro con documentación técnica local | 45 min | Pendiente |
+| 4.4 | [`lab-4-4`](cap4/lab-4-4-documentacion/README.md) | Laboratorio, generación breve de documentación Markdown para un proyecto Java o .NET | 30 min | Pendiente |
+| 5.1 | [`lab-5-1`](cap5/lab-5-1-preparacion/README.md) | Preparación del escenario integrador y criterios de evaluación | 45 min | Pendiente |
+| 5.2 | [`lab-5-2`](cap5/lab-5-2-refactorizacion/README.md) | Planeación de mejora, refactorización y validación incremental | 45 min | Pendiente |
+| 5.3 | [`lab-5-3`](cap5/lab-5-3-pruebas-y-revision/README.md) | Estrategia de pruebas, documentación Markdown y checklist de revisión | 45 min | Pendiente |
+| 5.4 | [`lab-5-4`](cap5/lab-5-4-laboratorio-final/README.md) | Laboratorio final, construcción de activos reutilizables para el equipo | 45 min | Pendiente |
+
+Tiempo total de laboratorio: 30 + 60 + 45 + 45 + 30 + 45 + 45 + 45 + 45 = 390 minutos de
+los 810 del taller.
 
 El estado pasa de Pendiente a Listo cuando el enunciado está redactado y el laboratorio se
 probó de extremo a extremo sobre una máquina virtual equivalente a la de clase.
@@ -33,7 +37,9 @@ Todos los enunciados siguen la misma estructura de seis secciones, en este orden
 
 ## Restricciones del ambiente
 
-Los laboratorios se ejecutan por escritorio remoto sobre máquinas virtuales con latencia
-alta. Por eso ningún enunciado pide tipear prompts largos a mano, copiar y pegar entre
-ventanas, ni descargar nada durante la clase. Los prompts viven en archivos del
-repositorio y se invocan desde el editor.
+Los laboratorios se ejecutan por escritorio remoto sobre máquinas virtuales. La latencia
+medida es aceptable: las sugerencias cortas responden rápido y solo las generaciones largas
+tardan algunos segundos. Aun así, ningún enunciado pide tipear prompts largos a mano,
+copiar y pegar entre ventanas, ni descargar nada durante la clase. Los prompts viven en
+archivos del repositorio y se invocan desde el editor, lo que además hace que doce
+participantes obtengan resultados comparables.

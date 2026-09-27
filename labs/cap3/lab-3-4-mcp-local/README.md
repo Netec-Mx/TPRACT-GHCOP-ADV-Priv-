@@ -1,4 +1,4 @@
-# Laboratorio 3.4. Servidor MCP local sin salida a internet
+# Laboratorio 3.4. Caso de uso de MCP local seguro con documentación técnica
 
 > **Enunciado marcador.** El título y la duración de este laboratorio son definitivos. Las
 > secciones de Prerrequisitos, Pasos, Resultado esperado y Criterios de revisión están sin
@@ -6,12 +6,13 @@
 
 ## Objetivo del laboratorio
 
-Configurar y usar un servidor MCP local que corre como proceso sin salida a internet,
-registrar sus herramientas en el cliente y documentar el caso de uso con sus riesgos.
+Configurar y usar un servidor MCP local que corre como proceso sin salida a internet, y
+documentar el caso de uso: qué datos expone el servidor, qué herramientas registra, qué
+riesgos tiene y por qué el caso es defendible ante un área de seguridad.
 
 ## Duración
 
-30 minutos.
+45 minutos.
 
 ## Prerrequisitos
 

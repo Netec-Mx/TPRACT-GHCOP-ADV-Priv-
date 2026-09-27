@@ -25,8 +25,8 @@ bastante más de 8 GB. Con menos memoria los laboratorios del capítulo 5 se vue
 inviables.
 
 El disco de estado sólido tampoco es opcional: la indexación del workspace que hace
-Copilot sobre disco mecánico agrega minutos a cada operación, y la latencia del escritorio
-remoto ya consume parte del presupuesto de tiempo de cada laboratorio.
+Copilot sobre disco mecánico agrega minutos a cada operación, un costo que el presupuesto de tiempo de los
+laboratorios no absorbe.
 
 ## 2. Herramientas requeridas
 
@@ -186,7 +186,7 @@ Puntos que conviene confirmar con el administrador de la organización:
 - Las políticas de la organización habilitan Copilot Chat y el modo agente. Si están
   deshabilitados a nivel de organización, los capítulos 1, 2 y 5 no se pueden dictar.
 - La política de exclusión de contenido no bloquea los directorios del taller. Es un tema
-  que se trata en el capítulo 6, pero si está mal configurada afecta desde el capítulo 1.
+  que se trata en el subtema 3.3, pero si está mal configurada afecta desde el capítulo 1.
 - La sesión de GitHub en el IDE está iniciada y persiste entre reinicios de la máquina
   virtual.
 
