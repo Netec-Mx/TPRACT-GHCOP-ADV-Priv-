@@ -73,8 +73,8 @@ llega, para que quien lo retome más adelante no tenga que reconstruir el contex
 | SPEC-004 | Prompt files, solo la calibración | Absorbido por SPEC-009 |
 | SPEC-005 y SPEC-006 | Activos de referencia y servidor MCP | Absorbidos por SPEC-009 |
 | SPEC-007 | Guía general del relator | Pendiente, después de SPEC-009 |
-| SPEC-008 | Realineación al temario contratado | Ejecutado |
-| SPEC-009 | Construcción completa de los nueve laboratorios | Pendiente |
+| SPEC-008 | Realineación al temario contratado | Cerrado |
+| SPEC-009 | Construcción completa de los nueve laboratorios | Ejecutado, pendiente de prueba en la máquina virtual |
 | SPEC-010 a SPEC-018 | README de cada laboratorio | Absorbidos por SPEC-009 |
 
 SPEC-010 a SPEC-018 conservan su correspondencia con los laboratorios, en el orden de la
@@ -99,9 +99,13 @@ que lo completa.
 ## Repositorio de participantes
 
 Este es el repositorio de construcción y del relator. Los participantes clonan otro,
-`github-copilot-netec-taller`, que se genera desde este con `scripts/publicar-taller.sh`.
+[`github-copilot-netec-taller`](https://github.com/RodrigoMSB/github-copilot-netec-taller),
+privado, que se genera desde este con `scripts/publicar-taller.sh`.
 Solo llega allá lo que figura en `scripts/publicacion/incluir.txt`, y el script se niega a
 publicar si encuentra material del relator en el contenido generado.
+
+La prueba del material en la máquina virtual de Netec se hace siguiendo
+[`docs/relator/07-protocolo-prueba-vm.md`](docs/relator/07-protocolo-prueba-vm.md).
 
 ## Antes de tocar el código del escenario
 
