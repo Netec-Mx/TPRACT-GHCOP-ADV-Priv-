@@ -70,6 +70,24 @@ meses del fin de soporte.
 Solo se necesita el stack del lenguaje que usará cada participante, pero si la imagen es
 única para todo el grupo debe traer ambos.
 
+### 2.3 Preparación al construir la imagen
+
+El servidor MCP del laboratorio 3.4 depende de dos paquetes de npm, fijados con versión
+exacta en `mcp/servidor-local/package.json` y `package-lock.json`. En clase no se descarga
+nada, así que se instalan una sola vez al construir la imagen, con el repositorio ya
+clonado y con acceso a internet, desde la raíz del repositorio:
+
+```bash
+npm ci --prefix mcp/servidor-local
+```
+
+`npm ci` instala exactamente lo que dice el archivo de bloqueo y falla si no coincide con
+`package.json`. Las dependencias quedan en `mcp/servidor-local/node_modules/`, que no se
+versiona.
+
+El script de verificación comprueba que estén instaladas con la versión exigida y que el
+servidor arranque. Si falta alguna, reporta la falla con este mismo comando.
+
 ### GitHub Copilot en Visual Studio Code
 
 Copilot no se instala. Desde la versión 1.116, publicada en abril de 2026, GitHub Copilot

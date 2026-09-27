@@ -20,7 +20,7 @@ set -u
 # Version del script y requisitos minimos
 # ---------------------------------------------------------------------------
 
-readonly VERSION_SCRIPT="2.1.0"
+readonly VERSION_SCRIPT="2.2.0"
 
 # Piso exigido por herramienta. Es el minimo con el que el taller es viable, no lo que se
 # solicita para la imagen de la maquina virtual. La distincion entre ambos esta explicada
@@ -682,6 +682,92 @@ verificar_dominios() {
 }
 
 # ---------------------------------------------------------------------------
+# Servidor MCP local
+# ---------------------------------------------------------------------------
+
+# Dependencias del servidor MCP del laboratorio 3.4. Se instalan al construir la imagen
+# de la maquina virtual, nunca en clase. Se comprueba que esten instaladas con la version
+# exacta que fija package.json, y que el servidor arranque y liste sus tres herramientas
+# con el mismo modelo de permisos con que lo lanza Visual Studio Code.
+readonly DIR_SERVIDOR_MCP="mcp/servidor-local"
+readonly HERRAMIENTAS_MCP="buscar_comercios detalle_comercio buscar_notas_soporte"
+readonly PREPARACION_MCP="npm ci --prefix mcp/servidor-local"
+
+verificar_servidor_mcp() {
+    dir="$dir_repositorio/$DIR_SERVIDOR_MCP"
+
+    if [ ! -f "$dir/package.json" ] || [ ! -f "$dir/package-lock.json" ]; then
+        falla "No se encontro $DIR_SERVIDOR_MCP/package.json o su package-lock.json. El repositorio esta incompleto"
+        return 1
+    fi
+
+    if ! command -v node >/dev/null 2>&1; then
+        falla "Sin Node.js no se pueden comprobar las dependencias del servidor MCP"
+        return 1
+    fi
+
+    # Cada linea es "paquete version-exigida version-instalada". La version instalada es
+    # "ausente" si el paquete no esta en node_modules.
+    comparacion=$(cd "$dir" && node --no-warnings -e '
+        const fs = require("fs");
+        const deps = JSON.parse(fs.readFileSync("package.json", "utf8")).dependencies || {};
+        for (const [nombre, exigida] of Object.entries(deps)) {
+            let instalada = "ausente";
+            try {
+                instalada = JSON.parse(fs.readFileSync("node_modules/" + nombre + "/package.json", "utf8")).version;
+            } catch (e) {}
+            console.log(nombre + " " + exigida + " " + instalada);
+        }' 2>&1 | tr -d '\r')
+
+    if [ -z "$comparacion" ]; then
+        falla "No se pudieron leer las dependencias del servidor MCP"
+        return 1
+    fi
+
+    faltantes=0
+    while IFS=' ' read -r paquete exigida instalada; do
+        [ -z "$paquete" ] && continue
+        if [ "$instalada" = "ausente" ]; then
+            falla "Dependencia del servidor MCP no instalada: $paquete $exigida. Se instala al preparar la imagen con: $PREPARACION_MCP"
+            faltantes=$((faltantes + 1))
+        elif [ "$instalada" != "$exigida" ]; then
+            falla "Dependencia del servidor MCP con otra version: $paquete $instalada, se exige $exigida. Reinstalar con: $PREPARACION_MCP"
+            faltantes=$((faltantes + 1))
+        else
+            ok "Dependencia del servidor MCP $paquete $instalada"
+        fi
+    done <<EOF_DEPS
+$comparacion
+EOF_DEPS
+
+    [ "$faltantes" -gt 0 ] && return 1
+
+    # Prueba de arranque. Se envia la secuencia minima del protocolo y se espera la lista
+    # de herramientas. El proceso termina solo al cerrarse su entrada.
+    solicitudes='{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"verificar-ambiente","version":"1"}}}
+{"jsonrpc":"2.0","method":"notifications/initialized"}
+{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
+    respuesta=$(cd "$dir_repositorio" && printf '%s\n' "$solicitudes" \
+        | node --permission --allow-fs-read=. "$DIR_SERVIDOR_MCP/servidor.js" 2>&1 | tr -d '\r')
+
+    ausentes=""
+    for herramienta in $HERRAMIENTAS_MCP; do
+        case "$respuesta" in
+            *"\"name\":\"$herramienta\""*) ;;
+            *) ausentes="$ausentes $herramienta" ;;
+        esac
+    done
+
+    if [ -n "$ausentes" ]; then
+        falla "El servidor MCP no arranco o no listo sus herramientas (faltan:$ausentes). Salida: $(printf '%s' "$respuesta" | head -c 300)"
+        return 1
+    fi
+
+    ok "El servidor MCP arranca y lista sus tres herramientas"
+    return 0
+}
+
+# ---------------------------------------------------------------------------
 # Argumentos
 # ---------------------------------------------------------------------------
 
@@ -743,6 +829,9 @@ verificar_herramienta "Visual Studio Code" "$vscode_ruta" "$MIN_CODE" "si" "$vsc
 
 titulo "GitHub Copilot en Visual Studio Code"
 verificar_funciones_ia
+
+titulo "Servidor MCP local"
+verificar_servidor_mcp || true
 
 titulo "Herramientas recomendadas"
 verificar_herramienta "Apache Maven" "mvn" "$MIN_MAVEN" "no" mvn --version

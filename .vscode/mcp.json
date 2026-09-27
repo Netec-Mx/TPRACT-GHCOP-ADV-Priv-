@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "pasarela-andina": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "--permission",
+        "--allow-fs-read=.",
+        "mcp/servidor-local/servidor.js"
+      ],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}
