@@ -223,15 +223,17 @@ publicar() {
         git add -A &&
         git -c user.name="$autor" -c user.email="$correo" \
             commit -q -m "Taller GitHub Copilot, material de participantes ($fecha)" &&
+        git -c user.name="$autor" -c user.email="$correo" \
+            tag -a punto-de-partida -m "Estado inicial de los laboratorios, usado por scripts/reiniciar-lab.sh" &&
         if [ -n "$remoto" ]; then
             aviso "Reemplazando el contenido del remoto, autorizado con --reemplazar"
-            git push -q --force "$url" main
+            git push -q --force "$url" main refs/tags/punto-de-partida
         else
-            git push -q "$url" main
+            git push -q "$url" main refs/tags/punto-de-partida
         fi
     ) || { falla "La publicacion no se completo"; return 2; }
 
-    ok "Publicado como un commit unico en la rama main"
+    ok "Publicado como un commit unico en la rama main, con la etiqueta punto-de-partida"
     return 0
 }
 
