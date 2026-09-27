@@ -1,23 +1,45 @@
 ---
-description: "Reglas de Copilot para el escenario .NET del taller"
-applyTo: "escenario/dotnet/**/*.cs"
+name: 'Escenario .NET'
+description: 'Convenciones para trabajar sobre el escenario .NET: versión, pruebas, compilación y alcance de los cambios'
+applyTo: 'escenario/dotnet/**/*.cs,escenario/dotnet/**/*.csproj'
 ---
 
-# Instrucciones para código .NET
+# Escenario .NET
 
-> **Archivo marcador.** El bloque de metadatos de arriba ya declara el alcance real por
-> patrón de ruta, pero el cuerpo no contiene reglas activas. Su contenido se define en
-> **SPEC-005**.
+## Versión y compilación
 
-## Qué irá en este archivo
+- Los proyectos apuntan a `net8.0`, con `Nullable` e `ImplicitUsings` deshabilitados. No
+  los habilites y no uses características que exijan otra versión de destino.
+- No agregues paquetes NuGet. El proyecto de pruebas ya tiene xUnit.
+- Compila y prueba desde `escenario/dotnet/`:
 
-Las convenciones que Copilot debe respetar al trabajar sobre `escenario/dotnet/`: versión
-del lenguaje y del SDK, tipos de referencia que admiten null, estilo de nombres, manejo de
-excepciones, framework y estilo de pruebas, uso de inyección de dependencias y criterios
-de refactorización aceptables durante los laboratorios.
+  ```bash
+  dotnet build LiquidacionComercios -c Release
+  dotnet test LiquidacionComercios.Pruebas
+  ```
 
-## Pendiente
+## Estilo del código existente
 
-- [ ] Redactar las reglas de .NET (SPEC-005)
-- [ ] Confirmar que el patrón de `applyTo` coincide con la estructura real del escenario,
-      una vez que SPEC-003 lo construya
+- Espacio de nombres raíz `Pe.PasarelaAndina`, con `Modelo`, `Repositorio`, `Calculo`,
+  `Reporte` y `Util`. El espacio de nombres corresponde al directorio.
+- Nombres en español, en PascalCase para tipos y miembros públicos.
+- `Util/CompatibilidadJava.cs` reproduce el redondeo y el formateo de Java para que los
+  dos escenarios produzcan la misma salida. Todo redondeo y todo formateo de montos pasa
+  por esa clase. No la reemplaces por `Math.Round` ni por `ToString("F2")`, porque la
+  salida dejaría de coincidir con la de Java.
+
+## Pruebas
+
+- xUnit, con `[Fact]`. Las clases de prueba terminan en `Pruebas` y viven en
+  `LiquidacionComercios.Pruebas`, en el directorio que corresponde a la clase probada.
+- Los nombres de los métodos de prueba describen en español lo que se espera, en
+  PascalCase, por ejemplo `RechazaRegistrosTributariosMalFormados`.
+- Una prueba nueva va en un archivo nuevo salvo que la tarea diga otra cosa.
+
+## Alcance
+
+- Las mismas reglas de `.github/copilot-instructions.md` aplican aquí. En particular, no
+  cambies tipos, no extraigas literales, no unifiques código entre clases ni renombres
+  nada que la tarea no nombre.
+- El escenario Java tiene un archivo equivalente para cada archivo .NET. Si la tarea es
+  sobre un solo escenario, no toques el otro.
