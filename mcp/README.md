@@ -38,7 +38,7 @@ solo puede leer archivos del repositorio. No puede escribir en disco, lanzar otr
 procesos ni cargar complementos nativos. El servidor no usa red y no abre conexiones.
 
 Lanzado a mano, el proceso queda esperando mensajes del protocolo en su entrada
-estándar. Es lo esperado: quien lo usa es el cliente, en este caso Visual Studio Code.
+estándar. Es lo esperado. Quien lo usa es el cliente, en este caso Visual Studio Code.
 
 ## Dependencias
 

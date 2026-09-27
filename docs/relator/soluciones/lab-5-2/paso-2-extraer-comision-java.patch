@@ -1,0 +1,138 @@
+diff --git a/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java b/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
+index 45e65aa..470972f 100644
+--- a/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
++++ b/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
+@@ -137,63 +137,14 @@ public class CalculadoraLiquidacion {
+ 
+                             if (transaccion.getEstado() == EstadoTransaccion.APROBADA) {
+ 
+-                                double montoTransaccion = transaccion.getMonto();
+-                                double porcentajeAplicado = 0.0;
+-                                boolean tramoEncontrado = false;
+-
+-                                for (TramoComision tramo : plan.getTramos()) {
+-
+-                                    if (!tramoEncontrado) {
+-
+-                                        if (montoTransaccion >= tramo.getMontoDesde()
+-                                                && montoTransaccion < tramo.getMontoHasta()) {
+-
+-                                            porcentajeAplicado = tramo.getPorcentaje();
+-                                            tramoEncontrado = true;
+-                                        }
+-                                    }
+-                                }
+-
+-                                if (!tramoEncontrado) {
+-                                    if (!plan.getTramos().isEmpty()) {
+-                                        porcentajeAplicado = plan.getTramos()
+-                                                .get(plan.getTramos().size() - 1).getPorcentaje();
+-                                    }
+-                                }
+-
+-                                double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
+-                                comisionBase = comisionBase + plan.getMontoFijoPorTransaccion();
+-
+-                                double recargo = 0.0;
+-
+-                                if (transaccion.getCuotas() > 1) {
+-
+-                                    double porcentajeRecargo = (transaccion.getCuotas() - 1) * 0.5;
+-
+-                                    if (porcentajeRecargo > 3.0) {
+-                                        porcentajeRecargo = 3.0;
+-                                    }
+-
+-                                    recargo = comisionBase * porcentajeRecargo / 100.0;
+-                                }
+-
+-                                double comisionTotal = comisionBase + recargo;
+-
+-                                DetalleLiquidacion linea = new DetalleLiquidacion();
+-                                linea.setIdTransaccion(transaccion.getId());
+-                                linea.setMontoTransaccion(montoTransaccion);
+-                                linea.setComisionBase(comisionBase);
+-                                linea.setRecargoCuotas(recargo);
+-                                linea.setComisionTotal(comisionTotal);
+-                                linea.setCuotas(transaccion.getCuotas());
+-                                linea.setMedioPago(transaccion.getMedioPago().name());
++                                DetalleLiquidacion linea = calcularDetalleLiquidacion(plan, transaccion);
+                                 liquidacion.agregarDetalle(linea);
+ 
+-                                totalTransado = totalTransado + montoTransaccion;
+-                                totalComisiones = totalComisiones + comisionTotal;
++                                totalTransado = totalTransado + linea.getMontoTransaccion();
++                                totalComisiones = totalComisiones + linea.getComisionTotal();
+                                 cantidadTransacciones++;
+ 
+-                                acumuladoGeneralComisiones = acumuladoGeneralComisiones + comisionTotal;
++                                acumuladoGeneralComisiones = acumuladoGeneralComisiones + linea.getComisionTotal();
+                             }
+                         }
+                     }
+@@ -363,6 +314,65 @@ public class CalculadoraLiquidacion {
+         return resultado;
+     }
+ 
++    /**
++     * Calcula la comision de la transaccion segun el plan y arma el detalle de
++     * liquidacion correspondiente.
++     */
++    private DetalleLiquidacion calcularDetalleLiquidacion(PlanComisiones plan, Transaccion transaccion) {
++
++        double montoTransaccion = transaccion.getMonto();
++        double porcentajeAplicado = 0.0;
++        boolean tramoEncontrado = false;
++
++        for (TramoComision tramo : plan.getTramos()) {
++
++            if (!tramoEncontrado) {
++
++                if (montoTransaccion >= tramo.getMontoDesde()
++                        && montoTransaccion < tramo.getMontoHasta()) {
++
++                    porcentajeAplicado = tramo.getPorcentaje();
++                    tramoEncontrado = true;
++                }
++            }
++        }
++
++        if (!tramoEncontrado) {
++            if (!plan.getTramos().isEmpty()) {
++                porcentajeAplicado = plan.getTramos()
++                        .get(plan.getTramos().size() - 1).getPorcentaje();
++            }
++        }
++
++        double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
++        comisionBase = comisionBase + plan.getMontoFijoPorTransaccion();
++
++        double recargo = 0.0;
++
++        if (transaccion.getCuotas() > 1) {
++
++            double porcentajeRecargo = (transaccion.getCuotas() - 1) * 0.5;
++
++            if (porcentajeRecargo > 3.0) {
++                porcentajeRecargo = 3.0;
++            }
++
++            recargo = comisionBase * porcentajeRecargo / 100.0;
++        }
++
++        double comisionTotal = comisionBase + recargo;
++
++        DetalleLiquidacion linea = new DetalleLiquidacion();
++        linea.setIdTransaccion(transaccion.getId());
++        linea.setMontoTransaccion(montoTransaccion);
++        linea.setComisionBase(comisionBase);
++        linea.setRecargoCuotas(recargo);
++        linea.setComisionTotal(comisionTotal);
++        linea.setCuotas(transaccion.getCuotas());
++        linea.setMedioPago(transaccion.getMedioPago().name());
++        return linea;
++    }
++
+     private String formatearMonto(double monto) {
+         return String.format(ConfiguracionRegional.REGION_DE_SALIDA, "%.2f", monto);
+     }

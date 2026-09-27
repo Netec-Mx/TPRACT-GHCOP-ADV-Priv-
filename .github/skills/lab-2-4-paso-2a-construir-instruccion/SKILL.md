@@ -23,7 +23,8 @@ dile que el paso que corresponde es `/lab-2-4-paso-2b-construir-agente`.
    `.instructions.md`. Completa cada hueco marcado con `COMPLETAR` y borra los
    comentarios de la plantilla.
 4. Lista los archivos del repositorio que hoy coinciden con el patrón de `applyTo`. Si
-   no coincide ninguno, dilo, porque la instrucción nunca se aplicaría.
+   no coincide ninguno, dilo y aclara que la instrucción igual se aplica cuando el agente
+   crea un archivo nuevo que coincide con el patrón. El paso 3 lo prueba así.
 
 # Restricciones
 

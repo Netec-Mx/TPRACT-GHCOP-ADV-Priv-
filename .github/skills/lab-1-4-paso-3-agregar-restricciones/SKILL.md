@@ -35,8 +35,8 @@ Las reglas de negocio que el método debe seguir cumpliendo están en [escenario
 
 # Salida esperada
 
-Una tabla de tres filas, ordenada por impacto, con estas columnas y nada más antes ni
-después de ella:
+Una tabla de tres filas, ordenada por impacto, con estas columnas y nada antes de ella.
+Después de la tabla, como máximo una línea con otros problemas vistos y no tocados.
 
 | Mejora | Líneas | Por qué mejora la legibilidad | Riesgo de cambiar la salida |
 |---|---|---|---|

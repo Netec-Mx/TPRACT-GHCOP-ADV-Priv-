@@ -15,7 +15,7 @@ comercios afiliados. Las reglas de negocio están en `escenario/README.md`.
 
 Los enunciados de los laboratorios están en `labs/`.
 
-## Regla crítica: el código del escenario no se corrige por iniciativa propia
+## El código del escenario no se corrige por iniciativa propia
 
 El código bajo `escenario/` tiene características elegidas a propósito para que haya
 trabajo que hacer en los laboratorios. Algunas pueden parecer errores o malas prácticas.

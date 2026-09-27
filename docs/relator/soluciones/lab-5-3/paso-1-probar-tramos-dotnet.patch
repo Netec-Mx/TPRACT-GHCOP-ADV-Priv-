@@ -1,0 +1,124 @@
+diff --git a/escenario/dotnet/LiquidacionComercios.Pruebas/Calculo/CalculadoraComisionPruebas.cs b/escenario/dotnet/LiquidacionComercios.Pruebas/Calculo/CalculadoraComisionPruebas.cs
+new file mode 100644
+index 0000000..a2216e6
+--- /dev/null
++++ b/escenario/dotnet/LiquidacionComercios.Pruebas/Calculo/CalculadoraComisionPruebas.cs
+@@ -0,0 +1,118 @@
++using Pe.PasarelaAndina.Calculo;
++using Pe.PasarelaAndina.Modelo;
++using Xunit;
++
++namespace Pe.PasarelaAndina.Pruebas.Calculo
++{
++    /// <summary>
++    /// Pruebas de la seleccion de tramo de comision.
++    ///
++    /// Los tramos usados aqui son los del plan PL01 (ver escenario/datos/planes.txt):
++    /// de 0 a 500 al 3,5 %, de 500 a 2000 al 2,9 %, de 2000 a 10000 al 2,5 % y de
++    /// 10000 en adelante al 2,1 %.
++    ///
++    /// Nota sobre los bordes: DeterminarTramo compara con
++    /// "monto >= MontoDesde &amp;&amp; monto &lt;= MontoHasta", asi que un monto
++    /// que cae justo en el limite superior de un tramo (500.00, 2000.00 o
++    /// 10000.00) se queda en ese tramo, el de abajo, y no pasa al siguiente. El
++    /// cierre de la liquidacion (CalculadoraLiquidacion) usa en cambio
++    /// "monto >= MontoDesde &amp;&amp; monto &lt; MontoHasta", que para esos
++    /// mismos montos elige el tramo siguiente. Las reglas de negocio
++    /// (escenario/README.md, regla 1) dicen que se aplica "el porcentaje del
++    /// tramo que corresponde a su monto" pero no precisan si el limite superior
++    /// de un tramo es inclusivo o exclusivo, asi que no alcanzan para decidir
++    /// cual de las dos implementaciones es la correcta. Estas pruebas
++    /// documentan el comportamiento actual de DeterminarTramo, sin corregir la
++    /// discrepancia.
++    /// </summary>
++    public class CalculadoraComisionPruebas
++    {
++        private readonly CalculadoraComision calculadora = new CalculadoraComision();
++
++        private static PlanComisiones PlanPL01()
++        {
++            PlanComisiones plan = new PlanComisiones("PL01", "Basico", 0.30, 8000.00);
++            plan.AgregarTramo(new TramoComision(0, 500, 3.5));
++            plan.AgregarTramo(new TramoComision(500, 2000, 2.9));
++            plan.AgregarTramo(new TramoComision(2000, 10000, 2.5));
++            plan.AgregarTramo(new TramoComision(10000, 999999, 2.1));
++            return plan;
++        }
++
++        [Fact]
++        public void EligeElPrimerTramoParaUnMontoInteriorAEse()
++        {
++            TramoComision tramo = calculadora.DeterminarTramo(PlanPL01(), 250.00);
++            Assert.Equal(3.5, tramo.Porcentaje);
++        }
++
++        [Fact]
++        public void EligeElSegundoTramoParaUnMontoInteriorAEse()
++        {
++            TramoComision tramo = calculadora.DeterminarTramo(PlanPL01(), 1000.00);
++            Assert.Equal(2.9, tramo.Porcentaje);
++        }
++
++        [Fact]
++        public void EligeElTercerTramoParaUnMontoInteriorAEse()
++        {
++            TramoComision tramo = calculadora.DeterminarTramo(PlanPL01(), 5000.00);
++            Assert.Equal(2.5, tramo.Porcentaje);
++        }
++
++        [Fact]
++        public void EligeElCuartoTramoParaUnMontoInteriorAEse()
++        {
++            TramoComision tramo = calculadora.DeterminarTramo(PlanPL01(), 50000.00);
++            Assert.Equal(2.1, tramo.Porcentaje);
++        }
++
++        [Fact]
++        public void EnElBorde500SeQuedaEnElPrimerTramoPorqueElLimiteSuperiorEsInclusivo()
++        {
++            TramoComision tramo = calculadora.DeterminarTramo(PlanPL01(), 500.00);
++            Assert.Equal(3.5, tramo.Porcentaje);
++        }
++
++        [Fact]
++        public void EnElBorde2000SeQuedaEnElSegundoTramoPorqueElLimiteSuperiorEsInclusivo()
++        {
++            TramoComision tramo = calculadora.DeterminarTramo(PlanPL01(), 2000.00);
++            Assert.Equal(2.9, tramo.Porcentaje);
++        }
++
++        [Fact]
++        public void EnElBorde10000SeQuedaEnElTercerTramoPorqueElLimiteSuperiorEsInclusivo()
++        {
++            TramoComision tramo = calculadora.DeterminarTramo(PlanPL01(), 10000.00);
++            Assert.Equal(2.5, tramo.Porcentaje);
++        }
++
++        [Fact]
++        public void UnMontoPorDebajoDelPrimerTramoCaeEnElUltimoTramoPorElValorPorDefecto()
++        {
++            // Cuando el monto no encaja en ningun tramo del bucle (por ejemplo,
++            // por ser negativo o menor que el primer MontoDesde), el metodo no
++            // devuelve null ni el primer tramo: devuelve el ULTIMO tramo de la
++            // lista como valor por defecto. Se documenta este comportamiento
++            // tal como esta hoy, sin corregirlo.
++            TramoComision tramo = calculadora.DeterminarTramo(PlanPL01(), -100.00);
++            Assert.Equal(2.1, tramo.Porcentaje);
++        }
++
++        [Fact]
++        public void UnMontoPorEncimaDelUltimoTramoCaeEnElUltimoTramo()
++        {
++            TramoComision tramo = calculadora.DeterminarTramo(PlanPL01(), 1000000.00);
++            Assert.Equal(2.1, tramo.Porcentaje);
++        }
++
++        [Fact]
++        public void UnPlanSinTramosNoDevuelveNingunTramo()
++        {
++            PlanComisiones planVacio = new PlanComisiones("PL99", "SinTramos", 0.0, 0.0);
++            TramoComision tramo = calculadora.DeterminarTramo(planVacio, 100.00);
++            Assert.Null(tramo);
++        }
++    }
++}

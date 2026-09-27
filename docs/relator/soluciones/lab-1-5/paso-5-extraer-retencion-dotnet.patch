@@ -1,0 +1,66 @@
+diff --git a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+index 3a3c1a7..26843c3 100644
+--- a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
++++ b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+@@ -224,24 +224,8 @@ namespace Pe.PasarelaAndina.Calculo
+                         }
+                     }
+ 
+-                    double retenciones = 0.0;
+-
+-                    DateTime fechaAfiliacion = comercio.FechaAfiliacion;
+-
+-                    if (fechaAfiliacion != DateTime.MinValue)
+-                    {
+-                        int meses = utilidadesFecha.MesesEntre(fechaAfiliacion, inicioPeriodo);
+-
+-                        if (meses < 6)
+-                        {
+-                            double baseRetencion = totalTransado - totalComisiones - totalContracargos;
+-
+-                            if (baseRetencion > 0)
+-                            {
+-                                retenciones = baseRetencion * 0.05;
+-                            }
+-                        }
+-                    }
++                    double retenciones = CalcularRetencionGarantia(comercio, inicioPeriodo,
++                            totalTransado, totalComisiones, totalContracargos);
+ 
+                     totalTransado = CompatibilidadJava.RedondearADosDecimales(totalTransado);
+                     totalComisiones = CompatibilidadJava.RedondearADosDecimales(totalComisiones);
+@@ -385,6 +369,34 @@ namespace Pe.PasarelaAndina.Calculo
+             return CompatibilidadJava.FormatearDosDecimales(monto);
+         }
+ 
++        /// <summary>
++        /// Calcula la retencion de garantia de un comercio para el periodo indicado.
++        /// </summary>
++        private double CalcularRetencionGarantia(Comercio comercio, DateTime inicioPeriodo,
++                double totalTransado, double totalComisiones, double totalContracargos)
++        {
++            double retenciones = 0.0;
++
++            DateTime fechaAfiliacion = comercio.FechaAfiliacion;
++
++            if (fechaAfiliacion != DateTime.MinValue)
++            {
++                int meses = utilidadesFecha.MesesEntre(fechaAfiliacion, inicioPeriodo);
++
++                if (meses < 6)
++                {
++                    double baseRetencion = totalTransado - totalComisiones - totalContracargos;
++
++                    if (baseRetencion > 0)
++                    {
++                        retenciones = baseRetencion * 0.05;
++                    }
++                }
++            }
++
++            return retenciones;
++        }
++
+         public double AcumuladoGeneralTransado { get { return acumuladoGeneralTransado; } }
+ 
+         public double AcumuladoGeneralComisiones { get { return acumuladoGeneralComisiones; } }

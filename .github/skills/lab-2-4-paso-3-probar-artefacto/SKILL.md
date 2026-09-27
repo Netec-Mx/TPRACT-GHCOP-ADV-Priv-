@@ -15,15 +15,18 @@ pruebas que el participante ejecuta para ver que Copilot lo aplica.
    participante, es decir, el que no figura en la lista de abajo. Si no hay ninguno,
    dilo y termina: el participante necesita el artefacto de respaldo del relator.
 2. Revisa su formato:
-   - Instrucción: metadatos `name`, `description` y `applyTo`, y que el patrón coincida
-     con al menos un archivo existente.
+   - Instrucción: metadatos `name`, `description` y `applyTo`, y a qué archivos apunta el
+     patrón.
    - Agente: metadatos `name`, `description` y `tools`, con herramientas que existan en
      Visual Studio Code, como `read`, `search`, `edit` o `execute`.
    - Que no queden huecos `COMPLETAR`.
 3. Escribe dos pruebas, cada una con el texto exacto a escribir en el chat, de no más
    de una línea, y lo que debe verse si el artefacto se aplica:
-   - Instrucción: con un archivo que coincide con el patrón abierto en el editor, la
-     instrucción aparece en la lista de referencias de la respuesta.
+   - Instrucción: en modo agente, pedir que cree o modifique un archivo que coincide con
+     el patrón. La instrucción aparece en la lista de referencias de la respuesta y el
+     archivo cumple sus reglas. Si el patrón no coincide con ningún archivo existente, la
+     prueba crea uno nuevo, dentro de `labs/cap2/lab-2-4-agente-o-instruccion/entregables/`
+     para la tarea C o de `scripts/` para la tarea D.
    - Agente: seleccionado en el selector de agentes del chat, responde dentro de su rol
      y rechaza algo fuera de su rol.
 

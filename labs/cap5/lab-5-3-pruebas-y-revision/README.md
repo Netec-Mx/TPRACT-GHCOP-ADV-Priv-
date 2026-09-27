@@ -1,14 +1,10 @@
 # Laboratorio 5.3. Estrategia de pruebas, documentación y checklist de revisión
 
-> **Enunciado marcador.** El título y la duración de este laboratorio son definitivos. Las
-> secciones de Prerrequisitos, Pasos, Resultado esperado y Criterios de revisión están sin
-> redactar y se completan en **SPEC-017**.
-
 ## Objetivo del laboratorio
 
-Cubrir con pruebas una parte de la lógica que hoy no tiene ninguna, documentar en Markdown
-la estrategia de pruebas y lo que las pruebas revelaron, y revisar el resultado con un
-checklist de revisión humana.
+Cubrir con pruebas una parte de la lógica de negocio que hoy no tiene ninguna, documentar
+en Markdown la estrategia de pruebas y revisar el resultado con un checklist de revisión
+humana.
 
 ## Duración
 
@@ -16,27 +12,47 @@ checklist de revisión humana.
 
 ## Prerrequisitos
 
-> Pendiente de redacción (SPEC-017).
+- Punto de partida. Este laboratorio puede empezar sobre el resultado del 5.2 o desde
+  cero. Para empezar desde cero, desde la raíz del repositorio, en Git Bash:
 
-Se listarán aquí los capítulos previos necesarios, el estado en que debe estar el
-repositorio al empezar y las verificaciones que el participante hace antes del primer paso.
+  ```bash
+  bash scripts/reiniciar-lab.sh lab-5-3
+  ```
+
+- Los pasos 1, 2 y 4 se hacen en modo **Agent**. El paso 3 en modo **Ask**.
 
 ## Pasos
 
-> Pendiente de redacción (SPEC-017).
+| Paso | Qué escribir en el chat | Qué observar | Tiempo |
+|---|---|---|---|
+| 1 | `/lab-5-3-paso-1-probar-tramos java` | Si las pruebas documentan lo que el código hace o lo que debería hacer, y la tabla de bordes que entrega al final | 12 min |
+| 2 | `/lab-5-3-paso-2-documentar-estrategia java` | Qué reglas de negocio quedan sin ninguna prueba | 9 min |
+| 3 | `/lab-5-3-paso-3-revision-asistida` | Qué hallazgos clasifica como fuera del alcance del cambio | 9 min |
+| 4 | `/lab-5-3-paso-4-checklist-humano` | Qué puntos del checklist no podría responder un agente | 8 min |
 
-Los pasos numerados del laboratorio. Ningún paso pedirá tipear prompts largos a mano,
-copiar y pegar entre ventanas, ni descargar dependencias durante la clase.
+Reemplaza `java` por `dotnet` si trabajas con .NET.
+
+Si el paso 1 te muestra dos partes del sistema que no coinciden, no lo corrijas. Busca en
+`escenario/README.md` cuál es el comportamiento correcto. Si las reglas no alcanzan para
+decidirlo, esa es la pregunta que llevas a la puesta en común.
+
+## Opcional, fuera del camino obligatorio
+
+Si terminas antes, pide pruebas del recargo por cuotas con su máximo, del tope mensual y
+de la retención de garantía, en un archivo nuevo distinto del paso 1. No tiene tiempo asignado ni entra en
+la puesta en común.
 
 ## Resultado esperado
 
-> Pendiente de redacción (SPEC-017).
-
-Qué debe existir y funcionar en la máquina del participante cuando el laboratorio termina.
+- Un archivo de pruebas nuevo de la calculadora de comisión, con las pruebas en verde.
+- `labs/cap5/lab-5-3-pruebas-y-revision/entregables/estrategia-de-pruebas.md`.
+- Una revisión del diff en el chat, con cada hallazgo clasificado.
+- `labs/cap5/lab-5-3-pruebas-y-revision/entregables/checklist-de-revision.md`.
 
 ## Criterios de revisión
 
-> Pendiente de redacción (SPEC-017).
-
-La lista verificable con la que el participante y el relator confirman que el laboratorio
-quedó resuelto.
+- [ ] Las pruebas nuevas pasan junto con las veinte que ya existían.
+- [ ] Ningún archivo existente fue modificado por el paso 1.
+- [ ] La estrategia dice qué reglas no tienen pruebas y qué valores de borde importan.
+- [ ] La revisión clasifica cada hallazgo en aplicar, descartar o decidir.
+- [ ] El checklist tiene puntos que se responden con sí o no y dice cómo verificar cada uno.

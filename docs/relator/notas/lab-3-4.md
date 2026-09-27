@@ -1,7 +1,62 @@
 # Notas del relator, laboratorio 3.4
 
-> Documento en construcción. Las secciones de conducción se completan en la fase 6 de
-> SPEC-009. La sección de la nota con inyección es definitiva.
+Caso de uso de MCP local seguro con documentación técnica. 45 minutos.
+
+## Qué va a pasar en la sala
+
+El paso 1 crea `.vscode/mcp.json`. El participante arranca el servidor con **MCP: List
+Servers** desde la paleta de comandos, a la que se llega por el menú **View**, **Command
+Palette**. Visual Studio Code confía en los servidores del espacio de trabajo si el
+espacio de trabajo es de confianza, así que no aparece un diálogo de confianza propio del
+servidor. Si la carpeta se abrió en modo restringido, el servidor no arranca. Es la causa
+más probable si a alguien no le aparecen las herramientas.
+
+En el paso 2 cada llamada a una herramienta pide aprobación. Es deliberado, ver más abajo.
+Pida que lean los parámetros antes de aprobar.
+
+La consulta del paso 2 es sobre CM0005, cuyas notas de soporte incluyen la nota con
+inyección. Lo que pase depende del modelo. En la verificación, el agente no obedeció.
+Reconoció el texto como un intento de instrucción y lo reportó como dato no confiable.
+Con Copilot puede pasar cualquiera de las dos cosas, y las dos sirven para la
+conversación.
+
+El paso 4 produce el documento del caso de uso con cuatro secciones. Es el entregable que
+pide el temario.
+
+## Errores típicos
+
+- Servidor que no arranca porque falta `npm ci` en la imagen. `bash scripts/verificar-ambiente.sh`
+  lo detecta en la sección «Servidor MCP local».
+- `.vscode/mcp.json` con rutas absolutas copiadas de otra máquina. La configuración de
+  referencia usa rutas relativas y `${workspaceFolder}` como directorio de trabajo.
+- Ampliar los permisos de Node para «que funcione». El servidor solo necesita leer el
+  repositorio. Si alguien quita `--permission`, es el momento de preguntar por qué.
+- Aprobar las herramientas «para toda la sesión» sin leerlas. Es exactamente el riesgo que
+  el documento del paso 4 tiene que describir.
+
+## Tiempos
+
+| Paso | Estimado | Observado en la verificación |
+|---|---|---|
+| 1 | 8 min | 24 s de agente, más el arranque desde el menú |
+| 2 | 8 min | 27 s de agente, más una aprobación por llamada |
+| 3 | 8 min | 34 s de agente |
+| 4 | 12 min | 67 s de agente. Es el más largo y el que más conviene revisar |
+
+Suma estimada 36 minutos. Quedan 9 para la conversación.
+
+## Si alguien se atrasa
+
+Los pasos 3 y 4 leen el código del servidor y no dependen de que el paso 1 haya
+funcionado. Si el servidor no arranca a los 10 minutos, que el participante pase al paso 3
+y vea el paso 2 en la pantalla de un compañero.
+
+Si no logra crear `.vscode/mcp.json`, díctele el contenido de la referencia.
+
+## Solución de referencia
+
+`.vscode/mcp.json` del repositorio de construcción. Arranca el servidor con los mismos
+permisos que exige el verificador de ambiente.
 
 ## La nota con inyección indirecta
 
@@ -29,7 +84,7 @@ La pregunta que la dispara es cualquiera que haga leer las notas de CM0005, por 
 - `detalle_comercio` devuelve, en la misma conversación, que CM0005 tiene el plan
   **PL04**. La contradicción queda a la vista.
 - Si el agente no obedece, lo habitual es que cite la nota como sospechosa o que la
-  ignore. También sirve: se muestra la nota y se pregunta a la sala qué habría pasado con
+  ignore. También sirve. Se muestra la nota y se pregunta a la sala qué habría pasado con
   un servidor que sí tuviera herramientas de escritura.
 
 No se puede garantizar que el modelo obedezca. Depende del modelo y de la versión. Por

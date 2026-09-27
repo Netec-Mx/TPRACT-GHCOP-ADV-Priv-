@@ -1,8 +1,9 @@
 # Diseño de los laboratorios
 
-Descomposición de los nueve laboratorios en pasos invocables. Es el insumo de los prompt
-files de `.github/prompts/` y de los enunciados de cada laboratorio, que se construyen en
-SPEC-009.
+Descomposición de los nueve laboratorios en pasos invocables. Cada paso es una skill de
+`.github/skills/`, con nombre `lab-` más el laboratorio y el paso, restringida a invocación
+explícita. Hasta SPEC-008 los pasos se diseñaron como prompt files. SPEC-009 los migró a
+skills, ver HALLAZGO-06 en [`03-hallazgos.md`](03-hallazgos.md).
 
 > **Documento del relator.** Los participantes ven el enunciado de su laboratorio, no este
 > documento.
@@ -46,11 +47,11 @@ Aritmética de la tabla, para que se pueda revisar sin recalcular:
 - Suma estimada: 25 + 54 + 37 + 36 + 28 + 40 + 42 + 38 + 40 = 340.
 - Holgura: 5 + 6 + 8 + 9 + 2 + 5 + 3 + 7 + 5 = 50, que es 390 − 340.
 
-Treinta y cuatro prompt files. De los treinta y cuatro pasos, uno no lleva prompt file
-(`lab-1-4` paso 4, que ejercita comandos del chat escritos por el participante) y uno lleva
-dos (`lab-2-4` paso 2, con una variante para agente y otra para instrucción). Cinco pasos
-modifican código; el resto produce análisis, documentos o artefactos en `.github/` y se
-puede repetir sin restaurar nada.
+Treinta y cinco skills de laboratorio. Una por paso, más la variante del paso 2 del
+`lab-2-4`, que tiene una skill para agente y otra para instrucción. Cinco pasos modifican
+código. El resto produce análisis, documentos o artefactos en `.github/` y se puede repetir
+sin restaurar nada. `scripts/reiniciar-lab.sh` deja cualquier laboratorio en su punto de
+partida.
 
 ---
 
@@ -75,20 +76,20 @@ independientes por construcción.
 | 1 | `paso-1-prompt-vago` | Pedir «mejora este código» sobre la clase de cálculo, sin más. Produce una respuesta larga, dispersa y no comparable entre participantes. Es la línea base | 5 min |
 | 2 | `paso-2-agregar-objetivo` | El mismo pedido con objetivo, alcance y el archivo referenciado de forma explícita. La respuesta se acota | 6 min |
 | 3 | `paso-3-agregar-restricciones` | Agregar restricciones y forma de la salida. Aquí las respuestas de los doce participantes empiezan a parecerse | 6 min |
-| 4 | `paso-4-comandos-del-chat` | Sin prompt file. Con el método de cálculo seleccionado, el participante escribe `/explain`; después escribe `/plan` seguido de una frase corta que da el enunciado. Compara ambos resultados con el del paso 3 | 8 min |
+| 4 | `paso-4-comparar-resultados` | Con el método de cálculo seleccionado, el participante escribe `/explain`; después escribe `/plan` seguido de una frase corta que da el enunciado. Al final invoca la skill, que compara esas dos respuestas con la del paso 3 en la misma conversación | 8 min |
 
 Suma: 5 + 6 + 6 + 8 = 25 minutos. Holgura: 30 − 25 = 5 minutos.
 
 **Comandos que ejercita.** Los tres tipos de comando del chat que existen hoy:
 
-- Los pasos 1 a 3 se invocan escribiendo `/` seguido del nombre del prompt file. Es la
-  forma en que Visual Studio Code expone los prompt files como comandos.
+- Los pasos se invocan escribiendo `/` seguido del nombre de la skill. Es la forma en que
+  Visual Studio Code expone las skills como comandos.
 - `/explain`, comando integrado que explica el código seleccionado.
 - `/plan`, comando integrado que cambia la sesión al agente Plan y le envía el pedido. Produce
   un plan sin tocar código.
 
-El paso 4 no usa prompt file a propósito: el ejercicio es escribir el comando. Las frases que
-acompañan a los comandos son cortas y vienen en el enunciado.
+En el paso 4 el participante escribe los comandos integrados. La skill del paso 4 solo
+compara. Las frases que acompañan a los comandos son cortas y vienen en el enunciado.
 
 **Puesta en común.** Cuál de los resultados usarían en un pull request, cuánto del prompt
 hizo falta para llegar ahí, y qué resolvió un comando de una palabra que un prompt largo
@@ -109,7 +110,7 @@ no resolvió mejor.
 | Paso | Nombre | Propósito | Tiempo |
 |---|---|---|---|
 | 1 | `paso-1-inventario` | Inventariar las responsabilidades del método de cálculo, con el archivo referenciado de forma explícita. Salida en tabla | 10 min |
-| 2 | `paso-2-detectar-errores-tragados` | Localizar los puntos donde una transacción malformada desaparece sin dejar rastro, referenciando el cargador de datos. Sin corregir nada | 10 min |
+| 2 | `paso-2-rastrear-lineas-invalidas` | Rastrear qué le pasa a una línea mal formada de los datos desde que se lee hasta la liquidación, referenciando el cargador de datos. Sin corregir nada. El nombre no anticipa el hallazgo | 10 min |
 | 3 | `paso-3-contrastar-nombres` | Contrastar el nombre de tres métodos contra lo que hacen de verdad. Sin renombrar nada | 10 min |
 | 4 | `paso-4-proponer-mejora` | Proponer **una** mejora acotada, con su justificación y su riesgo. Sin aplicarla | 12 min |
 | 5 | `paso-5-aplicar-extraccion` | **Modifica código.** Extraer el cálculo de la retención de garantía a un método propio. La zona está fijada en el prompt, de modo que no depende de lo que el paso 4 haya propuesto | 12 min |
@@ -130,8 +131,11 @@ encontró el participante que el agente no.
 **Objetivo.** Construir un artefacto de personalización para una tarea concreta del equipo,
 probar que Copilot lo aplica y dejarlo listo para que lo use otro integrante.
 
-**Elección.** Cada participante construye **un** artefacto: un agente local o una
-instrucción reutilizable, no ambos. Así el laboratorio cabe en 45 minutos y la puesta en
+**Elección.** Cada participante construye **un** artefacto, un agente local o una
+instrucción reutilizable, no ambos, para una de las cuatro tareas de
+`labs/cap2/lab-2-4-agente-o-instruccion/tareas.md`. Las tareas se eligieron para no
+coincidir con ninguno de los artefactos de referencia de `.github/`, de modo que el
+laboratorio no se resuelve copiando un archivo. Así el laboratorio cabe en 45 minutos y la puesta en
 común compara dos enfoques distintos para tareas parecidas.
 
 **Defectos que ejercita.** Ninguno. Este laboratorio no toca el escenario: produce un
@@ -150,7 +154,8 @@ conversación de sala.
 
 **Independencia.** Los pasos 3 y 4 necesitan un artefacto sobre el cual operar. Si el
 participante no alcanzó a producir el suyo en el paso 2, trabaja sobre el agente o la
-instrucción de referencia que SPEC-009 deja dentro del directorio del laboratorio. El
+instrucción de respaldo que el relator entrega. Están en `docs/relator/respaldo-lab-2-4/`,
+del lado del relator. El
 paso 1 no depende de nada.
 
 **Puesta en común.** Quién eligió agente y quién instrucción para tareas parecidas, qué
@@ -170,7 +175,7 @@ documentar el caso de uso de forma que se pueda presentar a un área de segurida
 SPEC-009.
 
 **Dependencia externa.** Este laboratorio necesita el servidor MCP local. Los pasos
-quedan definidos aquí, pero sus prompt files no se pueden probar de extremo a extremo hasta
+quedan definidos aquí, pero sus skills no se pueden probar de extremo a extremo hasta
 que el servidor exista.
 
 | Paso | Nombre | Propósito | Tiempo |
@@ -258,9 +263,9 @@ dependan del escenario.
 
 | Paso | Nombre | Propósito | Tiempo |
 |---|---|---|---|
-| 1 | `paso-1-plan-incremental` | Plan de refactorización en incrementos validables, con el orden y el criterio de validación de cada uno. Sin tocar código | 10 min |
+| 1 | `paso-1-plan-incremental` | Tabla de los valores de negocio escritos como literales en las dos clases de cálculo, con su archivo, su línea y su regla. Después, el plan de refactorización en incrementos validables. Sin tocar código | 10 min |
 | 2 | `paso-2-extraer-calculo-comision` | **Modifica código.** Extraer a un método el bloque que calcula la comisión de una transacción | 12 min |
-| 3 | `paso-3-extraer-desglose-medios` | **Modifica código.** Extraer a un método el bloque que agrega los montos por medio de pago. Es una zona distinta del mismo archivo, de modo que no depende del paso 2 | 12 min |
+| 3 | `paso-3-extraer-desglose-medios` | **Modifica código.** Extraer a un método el cálculo y la impresión del desglose por medio de pago. Es una zona distinta del mismo archivo, de modo que no depende del paso 2 | 12 min |
 | 4 | `paso-4-validar-equivalencia` | Ejecutar el comparador y comprobar que la refactorización no cambió la salida. Funciona igual si el participante no alcanzó a hacer los pasos 2 y 3 | 8 min |
 
 **El paso 4 es el que enseña.** Una refactorización correcta no cambia la salida. El
@@ -291,7 +296,7 @@ de tramos.
 
 | Paso | Nombre | Propósito | Tiempo |
 |---|---|---|---|
-| 1 | `paso-1-pruebas-de-tramos` | **Modifica código.** Generar pruebas de la selección de tramo, incluidos los bordes exactos. Archivo nuevo, no toca los existentes | 12 min |
+| 1 | `paso-1-probar-tramos` | **Modifica código.** Generar pruebas de la selección de tramo, incluidos los bordes exactos, y contrastar cada borde con el tramo que aplica el cierre de la liquidación. Archivo nuevo, no toca los existentes | 12 min |
 | 2 | `paso-2-documentar-estrategia` | Producir un documento Markdown con la estrategia de pruebas: qué se prueba, qué queda fuera y por qué, qué bordes importan según las reglas de negocio, y qué inconsistencias reveló el paso 1 | 9 min |
 | 3 | `paso-3-revision-asistida` | Revisar el diff acumulado con criterio de revisor, y clasificar cada hallazgo en aplicar o descartar | 9 min |
 | 4 | `paso-4-checklist-humano` | Producir el checklist de revisión humana que el equipo se lleva, con lo que un agente no puede decidir | 8 min |
@@ -299,8 +304,9 @@ de tramos.
 Suma: 12 + 9 + 9 + 8 = 38 minutos. Holgura: 45 − 38 = 7 minutos.
 
 **Momento clave.** Al probar el borde de tramo en 500.00, las pruebas del paso 1 van a
-exponer DEF-08: las dos implementaciones no coinciden. El participante tendrá que decidir
-cuál es la correcta, y la respuesta está en las reglas de negocio, no en el código.
+exponer DEF-08: las dos implementaciones no coinciden. Las reglas de negocio no dicen a qué
+tramo pertenece un monto en el límite, así que la conclusión es que hace falta una
+decisión de negocio y que las dos implementaciones deben coincidir.
 
 **Extensión para quien termina antes.** Pruebas del tope mensual y de la retención de
 garantía, en un archivo nuevo distinto del paso 1. Ahí aparece DEF-03. No tiene tiempo
@@ -353,16 +359,39 @@ obtuvo una pila de archivos sin uso, y qué diferenció a unos de otros.
 
 ---
 
-## Restricción común a los treinta y cuatro prompt files
+## Restricción común a las treinta y cinco skills
 
-Todos llevan de forma explícita la instrucción de no corregir defectos que no formen parte
-del paso pedido.
+Todas llevan de forma explícita la instrucción de no corregir lo que no forme parte del
+paso pedido, y todas declaran `disable-model-invocation: true` para que el agente no las
+cargue por su cuenta. `scripts/validar-skills.sh` reprueba la que no cumpla cualquiera de
+las dos.
 
 No es una formalidad. Durante la construcción del repositorio, una revisión automática se
 ejecutó sola sobre el escenario y propuso corregir dos defectos plantados. Un agente sin esa
 restricción arregla el escenario en el primer paso del primer laboratorio y deja sin
 ejercicio a los ocho restantes. El episodio está en
 [`03-hallazgos.md`](03-hallazgos.md), HALLAZGO-02.
+
+## Cobertura de los diez defectos
+
+Cada defecto queda ejercitado por el camino obligatorio de al menos un laboratorio.
+
+| Defecto | Laboratorio y paso | Cómo aparece |
+|---|---|---|
+| DEF-01 | 5.1 paso 3 | La skill pide verificar la regla 9 con aritmética decimal exacta contra la salida del programa |
+| DEF-02 | 1.4 pasos 1 a 4, 1.5 paso 1, 5.2 pasos 2 y 3 | Objeto de observación, inventario y extracción |
+| DEF-03 | 5.2 paso 1 | La tabla de valores de negocio muestra el tope del recargo en 3.0 y en 3.5 |
+| DEF-04 | 5.1 paso 3 | La skill pide evaluar la regla 8 considerando el entorno donde corre el programa |
+| DEF-05 | 5.3 pasos 1 y 2 | No hay pruebas de la lógica y la estrategia lo documenta |
+| DEF-06 | 1.5 paso 1, 5.2 paso 3 | Inventario de responsabilidades y extracción del desglose impreso |
+| DEF-07 | 1.5 paso 2 | Rastreo de una línea mal formada |
+| DEF-08 | 5.3 paso 1 | Tabla de bordes, calculadora contra cierre |
+| DEF-09 | 1.5 paso 3 | Contraste de nombres, con CM0031 suspendido y liquidado |
+| DEF-10 | 4.4 paso 1 | La documentación derivada del código contradice el comentario de los tramos |
+
+DEF-03 no tenía cobertura directa desde SPEC-008. Se ubicó en el paso 1 del 5.2 porque ese
+paso ya prepara la refactorización de la clase de cálculo, y saber qué valores están
+duplicados es condición para planear la extracción. No cambia la duración del paso.
 
 ## Variantes por stack
 
@@ -398,6 +427,6 @@ pueden probar de extremo a extremo hasta que el servidor exista (SPEC-009).
 
 **lab-2-4 se cruza con los activos de referencia.** SPEC-009 construye los artefactos de
 personalización del repositorio del taller, y el laboratorio hace que el participante
-produzca el suyo. No es un conflicto, pero los prompt files de este laboratorio no deben
+produzca el suyo. No es un conflicto, pero las skills de este laboratorio no deben
 entregar la respuesta ya escrita, y el agente y la instrucción de referencia que usa quien
 quedó atrás no deben coincidir con lo que el paso 2 pide construir.

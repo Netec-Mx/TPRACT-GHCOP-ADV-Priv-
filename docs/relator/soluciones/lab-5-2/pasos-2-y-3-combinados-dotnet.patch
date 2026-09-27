@@ -1,0 +1,285 @@
+diff --git a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+index 3a3c1a7..f3e6c0a 100644
+--- a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
++++ b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+@@ -133,65 +133,14 @@ namespace Pe.PasarelaAndina.Calculo
+                             {
+                                 if (transaccion.Estado == EstadoTransaccion.APROBADA)
+                                 {
+-                                    double montoTransaccion = transaccion.Monto;
+-                                    double porcentajeAplicado = 0.0;
+-                                    bool tramoEncontrado = false;
+-
+-                                    foreach (TramoComision tramo in plan.Tramos)
+-                                    {
+-                                        if (!tramoEncontrado)
+-                                        {
+-                                            if (montoTransaccion >= tramo.MontoDesde
+-                                                    && montoTransaccion < tramo.MontoHasta)
+-                                            {
+-                                                porcentajeAplicado = tramo.Porcentaje;
+-                                                tramoEncontrado = true;
+-                                            }
+-                                        }
+-                                    }
+-
+-                                    if (!tramoEncontrado)
+-                                    {
+-                                        if (plan.Tramos.Count > 0)
+-                                        {
+-                                            porcentajeAplicado = plan.Tramos[plan.Tramos.Count - 1].Porcentaje;
+-                                        }
+-                                    }
+-
+-                                    double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
+-                                    comisionBase = comisionBase + plan.MontoFijoPorTransaccion;
+-
+-                                    double recargo = 0.0;
+-
+-                                    if (transaccion.Cuotas > 1)
+-                                    {
+-                                        double porcentajeRecargo = (transaccion.Cuotas - 1) * 0.5;
+-
+-                                        if (porcentajeRecargo > 3.0)
+-                                        {
+-                                            porcentajeRecargo = 3.0;
+-                                        }
+-
+-                                        recargo = comisionBase * porcentajeRecargo / 100.0;
+-                                    }
+-
+-                                    double comisionTotal = comisionBase + recargo;
+-
+-                                    DetalleLiquidacion linea = new DetalleLiquidacion();
+-                                    linea.IdTransaccion = transaccion.Id;
+-                                    linea.MontoTransaccion = montoTransaccion;
+-                                    linea.ComisionBase = comisionBase;
+-                                    linea.RecargoCuotas = recargo;
+-                                    linea.ComisionTotal = comisionTotal;
+-                                    linea.Cuotas = transaccion.Cuotas;
+-                                    linea.MedioPago = transaccion.MedioPago.ToString();
++                                    DetalleLiquidacion linea = CalcularDetalleLiquidacion(plan, transaccion);
+                                     liquidacion.AgregarDetalle(linea);
+ 
+-                                    totalTransado = totalTransado + montoTransaccion;
+-                                    totalComisiones = totalComisiones + comisionTotal;
++                                    totalTransado = totalTransado + linea.MontoTransaccion;
++                                    totalComisiones = totalComisiones + linea.ComisionTotal;
+                                     cantidadTransacciones++;
+ 
+-                                    acumuladoGeneralComisiones = acumuladoGeneralComisiones + comisionTotal;
++                                    acumuladoGeneralComisiones = acumuladoGeneralComisiones + linea.ComisionTotal;
+                                 }
+                             }
+                         }
+@@ -286,46 +235,6 @@ namespace Pe.PasarelaAndina.Calculo
+                     {
+                     }
+ 
+-                    double montoCredito = 0.0;
+-                    double montoDebito = 0.0;
+-                    double montoBilletera = 0.0;
+-                    double montoTransferencia = 0.0;
+-                    int transaccionesEnCuotas = 0;
+-
+-                    foreach (DetalleLiquidacion linea in liquidacion.Detalle)
+-                    {
+-                        if (linea.MedioPago != null)
+-                        {
+-                            if (linea.MedioPago == "TARJETA_CREDITO")
+-                            {
+-                                montoCredito = montoCredito + linea.MontoTransaccion;
+-
+-                                if (linea.Cuotas > 1)
+-                                {
+-                                    transaccionesEnCuotas++;
+-                                }
+-                            }
+-                            else
+-                            {
+-                                if (linea.MedioPago == "TARJETA_DEBITO")
+-                                {
+-                                    montoDebito = montoDebito + linea.MontoTransaccion;
+-                                }
+-                                else
+-                                {
+-                                    if (linea.MedioPago == "BILLETERA_MOVIL")
+-                                    {
+-                                        montoBilletera = montoBilletera + linea.MontoTransaccion;
+-                                    }
+-                                    else
+-                                    {
+-                                        montoTransferencia = montoTransferencia + linea.MontoTransaccion;
+-                                    }
+-                                }
+-                            }
+-                        }
+-                    }
+-
+                     if (cantidadTransacciones > 0)
+                     {
+                         resultado.Add(liquidacion);
+@@ -339,28 +248,7 @@ namespace Pe.PasarelaAndina.Calculo
+                         Console.WriteLine("  Retenciones              : S/ " + FormatearMonto(retenciones));
+                         Console.WriteLine("  Monto neto a pagar       : S/ " + FormatearMonto(neto));
+ 
+-                        if (montoCredito > 0 || montoDebito > 0 || montoBilletera > 0 || montoTransferencia > 0)
+-                        {
+-                            Console.WriteLine("  Desglose por medio de pago:");
+-
+-                            if (montoCredito > 0)
+-                            {
+-                                Console.WriteLine("    Tarjeta de credito     : S/ " + FormatearMonto(montoCredito)
+-                                        + (transaccionesEnCuotas > 0 ? "  (" + transaccionesEnCuotas + " en cuotas)" : ""));
+-                            }
+-                            if (montoDebito > 0)
+-                            {
+-                                Console.WriteLine("    Tarjeta de debito      : S/ " + FormatearMonto(montoDebito));
+-                            }
+-                            if (montoBilletera > 0)
+-                            {
+-                                Console.WriteLine("    Billetera movil        : S/ " + FormatearMonto(montoBilletera));
+-                            }
+-                            if (montoTransferencia > 0)
+-                            {
+-                                Console.WriteLine("    Transferencia          : S/ " + FormatearMonto(montoTransferencia));
+-                            }
+-                        }
++                        ImprimirDesglosePorMedioPago(liquidacion);
+ 
+                         if (observacionRegistro.Length > 0)
+                         {
+@@ -380,6 +268,133 @@ namespace Pe.PasarelaAndina.Calculo
+             return resultado;
+         }
+ 
++        /// <summary>
++        /// Calcula la comision de la transaccion segun el plan y arma el detalle de
++        /// liquidacion correspondiente.
++        /// </summary>
++        private DetalleLiquidacion CalcularDetalleLiquidacion(PlanComisiones plan, Transaccion transaccion)
++        {
++            double montoTransaccion = transaccion.Monto;
++            double porcentajeAplicado = 0.0;
++            bool tramoEncontrado = false;
++
++            foreach (TramoComision tramo in plan.Tramos)
++            {
++                if (!tramoEncontrado)
++                {
++                    if (montoTransaccion >= tramo.MontoDesde
++                            && montoTransaccion < tramo.MontoHasta)
++                    {
++                        porcentajeAplicado = tramo.Porcentaje;
++                        tramoEncontrado = true;
++                    }
++                }
++            }
++
++            if (!tramoEncontrado)
++            {
++                if (plan.Tramos.Count > 0)
++                {
++                    porcentajeAplicado = plan.Tramos[plan.Tramos.Count - 1].Porcentaje;
++                }
++            }
++
++            double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
++            comisionBase = comisionBase + plan.MontoFijoPorTransaccion;
++
++            double recargo = 0.0;
++
++            if (transaccion.Cuotas > 1)
++            {
++                double porcentajeRecargo = (transaccion.Cuotas - 1) * 0.5;
++
++                if (porcentajeRecargo > 3.0)
++                {
++                    porcentajeRecargo = 3.0;
++                }
++
++                recargo = comisionBase * porcentajeRecargo / 100.0;
++            }
++
++            double comisionTotal = comisionBase + recargo;
++
++            DetalleLiquidacion linea = new DetalleLiquidacion();
++            linea.IdTransaccion = transaccion.Id;
++            linea.MontoTransaccion = montoTransaccion;
++            linea.ComisionBase = comisionBase;
++            linea.RecargoCuotas = recargo;
++            linea.ComisionTotal = comisionTotal;
++            linea.Cuotas = transaccion.Cuotas;
++            linea.MedioPago = transaccion.MedioPago.ToString();
++            return linea;
++        }
++
++        private void ImprimirDesglosePorMedioPago(Liquidacion liquidacion)
++        {
++            double montoCredito = 0.0;
++            double montoDebito = 0.0;
++            double montoBilletera = 0.0;
++            double montoTransferencia = 0.0;
++            int transaccionesEnCuotas = 0;
++
++            foreach (DetalleLiquidacion linea in liquidacion.Detalle)
++            {
++                if (linea.MedioPago != null)
++                {
++                    if (linea.MedioPago == "TARJETA_CREDITO")
++                    {
++                        montoCredito = montoCredito + linea.MontoTransaccion;
++
++                        if (linea.Cuotas > 1)
++                        {
++                            transaccionesEnCuotas++;
++                        }
++                    }
++                    else
++                    {
++                        if (linea.MedioPago == "TARJETA_DEBITO")
++                        {
++                            montoDebito = montoDebito + linea.MontoTransaccion;
++                        }
++                        else
++                        {
++                            if (linea.MedioPago == "BILLETERA_MOVIL")
++                            {
++                                montoBilletera = montoBilletera + linea.MontoTransaccion;
++                            }
++                            else
++                            {
++                                montoTransferencia = montoTransferencia + linea.MontoTransaccion;
++                            }
++                        }
++                    }
++                }
++            }
++
++            if (montoCredito > 0 || montoDebito > 0 || montoBilletera > 0 || montoTransferencia > 0)
++            {
++                Console.WriteLine("  Desglose por medio de pago:");
++
++                if (montoCredito > 0)
++                {
++                    Console.WriteLine("    Tarjeta de credito     : S/ " + FormatearMonto(montoCredito)
++                            + (transaccionesEnCuotas > 0 ? "  (" + transaccionesEnCuotas + " en cuotas)" : ""));
++                }
++                if (montoDebito > 0)
++                {
++                    Console.WriteLine("    Tarjeta de debito      : S/ " + FormatearMonto(montoDebito));
++                }
++                if (montoBilletera > 0)
++                {
++                    Console.WriteLine("    Billetera movil        : S/ " + FormatearMonto(montoBilletera));
++                }
++                if (montoTransferencia > 0)
++                {
++                    Console.WriteLine("    Transferencia          : S/ " + FormatearMonto(montoTransferencia));
++                }
++            }
++        }
++
+         private string FormatearMonto(double monto)
+         {
+             return CompatibilidadJava.FormatearDosDecimales(monto);

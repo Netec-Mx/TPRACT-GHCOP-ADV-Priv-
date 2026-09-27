@@ -1,0 +1,64 @@
+diff --git a/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java b/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
+index 45e65aa..5a4d863 100644
+--- a/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
++++ b/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
+@@ -225,23 +225,8 @@ public class CalculadoraLiquidacion {
+                     }
+                 }
+ 
+-                double retenciones = 0.0;
+-
+-                Date fechaAfiliacion = comercio.getFechaAfiliacion();
+-
+-                if (fechaAfiliacion != null) {
+-
+-                    int meses = utilidadesFecha.mesesEntre(fechaAfiliacion, inicioPeriodo);
+-
+-                    if (meses < 6) {
+-
+-                        double baseRetencion = totalTransado - totalComisiones - totalContracargos;
+-
+-                        if (baseRetencion > 0) {
+-                            retenciones = baseRetencion * 0.05;
+-                        }
+-                    }
+-                }
++                double retenciones = calcularRetencionGarantia(comercio, inicioPeriodo,
++                        totalTransado, totalComisiones, totalContracargos);
+ 
+                 totalTransado = Math.round(totalTransado * 100.0) / 100.0;
+                 totalComisiones = Math.round(totalComisiones * 100.0) / 100.0;
+@@ -363,6 +348,33 @@ public class CalculadoraLiquidacion {
+         return resultado;
+     }
+ 
++    /**
++     * Calcula la retencion de garantia de un comercio para el periodo indicado.
++     */
++    private double calcularRetencionGarantia(Comercio comercio, Date inicioPeriodo,
++            double totalTransado, double totalComisiones, double totalContracargos) {
++
++        double retenciones = 0.0;
++
++        Date fechaAfiliacion = comercio.getFechaAfiliacion();
++
++        if (fechaAfiliacion != null) {
++
++            int meses = utilidadesFecha.mesesEntre(fechaAfiliacion, inicioPeriodo);
++
++            if (meses < 6) {
++
++                double baseRetencion = totalTransado - totalComisiones - totalContracargos;
++
++                if (baseRetencion > 0) {
++                    retenciones = baseRetencion * 0.05;
++                }
++            }
++        }
++
++        return retenciones;
++    }
++
+     private String formatearMonto(double monto) {
+         return String.format(ConfiguracionRegional.REGION_DE_SALIDA, "%.2f", monto);
+     }

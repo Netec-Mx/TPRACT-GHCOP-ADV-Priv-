@@ -103,17 +103,21 @@ romper la equivalencia entre ambas implementaciones.
 
 ## Tabla resumen
 
+La columna de laboratorio indica dónde el camino obligatorio ejercita cada defecto. El
+detalle por paso está en [`05-diseno-de-laboratorios.md`](05-diseno-de-laboratorios.md),
+sección «Cobertura de los diez defectos».
+
 | ID | Defecto | Ubicación principal | Laboratorio |
 |---|---|---|---|
-| DEF-01 | Dinero en punto flotante | Transversal, todo el modelo y el cálculo | 1.5, 5.2, 5.3 |
-| DEF-02 | Método monstruo de 282 líneas | `CalculadoraLiquidacion.java:81` | 1.5, 5.1, 5.2 |
-| DEF-03 | Números mágicos e inconsistentes | `CalculadoraLiquidacion.java`, `CalculadoraComision.java` | 2.4, 5.2 |
-| DEF-04 | Fechas sin zona horaria | `UtilidadesFecha.java`, modelo completo | 1.5, 5.3 |
+| DEF-01 | Dinero en punto flotante | Transversal, todo el modelo y el cálculo | 5.1, 5.4 opcional |
+| DEF-02 | Método monstruo de 282 líneas | `CalculadoraLiquidacion.java:81` | 1.4, 1.5, 5.2 |
+| DEF-03 | Números mágicos e inconsistentes | `CalculadoraLiquidacion.java`, `CalculadoraComision.java` | 5.2 |
+| DEF-04 | Fechas sin zona horaria | `UtilidadesFecha.java`, modelo completo | 5.1 |
 | DEF-05 | Pruebas que no cubren lo que importa | `src/test/`, 20 pruebas triviales | 5.3 |
-| DEF-06 | Responsabilidades mezcladas | `CalculadoraLiquidacion.java` | 5.1, 5.2 |
-| DEF-07 | Errores tragados en silencio | `CargadorDatos.java`, `CalculadoraLiquidacion.java` | 1.5, 5.3 |
-| DEF-08 | Lógica de tramos duplicada y divergente | `CalculadoraComision.java:18` y `CalculadoraLiquidacion.java:146` | 5.1, 5.2 |
-| DEF-09 | Nombres que mienten | Tres métodos en tres clases | 1.4, 1.5 |
+| DEF-06 | Responsabilidades mezcladas | `CalculadoraLiquidacion.java` | 1.5, 5.2 |
+| DEF-07 | Errores tragados en silencio | `CargadorDatos.java`, `CalculadoraLiquidacion.java` | 1.5 |
+| DEF-08 | Lógica de tramos duplicada y divergente | `CalculadoraComision.java:18` y `CalculadoraLiquidacion.java:146` | 5.3 |
+| DEF-09 | Nombres que mienten | Tres métodos en tres clases | 1.5 |
 | DEF-10 | Comentarios desactualizados | Tres comentarios de clase | 1.4, 4.4 |
 
 ---

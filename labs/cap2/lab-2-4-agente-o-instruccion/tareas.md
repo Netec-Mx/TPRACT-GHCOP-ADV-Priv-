@@ -11,14 +11,14 @@ con el relator antes de seguir.
 
 El área comercial recibe llamadas de comercios que no entienden su liquidación. Hace falta
 un agente que explique, en lenguaje de negocio y sin jerga técnica, cómo se compuso la
-liquidación de un comercio en un periodo: comisiones, tope, contracargos y retención. No
+liquidación de un comercio en un periodo, con comisiones, tope, contracargos y retención. No
 toca código ni archivos. Responde con el formato que usa el área comercial en sus correos.
 
 ## B. Agente redactor de pull requests
 
 El equipo pierde tiempo escribiendo descripciones de pull request que después nadie lee.
 Hace falta un agente que, a partir de los cambios del repositorio, redacte el título y la
-descripción con la plantilla del equipo: qué cambia, por qué, cómo se verificó y qué
+descripción con la plantilla del equipo, que dice qué cambia, por qué, cómo se verificó y qué
 riesgo tiene. No modifica código.
 
 ## C. Instrucción para la documentación del equipo

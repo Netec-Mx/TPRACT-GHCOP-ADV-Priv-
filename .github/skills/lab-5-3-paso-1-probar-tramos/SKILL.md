@@ -55,6 +55,19 @@ Como mínimo:
 Cada prueba debe declarar en su nombre qué espera, en español, siguiendo el estilo de
 las pruebas que ya existen.
 
+# Contraste con el cierre de la liquidación
+
+La selección de tramo no se usa solo en la calculadora de comisión. Antes de terminar,
+busca en el método que calcula la liquidación mensual cómo elige el tramo para una
+transacción:
+
+- Java: [CalculadoraLiquidacion.java](../../../escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java)
+- .NET: [CalculadoraLiquidacion.cs](../../../escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs)
+
+Para cada uno de los tres bordes, di en tu respuesta qué porcentaje aplica la calculadora
+de comisión y qué porcentaje aplicaría el cierre de la liquidación al mismo monto. No
+escribas pruebas de la liquidación en este paso.
+
 # Restricciones
 
 - **Crea un archivo nuevo. No modifiques ningún archivo existente**, ni de pruebas ni
@@ -79,6 +92,8 @@ las pruebas que ya existen.
 3. Las pruebas corren y pasan. Java, desde `escenario/java/`: `mvn test`. .NET, desde
    `escenario/dotnet/`: `dotnet test LiquidacionComercios.Pruebas`. Deben ejecutarse
    las 20 pruebas que ya existían más las nuevas, todas en verde.
-4. En tu respuesta, la explicación de cualquier discrepancia que hayas encontrado al
-   probar los bordes, con lo que dicen las reglas de negocio y **sin haberla
-   corregido**.
+4. En tu respuesta, una tabla con los tres bordes, el porcentaje de la calculadora de
+   comisión y el del cierre de la liquidación.
+5. La explicación de cualquier discrepancia que hayas encontrado, con lo que dicen las
+   reglas de negocio, o la aclaración de que las reglas no alcanzan para decidir, y **sin
+   haberla corregido**.
