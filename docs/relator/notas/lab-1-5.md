@@ -16,6 +16,11 @@ En el paso 2, si hay tiempo, muestre en vivo cómo desaparece una línea. Corrom
 de una transacción en `escenario/datos/transacciones.txt`, ejecute el escenario y compare
 el total de transacciones. Después restaure con `bash scripts/reiniciar-lab.sh lab-1-5`.
 
+**Monto negativo.** Si alguien, al revisar la selección de tramo, nota que un monto
+negativo recibe el tramo más bajo, la respuesta es que es un comportamiento real del
+sistema que nadie plantó, que el negocio no admite montos negativos en una venta y que
+corregirlo queda fuera del alcance del laboratorio.
+
 ## Errores típicos
 
 - Hacer el paso 5 en modo **Ask**. El agente propone el cambio pero no lo aplica.

@@ -123,7 +123,7 @@ los dos y de ninguno. No hay base de datos: todo se carga en memoria al arrancar
 | `planes.txt` | 4 planes de comisiones con sus tramos |
 | `comercios.txt` | 40 comercios afiliados |
 | `transacciones.txt` | 2.037 transacciones en tres periodos mensuales |
-| `contracargos.txt` | 30 contracargos en distintos estados |
+| `contracargos.txt` | 30 contracargos en distintos estados. La fecha de cada contracargo es la de su aprobación |
 
 Los periodos cubiertos son 2026-04, 2026-05 y 2026-06. El periodo por omisión del
 ejecutable es **2026-06**.

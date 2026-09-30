@@ -363,3 +363,25 @@ dispara alertas que cuestan más explicaciones que el valor pedagógico que apor
 
 Tampoco hay código que no compile ni errores funcionales visibles fuera de los tres
 centavos de DEF-01.
+
+---
+
+## Comportamientos no planificados
+
+Comportamientos reales del sistema que nadie plantó. No forman parte del catálogo de diez
+defectos, que es el número que usan el material publicado y la sesión de apertura. No se
+corrigen.
+
+### Un monto negativo recibe el tramo más bajo
+
+`CalculadoraComision.determinarTramo` (Java) y `CalculadoraComision.DeterminarTramo` (.NET)
+recorren los tramos buscando uno que contenga el monto. Un monto negativo no cae en
+ninguno, y el método devuelve el último tramo de la lista como valor por omisión. Con el
+plan PL01, un monto de -50.00 recibe 2,1 %, el porcentaje más bajo.
+
+Lo encontró la verificación de SPEC-009 al probar el borde inferior en el laboratorio 5.3.
+Los datos de ejemplo no tienen montos negativos, así que no cambia ninguna salida.
+
+Si un participante lo encuentra, la respuesta es que es un comportamiento real del sistema
+que nadie plantó, que el negocio no admite montos negativos en una venta y que corregirlo
+queda fuera del alcance del laboratorio.

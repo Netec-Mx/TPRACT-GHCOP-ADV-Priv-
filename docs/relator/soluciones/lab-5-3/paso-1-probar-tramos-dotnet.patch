@@ -1,9 +1,9 @@
 diff --git a/escenario/dotnet/LiquidacionComercios.Pruebas/Calculo/CalculadoraComisionPruebas.cs b/escenario/dotnet/LiquidacionComercios.Pruebas/Calculo/CalculadoraComisionPruebas.cs
 new file mode 100644
-index 0000000..a2216e6
+index 0000000..baf9550
 --- /dev/null
 +++ b/escenario/dotnet/LiquidacionComercios.Pruebas/Calculo/CalculadoraComisionPruebas.cs
-@@ -0,0 +1,118 @@
+@@ -0,0 +1,117 @@
 +using Pe.PasarelaAndina.Calculo;
 +using Pe.PasarelaAndina.Modelo;
 +using Xunit;
@@ -23,13 +23,12 @@ index 0000000..a2216e6
 +    /// 10000.00) se queda en ese tramo, el de abajo, y no pasa al siguiente. El
 +    /// cierre de la liquidacion (CalculadoraLiquidacion) usa en cambio
 +    /// "monto >= MontoDesde &amp;&amp; monto &lt; MontoHasta", que para esos
-+    /// mismos montos elige el tramo siguiente. Las reglas de negocio
-+    /// (escenario/README.md, regla 1) dicen que se aplica "el porcentaje del
-+    /// tramo que corresponde a su monto" pero no precisan si el limite superior
-+    /// de un tramo es inclusivo o exclusivo, asi que no alcanzan para decidir
-+    /// cual de las dos implementaciones es la correcta. Estas pruebas
-+    /// documentan el comportamiento actual de DeterminarTramo, sin corregir la
-+    /// discrepancia.
++    /// mismos montos elige el tramo siguiente. Las reglas de negocio no precisan
++    /// si el limite superior de un tramo es inclusivo, y el negocio decidio que si
++    /// lo es. Un monto que cae justo en el limite pertenece al tramo inferior.
++    /// DeterminarTramo cumple esa decision y el cierre de la liquidacion no. Estas
++    /// pruebas documentan el comportamiento de DeterminarTramo y no corrigen la
++    /// liquidacion.
 +    /// </summary>
 +    public class CalculadoraComisionPruebas
 +    {

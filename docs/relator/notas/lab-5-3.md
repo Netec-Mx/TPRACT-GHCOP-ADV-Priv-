@@ -17,15 +17,28 @@ liquidación. No coinciden en ninguno de los tres bordes (DEF-08).
 Al comercio se le cotiza con una y se le cobra con la otra.
 
 **Punto delicado.** Las reglas de negocio de `escenario/README.md` no dicen a qué tramo
-pertenece un monto que cae exactamente en el límite. No hay una respuesta correcta en el
-material. La conclusión que se busca en la sala es que las dos implementaciones tienen que
-coincidir y que decidir cuál vale es una decisión de negocio, no del desarrollador ni del
-agente. Si alguien afirma que una de las dos es la correcta, pregunte en qué regla se
-apoya.
+pertenece un monto que cae exactamente en el límite. Es a propósito. El laboratorio existe
+para que el participante detecte la ambigüedad y la escale al negocio, y en la sala el
+negocio es usted. Si alguien afirma que una de las dos implementaciones es la correcta,
+pregunte en qué regla se apoya.
 
-La verificación encontró además que un monto negativo cae en el último tramo en las dos
-calculadoras. No figura en el catálogo de defectos. Ver la sección de hallazgos del informe
-de SPEC-009. Si aparece en la sala, se reconoce y no se corrige.
+**La respuesta del negocio**, que usted entrega cuando un participante la pide:
+
+> Un monto que cae exactamente en el límite pertenece al tramo inferior. El límite superior
+> de cada tramo es inclusivo. 500 está en el primer tramo, 2000 en el segundo y 10000 en
+> el tercero.
+
+Con esa respuesta, la calculadora de comisión es la que cumple y el cierre de la
+liquidación es el que cobra de menos en los bordes. No la escriba en ningún archivo que
+vean los participantes. Si la respuesta estuviera en el README, el laboratorio perdería su
+razón de ser.
+
+**Monto negativo.** Las pruebas del borde inferior suelen mostrar que un monto negativo
+recibe el tramo más bajo en las dos calculadoras. Si un participante lo encuentra, la
+respuesta es que es un comportamiento real del sistema que nadie plantó, que el negocio no
+admite montos negativos en una venta y que corregirlo queda fuera del alcance del
+laboratorio. Está registrado en `docs/relator/04-defectos-plantados.md`, sección
+«Comportamientos no planificados».
 
 El paso 2 documenta la estrategia de pruebas en Markdown. El paso 3 revisa el diff y
 clasifica hallazgos. Es el momento de proyectar el caso de clase 01,
@@ -75,4 +88,6 @@ pase al paso 2 y vea la tabla de bordes en la pantalla de un compañero.
 
 `docs/relator/soluciones/lab-5-3/paso-1-probar-tramos-java.patch` y
 `paso-1-probar-tramos-dotnet.patch`. Un archivo nuevo de pruebas en cada escenario,
-verificado sobre una copia limpia. 30 pruebas en verde y el comparador en cero.
+verificado sobre una copia limpia. 30 pruebas en verde y el comparador en cero. Las
+pruebas de los bordes esperan el tramo inferior, que es la decisión del negocio, y el
+comentario de la clase de prueba lo dice.
