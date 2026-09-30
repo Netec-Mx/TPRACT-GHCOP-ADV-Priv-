@@ -36,6 +36,9 @@ Esto significa:
 Si ves algo que te parece un problema y no forma parte de la tarea, menciónalo en tu
 respuesta y no lo toques.
 
+El repositorio tiene un hook en `.github/hooks/` que puede bloquear algunas acciones. Si
+bloquea una, informa el motivo y no intentes rodearlo.
+
 ## Convenciones del repositorio
 
 Todo el contenido va en español neutro. Los identificadores del código siguen la

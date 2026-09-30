@@ -20,7 +20,7 @@ set -u
 # Version del script y requisitos minimos
 # ---------------------------------------------------------------------------
 
-readonly VERSION_SCRIPT="2.2.0"
+readonly VERSION_SCRIPT="2.3.0"
 
 # Piso exigido por herramienta. Es el minimo con el que el taller es viable, no lo que se
 # solicita para la imagen de la maquina virtual. La distincion entre ambos esta explicada
@@ -682,6 +682,57 @@ verificar_dominios() {
 }
 
 # ---------------------------------------------------------------------------
+# Hook de proteccion de datos
+# ---------------------------------------------------------------------------
+
+# Hook PreToolUse del repositorio. Se comprueba que exista, que bloquee una edicion de
+# prueba y deje pasar otra, y que los hooks no esten deshabilitados en Visual Studio Code
+# con chat.useHooks, que por omision esta activo.
+readonly HOOK_CONFIG=".github/hooks/proteger-datos-escenario.json"
+readonly HOOK_SCRIPT=".github/hooks/proteger-datos-escenario.js"
+readonly AJUSTE_HOOKS="chat.useHooks"
+
+verificar_hook_datos() {
+    if [ ! -f "$dir_repositorio/$HOOK_CONFIG" ] || [ ! -f "$dir_repositorio/$HOOK_SCRIPT" ]; then
+        falla "No se encontro el hook de proteccion de datos en $HOOK_CONFIG. El repositorio esta incompleto"
+        return 1
+    fi
+    if ! command -v node >/dev/null 2>&1; then
+        falla "Sin Node.js el hook de proteccion de datos no puede ejecutarse"
+        return 1
+    fi
+
+    printf '%s' '{"tool_name":"editFiles","tool_input":{"files":["escenario/datos/planes.txt"]}}' \
+        | (cd "$dir_repositorio" && node "$HOOK_SCRIPT" >/dev/null 2>&1)
+    rc_bloqueo=$?
+    printf '%s' '{"tool_name":"editFiles","tool_input":{"files":["escenario/java/pom.xml"]}}' \
+        | (cd "$dir_repositorio" && node "$HOOK_SCRIPT" >/dev/null 2>&1)
+    rc_paso=$?
+    if [ "$rc_bloqueo" -ne 2 ] || [ "$rc_paso" -ne 0 ]; then
+        falla "El hook de proteccion de datos no responde como se espera (bloqueo $rc_bloqueo, se esperaba 2; paso $rc_paso, se esperaba 0)"
+        return 1
+    fi
+    ok "El hook de proteccion de datos bloquea una edicion de prueba y deja pasar otra"
+
+    if [ -z "$vscode_ruta" ]; then
+        aviso "No se pudo comprobar $AJUSTE_HOOKS: Visual Studio Code no esta instalado"
+        return 0
+    fi
+    datos=$(directorio_datos_vscode)
+    [ -n "$datos" ] || { aviso "No se pudo comprobar $AJUSTE_HOOKS: no se ubico el perfil de Visual Studio Code"; return 0; }
+    estado=$(leer_estado_funciones_ia "$datos" "$dir_repositorio/.vscode/settings.json" \
+        "$EXTENSION_COPILOT_INTEGRADA" "$AJUSTE_HOOKS")
+    usuario=$(valor_estado "$estado" ajuste_usuario)
+    espacio=$(valor_estado "$estado" ajuste_espacio)
+    if [ "$espacio" = "false" ] || { [ "$usuario" = "false" ] && [ "$espacio" != "true" ]; }; then
+        falla "Los hooks estan deshabilitados con $AJUSTE_HOOKS en false. Quitar ese ajuste de settings.json para que el hook de proteccion de datos funcione"
+        return 1
+    fi
+    ok "Hooks habilitados en Visual Studio Code ($AJUSTE_HOOKS no esta deshabilitado)"
+    return 0
+}
+
+# ---------------------------------------------------------------------------
 # Servidor MCP local
 # ---------------------------------------------------------------------------
 
@@ -829,6 +880,9 @@ verificar_herramienta "Visual Studio Code" "$vscode_ruta" "$MIN_CODE" "si" "$vsc
 
 titulo "GitHub Copilot en Visual Studio Code"
 verificar_funciones_ia
+
+titulo "Hook de proteccion de datos"
+verificar_hook_datos || true
 
 titulo "Servidor MCP local"
 verificar_servidor_mcp || true

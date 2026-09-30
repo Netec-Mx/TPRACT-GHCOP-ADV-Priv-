@@ -72,6 +72,14 @@ Solo se necesita el stack del lenguaje que usará cada participante, pero si la 
 
 ### 2.3 Preparación al construir la imagen
 
+**Hooks de Copilot.** El repositorio trae un hook en `.github/hooks/` que se ejecuta con
+Node.js. Visual Studio Code ejecuta los hooks del espacio de trabajo cuando el ajuste
+`chat.useHooks` está activo, que es su valor por omisión, y cuando la carpeta está marcada
+como de confianza. No hay que habilitar nada, pero la imagen no debe fijar
+`chat.useHooks` en `false`. El script de verificación lo comprueba y prueba el hook.
+
+**Servidor MCP.**
+
 El servidor MCP del laboratorio 3.4 depende de dos paquetes de npm, fijados con versión
 exacta en `mcp/servidor-local/package.json` y `package-lock.json`. En clase no se descarga
 nada, así que se instalan una sola vez al construir la imagen, con el repositorio ya

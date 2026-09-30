@@ -19,6 +19,9 @@ paso, qué hacer si alguien se atrasa y dónde está la solución de referencia.
 | 5.3 | [lab-5-3.md](lab-5-3.md) | [`../soluciones/lab-5-3/`](../soluciones/lab-5-3/) |
 | 5.4 | [lab-5-4.md](lab-5-4.md) | [`../soluciones/lab-5-4/`](../soluciones/lab-5-4/) |
 
+El hook que protege los datos del escenario tiene sus propias notas, con una demostración
+opcional, en [hook-proteccion-datos.md](hook-proteccion-datos.md).
+
 ## Antes de cada laboratorio
 
 Cada participante corre `bash scripts/reiniciar-lab.sh lab-X-Y` desde la raíz de su
