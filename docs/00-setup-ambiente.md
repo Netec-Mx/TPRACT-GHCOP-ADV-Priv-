@@ -44,7 +44,7 @@ puede seguir el taller sin quedar fuera.
 |---|---|---|
 | Git | 2.40 | Clonar el repositorio y los laboratorios de revisión. Aporta además Git Bash, el intérprete de los scripts en Windows |
 | JDK | 21 (LTS) | Escenario Java |
-| SDK de .NET | 8.0 (LTS) | Escenario .NET |
+| SDK de .NET | 10.0 (LTS) | Escenario .NET, que apunta a `net10.0` |
 | Node.js | 22 (LTS) | Servidor MCP local del capítulo 3, y lectura del perfil del editor en el script de verificación |
 | Visual Studio Code | 1.116 | IDE principal del taller. Es la primera versión que trae GitHub Copilot integrado |
 | curl | Cualquiera | Comprobación de conectividad. Viene con Git para Windows, macOS y Linux |
@@ -77,6 +77,22 @@ Node.js. Visual Studio Code ejecuta los hooks del espacio de trabajo cuando el a
 `chat.useHooks` está activo, que es su valor por omisión, y cuando la carpeta está marcada
 como de confianza. No hay que habilitar nada, pero la imagen no debe fijar
 `chat.useHooks` en `false`. El script de verificación lo comprueba y prueba el hook.
+
+**Dependencias de compilación.** Los escenarios dependen de JUnit, de los plugins de
+Maven y de los paquetes de prueba de NuGet. En clase no se descargan. Se dejan en la caché
+local del usuario de la máquina virtual, en `~/.m2` y `~/.nuget/packages`, compilando y
+probando una vez los dos escenarios con red, desde la raíz del repositorio:
+
+```bash
+mvn -B -f escenario/java/pom.xml clean package
+dotnet test escenario/dotnet/LiquidacionComercios.Pruebas
+dotnet build escenario/dotnet/LiquidacionComercios -c Release
+```
+
+El script de verificación compila los dos escenarios sobre una copia temporal, con Maven
+desconectado y con una fuente de NuGet vacía. Si falta algo en la caché, falla y repite
+estos comandos. La caché es por usuario, así que se prepara con la misma cuenta que usan
+los participantes.
 
 **Servidor MCP.**
 

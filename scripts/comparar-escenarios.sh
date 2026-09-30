@@ -198,7 +198,7 @@ fi
 titulo "Ejecucion"
 
 jar_java="$ruta_java/target/liquidacion-comercios.jar"
-dll_dotnet="$ruta_dotnet/LiquidacionComercios/bin/Release/net8.0/LiquidacionComercios.dll"
+dll_dotnet="$ruta_dotnet/LiquidacionComercios/bin/Release/net10.0/LiquidacionComercios.dll"
 
 if [ ! -f "$jar_java" ]; then
     falla "No existe $jar_java, compila primero sin --sin-compilar"

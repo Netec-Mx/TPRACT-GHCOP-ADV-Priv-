@@ -81,13 +81,13 @@ Desde `escenario/dotnet/`:
 
 ```bash
 dotnet build LiquidacionComercios -c Release
-dotnet LiquidacionComercios/bin/Release/net8.0/LiquidacionComercios.dll
+dotnet LiquidacionComercios/bin/Release/net10.0/LiquidacionComercios.dll
 ```
 
 Se puede indicar otro periodo y otro directorio de datos:
 
 ```bash
-dotnet LiquidacionComercios/bin/Release/net8.0/LiquidacionComercios.dll 2026-05 ../datos
+dotnet LiquidacionComercios/bin/Release/net10.0/LiquidacionComercios.dll 2026-05 ../datos
 ```
 
 Para correr solo las pruebas:

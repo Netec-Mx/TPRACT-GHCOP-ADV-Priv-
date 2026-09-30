@@ -27,7 +27,7 @@ readonly VERSION_SCRIPT="2.3.0"
 # en docs/00-setup-ambiente.md.
 readonly MIN_GIT="2.40"
 readonly MIN_JDK="21"
-readonly MIN_DOTNET="8.0"
+readonly MIN_DOTNET="10.0"
 readonly MIN_NODE="22"
 readonly MIN_MAVEN="3.9"
 
@@ -682,6 +682,50 @@ verificar_dominios() {
 }
 
 # ---------------------------------------------------------------------------
+# Compilacion sin red
+# ---------------------------------------------------------------------------
+
+# En clase no se descarga nada. Las dependencias de Maven y de NuGet tienen que estar en
+# la cache local desde la construccion de la imagen. Se compilan los dos escenarios sobre
+# una copia temporal, sin tocar el repositorio: Maven en modo desconectado y NuGet con una
+# fuente vacia, de modo que cualquier paquete que falte en la cache hace fallar.
+readonly PREPARACION_CACHE="mvn -B -f escenario/java/pom.xml clean package; dotnet test escenario/dotnet/LiquidacionComercios.Pruebas; dotnet build escenario/dotnet/LiquidacionComercios -c Release"
+
+verificar_compilacion_sin_red() {
+    if ! command -v git >/dev/null 2>&1 || ! command -v mvn >/dev/null 2>&1 || ! command -v dotnet >/dev/null 2>&1; then
+        aviso "No se comprobo la compilacion sin red: faltan git, Maven o el SDK de .NET"
+        return 0
+    fi
+
+    temporal=$(mktemp -d 2>/dev/null) || { aviso "No se pudo crear un directorio temporal para compilar"; return 0; }
+    fuente_vacia="$temporal/fuente-vacia"
+    mkdir -p "$fuente_vacia"
+    if ! git -C "$dir_repositorio" archive --format=tar HEAD escenario/java escenario/dotnet 2>/dev/null \
+        | tar -x -C "$temporal" 2>/dev/null; then
+        aviso "No se pudo copiar el escenario para compilarlo"
+        rm -rf "${temporal:?}"
+        return 0
+    fi
+
+    if (cd "$temporal/escenario/java" && mvn -o -B -q package > "$temporal/maven.log" 2>&1); then
+        ok "El escenario Java compila y prueba sin red"
+    else
+        falla "El escenario Java no compila sin red: faltan dependencias en la cache de Maven. Prepararla al construir la imagen, desde la raiz del repositorio y con red: $PREPARACION_CACHE. Detalle: $(grep -m1 -E 'ERROR' "$temporal/maven.log" | cut -c1-200)"
+    fi
+
+    if (cd "$temporal/escenario/dotnet" \
+        && dotnet restore LiquidacionComercios.Pruebas --source "$fuente_vacia" > "$temporal/nuget.log" 2>&1 \
+        && dotnet build LiquidacionComercios.Pruebas --no-restore >> "$temporal/nuget.log" 2>&1); then
+        ok "El escenario .NET restaura y compila sin red"
+    else
+        falla "El escenario .NET no compila sin red: faltan paquetes en la cache de NuGet. Prepararla al construir la imagen, desde la raiz del repositorio y con red: $PREPARACION_CACHE. Detalle: $(grep -m1 -E 'error' "$temporal/nuget.log" | tr -d '\r' | cut -c1-200)"
+    fi
+
+    rm -rf "${temporal:?}"
+    return 0
+}
+
+# ---------------------------------------------------------------------------
 # Hook de proteccion de datos
 # ---------------------------------------------------------------------------
 
@@ -880,6 +924,9 @@ verificar_herramienta "Visual Studio Code" "$vscode_ruta" "$MIN_CODE" "si" "$vsc
 
 titulo "GitHub Copilot en Visual Studio Code"
 verificar_funciones_ia
+
+titulo "Compilacion sin red"
+verificar_compilacion_sin_red
 
 titulo "Hook de proteccion de datos"
 verificar_hook_datos || true

@@ -8,7 +8,7 @@ applyTo: 'escenario/dotnet/**/*.cs,escenario/dotnet/**/*.csproj'
 
 ## Versión y compilación
 
-- Los proyectos apuntan a `net8.0`, con `Nullable` e `ImplicitUsings` deshabilitados. No
+- Los proyectos apuntan a `net10.0`, con `Nullable` e `ImplicitUsings` deshabilitados. No
   los habilites y no uses características que exijan otra versión de destino.
 - No agregues paquetes NuGet. El proyecto de pruebas ya tiene xUnit.
 - Compila y prueba desde `escenario/dotnet/`:
