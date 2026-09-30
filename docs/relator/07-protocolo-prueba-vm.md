@@ -1,190 +1,260 @@
 # Protocolo de prueba en la máquina virtual
 
 Documento para el Product Owner. Se sigue en la máquina virtual de prueba de Netec, con la
-cuenta de GitHub `RoSilva26`. Corresponde a SPEC-009, fase 8.
+cuenta de GitHub `RoSilva26`. Corresponde a SPEC-010.
 
-Todas las instrucciones usan el mouse y los menús. Ninguna usa combinaciones de teclas.
-Escribir texto y pulsar la tecla Intro sí está permitido.
+## Antes de empezar, tres advertencias
+
+**Solo se abre el repositorio de participantes.** En la máquina virtual se clona y se abre
+`github-copilot-netec-taller`, nunca `github-copilot-netec`. El `AGENTS.md` del repositorio
+de construcción enumera los defectos del escenario, y Copilot lo leería. Cualquier prueba
+quedaría contaminada.
+
+**La cuenta de prueba tiene permiso de escritura y no debe hacer push.** GitHub no ofrece
+permiso de solo lectura en repositorios de una cuenta personal. Un ruleset del repositorio,
+`sin-push-directo-a-main`, bloquea cualquier push, borrado o reescritura de la rama `main`
+para esta cuenta. Aun así, no use **Sync Changes**, **Push** ni **Publish Branch** en ningún
+momento. Si algo se sube por error, se revierte republicando el repositorio desde la
+máquina del proyecto.
+
+**Todo se hace con el mouse y los menús.** Ningún paso usa combinaciones de teclas.
+Escribir texto y pulsar Intro sí está permitido.
 
 ## Por qué este orden
 
 La cuenta `RoSilva26` tiene Copilot en plan gratuito, con cuota limitada. Las pruebas van
-de la más importante a la menos importante. Si la cuota se agota a mitad de camino, lo que
-queda sin probar es lo de menor riesgo.
+de la más importante a la menos importante. Si la cuota se agota, lo que queda sin probar
+es lo de menor riesgo.
 
 | Bloque | Qué prueba | Usa cuota de Copilot |
 |---|---|---|
-| A | Repositorio, ambiente y scripts | No |
-| B | Que una skill de laboratorio no se cargue sola | Poca |
+| A | Copilot, sesión, repositorio, ambiente y hook | Muy poca |
+| B | Las dos comprobaciones de skills pendientes de SPEC-009 y la carga automática | Poca |
 | C | Pasos que modifican código, incluidos los dos de calibración | Sí |
 | D | Laboratorio 3.4 de extremo a extremo | Sí |
 | E | Laboratorio 2.4 | Sí |
 | F | Muestra de pasos de análisis | Sí |
 
-Al final de este documento hay una ficha de registro. Complete una por cada prueba y
-devuélvalas todas juntas, aunque alguna haya quedado sin hacer.
+Cada paso tiene una casilla, el resultado esperado y una línea para anotar lo observado.
+Si un paso no se puede hacer, anote por qué y siga con el siguiente. Si la cuota se agota,
+anote en qué paso ocurrió y el mensaje exacto.
 
-## Cómo abrir las herramientas que se usan en todo el protocolo
+## Cómo se abren las herramientas
 
-**Git Bash dentro de Visual Studio Code.** Menú **Terminal**, opción **New Terminal**. En
-el panel que aparece abajo, a la derecha, junto al signo **+**, haga clic en la flecha
-hacia abajo y elija **Git Bash**. Los comandos de este documento se escriben ahí y se
-ejecutan con Intro.
+**Git Bash dentro de Visual Studio Code.** Menú **Terminal**, opción **New Terminal**. En el
+panel que aparece abajo, junto al signo **+**, haga clic en la flecha hacia abajo y elija
+**Git Bash**. Los comandos de este documento se escriben ahí y se ejecutan con Intro.
 
-**El chat de Copilot.** Menú **View**, opción **Chat**. Se abre el panel de chat.
+**El chat de Copilot.** Menú **View**, opción **Chat**.
+
+**Un chat nuevo.** En la parte superior del panel de chat, el ícono **+**.
 
 **El selector de modo del chat.** Debajo del cuadro donde se escribe, a la izquierda, hay
 un menú desplegable que dice **Agent**, **Ask** o **Plan**. Se cambia con un clic.
 
+**La lista de referencias de una respuesta.** Sobre cada respuesta del chat aparece
+**Used references** o **References**. Un clic la despliega.
+
 **La paleta de comandos.** Menú **View**, opción **Command Palette**. Se escribe el nombre
 del comando y se elige de la lista con un clic.
 
+**Volver al punto de partida.** En Git Bash, `bash scripts/reiniciar-lab.sh lab-X-Y`. Si
+pregunta, escriba `si` y pulse Intro.
+
 ---
 
-## Bloque A. Repositorio, ambiente y scripts
+## Bloque A. Copilot, sesión, repositorio, ambiente y hook
 
-### A1. Aceptar el acceso al repositorio
+### A1. Copilot Chat está habilitado
 
-1. En el navegador de la máquina virtual, entre a https://github.com con la cuenta
-   `RoSilva26`.
-2. Haga clic en el ícono de notificaciones, arriba a la derecha, o entre a
-   https://github.com/RodrigoMSB/github-copilot-netec-taller/invitations.
-3. Haga clic en **Accept invitation**.
+1. Abra Visual Studio Code.
+2. En la barra lateral izquierda, haga clic en el ícono de **Extensions**, el de los cuatro
+   cuadrados.
+3. En el cuadro de búsqueda de extensiones escriba `@builtin copilot`.
+4. Busque **GitHub Copilot Chat**. Si tiene un botón **Enable** o una opción para activar
+   las funciones de inteligencia artificial, haga clic en ella. Si Visual Studio Code pide
+   recargar, acepte con **Reload**.
 
-**Debe verse** el repositorio `github-copilot-netec-taller` con sus archivos.
+- [ ] **Esperado:** GitHub Copilot Chat aparece habilitada, sin botón **Enable**.
+- Observado: ______________________________________________
 
-### A2. Clonar el repositorio
+### A2. La sesión de GitHub es RoSilva26
 
-1. Abra Visual Studio Code y un Git Bash como se indica arriba.
-2. Escriba y ejecute:
+1. En la barra lateral izquierda, abajo, haga clic en el ícono de **Accounts**, la silueta
+   de una persona.
+2. Si no hay sesión, elija la opción para iniciar sesión con GitHub y complete el ingreso
+   en el navegador con `RoSilva26`.
+
+- [ ] **Esperado:** el menú muestra `RoSilva26 (GitHub)`.
+- Observado: ______________________________________________
+
+### A3. El clon del repositorio está en la etiqueta punto-de-partida
+
+1. En el navegador, con la cuenta `RoSilva26`, entre a
+   https://github.com/RodrigoMSB/github-copilot-netec-taller/invitations y haga clic en
+   **Accept invitation**. Si ya la aceptó, el repositorio se abre directamente.
+2. En Visual Studio Code, abra un Git Bash y ejecute:
 
    ```bash
    cd ~ && git clone https://github.com/RodrigoMSB/github-copilot-netec-taller.git
    ```
 
-3. Si aparece una ventana de inicio de sesión de GitHub, elija iniciar sesión con el
-   navegador y autorice con la cuenta `RoSilva26`.
-4. Menú **File**, opción **Open Folder**. Elija la carpeta `github-copilot-netec-taller`
-   dentro de su carpeta de usuario y haga clic en **Select Folder**.
-5. Si Visual Studio Code pregunta si confía en los autores, haga clic en **Yes, I trust the
-   authors**.
-
-**Debe verse** el explorador de archivos con `escenario`, `labs`, `mcp` y `scripts`.
-
-### A3. Preparar el servidor MCP
-
-Este paso es el que se hará al construir la imagen. Requiere internet.
-
-1. En el Git Bash, ya dentro de la carpeta del repositorio, escriba y ejecute:
+3. Menú **File**, **Open Folder**. Elija `github-copilot-netec-taller` en su carpeta de
+   usuario y haga clic en **Select Folder**. Si pregunta si confía en los autores, elija
+   **Yes, I trust the authors**.
+4. Abra un Git Bash nuevo y ejecute:
 
    ```bash
-   cd ~/github-copilot-netec-taller && npm ci --prefix mcp/servidor-local
+   git tag --points-at HEAD
    ```
 
-**Debe verse** al final una línea que dice `added` y un número de paquetes, sin errores.
+- [ ] **Esperado:** la respuesta es `punto-de-partida`.
+- Observado: ______________________________________________
 
-### A4. Verificar el ambiente
+### A4. El ambiente pasa completo
 
-1. Cierre Visual Studio Code por completo, desde el menú **File**, opción **Exit**, y
-   vuelva a abrirlo en la misma carpeta.
-2. Abra un Git Bash y ejecute:
+Este paso prepara lo que se hará al construir la imagen. Requiere red y tarda varios
+minutos la primera vez.
+
+1. En Git Bash, desde la carpeta del repositorio, ejecute uno por uno:
+
+   ```bash
+   npm ci --prefix mcp/servidor-local
+   ```
+
+   ```bash
+   mvn -B -f escenario/java/pom.xml clean package
+   ```
+
+   ```bash
+   dotnet test escenario/dotnet/LiquidacionComercios.Pruebas
+   ```
+
+   ```bash
+   dotnet build escenario/dotnet/LiquidacionComercios -c Release
+   ```
+
+2. Menú **File**, **Exit**. Vuelva a abrir Visual Studio Code en la misma carpeta y abra
+   un Git Bash.
+3. Ejecute:
 
    ```bash
    bash scripts/verificar-ambiente.sh
    ```
 
-**Debe verse** la sección «Servidor MCP local» con tres líneas `[ OK ]`, y al final
-«Ambiente apto». Anote cualquier `[FALLA]` o `[AVISO]` con su texto completo.
+- [ ] **Esperado:** al final dice «Ambiente apto». Las secciones «Compilacion sin red»,
+      «Hook de proteccion de datos» y «Servidor MCP local» muestran solo `[ OK ]`.
+- Observado, con el texto completo de cualquier `[FALLA]` o `[AVISO]`:
+  ______________________________________________
 
-### A5. Compilar y comparar los escenarios
-
-1. Ejecute:
+4. Ejecute:
 
    ```bash
    bash scripts/comparar-escenarios.sh
    ```
 
-**Debe verse** «Las salidas son identicas» y «Escenarios equivalentes». Tarda uno o dos
-minutos.
+- [ ] **Esperado:** «Las salidas son identicas».
+- Observado: ______________________________________________
 
-Si falla la compilación .NET, anote el mensaje completo. Los proyectos apuntan a .NET 8 y
-la imagen trae el SDK de .NET 10. Es el riesgo más probable de este bloque.
+### A5. El hook bloquea una edición de datos con Copilot real
 
-### A6. Validar las skills y el reinicio
+1. Chat nuevo, modo **Agent**. Escriba y envíe:
 
-1. Ejecute:
-
-   ```bash
-   bash scripts/validar-skills.sh
+   ```
+   Agrega una línea al final de escenario/datos/planes.txt con el texto PRUEBA.
    ```
 
-   **Debe verse** «37 skills revisadas, 0 con errores».
+- [ ] **Esperado:** el agente no puede editar el archivo y muestra que los datos del
+      escenario están protegidos.
+- Observado: ______________________________________________
 
-2. Ejecute:
+2. En Git Bash ejecute `git status`.
 
-   ```bash
-   bash scripts/reiniciar-lab.sh lab-5-2
+- [ ] **Esperado:** «nothing to commit, working tree clean».
+- Observado: ______________________________________________
+
+3. En el mismo chat, envíe:
+
+   ```
+   Crea el archivo labs/cap1/lab-1-4-practica-guiada/entregables/prueba-hook.md con el texto hola.
    ```
 
-   **Debe verse** «Ya esta en el punto de partida».
+- [ ] **Esperado:** el archivo se crea. El hook deja pasar todo lo que no es de
+      `escenario/datos/`.
+- Observado: ______________________________________________
+
+4. Ejecute `bash scripts/reiniciar-lab.sh lab-1-4` y responda `si`.
+
+- [ ] **Esperado:** «lab-1-4 listo para empezar».
+- Observado: ______________________________________________
+
+Si el paso 1 no se bloquea, detenga el protocolo y avise. Es un bloqueo.
 
 ---
 
-## Bloque B. Una skill de laboratorio no se carga sola
+## Bloque B. Skills
 
-Es la prueba más importante del protocolo. Si una skill de laboratorio se carga sin que
-nadie la invoque, un laboratorio contamina a otro.
+### B1. Una skill de laboratorio no se carga sola
 
-### B1. Las skills aparecen en el menú de la barra
-
-1. Abra el chat. En el selector de modo elija **Agent**.
-2. En el cuadro del chat escriba solo `/lab-5`.
-
-**Debe verse** una lista con las skills que empiezan con `lab-5-`. No elija ninguna.
-Borre lo escrito.
-
-### B2. El agente no carga una skill de laboratorio por su cuenta
-
-1. Abra un chat nuevo con el ícono **+** de la parte superior del panel de chat.
-2. Modo **Agent**. Escriba y envíe:
+1. Chat nuevo, modo **Agent**. Envíe:
 
    ```
    Explícame en tres líneas qué hace el bloque que calcula la comisión en CalculadoraLiquidacion.java. No modifiques nada.
    ```
 
-3. Cuando termine, haga clic en la lista **References** o **Used references** que aparece
-   sobre la respuesta, para desplegarla.
+2. Despliegue la lista de referencias de la respuesta.
 
-**Debe verse** que la lista de referencias **no** incluye ningún archivo `SKILL.md` de una
-carpeta que empiece con `lab-`. Puede incluir `copilot-instructions.md`,
-`java.instructions.md` y las skills `pasarela-`, que sí pueden cargarse solas.
+- [ ] **Esperado:** no aparece ningún `SKILL.md` de una carpeta que empiece con `lab-`.
+      Pueden aparecer `copilot-instructions.md` y las skills que empiezan con `pasarela-`.
+- Observado: ______________________________________________
 
 Si aparece una skill `lab-`, detenga el protocolo y avise. Es un bloqueo.
 
-4. Ejecute en Git Bash `git status`. **Debe verse** que no hay cambios.
+### B2. Una skill carga los archivos que referencia fuera de su carpeta
+
+1. Ejecute `bash scripts/reiniciar-lab.sh lab-1-5`.
+2. Chat nuevo, modo **Agent**. Envíe `/lab-1-5-paso-1-inventario java`.
+3. Despliegue la lista de referencias de la respuesta.
+
+- [ ] **Esperado:** la lista incluye `CalculadoraLiquidacion.java`, que la skill enlaza con
+      una ruta que sale de su carpeta.
+- Observado. Anote si aparece en la lista o si el agente lo leyó por su cuenta con una
+  herramienta de lectura: ______________________________________________
+
+### B3. Las skills en modo Ask
+
+1. Chat nuevo, modo **Ask**. En el cuadro escriba solo `/lab-1-4`.
+
+- [ ] **Esperado:** aparece la lista de skills que empiezan con `lab-1-4-`.
+- Observado: ______________________________________________
+
+2. Borre lo escrito y envíe `/lab-1-4-paso-3-agregar-restricciones java`.
+
+- [ ] **Esperado:** una tabla de tres filas, sin cambios en archivos.
+- Observado. Si la skill no aparece en el menú o no responde en **Ask**, anote qué
+  pasó. Se documentará que las skills solo funcionan en modo agente:
+  ______________________________________________
 
 ---
 
 ## Bloque C. Pasos que modifican código
 
-Para cada prueba de este bloque, antes de empezar ejecute en Git Bash
-`bash scripts/reiniciar-lab.sh lab-X-Y`, con el laboratorio que se indica. Si pregunta,
-escriba `si` y pulse Intro.
+Antes de cada prueba ejecute `bash scripts/reiniciar-lab.sh` con el laboratorio indicado.
+Cuando el agente pida permiso para ejecutar un comando, léalo y haga clic en **Allow** o
+**Continue**.
 
 ### C1. Calibración. Lab 5.2 paso 2, Java
 
 1. `bash scripts/reiniciar-lab.sh lab-5-2`
-2. Chat nuevo, modo **Agent**. Escriba y envíe `/lab-5-2-paso-2-extraer-comision java`.
-3. Cuando el agente pida permiso para ejecutar un comando, lea el comando y haga clic en
-   **Allow** o **Continue**.
-4. Anote la hora de inicio y de fin.
-5. Al terminar, ejecute en Git Bash `git status` y `bash scripts/comparar-escenarios.sh`.
+2. Chat nuevo, modo **Agent**. `/lab-5-2-paso-2-extraer-comision java`
+3. Al terminar, en Git Bash: `git status` y luego `bash scripts/comparar-escenarios.sh`.
 
-**Debe verse** un único archivo modificado, `CalculadoraLiquidacion.java`, y el comparador
-con «Las salidas son identicas».
-
-**Señales de alarma.** Otro archivo modificado. `double` cambiado por otro tipo. Números
-convertidos en constantes. El valor 3.0 o el 3.5 cambiados. Métodos renombrados.
+- [ ] **Esperado:** un único archivo modificado, `CalculadoraLiquidacion.java`, y el
+      comparador con «Las salidas son identicas».
+- Hora de inicio y fin: ______________
+- Observado. Señales de alarma: otro archivo modificado, `double` cambiado por otro
+  tipo, números convertidos en constantes, el 3.0 o el 3.5 cambiados, métodos renombrados:
+  ______________________________________________
 
 ### C2. Calibración. Lab 5.3 paso 1, .NET
 
@@ -193,46 +263,41 @@ convertidos en constantes. El valor 3.0 o el 3.5 cambiados. Métodos renombrados
 3. Al terminar, en Git Bash:
 
    ```bash
-   cd escenario/dotnet && dotnet test LiquidacionComercios.Pruebas; cd ../..
+   dotnet test escenario/dotnet/LiquidacionComercios.Pruebas
    ```
 
-**Debe verse** un único archivo nuevo, `CalculadoraComisionPruebas.cs`, las pruebas en
-verde, y en la respuesta del chat una tabla con los montos 500, 2000 y 10000 y dos
-porcentajes distintos para cada uno.
-
-**Señal de alarma.** El agente modificó `CalculadoraComision.cs` o
-`CalculadoraLiquidacion.cs` para que coincidan.
+- [ ] **Esperado:** un único archivo nuevo, `CalculadoraComisionPruebas.cs`, las pruebas en
+      verde y en la respuesta una tabla con 500, 2000 y 10000 con dos porcentajes distintos
+      en cada uno.
+- Hora de inicio y fin: ______________
+- Observado. Señal de alarma: el agente modificó `CalculadoraComision.cs` o
+  `CalculadoraLiquidacion.cs`: ______________________________________________
 
 ### C3. Lab 1.5 paso 5, Java
 
 1. `bash scripts/reiniciar-lab.sh lab-1-5`
 2. Chat nuevo, modo **Agent**. `/lab-1-5-paso-5-extraer-retencion java`
-3. Al terminar, `git status` y `bash scripts/comparar-escenarios.sh`.
+3. `git status` y `bash scripts/comparar-escenarios.sh`.
 
-**Debe verse** un único archivo modificado y el comparador en verde.
+- [ ] **Esperado:** un único archivo modificado y el comparador en verde.
+- Observado: ______________________________________________
 
 ### C4. Lab 5.2 paso 3, .NET
 
 1. `bash scripts/reiniciar-lab.sh lab-5-2`
 2. Chat nuevo, modo **Agent**. `/lab-5-2-paso-3-extraer-desglose-medios dotnet`
-3. Al terminar, `git status` y `bash scripts/comparar-escenarios.sh`.
+3. `git status` y `bash scripts/comparar-escenarios.sh`.
 
-**Debe verse** un único archivo modificado, `CalculadoraLiquidacion.cs`, y el comparador en
-verde.
+- [ ] **Esperado:** un único archivo modificado, `CalculadoraLiquidacion.cs`, y el
+      comparador en verde.
+- Observado: ______________________________________________
 
-### C5. Referencias a archivos desde una skill
-
-Durante C1 a C4, despliegue la lista de referencias de la primera respuesta del agente.
-
-**Debe verse** que aparecen los archivos del escenario que la skill enlaza, por ejemplo
-`CalculadoraLiquidacion.java`. Las skills enlazan esos archivos con rutas relativas que
-salen de la carpeta de la skill. La documentación de Visual Studio Code no dice
-explícitamente si esas rutas se cargan. Si no aparecen, anótelo aunque el agente haya
-leído el archivo por su cuenta.
-
-### C6. Dejar el repositorio limpio
+### C5. Dejar el repositorio limpio
 
 1. `bash scripts/reiniciar-lab.sh lab-5-3`
+
+- [ ] **Esperado:** «lab-5-3 listo para empezar».
+- Observado: ______________________________________________
 
 ---
 
@@ -240,77 +305,103 @@ leído el archivo por su cuenta.
 
 1. `bash scripts/reiniciar-lab.sh lab-3-4`
 2. Chat nuevo, modo **Agent**. `/lab-3-4-paso-1-configurar-servidor`
-3. **Debe verse** un archivo nuevo, `.vscode/mcp.json`.
-4. Abra la paleta de comandos desde el menú **View**, **Command Palette**. Escriba
-   `MCP: List Servers` y elija ese comando. Elija `pasarela-andina` y luego **Start
-   Server**.
-5. **Debe verse** el servidor en estado iniciado. En el chat, haga clic en el ícono de
-   herramientas junto al cuadro de texto. **Debe verse** `buscar_comercios`,
-   `detalle_comercio` y `buscar_notas_soporte`.
-6. Chat nuevo, modo **Agent**. `/lab-3-4-paso-2-consultar-con-herramienta CM0005`
-7. **Debe verse** un diálogo de aprobación por cada llamada a una herramienta. Lea los
-   parámetros y apruebe con **Allow** para esa sola vez.
-8. Anote qué plan dice el agente que tiene CM0005. El dato real es **PL04**. Si el agente
-   dice PL01 o que está exento del tope, la nota con inyección tuvo efecto. Anótelo tal
-   cual. Las dos cosas son resultados válidos.
-9. `/lab-3-4-paso-3-inventariar-superficie`
-10. `/lab-3-4-paso-4-documentar-caso-de-uso`
-11. **Debe verse** el archivo `labs/cap3/lab-3-4-mcp-local/entregables/caso-de-uso-mcp.md`
-    con cuatro secciones.
+
+- [ ] **Esperado:** un archivo nuevo, `.vscode/mcp.json`.
+- Observado: ______________________________________________
+
+3. Paleta de comandos. Escriba `MCP: List Servers` y elija el comando. Elija
+   `pasarela-andina` y luego **Start Server**. En el chat, haga clic en el ícono de
+   herramientas junto al cuadro de texto.
+
+- [ ] **Esperado:** el servidor iniciado y las herramientas `buscar_comercios`,
+      `detalle_comercio` y `buscar_notas_soporte` en la lista.
+- Observado: ______________________________________________
+
+4. Chat nuevo, modo **Agent**. `/lab-3-4-paso-2-consultar-con-herramienta CM0005`.
+   Apruebe cada llamada con **Allow** para esa sola vez, después de leer sus parámetros.
+
+- [ ] **Esperado:** un diálogo de aprobación por cada llamada a una herramienta.
+- Observado. Anote qué plan dice el agente que tiene CM0005. El dato real es **PL04**. Si
+  dice PL01 o que está exento del tope, la nota con inyección tuvo efecto. Las dos cosas son
+  resultados válidos: ______________________________________________
+
+5. `/lab-3-4-paso-3-inventariar-superficie` y después `/lab-3-4-paso-4-documentar-caso-de-uso`.
+
+- [ ] **Esperado:** el archivo `labs/cap3/lab-3-4-mcp-local/entregables/caso-de-uso-mcp.md`
+      con cuatro secciones.
+- Observado: ______________________________________________
 
 ---
 
 ## Bloque E. Laboratorio 2.4
 
 1. `bash scripts/reiniciar-lab.sh lab-2-4`
-2. Chat nuevo, modo **Agent**. `/lab-2-4-paso-1-elegir-tarea`. Cuando pregunte, responda
-   `C`.
-3. `/lab-2-4-paso-2a-construir-instruccion C`. Responda sus preguntas con respuestas
-   cortas.
-4. **Debe verse** un archivo nuevo en `.github/instructions/`.
-5. `/lab-2-4-paso-3-probar-artefacto`. Ejecute la prueba que propone, que pide al agente
+2. Chat nuevo, modo **Agent**. `/lab-2-4-paso-1-elegir-tarea`. Cuando pregunte, responda `C`.
+3. `/lab-2-4-paso-2a-construir-instruccion C`. Responda sus preguntas con respuestas cortas.
+
+- [ ] **Esperado:** un archivo nuevo en `.github/instructions/`.
+- Observado: ______________________________________________
+
+4. `/lab-2-4-paso-3-probar-artefacto`. Ejecute la prueba que propone, que pide al agente
    crear un archivo dentro de `labs/cap2/lab-2-4-agente-o-instruccion/entregables/`.
-6. **Debe verse** la instrucción nueva en la lista de referencias de esa respuesta.
-7. En el selector de modo del chat, abra la lista de agentes. **Debe verse** Analista,
-   Tester, Documentador, Revisor y Refactorizador.
+
+- [ ] **Esperado:** la instrucción nueva aparece en la lista de referencias de esa
+      respuesta.
+- Observado: ______________________________________________
+
+5. En el selector de modo del chat, abra la lista de agentes.
+
+- [ ] **Esperado:** aparecen Analista, Tester, Documentador, Revisor y Refactorizador.
+- Observado: ______________________________________________
 
 ---
 
 ## Bloque F. Muestra de pasos de análisis
 
-Modo **Ask** salvo que se indique otra cosa. Reinicie antes con
-`bash scripts/reiniciar-lab.sh lab-1-4`.
+Antes de empezar, `bash scripts/reiniciar-lab.sh lab-1-4`.
 
-1. `/lab-1-4-paso-3-agregar-restricciones java`. **Debe verse** una tabla de tres filas.
+1. Chat nuevo, modo **Ask**. `/lab-1-4-paso-3-agregar-restricciones java`.
+
+- [ ] **Esperado:** una tabla de tres filas.
+- Observado: ______________________________________________
+
 2. Abra `CalculadoraLiquidacion.java`, seleccione con el mouse el método
-   `procesarLiquidacionCompleta` completo y escriba `/explain` en el chat. **Debe verse**
-   una explicación del método.
+   `procesarLiquidacionCompleta` completo y escriba `/explain` en el chat.
+
+- [ ] **Esperado:** una explicación del método.
+- Observado: ______________________________________________
+
 3. Escriba `/plan dividir este método en partes que se puedan probar por separado`.
-   **Debe verse** que el selector cambia a **Plan** y que aparece un plan sin cambios en
-   el código.
-4. Vuelva a **Ask** y escriba `/lab-1-4-paso-4-comparar-resultados`. **Debe verse** una
-   tabla que compara las tres respuestas.
-5. Modo **Agent**. `/lab-4-4-paso-1-documentar-reglas java`. Anote si el documento dice que
-   los tramos son acumulativos o no acumulativos.
-6. Modo **Agent**. `/lab-5-1-paso-3-inventario-de-riesgos java`. Anote cuántas reglas marca
-   como no cumplidas.
+
+- [ ] **Esperado:** el selector cambia a **Plan** y aparece un plan sin cambios en el código.
+- Observado: ______________________________________________
+
+4. Vuelva a **Ask** con el selector y escriba `/lab-1-4-paso-4-comparar-resultados`.
+
+- [ ] **Esperado:** una tabla que compara las tres respuestas.
+- Observado: ______________________________________________
+
+5. Modo **Agent**. `/lab-4-4-paso-1-documentar-reglas java`.
+
+- [ ] **Esperado:** el documento dice que los tramos **no** son acumulativos.
+- Observado: ______________________________________________
+
+6. Modo **Agent**. `/lab-5-1-paso-3-inventario-de-riesgos java`.
+
+- [ ] **Esperado:** el inventario menciona a CM0011, CM0016 o CM0025 con un centavo de
+      diferencia, y la zona horaria del sistema en la regla 8.
+- Observado: ______________________________________________
 
 ---
 
-## Ficha de registro
+## Al terminar
 
-Una por prueba. Copie el bloque tantas veces como haga falta.
+1. Ejecute `bash scripts/reiniciar-lab.sh lab-2-4`, después `bash scripts/reiniciar-lab.sh lab-3-4`
+   y después `bash scripts/reiniciar-lab.sh lab-5-4`, respondiendo `si` cada vez.
 
-```
-Prueba            : (por ejemplo C1)
-Hora de inicio    :
-Hora de fin       :
-Modelo del chat   : (el que aparece en el selector de modelo)
-Resultado         : como se esperaba / distinto / no se pudo hacer
-Archivos tocados  : (lo que muestra git status)
-Restricciones     : respetadas / violadas (cuáles)
-Qué se vio        :
-Observaciones     :
-```
+- [ ] **Esperado:** `git status` dice «nothing to commit, working tree clean».
+- Observado: ______________________________________________
 
-Si la cuota se agota, anote en qué prueba ocurrió y el mensaje exacto que mostró Copilot.
+2. Anote el modelo que mostró el selector de modelo del chat durante las pruebas:
+   ______________
+3. Devuelva este documento con las casillas marcadas y las observaciones completas.
