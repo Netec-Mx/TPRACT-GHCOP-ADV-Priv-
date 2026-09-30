@@ -74,7 +74,8 @@ llega, para que quien lo retome más adelante no tenga que reconstruir el contex
 | SPEC-005 y SPEC-006 | Activos de referencia y servidor MCP | Absorbidos por SPEC-009 |
 | SPEC-007 | Guía general del relator | Pendiente, después de SPEC-009 |
 | SPEC-008 | Realineación al temario contratado | Cerrado |
-| SPEC-009 | Construcción completa de los nueve laboratorios | Ejecutado, pendiente de prueba en la máquina virtual |
+| SPEC-009 | Construcción completa de los nueve laboratorios | Cerrado por SPEC-010 |
+| SPEC-010 | Cierre de SPEC-009, hook de protección de datos, .NET 10 y protocolo de prueba | Ejecutado, pendiente de prueba en la máquina virtual |
 | SPEC-010 a SPEC-018 | README de cada laboratorio | Absorbidos por SPEC-009 |
 
 SPEC-010 a SPEC-018 conservan su correspondencia con los laboratorios, en el orden de la
