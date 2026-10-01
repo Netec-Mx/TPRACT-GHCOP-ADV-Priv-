@@ -1,0 +1,9 @@
+# Contexto de construccion de herramientas/Dockerfile. Solo entra lo que la imagen copia.
+*
+!escenario/java/pom.xml
+!escenario/java/src/**
+!escenario/dotnet/**/*.csproj
+!escenario/dotnet/**/*.cs
+!escenario/datos/**
+!mcp/servidor-local/package.json
+!mcp/servidor-local/package-lock.json

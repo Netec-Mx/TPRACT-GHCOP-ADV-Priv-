@@ -93,9 +93,24 @@ que lo completa.
 | `docs/` | Guía de ambiente y troubleshooting, que también reciben los participantes |
 | `docs/relator/` | Material del relator. Nunca llega al repositorio de participantes |
 | `escenario/` | Código base de los escenarios Java y .NET usados en los laboratorios |
+| `herramientas/` | Imagen de Docker de los gates, con las versiones de la máquina virtual |
 | `labs/` | Enunciados de los nueve laboratorios |
 | `mcp/` | Servidor MCP local de demostración |
 | `scripts/` | Scripts de verificación, reinicio y publicación. `scripts/publicacion/` tiene la lista de inclusión del repositorio de participantes |
+
+## Gates
+
+Desde la raíz del repositorio de construcción, con Docker:
+
+```bash
+bash scripts/gates.sh
+```
+
+Corre sin red, dentro de la imagen de `herramientas/Dockerfile`, el verificador de
+ambiente, la validación de skills, el comparador de escenarios en los tres periodos, las
+pruebas de los dos escenarios y el gate de fugas. La máquina de construcción no necesita
+tener las versiones del taller instaladas. La primera vez construye la imagen y para eso
+necesita red.
 
 ## Repositorio de participantes
 
