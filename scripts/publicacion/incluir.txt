@@ -40,3 +40,5 @@ scripts/validar-skills.sh
 # Versiones para participantes de los archivos de la raiz
 scripts/publicacion/AGENTS-taller.md => AGENTS.md
 scripts/publicacion/README-taller.md => README.md
+scripts/publicacion/GUIA-DE-INICIO.md => GUIA-DE-INICIO.md
+scripts/publicacion/DESPUES-DEL-TALLER.md => DESPUES-DEL-TALLER.md

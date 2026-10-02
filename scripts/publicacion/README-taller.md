@@ -4,6 +4,9 @@ Repositorio de trabajo del taller. Contiene el código base de los laboratorios,
 artefactos de personalización de Copilot, un servidor MCP local y los scripts de soporte.
 Lo que construyas durante el taller queda en este repositorio y te lo llevas.
 
+Empieza por [`GUIA-DE-INICIO.md`](GUIA-DE-INICIO.md). Al terminar el taller, sigue con
+[`DESPUES-DEL-TALLER.md`](DESPUES-DEL-TALLER.md).
+
 ## Antes de la primera sesión
 
 Desde la raíz del repositorio, en Git Bash:
