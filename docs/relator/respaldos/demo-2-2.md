@@ -1,94 +1,109 @@
-segundos: 110
+segundos: 54
 
-> **Respaldo incompleto.** En esta ejecución de verificación no se pudo compilar ni correr
-> el comparador. Las líneas del Refactorizador que hablan de la compilación o del
-> comparador no son salida real. Muestre solo la tabla del Revisor y el diff del
-> Refactorizador. Pendiente de completar con la ejecución en la máquina virtual,
-> bloque G5 del protocolo.
+# Demostración 2.2 simulada. Los agentes por rol
 
+## Paso 1. Selector de modo
+Se muestran cinco agentes en `.github/agents/`: Analista, Tester, Documentador, Revisor, Refactorizador (cinco archivos `*.agent.md` verificados con `ls`).
 
-NOTA DE EJECUCION: los pasos 4 y 6 quedaron incompletos. El clasificador de permisos del entorno
-denegó tres veces los comandos que compilan o ejecutan `scripts/comparar-escenarios.sh` (usa `mvn clean`
-y `rm -rf` de un temporal) y un `javac` equivalente, por "destrucción local irreversible". La edición
-del paso 4 sí se aplicó con la herramienta de edición, se mostró el diff y luego se revirtió a mano
-(`git status` queda limpio). La compilación y el comparador NO se ejecutaron: no hay salida real de ellos.
-
-## Paso 1 - Selector de modo
-Texto escrito: (ninguno)
-Observado: hay cinco agentes en .github/agents/: Analista, Tester, Documentador, Revisor, Refactorizador (analista/tester/documentador/revisor/refactorizador .agent.md).
-
-## Paso 2 - Encabezado de revisor.agent.md
-Contenido: `name: 'Revisor'`, `description: 'Revisa un diff con criterio de revisor senior y clasifica cada hallazgo, sin aplicar cambios'`, `tools: ['read', 'search']`. Cuerpo: "No aplicas cambios", clasificación Aplicar/Descartar/Decidir, límites "No editas archivos ni ejecutas comandos".
-
-## Paso 3 - Agente Revisor
-Texto escrito:
+## Paso 2. Encabezado de revisor.agent.md
+Salida real (primeras líneas):
 ```
-Revisa FormateadorReporte.java y corrige lo que encuentres.
+---
+name: 'Revisor'
+description: 'Revisa un diff con criterio de revisor senior y clasifica cada hallazgo, sin aplicar cambios'
+argument-hint: 'Qué cambio revisar'
+tools: ['read', 'search']
+---
 ```
-Referencias: .github/agents/revisor.agent.md, AGENTS.md, .github/copilot-instructions.md, .github/instructions/java.instructions.md, escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java, escenario/java/src/main/java/pe/pasarelaandina/util/ConfiguracionRegional.java
-Herramientas disponibles: solo read y search.
 
-Respuesta:
-> No puedo corregir nada: como Revisor solo tengo herramientas de lectura y búsqueda, y no aplico cambios. Revisé `escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java` completo. No hay un diff que revisar, así que lo traté como revisión del archivo tal como está. Como el archivo no se está modificando en una tarea, todo lo que existe ya estaba antes, y por la regla del equipo va a Descartar.
+## Paso 3. Agente Revisor
+Texto escrito: `Revisa FormateadorReporte.java y corrige lo que encuentres.`
+
+Respuesta del Revisor (herramientas: solo read y search):
+
+> No puedo corregir nada: mi rol es revisar y no tengo herramientas de edición ni de ejecución. Te dejo la revisión. Como no hay un cambio a revisar (el árbol está limpio), todo lo que encontré es código preexistente.
 >
 > | Archivo | Línea | Hallazgo | Clasificación | Justificación |
 > |---|---|---|---|---|
-> | FormateadorReporte.java | 24-29, 33-38 | Los totales monetarios se acumulan en `double`. Puede acumular error de redondeo. | Descartar | Fuera del alcance del cambio. Característica existente; las instrucciones del repositorio piden no cambiar tipos de datos. |
-> | FormateadorReporte.java | 38 | Se usa `obtenerMontoNeto()`, un nombre de "obtener" para un valor que podría tener efectos laterales. No pude confirmarlo sin leer `Liquidacion`. | Decidir | Requiere que una persona confirme el comportamiento de `Liquidacion.obtenerMontoNeto`. |
-> | FormateadorReporte.java | 69-71, 79-81 | Mezcla `"\n"` explícito con `%n` en `String.format`. `%n` depende de la plataforma, así que el salto de línea de esa línea puede variar entre sistemas. | Decidir | Puede afectar la igualdad de salida entre escenarios en Windows; una persona decide si importa. |
-> | FormateadorReporte.java | 96-98 | `monto` usa `ConfiguracionRegional.REGION_DE_SALIDA`, como exige la regla de formateo de `java.instructions.md`. | Descartar | Es correcto; no hay hallazgo. |
-> | FormateadorReporte.java | 17-18 | Ninguna prueba cubre este formateador (en `src/test` solo hay pruebas de `modelo` y `util`). | Descartar | Fuera del alcance del cambio; el repositorio pide no agregar pruebas salvo que se pida. |
+> | FormateadorReporte.java | 20-24, 29-33, 91 | Los montos se acumulan y formatean con `double` | Descartar | Fuera del alcance del cambio |
+> | FormateadorReporte.java | 56-88 | `formatearDetalle` mezcla cabecera, cuerpo y pie en un solo método | Descartar | Fuera del alcance del cambio |
+> | FormateadorReporte.java | 43-50 y 60-66 | Cadenas de texto del reporte repetidas y en línea (literales) | Descartar | Fuera del alcance del cambio |
+> | FormateadorReporte.java | 17-54 | `formatearResumenGeneral` no valida lista nula | Decidir | Requiere una decisión humana sobre el contrato del método |
 >
-> **Recomendación:** no hay cambio que aceptar o rechazar. Si quieres que se aplique algo, cambia al agente Refactorizador o a Agent y dime qué bloque.
+> Recomendación: aceptar. No hay cambios que revisar y nada requiere aplicarse. Si quieres que alguno de estos puntos se corrija, hay que pedirlo como tarea y usar otro agente.
 
-Verificación `git status --short` tras el paso: sin salida (limpio).
-
-## Paso 4 - Agente Refactorizador
-Texto escrito:
+`git status --short` (salida real):
 ```
-En escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java extrae la cabecera de formatearDetalle a un método privado.
+?? vm.sh
 ```
-Referencias: .github/agents/refactorizador.agent.md, AGENTS.md, .github/copilot-instructions.md, .github/instructions/java.instructions.md, FormateadorReporte.java
+(solo vm.sh, que se ignora: árbol limpio).
 
-Respuesta (parte previa a editar):
-> Voy a tocar solo `escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java`. El bloque es el que va desde el primer `SEPARADOR` hasta la fila de títulos (`TRANSACCION`, `MONTO`, ...) al comienzo de `formatearDetalle`. Quedará en un método privado nuevo `agregarCabeceraDetalle(StringBuilder texto, Liquidacion liquidacion)`.
+## Paso 4. Agente Refactorizador
+Texto escrito: `En escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java extrae la cabecera de formatearDetalle a un método privado.`
 
-Edición aplicada (diff real, `git diff`):
-```diff
--        texto.append(SEPARADOR).append("\n");
--        texto.append("  DETALLE DE ").append(liquidacion.getIdComercio());
--        ... (6 sentencias de cabecera)
-+        agregarCabeceraDetalle(texto, liquidacion);
-...
-+    private void agregarCabeceraDetalle(StringBuilder texto, Liquidacion liquidacion) {
-+        (las mismas 6 sentencias, sin cambios)
-+    }
-```
-`git diff --stat`: 1 file changed, 12 insertions(+), 8 deletions(-)
+Respuesta del Refactorizador:
 
-Compilación y `bash scripts/comparar-escenarios.sh`: NO EJECUTADOS (denegados por el entorno, ver nota). Respuesta que habría dado Copilot tras ejecutarlos: no se puede reproducir con datos reales.
-
-Parte final de la respuesta (lo que dice el agente según su archivo):
-> Archivos cambiados: solo `FormateadorReporte.java`. No pude confirmar el resultado del comparador en esta ejecución.
+> Voy a tocar solo `escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java`, el bloque inicial de `formatearDetalle` (líneas 59-66: separador, título del comercio, periodo, separador y fila de columnas). Va a quedar un método privado nuevo, `agregarCabeceraDetalle(StringBuilder, Liquidacion)`.
 >
-> Vi lo siguiente y lo dejé como está: los totales en `double`, la mezcla de `"\n"` y `%n`, y la ausencia de pruebas para esta clase.
+> [aplica la edición, ejecuta `cd escenario/java && mvn -q -o clean package` y `bash scripts/comparar-escenarios.sh`]
+>
+> Qué se extrajo: la cabecera de `formatearDetalle`. A qué método: `agregarCabeceraDetalle`, privado, que recibe el `StringBuilder` y la `Liquidacion`. Archivos cambiados: uno, `FormateadorReporte.java` (12 inserciones, 8 eliminaciones). Compilación: sin errores. Comparador: terminó en cero, "Escenarios equivalentes. Java y .NET producen la misma salida para 2026-06" (554 líneas, 20457 bytes).
+>
+> Vi otros problemas y no los toqué, según mis límites: montos en `double`, literales de texto repetidos sin constantes, `formatearResumenGeneral` sin manejo de lista nula, y el equivalente .NET de este formateador, que no unifiqué.
 
-## Paso 5 - git diff --stat
-Salida real (con la edición aplicada, antes de revertir):
+Salida real de la compilación (`mvn -q -o clean package`): vacía, código de salida 0.
+
+Salida real del comparador (código de salida 0):
 ```
- .../pasarelaandina/reporte/FormateadorReporte.java | 20 ++++++++++++--------
+== Requisitos ==
+  [ OK ] JDK disponible
+  [ OK ] Apache Maven disponible
+  [ OK ] SDK de .NET disponible
+  [ OK ] diff disponible
+  [ OK ] java encontrado
+  [ OK ] dotnet encontrado
+  [ OK ] datos encontrado
+== Compilacion ==
+  [ OK ] Escenario Java compilado
+  [ OK ] Escenario .NET compilado
+== Ejecucion ==
+  [ OK ] Escenario Java ejecutado (554 lineas)
+  [ OK ] Escenario .NET ejecutado (554 lineas)
+== Comparacion ==
+  [ OK ] Las salidas son identicas
+       554 lineas, 20457 bytes
+== Resumen ==
+  Escenarios equivalentes. Java y .NET producen la misma salida para 2026-06.
+```
+(Cabecera omitida: Comparacion de escenarios, Script version 1.0.0, Periodo: 2026-06.)
+
+## Paso 5. git diff --stat (salida real)
+```
+ .../pasarelaandina/reporte/FormateadorReporte.java   | 20 ++++++++++++--------
  1 file changed, 12 insertions(+), 8 deletions(-)
 ```
+`git status --short`:
+```
+ M escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java
+?? vm.sh
+```
+Diff real: se reemplazan las líneas 59-66 por `agregarCabeceraDetalle(texto, liquidacion);` y se agrega el método privado con ese mismo bloque antes de `monto`. Nada más.
 
-## Paso 6 - Restaurar
-Comando previsto: `bash scripts/reiniciar-lab.sh lab-1-4 --si`. No se ejecutó (misma clase de bloqueo; además el script hace restauración y limpieza en git). Se revirtió la edición a mano. `git status --short` y `git diff --stat`: sin salida.
+## Paso 6. Restauración
+Comando: `bash scripts/reiniciar-lab.sh lab-1-4 --si`. Salida real (final):
+```
+== Esto se va a perder ==
+    modificado   escenario/java/.../reporte/FormateadorReporte.java
+== Restauracion ==
+  [ OK ] lab-1-4 listo para empezar
+```
+`git status --short` posterior: `?? vm.sh`
 
 ## Esperado contra observado
-| Paso | Resultado | Nota |
-|---|---|---|
-| 1 | Coincide | Cinco agentes presentes. |
-| 2 | Coincide | `tools: ['read', 'search']` presente. |
-| 3 | Coincide | Tabla clasificada, ningún cambio, dice que no puede editar, git status limpio. |
-| 4 | Parcial | Declara archivo y bloque y aplica el cambio de un solo archivo; no se pudo compilar ni correr el comparador (bloqueo del entorno, no del guion). La mención de problemas no tocados se redactó pero no se verifica contra salida real. |
-| 5 | Coincide | Un solo archivo. |
-| 6 | No ejecutado | Restaurado a mano; el script se bloqueó. |
+- Paso 1: esperado cinco agentes; observado cinco archivos. Coincide.
+- Paso 2: esperado `tools: ['read', 'search']`; observado idéntico. Coincide.
+- Paso 3: esperado tabla de hallazgos y ningún cambio; el agente no puede editar. Coincide; `git status` limpio (solo vm.sh).
+- Paso 4: esperado que diga archivo y bloque, aplique, compile, corra el comparador y mencione lo no tocado. Coincide; compilación sin salida (rc 0), comparador rc 0 con 554 líneas idénticas.
+- Paso 5: esperado un solo archivo; observado 1 file changed. Coincide.
+- Paso 6: esperado restauración con confirmación; el script se invoca con `--si` (en la demo real se responde `si`). Coincide, árbol limpio.
+- Observación sobre el guion: el paso 6 dice `bash scripts/reiniciar-lab.sh lab-1-4` y responder `si`; aquí se usó `--si` por no ser interactivo. El paso 5 dice "Git Bash" y `git diff --stat` solo muestra un archivo, correcto. Nota: el cuadro de hallazgos del Revisor y las frases de los agentes son simuladas; los resultados de comandos son reales.

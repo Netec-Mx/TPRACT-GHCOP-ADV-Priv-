@@ -22,9 +22,9 @@ que es el resultado de cada paso, debe coincidir.
 | [lab-5-4.md](lab-5-4.md) | Completo. El paso 1 es un ejemplo, no una respuesta correcta |
 | [demo-1-1.md](demo-1-1.md) | Completo |
 | [demo-1-2.md](demo-1-2.md) | Completo |
-| demo-1-3.md | **Falta.** La ejecución de verificación no se pudo completar. Ver `08-verificacion-de-skills.md` |
+| [demo-1-3.md](demo-1-3.md) | Completo. Comandos ejecutados en la imagen de gates |
 | [demo-2-1.md](demo-2-1.md) | Completo |
-| [demo-2-2.md](demo-2-2.md) | Incompleto. Sin compilación ni comparador del Refactorizador |
+| [demo-2-2.md](demo-2-2.md) | Completo. Compilación y comparador ejecutados en la imagen de gates |
 | [demo-2-3.md](demo-2-3.md) | Completo |
 | [demo-3-2.md](demo-3-2.md) | Completo |
 | [demo-3-3.md](demo-3-3.md) | Completo |

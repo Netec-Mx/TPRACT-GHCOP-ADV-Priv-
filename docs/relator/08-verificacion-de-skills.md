@@ -145,9 +145,9 @@ una demostración por buena. Todas están en el bloque G del protocolo de la má
 |---|---|---|---|
 | 1.1 Pedido pobre y pedido bueno | 42 | Coincide | Respuesta dispersa contra tabla de dos filas con rangos de líneas |
 | 1.2 Referencias de contexto | 40, estimado | Coincide con matiz | `#codebase` encontró la clase correcta y además la versión .NET y el README |
-| 1.3 Analizar, planear, implementar y validar | Sin dato | **No ejecutada** | El control de permisos del entorno de verificación bloqueó los comandos de implementación y validación. No se intentó rodear el bloqueo |
+| 1.3 Analizar, planear, implementar y validar | 45 | Coincide | Reintentada en SPEC-011-B dentro de la imagen de gates. Un solo archivo cambiado, comparador en cero, reinicio limpio |
 | 2.1 Jerarquía y skills | 6 | Coincide | `copilot-instructions.md` en las referencias. La skill respondió PL01, tramo 500 a 2000, 2,9 % |
-| 2.2 Agentes por rol | 110 | Parcial | El Revisor no modificó nada. El Refactorizador cambió un solo archivo. La compilación y el comparador fueron bloqueados por el mismo control de permisos |
+| 2.2 Agentes por rol | 54 | Coincide | Reintentada en SPEC-011-B dentro de la imagen de gates. El Revisor no modificó nada. El Refactorizador cambió un solo archivo, 12 inserciones y 8 borrados, compiló y el comparador dio cero |
 | 2.3 Instrucciones por ruta | 29 | Coincide | `mvn test` y JUnit 5 para Java, `dotnet test` y xUnit para .NET, con su instrucción en las referencias |
 | 3.2 Servidor MCP | 32 | Coincide | Dos llamadas aprobadas, `buscar_comercios` y `detalle_comercio` |
 | 3.3 Hook | 23 | Parcial, corregido | El hook bloqueó la edición y una escritura por terminal, y dejó pasar la lectura. El guion citaba el mensaje con tildes y el script lo imprime sin tildes. Se corrigió el guion |
@@ -160,8 +160,11 @@ una demostración por buena. Todas están en el bloque G del protocolo de la má
 - 3.2. Se aclara que hay que crear la carpeta `.vscode` y qué comercio es «el primero».
 - Todas. Donde se reinicia un laboratorio, se aclara que hay que responder `si`.
 
-### Pendiente
+### Reintento de SPEC-011-B
 
-La demostración 1.3 no tiene ejecución de verificación ni respaldo. La 2.2 tiene un respaldo
-sin compilación ni comparador. Las dos se completan con el bloque G del protocolo de la
-máquina virtual.
+La primera ejecución de la 1.3 y de la 2.2 fue bloqueada por el control de permisos del
+entorno de verificación, que no permitió compilar ni correr el comparador. En SPEC-011-B el
+Product Owner autorizó correr esos comandos dentro de la imagen de gates de
+`herramientas/Dockerfile`, sin red. Las dos se ejecutaron completas y coincidieron con sus
+guiones. Ningún comando fue denegado. No hubo que corregir los guiones. La redacción de las
+respuestas del chat es del agente de verificación; las salidas de comandos son reales.
