@@ -34,6 +34,7 @@ es lo de menor riesgo.
 | D | Laboratorio 3.4 de extremo a extremo | Sí |
 | E | Laboratorio 2.4 | Sí |
 | F | Muestra de pasos de análisis | Sí |
+| G | Las nueve demostraciones del relator | Sí |
 
 Cada paso tiene una casilla, el resultado esperado y una línea para anotar lo observado.
 Si un paso no se puede hacer, anote por qué y siga con el siguiente. Si la cuota se agota,
@@ -390,6 +391,88 @@ Antes de empezar, `bash scripts/reiniciar-lab.sh lab-1-4`.
 
 - [ ] **Esperado:** el inventario menciona a CM0011, CM0016 o CM0025 con un centavo de
       diferencia, y la zona horaria del sistema en la regla 8.
+- Observado: ______________________________________________
+
+---
+
+## Bloque G. Las nueve demostraciones del relator
+
+Las demostraciones están en `docs/relator/demos/` del repositorio de construcción. Ábralas
+en otra máquina o impresas, nunca en la máquina virtual. Siga cada una tal como está
+escrita, sobre el repositorio de participantes, y al terminar ejecute
+`bash scripts/reiniciar-lab.sh lab-1-4` y `bash scripts/reiniciar-lab.sh lab-3-4`,
+respondiendo `si`.
+
+### G1. Demostración 1.1
+
+Siga `docs/relator/demos/demo-1-1-pedido-pobre-y-pedido-bueno.md`.
+
+- [ ] **Esperado:** dos respuestas, la segunda es una tabla de dos filas con rangos de líneas.
+- Duración real: ______________
+- Observado: ______________________________________________
+
+### G2. Demostración 1.2
+
+Siga `docs/relator/demos/demo-1-2-referencias-de-contexto.md`.
+
+- [ ] **Esperado:** las cuatro respuestas cambian según la referencia, y con `CalculadoraLiquidacion.java` aparece la regla con sus líneas.
+- Duración real: ______________
+- Observado: ______________________________________________
+
+### G3. Demostración 1.3
+
+Siga `docs/relator/demos/demo-1-3-flujo-de-trabajo.md`.
+
+- [ ] **Esperado:** `/plan` produce un plan sin cambios, el modo Agent cambia un solo archivo y el comparador dice «Las salidas son identicas».
+- Duración real: ______________
+- Observado: ______________________________________________
+
+### G4. Demostración 2.1
+
+Siga `docs/relator/demos/demo-2-1-jerarquia-y-skills.md`.
+
+- [ ] **Esperado:** la respuesta sobre los commits cita `copilot-instructions.md` y la skill `/pasarela-reglas-de-negocio` responde con el tramo y el porcentaje.
+- Duración real: ______________
+- Observado: ______________________________________________
+
+### G5. Demostración 2.2
+
+Siga `docs/relator/demos/demo-2-2-agentes-por-rol.md`.
+
+- [ ] **Esperado:** el Revisor no modifica nada y el Refactorizador cambia un solo archivo y lista lo que no tocó.
+- Duración real: ______________
+- Observado: ______________________________________________
+
+### G6. Demostración 2.3
+
+Siga `docs/relator/demos/demo-2-3-instrucciones-por-ruta.md`.
+
+- [ ] **Esperado:** la pregunta sobre Java responde `mvn test` y JUnit, la de .NET `dotnet test` y xUnit.
+- Duración real: ______________
+- Observado: ______________________________________________
+
+### G7. Demostración 3.2
+
+Siga `docs/relator/demos/demo-3-2-servidor-mcp.md`.
+
+- [ ] **Esperado:** el servidor arranca, cada llamada pide aprobación y la respuesta indica qué herramienta respaldó cada dato.
+- Duración real: ______________
+- Observado: ______________________________________________
+
+### G8. Demostración 3.3
+
+Siga `docs/relator/demos/demo-3-3-hook.md`.
+
+- [ ] **Esperado:** la edición de `transacciones.txt` se bloquea con el mensaje del hook y la pregunta de lectura se responde.
+- Duración real: ______________
+- Observado: ______________________________________________
+
+### G9. Demostración 4.1
+
+Siga `docs/relator/demos/demo-4-1-documentacion-contra-ejecucion.md`.
+
+- [ ] **Esperado:** el documento trae cuatro resultados y `jshell` imprime 0, 1, 5 y -1.
+- Duración real: ______________
 - Observado: ______________________________________________
 
 ---

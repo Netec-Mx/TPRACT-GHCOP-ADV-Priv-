@@ -130,3 +130,38 @@ En el 1.4 no se suman `/explain` y `/plan`, que no son skills.
 El tiempo de agente es una fracción pequeña de cada duración. La restricción real de cada
 laboratorio es la suma estimada de `05-diseno-de-laboratorios.md`, que incluye lectura y
 conversación. Esa suma cabe con holgura en todos, con 340 minutos sobre 390.
+
+---
+
+## Verificación de las demostraciones, SPEC-011
+
+Ejecutadas el 1 de octubre de 2026 con el mismo método, sobre copias limpias del
+repositorio de participantes. MCP se simuló con un script que llama al servidor por su
+entrada estándar, y el hook se ejecutó antes de cada acción del agente, como lo haría
+Visual Studio Code. Sirve para detectar errores de construcción de los guiones, no para dar
+una demostración por buena. Todas están en el bloque G del protocolo de la máquina virtual.
+
+| Demostración | Segundos | Resultado | Observado |
+|---|---|---|---|
+| 1.1 Pedido pobre y pedido bueno | 42 | Coincide | Respuesta dispersa contra tabla de dos filas con rangos de líneas |
+| 1.2 Referencias de contexto | 40, estimado | Coincide con matiz | `#codebase` encontró la clase correcta y además la versión .NET y el README |
+| 1.3 Analizar, planear, implementar y validar | Sin dato | **No ejecutada** | El control de permisos del entorno de verificación bloqueó los comandos de implementación y validación. No se intentó rodear el bloqueo |
+| 2.1 Jerarquía y skills | 6 | Coincide | `copilot-instructions.md` en las referencias. La skill respondió PL01, tramo 500 a 2000, 2,9 % |
+| 2.2 Agentes por rol | 110 | Parcial | El Revisor no modificó nada. El Refactorizador cambió un solo archivo. La compilación y el comparador fueron bloqueados por el mismo control de permisos |
+| 2.3 Instrucciones por ruta | 29 | Coincide | `mvn test` y JUnit 5 para Java, `dotnet test` y xUnit para .NET, con su instrucción en las referencias |
+| 3.2 Servidor MCP | 32 | Coincide | Dos llamadas aprobadas, `buscar_comercios` y `detalle_comercio` |
+| 3.3 Hook | 23 | Parcial, corregido | El hook bloqueó la edición y una escritura por terminal, y dejó pasar la lectura. El guion citaba el mensaje con tildes y el script lo imprime sin tildes. Se corrigió el guion |
+| 4.1 Documentación contra ejecución | 36 | Coincide | La documentación predijo 0, 1, 5 y -1, y la ejecución dio 0, 1, 5 y -1 |
+
+### Correcciones a los guiones a partir de la verificación
+
+- 3.3. El mensaje del hook se cita literal y se agrega la cantidad esperada de
+  transacciones, 2037.
+- 3.2. Se aclara que hay que crear la carpeta `.vscode` y qué comercio es «el primero».
+- Todas. Donde se reinicia un laboratorio, se aclara que hay que responder `si`.
+
+### Pendiente
+
+La demostración 1.3 no tiene ejecución de verificación ni respaldo. La 2.2 tiene un respaldo
+sin compilación ni comparador. Las dos se completan con el bloque G del protocolo de la
+máquina virtual.
