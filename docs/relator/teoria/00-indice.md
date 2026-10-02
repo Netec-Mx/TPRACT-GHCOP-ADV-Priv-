@@ -26,7 +26,7 @@ La extensión sigue la regla de una página por cada diez minutos, contando una 
 | 4.1 | Uso de Copilot para documentación técnica y generación de Markdown | 20 | 4 | [4-1-documentacion-tecnica.md](4-1-documentacion-tecnica.md) | [demo 4.1](../demos/demo-4-1-documentacion-contra-ejecucion.md) |
 | 4.2 | Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting | 20 | 4 | [4-2-que-documentar.md](4-2-que-documentar.md) | |
 | 4.3 | Buenas prácticas para preparar documentación compatible con Confluence | 20 | 4 | [4-3-markdown-para-confluence.md](4-3-markdown-para-confluence.md) | |
-| 5 | Encuadre del laboratorio integrador | 0 | 4 | 5-0-encuadre-del-integrador.md | |
+| 5 | Encuadre del laboratorio integrador | 0 | 4 | [5-0-encuadre-del-integrador.md](5-0-encuadre-del-integrador.md) | |
 
 Aritmética. Capítulo 1, 30 + 30 + 30 = 90. Capítulo 2, 45 + 45 + 45 = 135. Capítulo 3,
 45 + 45 + 45 = 135. Capítulo 4, 20 + 20 + 20 = 60. Total 90 + 135 + 135 + 60 = 420.
@@ -34,5 +34,3 @@ Aritmética. Capítulo 1, 30 + 30 + 30 = 90. Capítulo 2, 45 + 45 + 45 = 135. Ca
 El capítulo 5 no tiene subtemas de teoría en el temario. Sus cuatro bloques son de
 práctica. El encuadre no suma minutos propios. Se dicta en los primeros minutos de cada
 bloque, que ya están contados en las notas de laboratorio.
-
-Los documentos de los capítulos 2 a 5 se enlazan a medida que se escriben.

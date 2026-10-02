@@ -214,7 +214,7 @@ nombre con la barra.
 
 | Afirmación | Fuente | Consultada |
 |---|---|---|
-| Instrucciones de repositorio, por ruta, `AGENTS.md`, `CLAUDE.md`, `applyTo`, carga por descripción, instrucciones aditivas sin orden garantizado | https://code.visualstudio.com/docs/agent-customization/custom-instructions | 2 de octubre de 2026 |
+| Instrucciones de repositorio, por ruta, `AGENTS.md`, `applyTo`, carga por descripción, instrucciones aditivas sin orden garantizado | https://code.visualstudio.com/docs/agent-customization/custom-instructions | 2 de octubre de 2026 |
 | `copilot-instructions.md` se incluye en todas las interacciones del chat | https://code.visualstudio.com/docs/agents/guides/context-engineering-guide | 2 de octubre de 2026 |
 | Skills, carpeta con `SKILL.md`, ubicaciones, carga progresiva, invocación con la barra, `user-invocable` y `disable-model-invocation` | https://code.visualstudio.com/docs/agent-customization/agent-skills | 2 de octubre de 2026 |
 | Agentes personalizados como instrucciones, herramientas y modelo para un rol | https://code.visualstudio.com/docs/agent-customization/custom-agents | 2 de octubre de 2026 |
