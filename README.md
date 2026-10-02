@@ -22,6 +22,35 @@ sus minutos.
 De los 810 minutos, 420 son teoría y 390 son práctica, repartidos en nueve bloques
 prácticos. Cada bloque práctico corresponde a un laboratorio de [`labs/`](labs/README.md).
 
+### Subtemas del temario contratado
+
+Títulos y minutos textuales del documento de Netec, Propuesta Temario 1. Son la única
+fuente de los planes de sesión de `docs/relator/01-guia-del-relator.md`.
+
+| Subtema | Título | Min | Sesión |
+|---|---|---|---|
+| 1.1 | Prompts efectivos para desarrollo: objetivo, contexto, restricciones y salida esperada | 30 | 1 |
+| 1.2 | Uso de contexto: archivos abiertos, selección de código, workspace y referencias específicas | 30 | 1 |
+| 1.3 | Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar | 30 | 1 |
+| 1.4 | Práctica guiada: mejora incremental de prompts y uso de comandos del chat | 30 | 1 |
+| 1.5 | Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | 60 | 1 |
+| 2.1 | Conceptos: agentes locales, skills, prompt files e instrucciones personalizadas | 45 | 2 |
+| 2.2 | Diseño de agentes por rol: analista, tester, documentador, revisor y refactorizador | 45 | 2 |
+| 2.3 | Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos | 45 | 2 |
+| 2.4 | Laboratorio: creación de un agente local o instrucción reutilizable para una tarea del equipo | 45 | 2 |
+| 3.1 | Qué es MCP y cómo se relaciona con contexto, agentes y herramientas locales | 45 | 3 |
+| 3.2 | Diferencia entre MCP local y MCP externo en ambientes restringidos | 45 | 3 |
+| 3.3 | Riesgos de seguridad: exposición de información, conectores no autorizados y fuga de contexto | 45 | 3 |
+| 3.4 | Laboratorio: diseño de un caso de uso de MCP local seguro con documentación técnica local | 45 | 3 |
+| 4.1 | Uso de Copilot para documentación técnica y generación de Markdown | 20 | 4 |
+| 4.2 | Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting | 20 | 4 |
+| 4.3 | Buenas prácticas para preparar documentación compatible con Confluence | 20 | 4 |
+| 4.4 | Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | 30 | 4 |
+| 5.1 | Preparación del escenario integrador y criterios de evaluación | 45 | 4 |
+| 5.2 | Planeación de mejora, refactorización y validación incremental | 45 | 4 |
+| 5.3 | Estrategia de pruebas, documentación Markdown y checklist de revisión | 45 | 4 |
+| 5.4 | Laboratorio final: construcción de activos reutilizables para el equipo | 45 | 4 |
+
 ### Distribución por sesión
 
 | Sesión | Contenido | Duración |
