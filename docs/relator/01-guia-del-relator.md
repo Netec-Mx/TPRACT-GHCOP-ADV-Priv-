@@ -111,6 +111,7 @@ mecanismos son los mismos y que el taller usa un solo editor para que todos vean
 | `09-bitacora-de-construccion.md` | Por qué el repositorio es como es |
 | `10-mantenimiento.md` | Qué revisar antes de cada dictado |
 | `notas/` | Notas por laboratorio y del hook |
+| `teoria/` | Contenido de cada subtema de teoría. Empieza en [`teoria/00-indice.md`](teoria/00-indice.md) |
 | `demos/` | Las nueve demostraciones |
 | `respaldos/` | Salidas grabadas de laboratorios y demostraciones |
 | `casos-de-clase/` | Tres casos reales para proyectar |
