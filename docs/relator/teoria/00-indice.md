@@ -20,9 +20,9 @@ La extensión sigue la regla de una página por cada diez minutos, contando una 
 | 2.1 | Conceptos: agentes locales, skills, prompt files e instrucciones personalizadas | 45 | 2 | [2-1-conceptos-de-personalizacion.md](2-1-conceptos-de-personalizacion.md) | [demo 2.1](../demos/demo-2-1-jerarquia-y-skills.md) |
 | 2.2 | Diseño de agentes por rol: analista, tester, documentador, revisor y refactorizador | 45 | 2 | [2-2-agentes-por-rol.md](2-2-agentes-por-rol.md) | [demo 2.2](../demos/demo-2-2-agentes-por-rol.md) |
 | 2.3 | Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos | 45 | 2 | [2-3-instrucciones-reutilizables.md](2-3-instrucciones-reutilizables.md) | [demo 2.3](../demos/demo-2-3-instrucciones-por-ruta.md) |
-| 3.1 | Qué es MCP y cómo se relaciona con contexto, agentes y herramientas locales | 45 | 3 | 3-1-que-es-mcp.md | |
-| 3.2 | Diferencia entre MCP local y MCP externo en ambientes restringidos | 45 | 3 | 3-2-mcp-local-y-externo.md | [demo 3.2](../demos/demo-3-2-servidor-mcp.md) |
-| 3.3 | Riesgos de seguridad: exposición de información, conectores no autorizados y fuga de contexto | 45 | 3 | 3-3-riesgos-de-seguridad.md | [demo 3.3](../demos/demo-3-3-hook.md) |
+| 3.1 | Qué es MCP y cómo se relaciona con contexto, agentes y herramientas locales | 45 | 3 | [3-1-que-es-mcp.md](3-1-que-es-mcp.md) | |
+| 3.2 | Diferencia entre MCP local y MCP externo en ambientes restringidos | 45 | 3 | [3-2-mcp-local-y-externo.md](3-2-mcp-local-y-externo.md) | [demo 3.2](../demos/demo-3-2-servidor-mcp.md) |
+| 3.3 | Riesgos de seguridad: exposición de información, conectores no autorizados y fuga de contexto | 45 | 3 | [3-3-riesgos-de-seguridad.md](3-3-riesgos-de-seguridad.md) | [demo 3.3](../demos/demo-3-3-hook.md) |
 | 4.1 | Uso de Copilot para documentación técnica y generación de Markdown | 20 | 4 | 4-1-documentacion-tecnica.md | [demo 4.1](../demos/demo-4-1-documentacion-contra-ejecucion.md) |
 | 4.2 | Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting | 20 | 4 | 4-2-que-documentar.md | |
 | 4.3 | Buenas prácticas para preparar documentación compatible con Confluence | 20 | 4 | 4-3-markdown-para-confluence.md | |
