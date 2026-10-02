@@ -148,7 +148,7 @@ confirmarlo, como con cualquier otro autor.
 | Separar planificación e implementación en cambios complejos, código como punto de partida que se revisa, incluir pruebas, leer antes de confirmar, puntos de control | https://code.visualstudio.com/docs/agents/best-practices | 2 de octubre de 2026 |
 | Agente Plan, solo lectura por omisión, aprobación del plan, memoria de sesión, cuándo planear y cuándo no | https://code.visualstudio.com/docs/agents/run/planning | 2 de octubre de 2026 |
 | Modos y comandos `/plan`, `/explain`, `/fix`, `/tests`, `/doc`, sugerencias en línea y de la próxima edición | https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet | 2 de octubre de 2026 |
-| `/analyze` no figura entre los comandos vigentes | https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet | 27 de septiembre de 2026 |
-| Aprobación de las herramientas y comandos que ejecuta el agente | https://code.visualstudio.com/docs/agents/run/approvals | 27 de septiembre de 2026 |
+| `/analyze` no figura entre los comandos vigentes | https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet | 2 de octubre de 2026 |
+| Aprobación de las herramientas y comandos que ejecuta el agente | https://code.visualstudio.com/docs/agents/run/approvals | 2 de octubre de 2026 |
 | Créditos de IA, tokens de entrada, salida y caché, costo según el modelo, qué funciones consumen créditos, sugerencias en línea y de la próxima edición sin cobro en planes pagos | https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing | 2 de octubre de 2026 |
 | Qué aumenta el consumo, el modelo más barato no siempre es el resultado más barato, `/compact`, cómo ver el consumo | https://code.visualstudio.com/docs/agents/guides/optimize-usage | 2 de octubre de 2026 |

@@ -25,6 +25,17 @@ Studio Code en el medio.
 Lo que ningún gate cubre se marca como «revisión manual». Son los puntos que más fácil se
 olvidan.
 
+**Un ejemplo de por qué esto existe.** GitHub reorganizó su documentación de cobro. Una
+página de la estructura anterior, como
+`https://docs.github.com/en/copilot/concepts/billing/organizations-and-enterprises`, todavía
+aparece en buscadores, pero la ruta equivalente para planes individuales,
+`https://docs.github.com/en/copilot/concepts/billing/individuals`, daba 404 el 2 de octubre de
+2026. La página vigente es
+`https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing`. Nada del
+repositorio había cambiado y ningún gate lo habría detectado. Por eso las fuentes se vuelven
+a consultar, siguiendo los enlaces de la documentación vigente y no rutas recordadas, antes
+de cada dictado.
+
 ## 1. Versión de Visual Studio Code en la imagen de Netec
 
 **Por qué importa.** Todo lo demás depende de la versión instalada. Copilot viene integrado

@@ -141,8 +141,8 @@ chico eso pasa seguido. En uno de mil clases, no tanto, y no se puede saber de a
 | Afirmación | Fuente | Consultada |
 |---|---|---|
 | Índice del espacio de trabajo, referencias con `#`, `#codebase`, arrastrar y soltar, Add Context, `#fetch`, participantes con `@` | https://code.visualstudio.com/docs/chat/copilot-chat-context | 2 de octubre de 2026 |
-| Participantes `@vscode`, `@terminal` y `@github` | https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet | 27 de septiembre de 2026 |
+| Participantes `@vscode`, `@terminal` y `@github` | https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet | 2 de octubre de 2026 |
 | Chat sobre el código seleccionado y comando `/explain` | https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet | 2 de octubre de 2026 |
-| `/workspace` no figura entre los comandos vigentes | https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet | 27 de septiembre de 2026 |
+| `/workspace` no figura entre los comandos vigentes | https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet | 2 de octubre de 2026 |
 | Evitar la sobrecarga de contexto, empezar chico, mantenerlo al día, más contexto aumenta el consumo de créditos | https://code.visualstudio.com/docs/agents/guides/context-engineering-guide | 2 de octubre de 2026 |
 | Abrir los archivos relevantes o seleccionar el código, conversación nueva por tarea | https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering | 2 de octubre de 2026 |

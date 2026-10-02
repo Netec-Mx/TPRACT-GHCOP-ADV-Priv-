@@ -17,9 +17,9 @@ La extensión sigue la regla de una página por cada diez minutos, contando una 
 | 1.1 | Prompts efectivos para desarrollo: objetivo, contexto, restricciones y salida esperada | 30 | 1 | [1-1-prompts-efectivos.md](1-1-prompts-efectivos.md) | [demo 1.1](../demos/demo-1-1-pedido-pobre-y-pedido-bueno.md) |
 | 1.2 | Uso de contexto: archivos abiertos, selección de código, workspace y referencias específicas | 30 | 1 | [1-2-uso-de-contexto.md](1-2-uso-de-contexto.md) | [demo 1.2](../demos/demo-1-2-referencias-de-contexto.md) |
 | 1.3 | Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar | 30 | 1 | [1-3-flujos-de-trabajo.md](1-3-flujos-de-trabajo.md) | [demo 1.3](../demos/demo-1-3-flujo-de-trabajo.md) |
-| 2.1 | Conceptos: agentes locales, skills, prompt files e instrucciones personalizadas | 45 | 2 | 2-1-conceptos-de-personalizacion.md | [demo 2.1](../demos/demo-2-1-jerarquia-y-skills.md) |
-| 2.2 | Diseño de agentes por rol: analista, tester, documentador, revisor y refactorizador | 45 | 2 | 2-2-agentes-por-rol.md | [demo 2.2](../demos/demo-2-2-agentes-por-rol.md) |
-| 2.3 | Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos | 45 | 2 | 2-3-instrucciones-reutilizables.md | [demo 2.3](../demos/demo-2-3-instrucciones-por-ruta.md) |
+| 2.1 | Conceptos: agentes locales, skills, prompt files e instrucciones personalizadas | 45 | 2 | [2-1-conceptos-de-personalizacion.md](2-1-conceptos-de-personalizacion.md) | [demo 2.1](../demos/demo-2-1-jerarquia-y-skills.md) |
+| 2.2 | Diseño de agentes por rol: analista, tester, documentador, revisor y refactorizador | 45 | 2 | [2-2-agentes-por-rol.md](2-2-agentes-por-rol.md) | [demo 2.2](../demos/demo-2-2-agentes-por-rol.md) |
+| 2.3 | Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos | 45 | 2 | [2-3-instrucciones-reutilizables.md](2-3-instrucciones-reutilizables.md) | [demo 2.3](../demos/demo-2-3-instrucciones-por-ruta.md) |
 | 3.1 | Qué es MCP y cómo se relaciona con contexto, agentes y herramientas locales | 45 | 3 | 3-1-que-es-mcp.md | |
 | 3.2 | Diferencia entre MCP local y MCP externo en ambientes restringidos | 45 | 3 | 3-2-mcp-local-y-externo.md | [demo 3.2](../demos/demo-3-2-servidor-mcp.md) |
 | 3.3 | Riesgos de seguridad: exposición de información, conectores no autorizados y fuga de contexto | 45 | 3 | 3-3-riesgos-de-seguridad.md | [demo 3.3](../demos/demo-3-3-hook.md) |
