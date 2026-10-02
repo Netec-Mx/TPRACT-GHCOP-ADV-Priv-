@@ -32,6 +32,10 @@ En cada paso, reemplaza `java` por `dotnet` si trabajas con .NET.
 | 4 | `/lab-1-5-paso-4-proponer-mejora java` | Si la propuesta cabe en una revisión de diez minutos | 12 min |
 | 5 | `/lab-1-5-paso-5-extraer-retencion java`, en modo **Agent** | Qué archivos toca, si compila y si el comparador sigue en cero | 12 min |
 
+**Cómo se cuentan los niveles de anidamiento en el paso 1.** El cuerpo del método es el nivel
+cero. Cada bloque que abre una llave dentro del cuerpo suma un nivel. Así todos cuentan
+igual y los resultados se pueden comparar.
+
 El paso 5 no depende de lo que haya propuesto el paso 4. La zona a extraer ya está fijada,
 para que todos trabajen sobre lo mismo.
 

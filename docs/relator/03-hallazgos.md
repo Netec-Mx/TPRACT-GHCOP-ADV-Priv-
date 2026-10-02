@@ -732,3 +732,45 @@ problema que el ejercicio quiere que descubra, el ejercicio desaparece.
 En el capítulo 2, al presentar los tipos de artefactos. La elección entre prompt file y
 skill no es de gusto: uno está en retiro y el otro no. Y en el capítulo 1, cuando se
 discute que Copilot cambia más rápido que la documentación interna de cualquier equipo.
+
+---
+
+## HALLAZGO-07. El mismo agente clasificó distinto la misma regla según el contexto
+
+| Campo | Valor |
+|---|---|
+| Detectado en | SPEC-011, grabación de las salidas de respaldo de los laboratorios |
+| Componente | Regla 8 de `escenario/README.md`, periodo en hora de Lima |
+| Severidad | Ninguna para el material. Es material de clase |
+| Estado | Registrado. No se corrige |
+
+### Qué pasó
+
+En la misma corrida de verificación, el mismo agente evaluó la regla 8 dos veces sobre el
+mismo código.
+
+- **En el laboratorio 4.4, paso 1.** La clasificó como regla que **no coincide** con el
+  código, porque `UtilidadesFecha` usa la zona horaria del sistema y no la de Lima.
+- **En el laboratorio 5.1, paso 3.** La clasificó como **«cumple en la práctica, sin
+  garantía»**, porque el código usa la zona del sistema de forma consistente y en una
+  máquina configurada en Lima el resultado es correcto.
+
+En SPEC-009 se había observado otra variante en el 4.4, con la regla 8 entre las que
+coinciden con matices.
+
+Las dos lecturas son defendibles. Cambió el contexto del pedido. En el 4.4 la pregunta era
+qué hace el código frente a la regla. En el 5.1 la pregunta era bajo qué condiciones la regla
+deja de cumplirse.
+
+### Reglas derivadas
+
+**Una clasificación hecha por un agente depende del pedido, no solo del código.** Dos
+pedidos distintos sobre el mismo archivo pueden producir dos veredictos distintos, los dos
+razonables. Para comparar entre participantes o entre corridas, el criterio de
+clasificación tiene que estar escrito en el pedido.
+
+### Dónde aplica esto en el taller
+
+En el 4.4 y en el 5.1. Si dos participantes, o el mismo participante en los dos
+laboratorios, clasifican distinto la regla 8, no es un error de ninguno. Es la ocasión de
+preguntar qué criterio usó cada uno y cuál pondría el equipo por escrito.

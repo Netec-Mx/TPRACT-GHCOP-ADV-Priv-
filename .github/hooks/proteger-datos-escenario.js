@@ -15,8 +15,8 @@
 
 'use strict';
 
-const MENSAJE = 'Los datos del escenario estan protegidos y no se pueden modificar. ' +
-    'Ningun laboratorio requiere cambiar los archivos de escenario/datos/.';
+const MENSAJE = 'Los datos del escenario están protegidos y no se pueden modificar. ' +
+    'Ningún laboratorio requiere cambiar los archivos de escenario/datos/.';
 
 // Herramientas que escriben en disco, por su nombre. Se evalua por patron porque los
 // nombres cambian entre versiones y entornos: editFiles, createFile, apply_patch,

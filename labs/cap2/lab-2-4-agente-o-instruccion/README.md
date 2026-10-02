@@ -36,6 +36,10 @@ comprobar que Copilot lo aplica y dejarlo listo para que lo use otro integrante.
 | 3 | `/lab-2-4-paso-3-probar-artefacto`, y luego las dos pruebas que propone | Si Copilot aplica tu artefacto. En una instrucción, que aparezca entre las referencias de la respuesta cuando el agente crea o modifica un archivo que coincide con el patrón. En un agente, que aparezca en el selector de agentes y se quede en su rol | 10 min |
 | 4 | `/lab-2-4-paso-4-ajustar-y-documentar` | Si otro integrante entendería para qué sirve con leer `description` | 8 min |
 
+**Orden de las pruebas del paso 3.** Ejecuta primero la prueba 1 y después la prueba 2. Si
+tu artefacto es una instrucción, la segunda prueba trabaja sobre el archivo que crea la
+primera. Si la primera no creó el archivo, no ejecutes la segunda.
+
 Si en el paso 2 no alcanzas a tener un artefacto que funcione, avísale al relator. Te va a
 entregar uno de respaldo para que hagas los pasos 3 y 4.
 

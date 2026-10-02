@@ -14,7 +14,8 @@ La descripción del servidor, su comando de arranque y sus permisos están en
 
 # Qué hacer
 
-1. Crea `.vscode/mcp.json` con un único servidor llamado `pasarela-andina`, de tipo
+1. Si la carpeta `.vscode` no existe en la raíz del repositorio, créala. Después crea
+   `.vscode/mcp.json` con un único servidor llamado `pasarela-andina`, de tipo
    `stdio`, que ejecute el comando de arranque de [mcp/README.md](../../../mcp/README.md) desde la raíz del
    repositorio. Usa `${workspaceFolder}` como directorio de trabajo.
 2. Conserva el modelo de permisos de Node tal como lo indica el README. No amplíes los
@@ -27,7 +28,8 @@ La descripción del servidor, su comando de arranque y sus permisos están en
 - **No corrijas nada que no forme parte de este paso.** El código del escenario tiene
   características elegidas a propósito para el taller. Si ves algo que te parece un
   problema, menciónalo al final de tu respuesta y no lo toques.
-- Crea un solo archivo. No modifiques el servidor ni sus datos.
+- Crea solo la carpeta `.vscode`, si falta, y el archivo `.vscode/mcp.json`. No modifiques el
+  servidor ni sus datos.
 - Ninguna variable de entorno ni secreto. El servidor no los necesita.
 
 # Salida esperada

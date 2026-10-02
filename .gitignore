@@ -109,3 +109,7 @@ tmp/
 
 # ---------- Salidas de comparacion de escenarios ----------
 escenario/*/salida-*.txt
+
+# ---------- Archivos personales del Product Owner ----------
+# No son del proyecto y no entran en ningun commit. No se borran.
+entrega_spec24.zip

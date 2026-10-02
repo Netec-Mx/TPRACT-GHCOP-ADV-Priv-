@@ -480,11 +480,20 @@ Siga `docs/relator/demos/demo-4-1-documentacion-contra-ejecucion.md`.
 ## Al terminar
 
 1. Ejecute `bash scripts/reiniciar-lab.sh lab-2-4`, después `bash scripts/reiniciar-lab.sh lab-3-4`
-   y después `bash scripts/reiniciar-lab.sh lab-5-4`, respondiendo `si` cada vez.
+   y después `bash scripts/reiniciar-lab.sh lab-5-3`, respondiendo `si` cada vez. El 5.4 no se
+   reinicia, ver la prueba siguiente.
+2. Ejecute `bash scripts/reiniciar-lab.sh lab-5-4`.
 
-- [ ] **Esperado:** `git status` dice «nothing to commit, working tree clean».
+- [ ] **Esperado:** dos avisos que dicen que el 5.4 no tiene punto de partida propio y que
+      reiniciarlo descarta el trabajo del 5.2 y el 5.3. Si hay algo que descartar, pide
+      escribir `descartar`. Responda `si`, y debe cancelar sin tocar nada.
 - Observado: ______________________________________________
 
-2. Anote el modelo que mostró el selector de modelo del chat durante las pruebas:
+3. Ejecute `git status`.
+
+- [ ] **Esperado:** «nothing to commit, working tree clean».
+- Observado: ______________________________________________
+
+4. Anote el modelo que mostró el selector de modelo del chat durante las pruebas:
    ______________
-3. Devuelva este documento con las casillas marcadas y las observaciones completas.
+5. Devuelva este documento con las casillas marcadas y las observaciones completas.

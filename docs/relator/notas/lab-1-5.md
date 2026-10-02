@@ -16,6 +16,17 @@ En el paso 2, si hay tiempo, muestre en vivo cómo desaparece una línea. Corrom
 de una transacción en `escenario/datos/transacciones.txt`, ejecute el escenario y compare
 el total de transacciones. Después restaure con `bash scripts/reiniciar-lab.sh lab-1-5`.
 
+**Comercio suspendido.** Las reglas de `escenario/README.md` no dicen si un comercio
+suspendido se liquida, a propósito. En el paso 3 aparece que `buscarComerciosActivos`
+devuelve también a CM0031, que está suspendido, y que se liquida. El participante tiene que
+detectar que hace falta una regla y escalarla, y el negocio es usted. Cuando alguien lo
+pregunte, y solo entonces, responda así.
+
+> Un comercio suspendido no se liquida.
+
+Con esa respuesta, la consecuencia que el paso 3 pide buscar es real. CM0031 aparece
+liquidado cuando no debería. No la escriba en ningún archivo que vean los participantes.
+
 **Monto negativo.** Si alguien, al revisar la selección de tramo, nota que un monto
 negativo recibe el tramo más bajo, la respuesta es que es un comportamiento real del
 sistema que nadie plantó, que el negocio no admite montos negativos en una venta y que

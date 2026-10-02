@@ -46,7 +46,10 @@ Tambien se aceptan las formas 5.2 y 5-2.
 
 Opciones:
   --si        Confirma de antemano. Sin esta opcion, el script pregunta antes de
-              descartar cambios.
+              descartar cambios. No vale para lab-5-4.
+  --confirmo-descartar-5-2-y-5-3
+              Solo para lab-5-4. Confirma de antemano que se descarta el trabajo
+              de los laboratorios 5.2 y 5.3.
   --ayuda     Muestra esta ayuda y termina.
   --version   Muestra la version del script y termina.
 
@@ -89,10 +92,12 @@ normalizar_laboratorio() {
 
 laboratorio=""
 confirmado=0
+confirmado_5_4=0
 
 while [ $# -gt 0 ]; do
     case "$1" in
         --si)        confirmado=1 ;;
+        --confirmo-descartar-5-2-y-5-3) confirmado_5_4=1 ;;
         --ayuda|-h)  uso; exit 0 ;;
         --version)   echo "reiniciar-lab.sh $VERSION_SCRIPT"; exit 0 ;;
         -*)          echo "Opcion desconocida: $1" >&2; uso >&2; exit 2 ;;
@@ -124,6 +129,15 @@ if git rev-parse -q --verify "refs/tags/$ETIQUETA_PARTIDA" >/dev/null; then
     referencia="$ETIQUETA_PARTIDA"
 else
     referencia="HEAD"
+fi
+
+# El laboratorio 5.4 no tiene punto de partida propio. Se trabaja sobre lo que dejaron el
+# 5.2 y el 5.3, asi que reiniciarlo descarta ese trabajo. Se advierte siempre y se pide una
+# confirmacion distinta de la habitual, que --si no reemplaza.
+if [ "$laboratorio" = "lab-5-4" ]; then
+    titulo "Advertencia"
+    aviso "El laboratorio 5.4 no tiene punto de partida propio. Se trabaja sobre lo que dejaron los laboratorios 5.2 y 5.3."
+    aviso "Reiniciarlo devuelve el escenario a su version original y descarta la refactorizacion del 5.2 y las pruebas del 5.3."
 fi
 
 titulo "Punto de partida de $laboratorio"
@@ -168,7 +182,19 @@ if [ "$referencia" != "HEAD" ] && [ -n "$(git rev-list "$referencia..HEAD" 2>/de
     aviso "Hay commits posteriores al punto de partida. Siguen en el historial, pero estas rutas vuelven a la version original."
 fi
 
-if [ "$confirmado" -eq 0 ]; then
+if [ "$laboratorio" = "lab-5-4" ] && [ "$confirmado_5_4" -eq 0 ]; then
+    if [ ! -t 0 ]; then
+        falla "Hace falta confirmar y no hay una terminal interactiva. Repetir con --confirmo-descartar-5-2-y-5-3."
+        exit 1
+    fi
+    printf '\n  Escribe descartar para perder el trabajo del 5.2 y el 5.3, cualquier otra cosa para cancelar: '
+    read -r respuesta
+    respuesta="$(printf '%s' "$respuesta" | tr -d '\r ' | tr '[:upper:]' '[:lower:]')"
+    if [ "$respuesta" != "descartar" ]; then
+        aviso "Cancelado. No se modifico nada."
+        exit 1
+    fi
+elif [ "$laboratorio" != "lab-5-4" ] && [ "$confirmado" -eq 0 ]; then
     if [ ! -t 0 ]; then
         falla "Hace falta confirmar y no hay una terminal interactiva. Repetir con --si para descartar."
         exit 1

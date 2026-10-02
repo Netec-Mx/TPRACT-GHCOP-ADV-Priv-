@@ -13,9 +13,8 @@ Code lo ejecuta antes de cada herramienta que el agente quiere usar. El script
 - Todo lo demás pasa. Leer los datos, editar `escenario/java/` y `escenario/dotnet/`, crear
   `.vscode/mcp.json` y escribir entregables en `labs/`.
 
-Al bloquear, el agente recibe el mensaje «Los datos del escenario estan protegidos y no se
-pueden modificar. Ningun laboratorio requiere cambiar los archivos de escenario/datos/.»,
-sin tildes, tal como lo imprime el script.
+Al bloquear, el agente recibe el mensaje «Los datos del escenario están protegidos y no se
+pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.».
 
 ## Por qué existe
 

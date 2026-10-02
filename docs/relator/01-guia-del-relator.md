@@ -317,6 +317,14 @@ Con los cinco recortes se recuperan 51 minutos. No se recortan el paso 2 del 5.4
 entregable comprometido, ni el paso 1 del 5.3, que es el único que ejercita la selección de
 tramo duplicada.
 
+**El capítulo 5 es un solo flujo.** Los cuatro laboratorios trabajan sobre el mismo
+repositorio, cada uno sobre lo que dejó el anterior. El 5.3 usa los criterios de evaluación
+del 5.1. A quien llegue al 5.3 sin haber hecho el 5.1, entréguele
+`soluciones/lab-5-1/criterios-de-evaluacion.md` para que lo guarde en
+`labs/cap5/lab-5-1-preparacion/entregables/`. El 5.4 no se reinicia. Continúa sobre el
+estado que dejó el 5.3, y el script de reinicio advierte y pide confirmación explícita si
+alguien lo intenta.
+
 **Antes de empezar.** Las notas de los cinco laboratorios abiertas en su segunda pantalla.
 Los casos de clase 01 y 03 listos para proyectar. La respuesta de negocio sobre los bordes
 de tramo a mano, ver la sección 6.

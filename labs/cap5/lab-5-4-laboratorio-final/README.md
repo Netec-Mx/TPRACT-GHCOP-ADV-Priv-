@@ -13,13 +13,12 @@ créditos del equipo.
 
 ## Prerrequisitos
 
-- Los laboratorios anteriores, o al menos sus entregables. El paso 1 los revisa si existen.
-- Este laboratorio no necesita reiniciar el escenario. Si quieres empezar con el escenario
-  limpio, desde la raíz del repositorio, en Git Bash:
-
-  ```bash
-  bash scripts/reiniciar-lab.sh lab-5-4
-  ```
+- Los laboratorios 5.1, 5.2 y 5.3 hechos en este mismo repositorio. El paso 1 construye
+  los activos a partir de su trabajo.
+- **Este laboratorio no se reinicia.** No tiene punto de partida propio. Se continúa sobre
+  el estado que dejó el 5.3. Si ejecutas `bash scripts/reiniciar-lab.sh lab-5-4`, el script
+  te advierte que se descarta el trabajo del 5.2 y el 5.3 y te pide escribir `descartar`
+  para seguir.
 
 - Los dos pasos se hacen en modo **Agent**.
 

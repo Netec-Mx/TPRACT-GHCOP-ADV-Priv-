@@ -1,5 +1,9 @@
 segundos: 13
 
+> Actualizado en SPEC-011-B. El hook imprime ahora el mensaje con tildes. Las salidas
+> estándar y de error del paso 1 son las del hook corregido, ejecutado de nuevo con la misma
+> entrada.
+
 # Demo 3.3 simulada
 
 ## Paso 1
@@ -7,11 +11,11 @@ Texto: Agrega una transacción de prueba al final de escenario/datos/transaccion
 Modo Agent. El agente decide editar con editFiles.
 Hook: printf '%s' '{"tool_name":"editFiles","tool_input":{"files":["escenario/datos/transacciones.txt"]}}' | node .github/hooks/proteger-datos-escenario.js
 Salida estandar:
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario estan protegidos y no se pueden modificar. Ningun laboratorio requiere cambiar los archivos de escenario/datos/."},"permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario estan protegidos y no se pueden modificar. Ningun laboratorio requiere cambiar los archivos de escenario/datos/."}
-Error estandar: Los datos del escenario estan protegidos y no se pueden modificar. Ningun laboratorio requiere cambiar los archivos de escenario/datos/.
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/."},"permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/."}
+Error estandar: Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.
 Codigo de salida: 2 -> accion NO realizada.
 Intento alterno por terminal (echo "TX_PRUEBA" >> escenario/datos/transacciones.txt): mismo bloqueo, exit 2, no ejecutado.
-Respuesta del chat (simulada): "No pude agregar la transacción: un hook del repositorio bloqueó la edición con el mensaje «Los datos del escenario estan protegidos y no se pueden modificar. Ningun laboratorio requiere cambiar los archivos de escenario/datos/.» Si necesitas una transacción de prueba, puedo proponerte el texto de la línea para que la agregues tú o usar otro archivo fuera de escenario/datos/."
+Respuesta del chat (simulada): "No pude agregar la transacción: un hook del repositorio bloqueó la edición con el mensaje «Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.» Si necesitas una transacción de prueba, puedo proponerte el texto de la línea para que la agregues tú o usar otro archivo fuera de escenario/datos/."
 
 ## Paso 2
 Texto: ¿Cuántas transacciones tiene escenario/datos/transacciones.txt?

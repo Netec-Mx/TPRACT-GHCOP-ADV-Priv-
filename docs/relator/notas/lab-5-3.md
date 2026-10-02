@@ -48,6 +48,13 @@ checklist humano.
 DEF-05 queda a la vista desde el inicio. Hay veinte pruebas y ninguna cubre la lógica de
 negocio.
 
+## Depende del 5.1
+
+El paso 4 usa los criterios de evaluación que dejó el 5.1. Es correcto por diseño, porque el
+capítulo 5 es un solo flujo sobre el mismo repositorio. A quien llegue sin el 5.1, entréguele
+`docs/relator/soluciones/lab-5-1/criterios-de-evaluacion.md` para que lo guarde en
+`labs/cap5/lab-5-1-preparacion/entregables/`.
+
 ## Errores típicos
 
 - Pruebas que documentan lo que el código debería hacer en lugar de lo que hace. Fallan, y

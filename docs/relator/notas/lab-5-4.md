@@ -15,6 +15,15 @@ El paso 2 produce el documento de línea base de medición y presupuesto de cré
 entregable del temario. Se apoya en lo que se vio en el subtema 1.3 sobre el consumo de
 cada modo de trabajo.
 
+## No se reinicia
+
+El 5.4 no tiene punto de partida propio. Se continúa sobre el estado que dejó el 5.3,
+porque los activos se construyen a partir del trabajo de los tres laboratorios anteriores.
+Si un participante ejecuta `bash scripts/reiniciar-lab.sh lab-5-4`, el script le advierte
+que descarta la refactorización del 5.2 y las pruebas del 5.3, y le pide escribir
+`descartar`. `--si` no alcanza. Si alguien lo hizo por error, se recupera aplicando las
+soluciones de referencia del 5.2 y el 5.3.
+
 ## Qué mirar en el paso 1
 
 - Qué decidió el agente sin que nadie lo acotara, y si se puede usar al día siguiente.
@@ -41,7 +50,8 @@ Si el paso 1 sigue corriendo a los 32 minutos, pida que lo detengan y pasen al p
 
 ## Si alguien se atrasa
 
-Que haga el paso 2 primero. Es el entregable obligatorio.
+Que haga el paso 2 primero. Es el entregable obligatorio. No reinicie el laboratorio para
+ganar tiempo, porque se pierde el trabajo del 5.2 y el 5.3.
 
 ## Solución de referencia
 

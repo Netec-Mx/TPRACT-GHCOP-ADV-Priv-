@@ -24,6 +24,12 @@ participante.
 
 El paso 3 prepara una copia para Confluence y lista lo que se pierde.
 
+**La regla 8 puede salir clasificada distinto.** En la verificación, el mismo agente la
+dio como no cumplida en el 4.4 y como «cumple en la práctica, sin garantía» en el 5.1. Si
+pasa en la sala, no es un error. Pregunte qué criterio usó cada uno y diga que, para comparar
+clasificaciones, el criterio tiene que estar escrito en el pedido. Ver HALLAZGO-07 en
+`03-hallazgos.md`.
+
 ## Errores típicos
 
 - Aceptar el documento del paso 1 sin abrir ninguna de las líneas que cita.

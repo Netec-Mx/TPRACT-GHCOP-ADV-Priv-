@@ -25,6 +25,12 @@ comercio suspendido liquidado (DEF-09). Se registran en el inventario y ninguno 
 El paso 4 convierte el inventario en criterios verificables. Acuérdelos en voz alta con la
 sala, porque se usan en el 5.2 y el 5.3.
 
+**La regla 8 puede salir clasificada distinto.** En la verificación, el mismo agente la
+dio como no cumplida en el 4.4 y como «cumple en la práctica, sin garantía» en el 5.1. Si
+pasa en la sala, no es un error. Pregunte qué criterio usó cada uno y diga que, para comparar
+clasificaciones, el criterio tiene que estar escrito en el pedido. Ver HALLAZGO-07 en
+`03-hallazgos.md`.
+
 ## Errores típicos
 
 - Intentar arreglar un fallo del paso 1 con el agente. Si la compilación falla, es un

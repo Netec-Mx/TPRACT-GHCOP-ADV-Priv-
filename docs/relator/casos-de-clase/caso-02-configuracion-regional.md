@@ -162,14 +162,16 @@ Un agente al que se le pide *"prueba configuraciones que cambien el separador de
 dígitos, el calendario y el juego de caracteres, y compara la salida redirigida a archivo"*
 encuentra las cuatro.
 
-**La diferencia no está en el agente. Está en lo que se le pidió.**
+La diferencia entre los dos pedidos está en saber qué pedir, y eso se aprende verificando,
+nivel por nivel. El segundo pedido solo se puede escribir después de haber visto los cuatro
+niveles. Quien escribió el primero tampoco sabía que existía el calendario budista. Lo
+aprendió al encontrarlo.
 
-Ese es el capítulo 1 completo en un solo ejemplo: el resultado no dependió de la capacidad
-del modelo sino de si quien pidió sabía qué dimensiones tenía el problema.
-
-Vale hacer notar que la persona que escribió el primer prompt tampoco sabía que existía el
-calendario budista. Lo aprendió al encontrarlo. Un prompt mejor no siempre se puede escribir
-de entrada, y por eso la verificación es iterativa.
+No se trata de que bastaba con pedirlo mejor desde el principio. Cada nivel encontrado
+enseñó qué preguntar en el siguiente, y por eso la verificación es iterativa. Ese es el
+capítulo 1 en un solo ejemplo. El resultado no dependió de la capacidad del modelo sino de
+cuánto sabía quien pedía sobre las dimensiones del problema, y ese conocimiento se construyó
+probando.
 
 ## La conclusión que cierra el caso
 

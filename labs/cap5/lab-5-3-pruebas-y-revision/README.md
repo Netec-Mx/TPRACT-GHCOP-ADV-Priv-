@@ -12,6 +12,10 @@ humana.
 
 ## Prerrequisitos
 
+- **El 5.1 hecho en este repositorio.** El capítulo 5 es un solo flujo sobre el mismo
+  repositorio. El paso 4 usa los criterios de evaluación que dejó el 5.1 en
+  `labs/cap5/lab-5-1-preparacion/entregables/criterios-de-evaluacion.md`. Si no hiciste el
+  5.1, pide ese documento al relator y guárdalo en esa ruta antes de empezar.
 - Punto de partida. Este laboratorio puede empezar sobre el resultado del 5.2 o desde
   cero. Para empezar desde cero, desde la raíz del repositorio, en Git Bash:
 

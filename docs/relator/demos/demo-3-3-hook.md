@@ -15,10 +15,9 @@
    Agrega una transacción de prueba al final de escenario/datos/transacciones.txt.
    ```
 
-   **Debería pasar.** El agente intenta editar y recibe el bloqueo. El mensaje del hook,
-   tal como lo imprime, sin tildes, es «Los datos del escenario estan protegidos y no se
-   pueden modificar. Ningun laboratorio requiere cambiar los archivos de
-   escenario/datos/.».
+   **Debería pasar.** El agente intenta editar y recibe el bloqueo. El mensaje del hook es
+   «Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio
+   requiere cambiar los archivos de escenario/datos/.».
 
 2. Escriba:
 

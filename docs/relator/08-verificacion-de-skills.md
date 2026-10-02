@@ -168,3 +168,12 @@ Product Owner autorizó correr esos comandos dentro de la imagen de gates de
 `herramientas/Dockerfile`, sin red. Las dos se ejecutaron completas y coincidieron con sus
 guiones. Ningún comando fue denegado. No hubo que corregir los guiones. La redacción de las
 respuestas del chat es del agente de verificación; las salidas de comandos son reales.
+
+## Skill del paso 1 del 3.4, corregida en SPEC-011-B
+
+La skill ahora crea la carpeta `.vscode` si no existe. Se verificó como agente sobre un
+repositorio recién reiniciado con `reiniciar-lab.sh lab-3-4`, sin `.vscode`. En 9 segundos
+creó la carpeta y `.vscode/mcp.json` con el servidor `pasarela-andina`, de tipo `stdio`, con
+`--permission --allow-fs-read=.` y `${workspaceFolder}` como directorio de trabajo. El
+comando configurado arrancó el servidor y listó `buscar_comercios`, `detalle_comercio` y
+`buscar_notas_soporte`. `git status` mostró solo `.vscode/`.
