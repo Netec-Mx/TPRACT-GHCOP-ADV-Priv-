@@ -101,10 +101,12 @@ llega, para que quien lo retome más adelante no tenga que reconstruir el contex
 | SPEC-003 a SPEC-003-B | Escenario .NET y equivalencia | Cerrado |
 | SPEC-004 | Prompt files, solo la calibración | Absorbido por SPEC-009 |
 | SPEC-005 y SPEC-006 | Activos de referencia y servidor MCP | Absorbidos por SPEC-009 |
-| SPEC-007 | Guía general del relator | Pendiente, después de SPEC-009 |
+| SPEC-007 | Guía general del relator | Absorbido por SPEC-011 |
 | SPEC-008 | Realineación al temario contratado | Cerrado |
 | SPEC-009 | Construcción completa de los nueve laboratorios | Cerrado por SPEC-010 |
-| SPEC-010 | Cierre de SPEC-009, hook de protección de datos, .NET 10 y protocolo de prueba | Ejecutado, pendiente de prueba en la máquina virtual |
+| SPEC-010 | Cierre de SPEC-009, hook de protección de datos, .NET 10 y protocolo de prueba | Cerrado |
+| SPEC-010-A | Infraestructura de construcción versionada | Cerrado |
+| SPEC-011 y SPEC-011-B | Guía del relator, demostraciones, material del participante y correcciones | Ejecutado, pendiente de prueba en la máquina virtual |
 | SPEC-010 a SPEC-018 | README de cada laboratorio | Absorbidos por SPEC-009 |
 
 SPEC-010 a SPEC-018 conservan su correspondencia con los laboratorios, en el orden de la
