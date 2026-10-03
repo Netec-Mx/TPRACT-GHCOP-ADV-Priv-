@@ -210,7 +210,7 @@ guía fija dónde va cada cosa y cuánto dura.
 | 0:30 | 12 | 1.2 Uso de contexto: archivos abiertos, selección de código, workspace y referencias específicas. Exposición | Teoría del subtema |
 | 0:42 | 8 | 1.2 Demostración de las referencias de contexto | [`demos/demo-1-2-referencias-de-contexto.md`](demos/demo-1-2-referencias-de-contexto.md) |
 | 0:50 | 10 | 1.2 Caso de clase de la configuración regional | Sección 7 de esta guía |
-| 1:00 | 20 | 1.3 Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar. Exposición | Teoría del subtema, incluido el consumo de cada modo de trabajo |
+| 1:00 | 20 | 1.3 Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar. Exposición | Teoría del subtema, incluido el consumo de cada modo de trabajo y la guía [`uso-responsable-de-tokens.md`](../gobierno/uso-responsable-de-tokens.md) |
 | 1:20 | 10 | 1.3 Demostración del flujo analizar, planear, implementar y validar | [`demos/demo-1-3-flujo-de-trabajo.md`](demos/demo-1-3-flujo-de-trabajo.md) |
 | 1:30 | 30 | 1.4 Práctica guiada: mejora incremental de prompts y uso de comandos del chat | Laboratorio 1.4 |
 | 2:00 | 60 | 1.5 Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | Laboratorio 1.5 |

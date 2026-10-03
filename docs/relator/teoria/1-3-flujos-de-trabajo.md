@@ -115,6 +115,11 @@ acuerdo con su proveedor. Lo que no cambia es el mecanismo, y con el mecanismo e
 puede decidir. Analizar y planear son baratos y evitan que el agente implemente lo que no
 se quería. Esa es la línea base que el laboratorio 5.4 convierte en presupuesto.
 
+Todo esto está resumido en una página para el equipo,
+[`docs/gobierno/uso-responsable-de-tokens.md`](../../gobierno/uso-responsable-de-tokens.md),
+con qué modo conviene según la tarea y cómo ver el consumo. Conviene proyectarla al cerrar
+este punto.
+
 ## Cómo se conecta
 
 - **Demostración.** La [demostración 1.3](../demos/demo-1-3-flujo-de-trabajo.md) lleva una
