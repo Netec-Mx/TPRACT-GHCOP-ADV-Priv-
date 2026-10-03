@@ -882,3 +882,32 @@ advierte y dice cómo confirmarlo en diez segundos: abrir el chat, escribir hola
 Copilot responde. Los atajos del mensaje dependen del sistema: `Cmd+Shift+X`, `Cmd+,` y
 `Ctrl+Cmd+I` en macOS, y `Ctrl+Shift+X`, `Ctrl+,` y `Ctrl+Alt+I` en Windows y Linux. Antes
 decía `Ctrl` en todos.
+
+## HALLAZGO-11. Copilot adelanta en el 5.1 defectos que el 5.3 hace descubrir
+
+| Campo | Valor |
+|---|---|
+| Detectado en | Primera prueba humana con Copilot real, 3 de octubre de 2026, paso 1 del 5.1 |
+| Componente | `lab-5-1-paso-1-historia-de-usuario`, restricción de mencionar al final lo que parezca un problema |
+| Severidad | Baja. Adelanta una parte del diagnóstico del 5.3, no lo reemplaza |
+| Estado | Aceptado. La skill no cambia; las notas del 5.1 y la hoja de respuestas dicen qué responder |
+
+### Qué pasó
+
+Al terminar la historia, Copilot avisó por su cuenta que `CalculadoraLiquidacion.java` trata
+el límite superior del tramo como exclusivo y que `CalculadoraComision.java` permite un
+recargo por cuotas de hasta 3,5 % cuando la regla dice 3 %. Son DEF-08 y DEF-03 del catálogo.
+Lo hizo porque la restricción común de las skills de laboratorio le pide mencionar al final
+lo que le parezca un problema, sin tocarlo.
+
+### Por qué no se cambia la skill
+
+Es un comportamiento realista y bueno de mostrar: el agente lee el código, ve la discrepancia
+con las reglas y la informa sin corregirla, que es exactamente lo que la restricción pide. Lo
+que el 5.3 agrega es la evidencia: cuánto suma cada causa, en qué comercios y con qué
+transacciones, y la segunda causa, el punto flotante, que no se ve leyendo el código.
+
+### Qué responde el relator
+
+Que está bien visto, que no se corrige ahora y que el 5.3 lo va a confirmar con evidencia.
+Está en las notas del 5.1 y en la hoja de respuestas del capítulo 5.

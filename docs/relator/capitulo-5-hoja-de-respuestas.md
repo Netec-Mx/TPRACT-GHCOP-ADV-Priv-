@@ -1,6 +1,6 @@
 # Capítulo 5: hoja de respuestas del relator
 
-Todo lo que usted dice en el capítulo, en orden. Lo demás lo entrega el repositorio.
+Lo que usted dice en el capítulo, en orden. Lo demás lo entrega el repositorio.
 
 ## 5.1, paso 1: usted es el negocio
 
@@ -12,7 +12,7 @@ Responda solo lo que pregunten.
 | Qué comercios entran | Los que se liquidan: activos y suspendidos con plan. No los dados de baja |
 | El periodo | Del primer día a las 00:00:00 al último a las 23:59:59, ambos incluidos, con la misma hora que usa el cierre |
 | El monto transado | La suma exacta de los montos de las transacciones del medio |
-| Las cuotas | La comisión incluye el recargo por cuotas: 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
+| Las cuotas | La comisión incluye su recargo: 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
 | Contracargos y retenciones | No forman parte del reporte |
 | Contra qué se comprueba | El total del reporte es igual a la suma del total de comisiones de las liquidaciones, al centavo |
 | El tope | Es por comercio, no se reparte. Las filas van antes del tope y una fila de ajuste muestra lo descontado |
@@ -20,13 +20,16 @@ Responda solo lo que pregunten.
 | Un monto en el límite de un tramo | Pertenece al tramo inferior. El límite superior es inclusivo |
 | Orden, formato o decimales | Los fija la especificación técnica que el repositorio entrega en el 5.2 |
 
+Si el agente avisa un defecto del código, como el borde o el recargo de 3,5 %: bien visto,
+no se corrige ahora, el 5.3 lo confirma con evidencia.
+
 En la puesta en común: una historia que solo excluye las anuladas difiere de las
 liquidaciones en 3 415,01, 4 065,43 y 2 521,97 soles en abril, mayo y junio.
 
 ## 5.3, paso 3: la decisión del borde
 
-Si no la pidieron en el 5.1, la piden aquí. Misma respuesta: el límite superior es
-inclusivo; 500 va al primer tramo, 2000 al segundo, 10000 al tercero.
+Si no la pidieron en el 5.1, la piden aquí. Misma respuesta: límite superior inclusivo;
+500 va al primer tramo, 2000 al segundo, 10000 al tercero.
 
 **Si alguien encuentra solo la causa grande** (22,00 del borde) y le quedan 0,03: pregunte
 cuánto suma lo que encontró contra la diferencia. Sugiera recalcular con decimal exacto los
@@ -35,9 +38,8 @@ flotante.
 
 ## Si alguien se atrasa
 
-Clave de ponerse al día: `quinua-condor-47`. Dígala en voz alta y que el participante
-ejecute, desde la raíz de su repositorio, con su stack y el laboratorio al que tiene que
-llegar:
+Clave de ponerse al día: `quinua-condor-47`. Dígala y que el participante ejecute, desde la
+raíz de su repositorio, con su stack y laboratorio:
 
 ```bash
 bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47
@@ -48,6 +50,5 @@ Descarta su trabajo del capítulo y pide escribir `descartar`. Para empezar el 5
 
 ## 5.4
 
-Nada. El incidente lo entrega el repositorio y la evolutiva está en el backlog. Si alguien
-propone revertir la versión: pregunte qué decisión respalda el monto nuevo y dónde está
-registrada.
+Nada; el repositorio entrega el incidente y la evolutiva. Si alguien propone revertir la
+versión: pregunte qué decisión respalda el monto nuevo y dónde está registrada.

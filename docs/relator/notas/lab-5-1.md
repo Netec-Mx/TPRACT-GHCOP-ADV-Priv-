@@ -23,6 +23,14 @@ anuladas, difiere de las liquidaciones en 3 415,01 soles en abril, 4 065,43 en m
 Si alguien pregunta a qué tramo pertenece un monto en el límite, responda con la decisión del
 borde. Si nadie lo pregunta aquí, aparece en el 5.3.
 
+**Si el agente adelanta defectos.** Al final de la historia, la skill le pide mencionar lo que
+le parezca un problema. En la primera prueba con Copilot real avisó por su cuenta que
+`CalculadoraLiquidacion` trata el límite superior del tramo como exclusivo y que
+`CalculadoraComision` permite un recargo por cuotas de hasta 3,5 % cuando la regla dice 3 %.
+Son DEF-08 y DEF-03. Es un comportamiento bueno y conviene mostrarlo. Responda que está bien
+visto, que no se corrige ahora y que el 5.3 lo va a confirmar con evidencia. No diga si es la
+causa de algo ni cuánto suma.
+
 **Paso 2.** La estimación con y sin IA. Lo que vale la pena observar es dónde la IA cambia la
 estimación y dónde no. El registro de tiempos empieza aquí y se compara en el 5.4.
 
