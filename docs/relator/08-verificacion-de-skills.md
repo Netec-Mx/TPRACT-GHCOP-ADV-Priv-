@@ -382,3 +382,41 @@ no cambiar tipos sin pedido explícito, y la skill del paso 3 la resolvió con a
 aprobación. El análisis por comercio del diagnóstico corrió con Python en la máquina del
 verificador; en la máquina virtual no está garantizado que haya Python, y el diagnóstico se
 puede hacer igual con los comandos del escenario.
+
+## Corrida s16b-u, diagnóstico sin pistas
+
+3 de octubre de 2026. Un agente sin acceso a `docs/relator/` ni al repositorio de construcción
+recorrió el 5.1 al 5.3 en Java sobre una publicación limpia, con los prompts de laboratorio
+como única guía. Un relator simulado respondió desde la hoja de respuestas, solo lo que el
+agente preguntó; el agente nunca la leyó. La pregunta era si llega solo a las dos causas.
+
+| Corrida | Paso | Segundos | Comandos | Resultado |
+|---|---|---|---|---|
+| s16b-u | `lab-5-1-paso-1-historia-de-usuario` | 58 (24 + 34, sin contar la espera al relator) | 6 | Sí |
+| s16b-u | `lab-5-1-paso-2-estimar` | 25 | 4 | Sí |
+| s16b-u | `lab-5-1-paso-3-ubicar-en-arquitectura` | 59 | 6 (+1 commit) | Sí |
+| s16b-u | `lab-5-2-paso-1-planificar` | 42 | 5 | Sí |
+| s16b-u | `lab-5-2-paso-2-implementar-reporte` | 73 | 5 | Sí |
+| s16b-u | `lab-5-2-paso-3-verificar-reporte` | 32 | 2 | Sí |
+| s16b-u | `lab-5-3-paso-1-probar-criterios` | 63 | 3 | Sí |
+| s16b-u | `lab-5-3-paso-2-conciliacion-en-pipeline` | 54 | 4 | Parcial |
+| s16b-u | `lab-5-3-paso-3-diagnosticar-y-corregir` | 152 | 9 | Sí |
+| s16b-u | `lab-5-3-paso-4-revision-y-pull-request` | 49 | 5 | Sí |
+| s16b-u | `lab-5-3-paso-5-opcional-github` | — | 0 | No aplica |
+
+**Llega solo a las dos causas.** El borde de tramo, 22,00, lo encontró a los 15 segundos del
+paso 3, y ya lo había anotado en el paso 3 del 5.1 al leer el código. El punto flotante,
+0,03, apareció a los 26 segundos. El paso completo, con la corrección y el pipeline en verde,
+tomó 152 segundos. Avisó que cambiaba el tipo antes de pedir la aprobación y solo actualizó el
+hash de junio.
+
+**Dónde se trabó.** En el 5.2 tomó el camino B, reutilizar el cálculo de la liquidación, y en
+el paso 2 del 5.3 la conciliación pasó. El rojo vino de las pruebas del paso 1, y la causa del
+punto flotante salió solo después de comparar comercio por comercio contra un modelo propio
+con decimal exacto. Por eso el paso 2 queda como parcial: el pipeline no muestra la
+diferencia de 22,03 en este camino, como describen las notas.
+
+**El relator.** En el 5.3 no hizo falta: la historia ya traía la decisión del borde. En el
+5.1 el agente preguntó por contracargos y retenciones, periodo, monto transado y cuotas, que
+la hoja no responde. El relator simulado los dejó como pendientes y el recorrido no se vio
+afectado.
