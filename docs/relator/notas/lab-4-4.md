@@ -18,9 +18,18 @@ Es el mejor ejemplo del taller sobre por qué la documentación generada se revi
 La otra diferencia que suele aparecer en el contraste es la de los bordes de tramo, que se
 trabaja en el 5.3. Si aparece aquí, se anota y se deja para ese laboratorio.
 
-El paso 2 produce un registro de decisiones. Dos salen del material, la configuración
-regional fija en Java y la compatibilidad de redondeo en .NET. La tercera la elige el
-participante.
+El paso 2 registra una decisión técnica que el repositorio todavía no tiene documentada: el
+escenario no usa frameworks ni dependencias de ejecución, solo dependencias de prueba. Se
+eligió en SPEC-015 por tres razones. Se observa en el código, en `pom.xml` y en los dos
+`.csproj`. Ninguna de las tres decisiones de `docs/arquitectura/decisiones/` la cubre; antes
+el paso pedía la configuración regional y la compatibilidad de redondeo, que la decisión 0001
+ya contiene y el participante tiene a la vista. Y no revela ningún defecto del catálogo.
+
+Lo que se revisa es que el documento separe lo que el código respalda, que no hay
+dependencias de ejecución, de lo que es una suposición sobre el porqué, que tiene que quedar
+marcada como pendiente de confirmar. Si alguien pregunta el porqué, la respuesta está en las
+preguntas difíciles de la guía: el escenario tiene que existir en los dos stacks con la misma
+salida, compilar sin descargas y ser chico.
 
 El paso 3 prepara una copia para Confluence y lista lo que se pierde.
 

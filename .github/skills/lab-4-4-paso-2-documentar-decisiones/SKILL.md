@@ -1,41 +1,50 @@
 ---
 name: lab-4-4-paso-2-documentar-decisiones
-description: 'Lab 4.4 paso 2. Produce un registro de decisiones técnicas del escenario, con contexto y consecuencias.'
+description: 'Lab 4.4 paso 2. Registra una decisión técnica del escenario que todavía no está documentada, derivada del código, con el formato de decisiones del repositorio.'
 disable-model-invocation: true
 ---
 
 # Objetivo
 
-Producir un registro de decisiones técnicas del escenario, en el formato que usaría el
-equipo para dejar constancia de por qué el código es como es.
+Registrar una decisión técnica real del escenario que el repositorio todavía no tiene
+documentada, en el formato que usa el equipo para dejar constancia de por qué el código es
+como es.
+
+La decisión es esta: **el escenario no usa frameworks ni dependencias de ejecución, solo
+dependencias de prueba.**
 
 Material de partida:
 
+- [pom.xml](../../../escenario/java/pom.xml)
+- [LiquidacionComercios.csproj](../../../escenario/dotnet/LiquidacionComercios/LiquidacionComercios.csproj)
+- [LiquidacionComercios.Pruebas.csproj](../../../escenario/dotnet/LiquidacionComercios.Pruebas/LiquidacionComercios.Pruebas.csproj)
 - [escenario/README.md](../../../escenario/README.md)
-- [ConfiguracionRegional.java](../../../escenario/java/src/main/java/pe/pasarelaandina/util/ConfiguracionRegional.java)
-- [CompatibilidadJava.cs](../../../escenario/dotnet/LiquidacionComercios/Util/CompatibilidadJava.cs)
-- [comparar-escenarios.sh](../../../scripts/comparar-escenarios.sh)
+- [La plantilla de decisiones](../../../docs/arquitectura/decisiones/plantilla.md) y su
+  [índice](../../../docs/arquitectura/decisiones/README.md)
 
 # Qué hacer
 
-Crea `labs/cap4/lab-4-4-documentacion/entregables/decisiones.md` con tres decisiones.
-Cada una con estas secciones:
-
-- **Contexto.** Qué problema había.
-- **Decisión.** Qué se hizo.
-- **Consecuencias.** Qué se gana, qué se pierde y qué obliga a hacer en adelante.
-
-Dos decisiones salen del material de partida. La tercera la elige el participante.
-Pregúntale cuál antes de escribirla.
+1. Lee el índice de `docs/arquitectura/decisiones/` y confirma que ninguna de las decisiones
+   registradas trata esta. Si alguna la cubre, dilo y termina.
+2. Lee el material de partida y establece, citando archivo y línea, qué dependencias tiene
+   cada proyecto y de qué tipo son.
+3. Crea `labs/cap4/lab-4-4-documentacion/entregables/decisiones.md` con una sola decisión,
+   siguiendo la plantilla: contexto, alternativas consideradas, decisión, consecuencias y
+   verificación.
+4. En el contexto y en las consecuencias, separa lo que se respalda con el código de lo que
+   es una suposición sobre el porqué. Las suposiciones van marcadas como «pendiente de
+   confirmar con el equipo».
 
 # Restricciones
 
 - **No corrijas nada que no forme parte de este paso.** El código del escenario tiene
   características elegidas a propósito para el taller. Si ves algo que te parece un
   problema, menciónalo al final de tu respuesta y no lo toques.
-- Crea un solo archivo. No modifiques código.
-- Solo decisiones que se puedan respaldar con el código. Nada supuesto.
+- Crea un solo archivo. No modifiques código ni `docs/arquitectura/decisiones/`.
+- No uses la skill `pasarela-registrar-decision`: este paso escribe en `entregables/`.
+- Solo afirmaciones que se puedan respaldar con el código o marcadas como pendientes.
 
 # Salida esperada
 
-El documento creado.
+El documento creado y, en tu respuesta, qué afirmaciones quedaron como pendientes de
+confirmar.

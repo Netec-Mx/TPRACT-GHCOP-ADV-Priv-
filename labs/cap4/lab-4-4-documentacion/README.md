@@ -25,7 +25,7 @@ contra el código y trasladable a Confluence.
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
 | 1 | `/lab-4-4-paso-1-documentar-reglas java` | Si cada afirmación del documento está respaldada por una línea de código. Revisa la sección de contraste con las reglas declaradas | 10 min |
-| 2 | `/lab-4-4-paso-2-documentar-decisiones` | Si las consecuencias que documenta son verificables | 10 min |
+| 2 | `/lab-4-4-paso-2-documentar-decisiones` | Qué afirma por el código y qué deja como pendiente de confirmar | 10 min |
 | 3 | `/lab-4-4-paso-3-preparar-para-confluence` | Qué se pierde al trasladar el Markdown | 8 min |
 | 4, opcional | `/lab-4-4-paso-4-generar-runbook java` | Qué acciones del runbook quedaron verificadas con una ejecución real y cuáles no | Fuera de los 30 min |
 
@@ -51,7 +51,8 @@ Si hiciste el paso 4, además `runbook-calculo-de-comisiones.md`.
 
 - [ ] Verificaste contra el código al menos tres afirmaciones del documento del paso 1.
 - [ ] La sección de contraste dice qué reglas coinciden con el código y cuáles no.
-- [ ] Cada decisión del paso 2 tiene contexto, decisión y consecuencias.
+- [ ] La decisión del paso 2 tiene contexto, alternativas, decisión, consecuencias y
+      verificación, y marca como pendiente lo que el código no respalda.
 - [ ] La copia para Confluence lista lo que se perdió.
 - [ ] Si hiciste el paso 4, ninguna acción del runbook figura como verificada sin una
       ejecución real.
