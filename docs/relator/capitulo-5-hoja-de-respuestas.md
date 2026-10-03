@@ -10,6 +10,10 @@ Responda solo lo que pregunten.
 |---|---|
 | Qué transacciones entran | Las mismas que la liquidación: aprobadas, en soles, monto mayor que cero, dentro del periodo. Ni anuladas, ni pendientes, ni rechazadas |
 | Qué comercios entran | Los que se liquidan: activos y suspendidos con plan. No los dados de baja |
+| El periodo | Del primer día a las 00:00:00 al último a las 23:59:59, ambos incluidos, con la misma hora que usa el cierre |
+| El monto transado | La suma exacta de los montos de las transacciones del medio |
+| Las cuotas | La comisión incluye el recargo por cuotas: 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
+| Contracargos y retenciones | No forman parte del reporte |
 | Contra qué se comprueba | El total del reporte es igual a la suma del total de comisiones de las liquidaciones, al centavo |
 | El tope | Es por comercio, no se reparte. Las filas van antes del tope y una fila de ajuste muestra lo descontado |
 | El redondeo | Al final: cada fila suma exacto y redondea; el total se calcula por comercio, como la liquidación |
