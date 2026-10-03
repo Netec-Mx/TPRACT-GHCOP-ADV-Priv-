@@ -2,9 +2,11 @@
 
 ## Objetivo del laboratorio
 
-Levantar el escenario con una línea base verificada, entenderlo con un mapa del sistema y
-un inventario de riesgos, y acordar los criterios con que se van a evaluar los
-laboratorios 5.2 y 5.3.
+Empezar el recorrido del ciclo de vida completo con una funcionalidad nueva: convertir la
+solicitud del área comercial en una historia con criterios de aceptación, estimarla con y
+sin IA, y decidir dónde va a vivir. Son las fases de Requerimientos, Estimación y Análisis y
+diseño de [`CICLO-DE-VIDA.md`](../../../CICLO-DE-VIDA.md). Los criterios que escribas aquí son
+los que van a evaluar los laboratorios 5.2 y 5.3.
 
 ## Duración
 
@@ -12,39 +14,49 @@ laboratorios 5.2 y 5.3.
 
 ## Prerrequisitos
 
-- Punto de partida limpio. Desde la raíz del repositorio, en Git Bash:
+- Elige un stack, Java o .NET. Vas a trabajar solo en ese durante todo el capítulo.
+- Punto de partida limpio y una rama local para el capítulo. Desde la raíz del repositorio,
+  en Git Bash:
 
   ```bash
   bash scripts/reiniciar-lab.sh lab-5-1
+  git switch -c reporte-medios-de-pago
   ```
 
-- Todos los pasos se hacen en modo **Agent**. Los documentos quedan en
-  `labs/cap5/lab-5-1-preparacion/entregables/`.
+- Todos los pasos se hacen en modo **Agent**. Los documentos quedan en `docs/proyecto/`.
+- No necesitas GitHub. Todo el capítulo se hace en tu máquina.
 
 ## Pasos
 
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
-| 1 | `/lab-5-1-paso-1-levantar-y-verificar` | Que todo esté en verde antes de tocar nada. Si algo falla, avisa al relator | 8 min |
-| 2 | `/lab-5-1-paso-2-mapa-del-sistema java` | Si las rutas del mapa existen | 10 min |
-| 3 | `/lab-5-1-paso-3-inventario-de-riesgos java` | Qué reglas de negocio el sistema no cumple del todo, y cómo lo demuestra el agente | 12 min |
-| 4 | `/lab-5-1-paso-4-criterios-de-evaluacion` | Si cada criterio se puede comprobar con un comando o una prueba | 10 min |
+| 1 | `/lab-5-1-paso-1-historia-de-usuario java` | Qué preguntas abiertas lista el agente antes de escribir criterios. Llévaselas al relator, que en esta sala es el negocio, y vuelve con las respuestas | 15 min |
+| 2 | `/lab-5-1-paso-2-estimar` | Qué supuestos escribe en cada fase y en qué fases la IA cambia más la estimación | 10 min |
+| 3 | `/lab-5-1-paso-3-ubicar-en-arquitectura java` | Qué alternativas propone y qué componentes del escenario va a tocar la que elijas | 10 min |
 
 Reemplaza `java` por `dotnet` si trabajas con .NET.
 
+Al terminar, confirma el trabajo en tu rama:
+
+```bash
+git add docs scripts/integracion/stack.txt && git commit -m "Historia, estimacion y decision del reporte"
+```
+
 ## Resultado esperado
 
-- La línea base. Los dos escenarios compilan, las pruebas pasan y el comparador termina en
-  cero.
-- Tres documentos en `entregables/`: `mapa-del-sistema.md`, `inventario-de-riesgos.md` y
-  `criterios-de-evaluacion.md`.
+- `docs/proyecto/historia-reporte-medios-de-pago.md`, con preguntas abiertas respondidas y
+  criterios de aceptación comprobables.
+- `docs/proyecto/estimacion.md` y `docs/proyecto/registro-de-tiempos.md`, con la hora de
+  inicio de las tres primeras fases.
+- Una decisión nueva en `docs/arquitectura/decisiones/`.
+- `scripts/integracion/stack.txt` con tu stack.
 - Ningún archivo de `escenario/` modificado.
 
 ## Criterios de revisión
 
-- [ ] La línea base quedó registrada con el resultado de cada comando.
-- [ ] El inventario revisa las nueve reglas de negocio una por una.
-- [ ] Cada problema del inventario cita archivo y línea, y ninguno fue corregido.
-- [ ] Cada criterio de evaluación dice cómo se comprueba y qué resultado lo da por
-      cumplido.
-- [ ] Los criterios se acordaron en sala antes de pasar al 5.2.
+- [ ] Las preguntas abiertas se listaron antes de escribir los criterios.
+- [ ] Cada criterio se puede comprobar con un comando o una prueba.
+- [ ] Hay un criterio con una transacción en el límite de un tramo y otro con un comercio
+      cuya suma de comisiones tiene más de dos decimales, cada uno con su valor esperado.
+- [ ] La estimación separa el tiempo de la persona del tiempo del agente y no tiene precios.
+- [ ] La decisión de arquitectura tiene alternativas y consecuencias.

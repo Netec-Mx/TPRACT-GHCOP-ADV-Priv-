@@ -1,58 +1,59 @@
 # Notas del relator, laboratorio 5.1
 
-Preparación del escenario integrador y criterios de evaluación. 45 minutos.
+Preparación del escenario integrador y criterios de evaluación. 45 minutos. Fases de
+Requerimientos, Estimación y Análisis y diseño.
+
+Lo que usted tiene que decir o entregar en todo el capítulo está resumido en una página en
+[`../capitulo-5-hoja-de-respuestas.md`](../capitulo-5-hoja-de-respuestas.md).
 
 ## Qué va a pasar en la sala
 
-El paso 1 fija la línea base. Los dos escenarios compilan, las pruebas pasan y el
-comparador termina en cero. Si algo falla aquí, detenga a esa persona y resuélvalo antes
-de seguir, porque el 5.2 y el 5.3 comparan contra esta línea base.
+**Abra proyectando [`CICLO-DE-VIDA.md`](../../../CICLO-DE-VIDA.md).** El capítulo recorre las
+once fases con una sola historia. Pida a cada participante que elija un stack y lo mantenga
+hasta el final.
 
-El paso 3 revisa las nueve reglas de negocio contra el código. Es el paso donde aparecen
-dos defectos que ningún otro laboratorio del camino obligatorio ejercita.
+**Paso 1, el momento clave.** La solicitud del área comercial es ambigua a propósito. Dice que
+las anuladas no cuentan y nada más sobre el alcance. El agente lista preguntas abiertas y se
+detiene. En esta sala el negocio es usted. Responda con la hoja de respuestas, y solo lo que
+le pregunten. Quien no pregunta por el alcance escribe un criterio que después no concilia,
+y eso es parte de la clase: una historia tomada al pie de la letra, que solo excluye las
+anuladas, difiere de las liquidaciones en 3 415,01 soles en abril, 4 065,43 en mayo y
+2 521,97 en junio. Use esas cifras en la puesta en común.
 
-- **Regla 9, redondeo (DEF-01).** La skill pide recalcular con aritmética decimal exacta el
-  total de comisiones de un comercio. Los comercios que muestran la diferencia son CM0011,
-  CM0016 y CM0025, a los que les falta un centavo. Si el agente eligió otro comercio y no
-  encontró diferencia, pídale que repita con CM0011.
-- **Regla 8, periodo en hora de Lima (DEF-04).** Las fechas se calculan con la zona
-  horaria del sistema. La transacción TX002005, del 30 de junio a las 23:59, entra o sale
-  del periodo según la configuración de la máquina.
+Si alguien pregunta a qué tramo pertenece un monto en el límite, responda con la decisión del
+borde. Si nadie lo pregunta aquí, aparece en el 5.3.
 
-Suelen aparecer también el tope del recargo (DEF-03), los bordes de tramo (DEF-08) y el
-comercio suspendido liquidado (DEF-09). Se registran en el inventario y ninguno se corrige.
+**Paso 2.** La estimación con y sin IA. Lo que vale la pena observar es dónde la IA cambia la
+estimación y dónde no. El registro de tiempos empieza aquí y se compara en el 5.4.
 
-El paso 4 convierte el inventario en criterios verificables. Acuérdelos en voz alta con la
-sala, porque se usan en el 5.2 y el 5.3.
-
-**La regla 8 puede salir clasificada distinto.** En la verificación, el mismo agente la
-dio como no cumplida en el 4.4 y como «cumple en la práctica, sin garantía» en el 5.1. Si
-pasa en la sala, no es un error. Pregunte qué criterio usó cada uno y diga que, para comparar
-clasificaciones, el criterio tiene que estar escrito en el pedido. Ver HALLAZGO-07 en
-`03-hallazgos.md`.
+**Paso 3.** Las tres alternativas de dónde vive el reporte llevan a los dos caminos del 5.2.
+No sugiera ninguna. Cualquiera sirve.
 
 ## Errores típicos
 
-- Intentar arreglar un fallo del paso 1 con el agente. Si la compilación falla, es un
-  problema de ambiente y lo resuelve el relator.
-- Inventarios que dicen «el código usa double» sin decir qué regla se incumple ni cuánto
-  dinero está en juego.
-- Criterios que son opiniones, como «el código queda más limpio». La skill los excluye.
+- Responder por el participante las preguntas que el agente lista. El valor del paso está
+  en que las lleve al negocio.
+- Criterios sin valor esperado. La skill pide la cuenta a la vista.
+- Estimaciones con precios. La plantilla los excluye.
 
 ## Tiempos
 
 | Paso | Estimado | Observado en la verificación |
 |---|---|---|
-| 1 | 8 min | 41 s de agente, con compilación, pruebas y comparador |
-| 2 | 10 min | 39 s de agente |
-| 3 | 12 min | 92 s de agente. Recalculó los 39 comercios y encontró los tres centavos |
-| 4 | 10 min | 26 s de agente |
+| 1 | 15 min | Se completa en la verificación de SPEC-016 |
+| 2 | 10 min | Se completa en la verificación de SPEC-016 |
+| 3 | 10 min | Se completa en la verificación de SPEC-016 |
+
+Suma 35. Quedan 10 para la puesta en común.
 
 ## Si alguien se atrasa
 
-El paso 2 se puede reemplazar por un mapa proyectado por el relator. Los pasos 1, 3 y 4
-no se saltan.
+Entréguele la historia de referencia. Está en
+[`../soluciones/lab-5-1/historia-de-referencia.md`](../soluciones/lab-5-1/historia-de-referencia.md),
+con las respuestas a las preguntas abiertas. Sin la historia no puede seguir, porque sus
+criterios son los que evalúan el 5.2 y el 5.3.
 
 ## Solución de referencia
 
-No hay. El laboratorio no modifica código.
+En `../soluciones/lab-5-1/`: la historia, la estimación construida con las mediciones de
+SPEC-015 y la decisión de dónde vive el reporte.

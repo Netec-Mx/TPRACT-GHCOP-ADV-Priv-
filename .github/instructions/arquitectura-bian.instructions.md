@@ -1,12 +1,13 @@
 ---
 name: 'Arquitectura BIAN'
 description: 'Vocabulario de dominios de servicio BIAN para diseñar o documentar la arquitectura de Pasarela Andina'
-applyTo: 'docs/arquitectura/**'
+applyTo: 'docs/arquitectura/**,docs/proyecto/**'
 ---
 
 # Arquitectura con vocabulario BIAN
 
-Estas reglas aplican a los documentos de arquitectura. No aplican al código del escenario.
+Estas reglas aplican a los documentos de arquitectura y del proyecto. No aplican al código
+del escenario.
 
 ## Vocabulario
 
