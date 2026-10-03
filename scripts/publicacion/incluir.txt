@@ -21,6 +21,8 @@
 .github/agents/
 .github/skills/
 .github/hooks/
+.github/workflows/integracion-continua.yml
+.github/pull_request_template.md
 
 # Codigo base, enunciados y servidor MCP
 escenario/
@@ -39,6 +41,8 @@ scripts/verificar-ambiente.sh
 scripts/comparar-escenarios.sh
 scripts/reiniciar-lab.sh
 scripts/validar-skills.sh
+scripts/verificar-reporte.sh
+scripts/integracion-local.sh
 
 # Versiones para participantes de los archivos de la raiz
 scripts/publicacion/AGENTS-taller.md => AGENTS.md
