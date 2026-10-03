@@ -67,8 +67,9 @@ corresponda a su tipo. Están solo en el repositorio de construcción, en
 - `documentacion-del-equipo.instructions.md`, para la tarea C. Se guarda en
   `.github/instructions/`.
 - `revisor-limites-bian.agent.md`, para la tarea E. Se guarda en `.github/agents/`. Para
-  probarlo hace falta al menos un archivo modificado. El propio archivo del agente, recién
-  guardado, ya cuenta como cambio sin confirmar.
+  probarlo, la primera prueba del paso 3 describe un cambio hipotético sobre archivos del
+  mapeo. Si se prueba solo con los cambios sin confirmar, el único es el propio agente y la
+  tabla sale vacía, que no prueba nada.
 
 La forma de entregarlo depende de la sala. Lo más simple es compartir el archivo por el
 canal de la clase y que el participante lo guarde en la carpeta indicada desde el

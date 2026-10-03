@@ -49,7 +49,7 @@ clasificaciones, el criterio tiene que estar escrito en el pedido. Ver HALLAZGO-
 | 1 | 10 min | 53 s de agente |
 | 2 | 10 min | 41 s de agente |
 | 3 | 8 min | 55 s de agente |
-| 4, opcional | Fuera del tiempo | Pendiente de verificación con agente |
+| 4, opcional | Fuera del tiempo | 156 s de agente y unas 18 aprobaciones. Se estiman 8 a 12 minutos de participante |
 
 En la verificación el agente documentó los tramos como no acumulativos, desde el código, y señaló el comentario. Con Copilot puede salir distinto. Es el laboratorio con menos holgura del taller, dos minutos: 10 + 10 + 8 = 28 de 30. Por
 eso el paso 4 del runbook es opcional y no se suma. Si la sesión 4 viene

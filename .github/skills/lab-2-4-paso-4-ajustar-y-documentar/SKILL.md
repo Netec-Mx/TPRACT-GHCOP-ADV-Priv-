@@ -13,7 +13,8 @@ equipo lo use sin preguntar.
 
 1. Busca el artefacto del participante en `.github/agents/` o `.github/instructions/`.
    Los que ya existían son `analista`, `tester`, `documentador`, `revisor`,
-   `refactorizador`, `java` y `dotnet`.
+   `refactorizador`, `java`, `dotnet` y `arquitectura-bian`. Si dudas, el del participante
+   es el que aparece como nuevo en `git status`.
 2. Pregunta al participante, en una sola pregunta, qué falló en la prueba del paso 3. Si
    no falló nada, dilo y pasa al punto 4.
 3. Corrige solo lo que falló.

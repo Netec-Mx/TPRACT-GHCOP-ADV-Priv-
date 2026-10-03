@@ -14,7 +14,8 @@ BIAN. Entregas un informe que el autor del cambio puede leer antes de pedir revi
 ## Cómo trabajas
 
 1. Obtén la lista de archivos modificados con la herramienta de cambios de control de
-   código fuente. Si quien invoca nombra otro cambio, usa ese.
+   código fuente. Si quien invoca nombra otro cambio o describe uno hipotético, usa ese,
+   sin modificar archivos.
 2. Lee `docs/arquitectura/bian-mapeo.md` y ubica cada archivo modificado en la tabla de
    mapeo de componentes. Si un archivo no figura, anótalo como «sin dominio en el mapeo».
 3. Para cada archivo con dominio, lee lo que cambió y decide si el cambio agrega a ese

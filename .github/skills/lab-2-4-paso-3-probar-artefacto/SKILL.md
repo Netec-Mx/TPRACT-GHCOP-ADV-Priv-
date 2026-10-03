@@ -28,7 +28,11 @@ pruebas que el participante ejecuta para ver que Copilot lo aplica.
      prueba crea uno nuevo, dentro de `labs/cap2/lab-2-4-agente-o-instruccion/entregables/`
      para la tarea C o de `scripts/` para la tarea D.
    - Agente: seleccionado en el selector de agentes del chat, responde dentro de su rol
-     y rechaza algo fuera de su rol.
+     y rechaza algo fuera de su rol. Para la tarea E, la primera prueba describe en el
+     pedido un cambio hipotético sobre archivos que figuran en
+     `docs/arquitectura/bian-mapeo.md`, por ejemplo mover el descuento de contracargos a la
+     clase de cálculo de comisiones, y pide revisarlo sin modificar nada. Así el mapeo se
+     pone a prueba sin tocar el escenario.
 
 Artefactos que ya existían y no son del participante: `analista.agent.md`,
 `tester.agent.md`, `documentador.agent.md`, `revisor.agent.md`,

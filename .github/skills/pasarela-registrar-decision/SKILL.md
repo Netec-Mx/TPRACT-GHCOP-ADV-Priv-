@@ -1,6 +1,6 @@
 ---
 name: pasarela-registrar-decision
-description: 'Redacta una decisión de arquitectura nueva de Pasarela Andina con la plantilla del repositorio, a partir del contexto que entrega el usuario. Úsala cuando alguien pida registrar, documentar o proponer una decisión de arquitectura.'
+description: 'Redacta una decisión de arquitectura nueva de Pasarela Andina con la plantilla del repositorio, a partir del contexto que entrega el usuario. Úsala cuando alguien pida registrar una decisión de arquitectura en docs/arquitectura/decisiones. No la uses si una skill de laboratorio indica otro archivo de salida.'
 ---
 
 # Registrar una decisión de arquitectura
@@ -33,3 +33,5 @@ una por archivo, con la [plantilla](../../../docs/arquitectura/decisiones/planti
 - No inventes hechos del contexto. Lo que no esté en lo que dio el usuario o en el
   repositorio va como pregunta abierta.
 - No cambies código. Registrar una decisión no es aplicarla.
+- Si una skill de laboratorio pide documentar decisiones en otro archivo, por ejemplo en
+  `labs/**/entregables/`, esa skill manda y esta no se usa.

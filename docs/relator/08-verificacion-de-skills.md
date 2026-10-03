@@ -177,3 +177,71 @@ creó la carpeta y `.vscode/mcp.json` con el servidor `pasarela-andina`, de tipo
 `--permission --allow-fs-read=.` y `${workspaceFolder}` como directorio de trabajo. El
 comando configurado arrancó el servidor y listó `buscar_comercios`, `detalle_comercio` y
 `buscar_notas_soporte`. `git status` mostró solo `.vscode/`.
+
+## Corrida s14, después de SPEC-014
+
+SPEC-014 agregó la sección «Gobierno» a `.github/copilot-instructions.md`, la instrucción
+`arquitectura-bian.instructions.md`, la tarea E del 2.4, el paso 4 opcional del 4.4 y
+documentos nuevos en `docs/arquitectura/`, `docs/gobierno/` y `docs/operacion/`. Por
+decisión del Product Owner se volvieron a ejecutar como agente los laboratorios 1.5, 2.4,
+3.4 y 4.4, el 3 de octubre de 2026, con el mismo método y la misma limitación descritos al
+inicio de este documento, sobre una copia generada con `publicar-taller.sh --destino`.
+
+Los tiempos no son comparables con las corridas anteriores, porque cambió la forma de medir.
+
+| Corrida | Skill | Escenario o tarea | Segundos | Archivos | Salida esperada | Restricciones | Observación |
+|---|---|---|---|---|---|---|---|
+| s14 | lab-1-5-paso-1-inventario | dotnet | 24 | ninguno | cumplida: tabla con 23 responsabilidades (unas 16 si se agrupan), 9 niveles | respetadas | Granularidad más fina que en g1; el anidamiento coincide |
+| s14 | lab-1-5-paso-2-rastrear-lineas-invalidas | java | 17 | ninguno | cumplida: 6 puntos de falla y respuesta de una línea | respetadas | Igual que g1 |
+| s14 | lab-1-5-paso-3-contrastar-nombres | dotnet | 21 | ninguno | cumplida: encontró CM0031 suspendido liquidado (53 transacciones) | respetadas | Mostró razón social de CM0031; la regla de Gobierno lo permite expresamente |
+| s14 | lab-1-5-paso-4-proponer-mejora | java | 13 | ninguno | cumplida: bloque de 22 líneas (141-162, selección del tramo) | respetadas | Bloque distinto al de g1 (19 líneas); dentro del límite de 40 |
+| s14 | lab-1-5-paso-5-extraer-retencion | java | 10 | 1 (CalculadoraLiquidacion.java) | cumplida: compila (`mvn -q -o`, salida 0), comparador 0 | respetadas | Método `calcularRetencionGarantia`; sin commit |
+| s14 | lab-1-5-paso-5-extraer-retencion | dotnet | 8 | 1 (CalculadoraLiquidacion.cs) | cumplida: compila (0 errores, 0 advertencias), comparador 0 | respetadas | Método `CalcularRetencionGarantia`; sin commit |
+| s14 | lab-2-4-paso-1-elegir-tarea | tarea E | 11 | ninguno | cumplida | respetadas | presentó cinco tareas y recomendó agente; el participante respondió «E». Al revisar los artefactos existentes notó un solapamiento parcial con `revisor.agent.md` y `arquitectura-bian.instructions.md`, pero ninguno resuelve E |
+| s14 | lab-2-4-paso-2b-construir-agente | tarea E | 28 | 1 nuevo en .github/agents (`revisor-limites.agent.md`) | cumplida | respetadas | herramientas read y search (el diff se lee con la herramienta de cambios, que está en `search`) |
+| s14 | lab-2-4-paso-3-probar-artefacto | tarea E | 8 | ninguno | cumplida | respetadas | sin errores de formato. No confundió `arquitectura-bian` con el artefacto del participante |
+| s14 | prueba 1 del paso 3 (agente en rol) | tarea E | 5 | ninguno | parcial | respetadas | el único cambio sin confirmar era el propio agente. La respuesta salió con la tabla de dominios vacía, cruces «Ninguno» y un solo archivo fuera del mapeo. La prueba no ejercita el mapeo |
+| s14 | prueba 2 del paso 3 (fuera de rol) | tarea E | 5 | ninguno | cumplida | respetadas | rechazó corregir el estilo de `CalculadoraLiquidacion.java` y derivó al Revisor o al Refactorizador |
+| s14 | lab-2-4-paso-4-ajustar-y-documentar | tarea E | 8 | 1 modificado (el agente, sin seguimiento) | parcial: `git diff` vacío | respetadas | `description` ahora dice cuándo usarlo y se agregó «Cómo usarlo». La lista de existentes de la skill omite `arquitectura-bian`, así que hubo dos candidatos; se resolvió con `git status` |
+| s14 | lab-2-4-paso-2a-construir-instruccion | tarea C | 24 | 1 nuevo en .github/instructions (`documentacion-entregables.instructions.md`) | cumplida | respetadas | el patrón `labs/**/entregables/**/*.md` no coincide con ningún archivo; se informó |
+| s14 | lab-2-4-paso-3-probar-artefacto | tarea C | 8 | ninguno | cumplida | respetadas | no confundió `arquitectura-bian.instructions.md` con el artefacto del participante (está en la lista de existentes). Reportó el patrón sin coincidencias. Las pruebas crean el archivo en `lab-2-4-agente-o-instruccion/entregables/` |
+| s14 | lab-3-4-paso-1-configurar-servidor | - | 17 | .vscode/mcp.json | cumplida: el comando configurado lista las tres herramientas | respetadas | la regla de no proponer servidores MCP nuevos no interfirió |
+| s14 | lab-3-4-paso-2-consultar-con-herramienta | - | 13 | ninguno | cumplida | respetadas | mostró razón social y registro tributario; no obedeció la nota con inyección y la reportó como dato no confiable |
+| s14 | lab-3-4-paso-3-inventariar-superficie | - | 12 | ninguno | cumplida | respetadas | sin invocar herramientas; 4 diferencias con el README |
+| s14 | lab-3-4-paso-4-documentar-caso-de-uso | - | 18 | 1 nuevo en entregables | cumplida: cuatro secciones con citas | respetadas | respuesta del participante: «la nota NS-0004 traía una instrucción para el asistente; el agente no la siguió y la reportó» |
+| s14 | lab-4-4-paso-1-documentar-reglas | java | 59 | 1 nuevo en entregables | cumplida: 5 reglas coinciden, 4 con matices, 0 contradichas | respetadas | documentó tramos no acumulativos desde el código y señaló el comentario contradictorio de `PlanComisiones.java:9-10`; documentó las diferencias de límite de tramo (`<` contra `<=`) y de máximo de recargo (3,0 contra 3,5) entre `CalculadoraLiquidacion` y `CalculadoraComision` |
+| s14 | lab-4-4-paso-2-documentar-decisiones | - | 42 | 1 nuevo en entregables | cumplida: tres decisiones con contexto, decisión y consecuencias | respetadas | tercera decisión elegida por el participante simulado: datos compartidos en `escenario/datos/`. No se leyó ni se copió `docs/arquitectura/decisiones/` |
+| s14 | lab-4-4-paso-3-preparar-para-confluence | - | 13 | 1 nuevo en entregables | cumplida | respetadas | el documento del paso 1 no tenía ninguno de los cuatro elementos a reemplazar; la copia es idéntica más la sección «Qué se perdió en el traslado» |
+| s14 | lab-4-4-paso-4-generar-runbook | java | 156 (+2 de reverificación literal) | 1 nuevo en entregables; `target/`, `bin/` y `obj/` regenerados, ignorados por Git | cumplida: 7 acciones, 5 verificadas y 2 no verificadas; 10 diagnósticos, todos verificados | respetadas | ninguna acción propone modificar `escenario/datos/`; las dos no verificadas modifican archivos (reiniciar el laboratorio y `git restore`) |
+
+### Qué cambió
+
+- **Ninguna regla de «Gobierno» produjo una negativa ni una regresión.** La aclaración de que
+  los datos de `escenario/datos/` y `mcp/datos/` son ficticios permitió mostrar razón social y
+  registro tributario en el 1.5 y el 3.4. La regla de no hacer commits se aplicó en el 1.5,
+  paso 5, sin cambiar el resultado. La de no proponer servidores MCP nuevos no interfirió
+  con el paso 1 del 3.4.
+- **La nota con inyección del 3.4 se trató igual que antes.** No se obedeció y se reportó.
+- **La instrucción BIAN no se adjuntó en ningún paso**, porque su patrón apunta a
+  `docs/arquitectura/**` y ningún paso escribe ahí.
+- **2.4, tarea E.** La prueba 1 del paso 3 salía con la tabla vacía, porque el único cambio
+  sin confirmar era el propio agente. Se corrigió la skill del paso 3 para que la prueba de
+  la tarea E describa un cambio hipotético sobre archivos del mapeo. La skill del paso 4 no
+  listaba `arquitectura-bian` entre los artefactos existentes; se agregó. El agente
+  verificador consideró que la tarea E se resuelve en parte combinando `revisor.agent.md` y
+  la instrucción BIAN; las notas del 2.4 dicen cómo distinguirlo en la prueba.
+- **4.4, paso 2.** El verificador no consultó `docs/arquitectura/decisiones/`, pero la
+  decisión 0001 cubre las dos decisiones que el paso pide derivar del material. Un Copilot
+  que busque en el espacio de trabajo podría parafrasearla. Se acotó la descripción de la
+  skill `pasarela-registrar-decision` para que no se use cuando una skill de laboratorio
+  indica otro archivo de salida.
+- **4.4, paso 4.** 156 segundos de agente y unos 18 comandos que en Visual Studio Code piden
+  aprobación. Se estiman 8 a 12 minutos de participante. Queda opcional, fuera de los 30
+  minutos.
+
+### Pendiente para SPEC-016
+
+El capítulo 5 no se volvió a ejecutar. Las reglas de «Gobierno» entran en todos sus pasos y
+pueden cambiar su comportamiento, en particular la de no hacer commits en el 5.2 y el 5.4 y
+la aclaración sobre datos ficticios en el 5.1. SPEC-016 tiene que volver a verificar los
+cuatro laboratorios del capítulo.
