@@ -207,3 +207,23 @@ la imagen de gates y sin red, sobre el punto de partida con los parches del repo
 pasos base, las pruebas del reporte en los dos stacks y la conciliación de los tres periodos
 en los dos stacks. 36 segundos en total. Todo pasa salvo la conciliación de 2026-06, en Java y
 en .NET, con diferencia 22,03.
+
+## SPEC-016. Capítulo 5 como ciclo de vida completo
+
+3 de octubre de 2026, con la enmienda SPEC-016-A.
+
+- El capítulo 5 recorre las once fases de `CICLO-DE-VIDA.md` con una sola historia, el
+  reporte por medio de pago, en un stack y en local. GitHub es un paso opcional del 5.3.
+- Se retiraron las catorce skills, las soluciones y los activos de ejemplo del capítulo
+  anterior. Se conservan la decisión del borde en el 5.3, el no reinicio del 5.4 y la
+  dependencia del 5.3 respecto del 5.1.
+- El stack se declara en `scripts/integracion/stack.txt` y la liquidación se compara con
+  hashes esperados publicados, sin `\r`, para que Windows y Linux coincidan.
+- El formato del reporte y el incidente los entrega `scripts/proyecto/entregar.sh`,
+  codificados con gzip y base64; las fuentes están en `docs/relator/entregas/`.
+- Demostración 5.3 grabada en `RodrigoMSB/github-copilot-netec-demo`, privado y sin
+  compartir. La revisión de Copilot quedó pendiente porque la cuenta de grabación no la tiene.
+- Verificado como agente en Java y en .NET y por los dos caminos del 5.2. La medición da 189 a
+  194 minutos de participante contra 180, con el 5.3 como el más cargado.
+- `gates.sh` tarda 153 segundos, por encima de los dos minutos de SPEC-015, por las cinco
+  corridas del pipeline del gate del capítulo 5.
