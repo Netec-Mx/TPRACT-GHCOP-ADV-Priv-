@@ -1,0 +1,113 @@
+diff --git a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+index 3a3c1a7..a0f2a03 100644
+--- a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
++++ b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+@@ -118,7 +118,7 @@ namespace Pe.PasarelaAndina.Calculo
+                     liquidacion.FechaGeneracion = DateTime.Now;
+ 
+                     double totalTransado = 0.0;
+-                    double totalComisiones = 0.0;
++                    decimal totalComisiones = 0m;
+                     int cantidadTransacciones = 0;
+ 
+                     List<Transaccion> transacciones = repositorio.BuscarTransaccionesDeComercio(comercio.Id);
+@@ -142,7 +142,7 @@ namespace Pe.PasarelaAndina.Calculo
+                                         if (!tramoEncontrado)
+                                         {
+                                             if (montoTransaccion >= tramo.MontoDesde
+-                                                    && montoTransaccion < tramo.MontoHasta)
++                                                    && montoTransaccion <= tramo.MontoHasta)
+                                             {
+                                                 porcentajeAplicado = tramo.Porcentaje;
+                                                 tramoEncontrado = true;
+@@ -158,10 +158,12 @@ namespace Pe.PasarelaAndina.Calculo
+                                         }
+                                     }
+ 
+-                                    double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
+-                                    comisionBase = comisionBase + plan.MontoFijoPorTransaccion;
++                                    decimal comisionBase = decimal.Parse(montoTransaccion.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)
++                                            * decimal.Parse(porcentajeAplicado.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)
++                                            / 100m;
++                                    comisionBase = comisionBase + decimal.Parse(plan.MontoFijoPorTransaccion.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+ 
+-                                    double recargo = 0.0;
++                                    decimal recargo = 0m;
+ 
+                                     if (transaccion.Cuotas > 1)
+                                     {
+@@ -172,17 +174,17 @@ namespace Pe.PasarelaAndina.Calculo
+                                             porcentajeRecargo = 3.0;
+                                         }
+ 
+-                                        recargo = comisionBase * porcentajeRecargo / 100.0;
++                                        recargo = comisionBase * decimal.Parse(porcentajeRecargo.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture) / 100m;
+                                     }
+ 
+-                                    double comisionTotal = comisionBase + recargo;
++                                    decimal comisionTotal = comisionBase + recargo;
+ 
+                                     DetalleLiquidacion linea = new DetalleLiquidacion();
+                                     linea.IdTransaccion = transaccion.Id;
+                                     linea.MontoTransaccion = montoTransaccion;
+-                                    linea.ComisionBase = comisionBase;
+-                                    linea.RecargoCuotas = recargo;
+-                                    linea.ComisionTotal = comisionTotal;
++                                    linea.ComisionBase = (double)comisionBase;
++                                    linea.RecargoCuotas = (double)recargo;
++                                    linea.ComisionTotal = (double)comisionTotal;
+                                     linea.Cuotas = transaccion.Cuotas;
+                                     linea.MedioPago = transaccion.MedioPago.ToString();
+                                     liquidacion.AgregarDetalle(linea);
+@@ -191,15 +193,15 @@ namespace Pe.PasarelaAndina.Calculo
+                                     totalComisiones = totalComisiones + comisionTotal;
+                                     cantidadTransacciones++;
+ 
+-                                    acumuladoGeneralComisiones = acumuladoGeneralComisiones + comisionTotal;
++                                    acumuladoGeneralComisiones = acumuladoGeneralComisiones + (double)comisionTotal;
+                                 }
+                             }
+                         }
+                     }
+ 
+-                    if (totalComisiones > plan.TopeMensual)
++                    if (totalComisiones > decimal.Parse(plan.TopeMensual.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture))
+                     {
+-                        totalComisiones = plan.TopeMensual;
++                        totalComisiones = decimal.Parse(plan.TopeMensual.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+                         liquidacion.TopeAplicado = true;
+                     }
+ 
+@@ -234,7 +236,7 @@ namespace Pe.PasarelaAndina.Calculo
+ 
+                         if (meses < 6)
+                         {
+-                            double baseRetencion = totalTransado - totalComisiones - totalContracargos;
++                            double baseRetencion = totalTransado - (double)totalComisiones - totalContracargos;
+ 
+                             if (baseRetencion > 0)
+                             {
+@@ -244,12 +246,12 @@ namespace Pe.PasarelaAndina.Calculo
+                     }
+ 
+                     totalTransado = CompatibilidadJava.RedondearADosDecimales(totalTransado);
+-                    totalComisiones = CompatibilidadJava.RedondearADosDecimales(totalComisiones);
++                    totalComisiones = Math.Round(totalComisiones, 2, MidpointRounding.AwayFromZero);
+                     totalContracargos = CompatibilidadJava.RedondearADosDecimales(totalContracargos);
+                     retenciones = CompatibilidadJava.RedondearADosDecimales(retenciones);
+ 
+                     liquidacion.TotalTransado = totalTransado;
+-                    liquidacion.TotalComisiones = totalComisiones;
++                    liquidacion.TotalComisiones = (double)totalComisiones;
+                     liquidacion.TotalContracargos = totalContracargos;
+                     liquidacion.Retenciones = retenciones;
+                     liquidacion.CantidadTransacciones = cantidadTransacciones;
+@@ -333,7 +335,7 @@ namespace Pe.PasarelaAndina.Calculo
+                         Console.WriteLine("Comercio " + comercio.Id + " - " + comercio.RazonSocial);
+                         Console.WriteLine("  Transacciones liquidadas : " + cantidadTransacciones);
+                         Console.WriteLine("  Total transado           : S/ " + FormatearMonto(totalTransado));
+-                        Console.WriteLine("  Total comisiones         : S/ " + FormatearMonto(totalComisiones)
++                        Console.WriteLine("  Total comisiones         : S/ " + FormatearMonto((double)totalComisiones)
+                                 + (liquidacion.TopeAplicado ? "  (tope aplicado)" : ""));
+                         Console.WriteLine("  Contracargos             : S/ " + FormatearMonto(totalContracargos));
+                         Console.WriteLine("  Retenciones              : S/ " + FormatearMonto(retenciones));

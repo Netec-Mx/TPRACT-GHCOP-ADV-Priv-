@@ -1,0 +1,16 @@
+==========================================================
+  PASARELA ANDINA - COMISIONES POR MEDIO DE PAGO
+  Periodo: 2026-06
+  Desde: 01/06/2026 00:00
+  Hasta: 30/06/2026 23:59
+==========================================================
+
+Medio de pago     Transacciones    Monto transado        Comision   Participacion
+BILLETERA_MOVIL             181      S/ 552504.92     S/ 14326.75         23.75 %
+TARJETA_CREDITO             159      S/ 557033.77     S/ 14395.78         23.86 %
+TARJETA_DEBITO              203      S/ 760564.01     S/ 19169.92         31.77 %
+TRANSFERENCIA               170      S/ 492042.49     S/ 12443.22         20.62 %
+---------------------------------------------------------------------------------
+Ajuste por tope                                      S/ -23698.32
+Ajuste por redondeo                                      S/ -0.01
+Total                                                 S/ 36637.34

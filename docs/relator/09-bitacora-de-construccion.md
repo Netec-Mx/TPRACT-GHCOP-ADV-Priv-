@@ -158,3 +158,27 @@ entrega del relator.
   gobierno produjo regresiones. El capítulo 5 queda para verificar en SPEC-016.
 - Hallazgo no planificado: el ejemplo de `escenario/README.md`, línea 69, carga cero
   comercios.
+
+## SPEC-015. Funcionalidad nueva y pipeline
+
+3 de octubre de 2026, con la enmienda SPEC-015-A.
+
+### Medición de la construcción con agente
+
+La solución de referencia y la mantención correctiva se construyeron con un agente, un stack
+después del otro, sobre una copia del punto de partida. El agente no es Copilot: es el mismo
+tipo de agente de las verificaciones anteriores, con compilación y pruebas dentro de la imagen
+de gates. «Comandos» cuenta los comandos de terminal, que en Visual Studio Code pedirían
+aprobación uno por uno. «Correcciones» cuenta las veces que el agente tuvo que rehacer algo
+porque una verificación falló.
+
+| Trabajo | Stack | Segundos de agente | Comandos | Correcciones | Resultado |
+|---|---|---|---|---|---|
+| Reporte, funcionalidad nueva | Java | 184 | 9 | 2, en la prueba de formato | 3 clases, 8 pruebas, salida del reporte esperada |
+| Reporte, funcionalidad nueva | .NET | 126 | 7 | 1, en las rutas de salida | 3 clases, 8 pruebas, idéntico byte a byte a Java |
+| Mantención correctiva | Java | 64 | 7 | 1, en el filtro de verificación | Un archivo, concilia en los tres periodos |
+| Mantención correctiva | .NET | 80 | 8 | 3, en los comandos de verificación | Un archivo, idéntico a Java, concilia |
+
+El segundo stack tardó menos en los dos trabajos porque tuvo el primero como referencia.
+Ninguna corrección fue en el código de producción. Todas fueron en pruebas o en comandos de
+verificación.

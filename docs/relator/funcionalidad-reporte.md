@@ -116,7 +116,7 @@ Medio de pago      Transacciones    Monto transado        Comision   Participaci
 BILLETERA_MOVIL              123   S/ 123456.78      S/ 1234.56         12.34 %
 ...
 ----------------------------------------------------------------------------------
-Ajuste por tope                                       S/ -23698.36
+Ajuste por tope                                       S/ -23698.32
 Ajuste por redondeo                                   S/ 0.00
 Total                                                 S/ 36637.34
 ```
@@ -149,3 +149,39 @@ El análisis completo, con las cinco variantes acumulativas que separan cada cau
 antes de SPEC-015-A. Partiendo de la liquidación actual: decimal exacto suma 0,03 en junio;
 el borde inclusivo suma 22,00 en junio; ninguno cambia abril ni mayo. No queda diferencia
 sin explicar.
+
+## Resultados verificados
+
+Con la solución de referencia de `soluciones/funcionalidad-reporte/`, el 3 de octubre de
+2026.
+
+**Ajuste por redondeo.** S/ -0.02 en 2026-04, S/ -0.02 en 2026-05 y S/ -0.01 en 2026-06. No
+cambia la conciliación, porque el total se calcula por comercio y no a partir de las filas.
+
+**Ajuste por tope.** S/ 0.00 en abril y mayo. En junio, S/ -23698.32, de CM0004.
+
+**Conciliación con la liquidación actual.** Exactamente la tabla de la sección anterior:
+abril y mayo concilian, junio difiere en 22,03.
+
+**Con la mantención correctiva.** Los parches `correccion-java.patch` y
+`correccion-dotnet.patch` se aplican después del reporte y cambian solo el cálculo de la
+comisión en `CalculadoraLiquidacion`: decimal exacto y borde superior inclusivo. Con ellos:
+
+- La conciliación da cero en los tres periodos y en los dos stacks.
+- Los dos stacks siguen produciendo la misma liquidación.
+- Las liquidaciones de 2026-04 y 2026-05 no cambian de checksum.
+- La de 2026-06 cambia de `61f2c13fed35a2ea2f0189dcc30e78227325bee57765baa9b1c31cff94e432eb`
+  a `cd1466305e636d89e4f5af11421a98f97fc75f9dc677083caee8aed83a8c498a`.
+
+Comercios cuyo total de comisiones cambia en 2026-06:
+
+| Comercio | Antes | Después | Causa |
+|---|---|---|---|
+| CM0001 | 727.34 | 738.34 | Borde de tramo, TX002001 y TX002002 |
+| CM0007 | 907.11 | 918.11 | Borde de tramo, TX002003 y TX002004 |
+| CM0011 | 137.82 | 137.83 | Punto flotante, TX002037 |
+| CM0016 | 493.99 | 494.00 | Punto flotante, TX002035 |
+| CM0025 | 957.18 | 957.19 | Punto flotante, TX002036 |
+
+El total de comisiones de junio pasa de 36 615,31 a 36 637,34. Con el monto de comisiones
+también cambian el neto y, en los comercios con menos de seis meses, la retención.
