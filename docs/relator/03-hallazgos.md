@@ -832,3 +832,53 @@ demostraciones, las notas, los casos de clase, los respaldos y la hoja de respue
 otro pasaje prometía el efecto. Las clasificaciones de la regla 8 como «no coincide» o
 «depende de la máquina» en el 4.4 se refieren al código, que no fija la zona, y siguen siendo
 correctas.
+
+## HALLAZGO-10. verificar-ambiente.sh reprobaba con el editor abierto sin estar seguro
+
+| Campo | Valor |
+|---|---|
+| Detectado en | Primera prueba humana con Copilot real, 3 de octubre de 2026, en macOS |
+| Componente | `scripts/verificar-ambiente.sh`, comprobación de las funciones de IA |
+| Severidad | Media. Un participante al que le dicen que algo está roto cuando funciona deja de confiar en el resto del diagnóstico |
+| Estado | Corregido en SPEC-017 |
+
+### Qué pasó
+
+El script informó «GitHub Copilot Chat esta deshabilitada en el perfil del editor» mientras el
+editor estaba abierto, con otra ventana de otro proyecto, y no se cerró entre las dos
+corridas.
+
+### Evidencia
+
+- El historial de la terminal registra las dos corridas a las 18:49:57 y a las 18:55:23.
+- `User/globalStorage/state.vscdb.backup`, del 18 de septiembre, tiene
+  `extensionsIdentifiers/disabled` con `github.copilot-chat` y `chat.setupContext` con
+  `"disabled":true`. Es el estado que el perfil tenía en disco antes de la prueba.
+- Los registros del editor muestran la misma sesión abierta desde el 29 de septiembre. En
+  ninguna ventana se había activado Copilot Chat hasta las 18:56:20 del 3 de octubre, cuando
+  `ExtensionService` la activó en las dos ventanas a la vez. Hasta 18:56:19 el chat registra
+  `no-model-at-toolbar-build`: no tenía modelo.
+- `state.vscdb` actual ya no tiene la lista de deshabilitadas y su fecha es posterior.
+- `storage.json` no tiene perfiles adicionales y todas las carpetas abiertas están asociadas
+  a `__default__profile__`.
+
+### Causa
+
+De las tres candidatas, el perfil distinto y la cuenta de perfiles adicionales quedan
+descartadas: hay un solo perfil, el que el script lee. La causa es el estado que el editor
+todavía no había guardado en disco. Según los registros, en las dos corridas Copilot Chat
+seguía deshabilitada en el perfil, y se habilitó un minuto después de la segunda. El script
+no puede distinguir ese caso del que importa: con el editor abierto, el disco puede estar
+atrasado respecto de lo que el editor ya aplicó, y la regla de reprobar ante cualquier
+deshabilitación en disco convierte ese atraso en una falla. Se reprodujo con una copia del
+perfil respaldado: el script anterior reprueba con el editor abierto.
+
+### Corrección
+
+El script reprueba solo cuando está seguro: el ajuste `chat.disableAIFeatures` en `true`, que
+se escribe en el momento, o la extensión deshabilitada en disco con el editor cerrado y sin
+perfiles adicionales. Con el editor abierto, con otros perfiles o sin poder leer el estado,
+advierte y dice cómo confirmarlo en diez segundos: abrir el chat, escribir hola y ver si
+Copilot responde. Los atajos del mensaje dependen del sistema: `Cmd+Shift+X`, `Cmd+,` y
+`Ctrl+Cmd+I` en macOS, y `Ctrl+Shift+X`, `Ctrl+,` y `Ctrl+Alt+I` en Windows y Linux. Antes
+decía `Ctrl` en todos.

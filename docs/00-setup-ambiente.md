@@ -130,7 +130,7 @@ iniciada y el ambiente parece correcto.
 
 Para habilitarla:
 
-1. Abrir la vista de Extensiones (`Ctrl+Shift+X`).
+1. Abrir la vista de Extensiones (`Ctrl+Shift+X`; en macOS, `Cmd+Shift+X`).
 2. Escribir `@builtin copilot` en el buscador. El filtro `@builtin` muestra las extensiones
    integradas, que no aparecen en la lista normal.
 3. Seleccionar **GitHub Copilot Chat**.
@@ -140,7 +140,7 @@ Para habilitarla:
 5. Iniciar sesión en GitHub desde el icono de Copilot de la barra de estado.
 
 El botón del paso 4 no hace más que cambiar el ajuste `chat.disableAIFeatures` a `false`.
-Se puede hacer también desde la configuración (`Ctrl+,`), buscando ese ajuste y dejando la
+Se puede hacer también desde la configuración (`Ctrl+,`; en macOS, `Cmd+,`), buscando ese ajuste y dejando la
 casilla desmarcada.
 
 Después, **cerrar Visual Studio Code por completo** antes de ejecutar el script de
@@ -287,16 +287,19 @@ ese estado:
   `User/globalStorage/state.vscdb`. La lee con el módulo `node:sqlite` de Node.js, de modo
   que no hace falta instalar un cliente de SQLite.
 
-Reprueba si cualquiera de los dos indica que Copilot está deshabilitado, y también si no
-puede leerlos. No aprueba nunca a ciegas.
+Reprueba solo cuando está seguro de que Copilot no va a funcionar: el ajuste en `true`, o la
+extensión deshabilitada en el perfil con el editor cerrado y sin perfiles adicionales. Si el
+editor está abierto, si hay otros perfiles o si no puede leer el estado, advierte y dice cómo
+confirmarlo en diez segundos: abrir el chat y escribir hola. No aprueba nunca a ciegas.
 
 El perfil se busca en `%APPDATA%\Code` en Windows, en
 `~/Library/Application Support/Code` en macOS y en `~/.config/Code` en Linux.
 
 Tiene tres límites conocidos:
 
-- **Hay que cerrar Visual Studio Code antes de ejecutarlo** si se acaba de cambiar el
-  estado. El editor guarda en disco con retraso, y el script lee lo que hay en disco.
+- **Con Visual Studio Code abierto, el estado en disco puede estar atrasado.** El editor lo
+  guarda después de aplicarlo, y el script lee lo que hay en disco. Por eso, con el editor
+  abierto, una extensión deshabilitada en disco es una advertencia y no una falla.
 - **Solo revisa el perfil por omisión.** Si el editor tiene perfiles adicionales, el
   script lo advierte.
 - **No comprueba la sesión de GitHub ni la licencia.** Eso se confirma abriendo el chat y

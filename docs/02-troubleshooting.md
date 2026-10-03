@@ -104,7 +104,7 @@ de usuario o en la del espacio de trabajo.
 
 ### Solución
 
-1. Abrir la vista de Extensiones (`Ctrl+Shift+X`).
+1. Abrir la vista de Extensiones (`Ctrl+Shift+X`; en macOS, `Cmd+Shift+X`).
 2. Escribir `@builtin copilot` en el buscador.
 3. Seleccionar **GitHub Copilot Chat**.
 4. Pulsar **Enable AI Features** (**Habilitar características de IA** con la interfaz en

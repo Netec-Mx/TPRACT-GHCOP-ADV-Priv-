@@ -519,9 +519,25 @@ agregar_causa() {
 # Van al final porque es donde mira quien esta frente a la pantalla intentando resolverlo.
 indicaciones_funciones_ia=""
 
+# Atajos de teclado del editor segun el sistema. En macOS la tecla es Cmd, no Ctrl.
+atajos_vscode() {
+    if [ "$entorno_nombre" = "macOS" ]; then
+        atajo_extensiones="Cmd+Shift+X"; atajo_configuracion="Cmd+,"; atajo_chat="Ctrl+Cmd+I"
+    else
+        atajo_extensiones="Ctrl+Shift+X"; atajo_configuracion="Ctrl+,"; atajo_chat="Ctrl+Alt+I"
+    fi
+}
+
+# Como confirmar a mano, en diez segundos, lo que el script no puede asegurar.
+confirmacion_en_el_chat() {
+    atajos_vscode
+    printf 'Para confirmarlo en diez segundos: abrir el chat de Visual Studio Code (%s), escribir hola y ver si Copilot responde. Si responde, Copilot funciona' "$atajo_chat"
+}
+
 registrar_indicaciones_funciones_ia() {
+    atajos_vscode
     indicaciones_funciones_ia="Como habilitar las funciones de IA en Visual Studio Code:
-  1. Abrir la vista de Extensiones (Ctrl+Shift+X).
+  1. Abrir la vista de Extensiones ($atajo_extensiones).
   2. Escribir @builtin copilot en el buscador.
   3. Seleccionar GitHub Copilot Chat.
   4. Pulsar \"Enable AI Features\" (\"Habilitar características de IA\" con la interfaz
@@ -529,8 +545,30 @@ registrar_indicaciones_funciones_ia() {
   5. Iniciar sesion en GitHub desde el icono de Copilot de la barra de estado.
   6. Cerrar Visual Studio Code por completo y volver a ejecutar este script. El editor
      no guarda este estado en disco en el momento, pero si al cerrarse.
-Alternativa para el paso 4: Configuracion (Ctrl+,), buscar chat.disableAIFeatures y
+Alternativa para el paso 4: Configuracion ($atajo_configuracion), buscar chat.disableAIFeatures y
 dejar la casilla desmarcada."
+}
+
+# Dice si Visual Studio Code esta abierto: 0 si lo esta, 1 si no, 2 si no se puede saber.
+# Mientras esta abierto, el estado de las extensiones que el perfil tiene en disco puede ser
+# anterior a lo que el editor ya aplico: lo guarda despues, no en el momento.
+vscode_en_ejecucion() {
+    case "$entorno_familia" in
+        windows)
+            command -v tasklist >/dev/null 2>&1 || return 2
+            tasklist //FI "IMAGENAME eq Code.exe" //NH 2>/dev/null | grep -qi "Code.exe" && return 0
+            return 1
+            ;;
+        *)
+            command -v pgrep >/dev/null 2>&1 || return 2
+            if [ "$entorno_nombre" = "macOS" ]; then
+                pgrep -f "Visual Studio Code.app/Contents/MacOS/" >/dev/null 2>&1 && return 0
+            else
+                pgrep -x code >/dev/null 2>&1 && return 0
+            fi
+            return 1
+            ;;
+    esac
 }
 
 # Comprueba que las funciones de IA de Visual Studio Code esten habilitadas, que es lo que
@@ -547,18 +585,18 @@ verificar_funciones_ia() {
     fi
 
     if ! command -v node >/dev/null 2>&1; then
-        falla "No se puede comprobar si las funciones de IA de Visual Studio Code estan habilitadas: hace falta Node.js para leer el perfil del editor"
+        aviso "No se puede comprobar si las funciones de IA de Visual Studio Code estan habilitadas: hace falta Node.js para leer el perfil del editor. $(confirmacion_en_el_chat)"
         return 0
     fi
 
     if [ "$entorno_nombre" = "WSL sobre Windows" ] && [ -z "$perfil_vscode" ]; then
-        falla "Desde WSL no se puede ubicar el perfil de Visual Studio Code: ejecutar desde Git Bash o indicar --perfil-vscode /mnt/c/Users/<usuario>/AppData/Roaming/Code"
+        aviso "Desde WSL no se puede ubicar el perfil de Visual Studio Code: ejecutar desde Git Bash o indicar --perfil-vscode /mnt/c/Users/<usuario>/AppData/Roaming/Code. $(confirmacion_en_el_chat)"
         return 0
     fi
 
     datos=$(directorio_datos_vscode)
     if [ -z "$datos" ]; then
-        falla "No se pudo ubicar el perfil de Visual Studio Code: la variable APPDATA no esta definida. Indicarlo con --perfil-vscode"
+        aviso "No se pudo ubicar el perfil de Visual Studio Code: la variable APPDATA no esta definida. Indicarlo con --perfil-vscode. $(confirmacion_en_el_chat)"
         return 0
     fi
 
@@ -573,7 +611,7 @@ verificar_funciones_ia() {
     error_lectura=$(valor_estado "$estado" error)
 
     if [ -z "$perfil" ]; then
-        falla "No se pudo leer el perfil de Visual Studio Code en $datos: $(printf '%s' "$estado" | head -n 1)"
+        aviso "No se pudo leer el perfil de Visual Studio Code en $datos: $(printf '%s' "$estado" | head -n 1). $(confirmacion_en_el_chat)"
         return 0
     fi
 
@@ -588,11 +626,14 @@ verificar_funciones_ia() {
     # instrucciones de habilitacion no sirven en el segundo caso.
     causas=""
     hay_deshabilitacion=0
+    # El ajuste se escribe en settings.json en el momento: si dice que esta deshabilitado, es
+    # seguro. El estado de la extension no: se guarda despues y solo es del perfil por omision.
+    seguro=0
 
     case "$ajuste_espacio" in
         true)
             agregar_causa "el archivo .vscode/settings.json del repositorio fija $AJUSTE_FUNCIONES_IA en true, hay que quitar esa linea"
-            hay_deshabilitacion=1
+            hay_deshabilitacion=1; seguro=1
             ;;
         ilegible)
             agregar_causa "no se pudo interpretar .vscode/settings.json del repositorio"
@@ -604,7 +645,7 @@ verificar_funciones_ia() {
         case "$ajuste_usuario" in
             true)
                 agregar_causa "$AJUSTE_FUNCIONES_IA esta en true en la configuracion de usuario"
-                hay_deshabilitacion=1
+                hay_deshabilitacion=1; seguro=1
                 ;;
             ilegible)
                 agregar_causa "no se pudo interpretar settings.json del usuario en $datos/User"
@@ -636,11 +677,28 @@ verificar_funciones_ia() {
             ;;
     esac
 
-    if [ "$hay_deshabilitacion" -eq 1 ]; then
+    # Con el editor cerrado y sin otros perfiles, lo que dice el disco es lo que va a usar.
+    if [ "$hay_deshabilitacion" -eq 1 ] && [ "$seguro" -eq 0 ]; then
+        vscode_en_ejecucion; en_ejecucion=$?
+        case "$perfiles_adicionales" in ''|0) otros_perfiles=0 ;; *) otros_perfiles=1 ;; esac
+        [ "$en_ejecucion" -eq 1 ] && [ "$otros_perfiles" -eq 0 ] && seguro=1
+    fi
+
+    if [ "$hay_deshabilitacion" -eq 1 ] && [ "$seguro" -eq 1 ]; then
         falla "Funciones de IA de Visual Studio Code deshabilitadas, Copilot no va a sugerir ni responder: $causas"
         registrar_indicaciones_funciones_ia
+    elif [ "$hay_deshabilitacion" -eq 1 ]; then
+        if [ "$otros_perfiles" -eq 1 ]; then
+            motivo="Visual Studio Code tiene otros perfiles y solo se leyo el perfil por omision"
+        elif [ "$en_ejecucion" -eq 0 ]; then
+            motivo="Visual Studio Code esta abierto y puede no haber guardado todavia en disco lo que ya aplico"
+        else
+            motivo="no se pudo saber si Visual Studio Code esta abierto"
+        fi
+        aviso "El perfil guardado indica que las funciones de IA pueden estar deshabilitadas ($causas), pero no es seguro: $motivo. $(confirmacion_en_el_chat); si no responde, seguir las indicaciones del final"
+        registrar_indicaciones_funciones_ia
     elif [ -n "$causas" ]; then
-        falla "No se pudo comprobar si las funciones de IA de Visual Studio Code estan habilitadas: $causas"
+        aviso "No se pudo comprobar si las funciones de IA de Visual Studio Code estan habilitadas: $causas. $(confirmacion_en_el_chat)"
     else
         ok "Funciones de IA de Visual Studio Code habilitadas (GitHub Copilot Chat integrada y activa)"
     fi
@@ -972,6 +1030,12 @@ if [ "$fallas" -eq 0 ]; then
     printf '%s' "$detalle_avisos" | while IFS= read -r linea; do
         [ -n "$linea" ] && printf '    - %s\n' "$linea"
     done
+    if [ -n "$indicaciones_funciones_ia" ]; then
+        printf '\n'
+        printf '%s\n' "$indicaciones_funciones_ia" | while IFS= read -r linea; do
+            printf '  %s\n' "$linea"
+        done
+    fi
     exit 0
 fi
 
