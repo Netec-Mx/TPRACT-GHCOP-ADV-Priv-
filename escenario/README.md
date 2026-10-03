@@ -66,7 +66,7 @@ java -jar target/liquidacion-comercios.jar
 Se puede indicar otro periodo y otro directorio de datos:
 
 ```bash
-java -jar target/liquidacion-comercios.jar 2026-05 datos
+java -jar target/liquidacion-comercios.jar 2026-05 ../datos
 ```
 
 Para correr solo las pruebas:

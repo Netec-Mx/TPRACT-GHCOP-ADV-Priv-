@@ -774,3 +774,30 @@ clasificación tiene que estar escrito en el pedido.
 En el 4.4 y en el 5.1. Si dos participantes, o el mismo participante en los dos
 laboratorios, clasifican distinto la regla 8, no es un error de ninguno. Es la ocasión de
 preguntar qué criterio usó cada uno y cuál pondría el equipo por escrito.
+
+## HALLAZGO-08. Un ejemplo del README del escenario no cargaba datos
+
+| Campo | Valor |
+|---|---|
+| Detectado en | SPEC-014, verificación como agente del laboratorio 4.4, paso 4 |
+| Componente | `escenario/README.md`, sección «Cómo se ejecuta», ejemplo de Java con periodo y directorio |
+| Severidad | Baja. Un participante que copiara el ejemplo vería una liquidación vacía |
+| Estado | Corregido en SPEC-015, con autorización expresa como única excepción a no tocar `escenario/` |
+
+### Qué pasó
+
+El ejemplo indicaba el directorio de datos como `datos`. Los dos escenarios se ejecutan
+desde su propio directorio y los datos están un nivel más arriba, en `escenario/datos`. Con
+`datos`, el cierre no encuentra ningún archivo, lo dice en cuatro líneas, liquida cero
+comercios y termina con código 0. El ejemplo de .NET ya usaba `../datos`.
+
+No es un defecto plantado ni está en el catálogo.
+
+### Corrección y verificación
+
+El ejemplo pasa a `java -jar target/liquidacion-comercios.jar 2026-05 ../datos`. Ejecutado
+desde `escenario/java`, carga 40 comercios, 2037 transacciones y 30 contracargos, y su
+salida tiene el SHA-256 `b80d54152371f23f37b9dc7f6cfd46200520c41b6eb2ebaf46ee24025b22e82c`,
+el mismo de la liquidación de 2026-05. El ejemplo de .NET con `../datos` da el mismo hash.
+Ningún otro ejemplo del README tiene el problema. El código, las pruebas y los datos del
+escenario no cambiaron.
