@@ -23,10 +23,12 @@ applyTo: 'escenario/dotnet/**/*.cs,escenario/dotnet/**/*.csproj'
 - Espacio de nombres raíz `Pe.PasarelaAndina`, con `Modelo`, `Repositorio`, `Calculo`,
   `Reporte` y `Util`. El espacio de nombres corresponde al directorio.
 - Nombres en español, en PascalCase para tipos y miembros públicos.
-- `Util/CompatibilidadJava.cs` reproduce el redondeo y el formateo de Java para que los
-  dos escenarios produzcan la misma salida. Todo redondeo y todo formateo de montos pasa
-  por esa clase. No la reemplaces por `Math.Round` ni por `ToString("F2")`, porque la
-  salida dejaría de coincidir con la de Java.
+- Todo `Math.Round` indica `MidpointRounding.AwayFromZero`, que es medio hacia arriba, como
+  pide la regla 9 de `escenario/README.md`. Sin ese argumento, .NET redondea al par.
+- Los montos `double` de la liquidación se redondean y se formatean con
+  `Util/CompatibilidadJava.cs`, que reproduce exactamente a Java para que los dos escenarios
+  produzcan la misma salida. No la reemplaces por `Math.Round` sobre `double` ni por
+  `ToString("F2")`, porque la salida dejaría de coincidir con la de Java.
 
 ## Pruebas
 

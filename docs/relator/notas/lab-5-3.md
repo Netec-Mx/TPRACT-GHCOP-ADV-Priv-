@@ -60,12 +60,11 @@ sección «Comportamientos no planificados». No se corrige.
 [`../demos/demo-5-3-pipeline-en-github.md`](../demos/demo-5-3-pipeline-en-github.md) muestra en
 GitHub lo que la sala hizo en local. Se presenta desde el respaldo grabado.
 
-**Corregir en .NET choca con una instrucción.** `dotnet.instructions.md` pide que todo
-redondeo pase por `CompatibilidadJava` y prohíbe `Math.Round`, pero la corrección en `decimal`
-necesita redondear un `decimal`, y esa clase solo trabaja con `double`. En la verificación el
-agente lo señaló y pidió confirmación. Si pasa en la sala, es una buena conversación: una
-instrucción escrita para proteger un comportamiento puede tener que cambiar cuando el negocio
-decide cambiar ese comportamiento, y ese cambio también se revisa.
+**El redondeo en .NET.** `dotnet.instructions.md` pide que todo `Math.Round` indique
+`MidpointRounding.AwayFromZero` y que los montos `double` de la liquidación pasen por
+`CompatibilidadJava`. La corrección en `decimal` redondea con `Math.Round` y ese argumento, y
+cumple la instrucción. Hasta SPEC-016-B la regla prohibía `Math.Round` sin más, y los agentes
+de verificación chocaban con ella.
 
 **Un solo stack.** Quien corrige solo su stack deja al otro distinto: `comparar-escenarios.sh`
 falla en junio y es lo esperado. El pipeline con un solo stack declarado no compara los dos.

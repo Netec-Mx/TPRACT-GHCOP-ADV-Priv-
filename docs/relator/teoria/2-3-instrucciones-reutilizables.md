@@ -92,11 +92,11 @@ cualquier desarrollador sabe del lenguaje. Dicen lo que es propio de este reposi
   una característica que el proyecto no admite.
 - **Cómo se compila y se prueba.** Los comandos exactos, para que el agente los ejecute en
   lugar de adivinarlos.
-- **Lo que no se reemplaza y por qué.** En .NET, todo redondeo y formateo de montos pasa por
-  una clase que reproduce el comportamiento de Java, porque los dos escenarios tienen que
-  dar la misma salida. Esa regla no es obvia leyendo el código, y un agente bien
-  intencionado la rompería reemplazándola por la función estándar del lenguaje. Por eso va
-  escrita, con su razón. En Java, la regla equivalente es que todo formateo de salida usa
+- **Lo que no se reemplaza y por qué.** En .NET, los montos de la liquidación pasan por una
+  clase que reproduce a Java, porque los dos escenarios dan la misma salida, y todo
+  `Math.Round` indica medio hacia arriba, porque por omisión redondea al par. Eso no es
+  obvio leyendo el código, y un agente bien intencionado lo rompería. Por eso va
+  escrito, con su razón. En Java, la regla equivalente es que todo formateo de salida usa
   una configuración regional fija, porque si se quita, la salida cambia según el idioma de
   la máquina.
 - **El estilo de las pruebas existentes.** Dónde viven, cómo se nombran, qué framework usan.

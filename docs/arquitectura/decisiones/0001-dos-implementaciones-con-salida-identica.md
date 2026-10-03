@@ -30,8 +30,9 @@ distinguiría de un cambio introducido durante un ejercicio.
 
 Se implementa el escenario dos veces, en `escenario/java` y en `escenario/dotnet`, sobre los
 mismos datos de `escenario/datos`. Las dos implementaciones producen la misma salida byte a
-byte. En .NET, todo redondeo y formateo de montos pasa por `Util/CompatibilidadJava.cs`, que
-reproduce el comportamiento de Java. En Java, el formateo de salida usa una configuración
+byte. En .NET, los montos `double` se redondean y se formatean con
+`Util/CompatibilidadJava.cs`, que reproduce el comportamiento de Java, y todo `Math.Round`
+indica `MidpointRounding.AwayFromZero`. En Java, el formateo de salida usa una configuración
 regional fija, `util/ConfiguracionRegional.java`. El script `scripts/comparar-escenarios.sh`
 ejecuta las dos y compara sus salidas.
 
@@ -41,8 +42,8 @@ ejecuta las dos y compara sus salidas.
   detecta al compararlos.
 - La comparación sirve como prueba de regresión para refactorizaciones: si la salida no
   cambió, el comportamiento observable tampoco.
-- Un desarrollador .NET no puede usar las funciones estándar de redondeo y formato de su
-  lenguaje en el escenario. Las instrucciones por ruta lo dicen.
+- Un desarrollador .NET no puede usar el redondeo por omisión de su lenguaje, que va al par,
+  ni formatear los montos `double` por su cuenta. Las instrucciones por ruta lo dicen.
 - La salida no depende del idioma de la máquina en que se ejecuta.
 
 ## Verificación

@@ -436,23 +436,26 @@ Siga `docs/relator/demos/demo-4-1-documentacion-contra-ejecucion.md`.
 ### G10. Demostración 5.3, la revisión de Copilot pendiente
 
 La demostración se presenta desde `docs/relator/respaldos/demo-5-3.md`, grabado en
-`RodrigoMSB/github-copilot-netec-demo`. Falta grabar una sola parte: la revisión de Copilot en
-el pull request. La cuenta con la que se grabó no la tiene disponible.
+`RodrigoMSB/github-copilot-netec-demo`, un repositorio privado de grabación. Falta una sola
+parte: la revisión de Copilot en el pull request. La cuenta `RoSilva26` tiene Copilot Pro, que
+la incluye, y ya está invitada como colaboradora del repositorio de demostración. El pull
+request #2 está abierto con el cambio completo para esto. No use el repositorio de
+participantes: un pull request deja allí su referencia para siempre.
 
-Para grabarla hace falta una cuenta con la revisión de Copilot en pull requests y acceso al
-repositorio de demostración. La cuenta `RoSilva26` no tiene acceso a ese repositorio, y no
-está verificado que su plan gratuito incluya la revisión en pull requests. Antes de esta
-prueba, el propietario decide si la invita o usa otra cuenta. No use el repositorio de
-participantes para esto: un pull request deja allí su referencia para siempre.
+1. Con la cuenta `RoSilva26`, en el navegador, abra
+   https://github.com/RodrigoMSB/github-copilot-netec-demo/invitations y haga clic en
+   **Accept invitation**.
+2. Abra https://github.com/RodrigoMSB/github-copilot-netec-demo/pull/2.
+3. En la columna de la derecha, en **Reviewers**, haga clic en el engranaje y elija
+   **Copilot**.
+4. Espere a que aparezca la revisión de Copilot en la conversación del pull request, en
+   general menos de un par de minutos.
+5. Avise al ejecutor. El ejecutor lee los comentarios con la API de GitHub, completa la
+   sección «Revisión de Copilot» del respaldo con el texto real, cierra el pull request sin
+   integrar y borra la rama.
 
-1. En el repositorio de demostración, una rama con la corrección: siga los pasos en vivo de
-   `docs/relator/demos/demo-5-3-pipeline-en-github.md`.
-2. En el pull request, pida la revisión de Copilot desde **Reviewers**.
-3. Copie a mano los comentarios en la sección «Revisión de Copilot» del respaldo.
-4. Cierre el pull request sin integrar y borre la rama.
-
-- [ ] **Pendiente:** revisión de Copilot grabada en el respaldo.
-- Cuenta usada y si tuvo la revisión disponible: ______________
+- [ ] **Esperado:** Copilot aparece en **Reviewers** y deja una revisión en el pull request.
+- [ ] **Hecho por el ejecutor:** respaldo completado, pull request #2 cerrado y rama borrada.
 - Observado: ______________________________________________
 
 ---

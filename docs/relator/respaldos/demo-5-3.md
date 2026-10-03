@@ -87,5 +87,6 @@ Se empujó la corrección de los dos stacks y el hash esperado nuevo de junio. E
 ## Revisión de Copilot
 
 **Pendiente.** La cuenta usada para grabar no tiene disponible la revisión de Copilot en pull
-requests: la solicitud no quedó registrada. Se graba en la máquina virtual con la cuenta de
-prueba, según el bloque G del protocolo, y esta sección se completa con su resultado.
+requests: la solicitud no quedó registrada. El pull request #2 del repositorio de
+demostración está abierto con el cambio completo para pedirla con la cuenta de prueba, según
+la casilla G10 del protocolo. Esta sección se completa con el texto real de esa revisión.
