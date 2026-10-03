@@ -36,7 +36,7 @@ Los nueve laboratorios están en [`labs/`](labs/README.md).
 | Ruta | Contenido |
 |---|---|
 | `.github/` | Instrucciones, agentes, skills y hooks de Copilot |
-| `docs/` | Preparación del ambiente y solución de problemas |
+| `docs/` | Preparación del ambiente, solución de problemas, arquitectura de referencia y decisiones (`arquitectura/`), política de uso de IA y uso de tokens (`gobierno/`) y plantilla de runbook (`operacion/`) |
 | `escenario/` | Código base Java y .NET de los laboratorios |
 | `labs/` | Enunciados de los laboratorios |
 | `mcp/` | Servidor MCP local de consulta |

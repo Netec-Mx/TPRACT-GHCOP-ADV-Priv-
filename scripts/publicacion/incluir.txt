@@ -30,6 +30,9 @@ mcp/
 # Documentacion para el participante
 docs/00-setup-ambiente.md
 docs/02-troubleshooting.md
+docs/arquitectura/
+docs/gobierno/
+docs/operacion/
 
 # Scripts
 scripts/verificar-ambiente.sh

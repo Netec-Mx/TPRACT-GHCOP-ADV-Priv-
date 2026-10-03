@@ -16,7 +16,7 @@ local. Lo que construyas en los laboratorios queda aquí.
 | `.github/` | Instrucciones, agentes, skills y hooks de Copilot |
 | `mcp/` | Servidor MCP local de consulta |
 | `scripts/` | Verificación de ambiente, comparación de escenarios, reinicio de laboratorios y validación de skills |
-| `docs/` | Preparación del ambiente y solución de problemas |
+| `docs/` | Preparación del ambiente, solución de problemas, arquitectura de referencia y decisiones (`arquitectura/`), política de uso de IA y uso de tokens (`gobierno/`) y plantilla de runbook (`operacion/`) |
 
 ## El escenario
 
