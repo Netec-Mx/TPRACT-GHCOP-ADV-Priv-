@@ -1,783 +1,441 @@
-> Los tiempos de este respaldo son de reloj del agente de verificación y no incluyen la
-> lectura de la sala.
+> Salida real grabada en la verificación de SPEC-016, el 3 de octubre de 2026, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
 
-# Lab 5.2 - Refactorización y validación incremental (Java)
+# Lab 5-2 salida grabada de respaldo
 
-Reinicio previo: `bash scripts/reiniciar-lab.sh lab-5-2 --si` (ya estaba en el punto de partida).
-Aviso de ejecución: los tiempos son segundos de reloj de esta corrida simulada.
+Hay dos grabaciones, una por cada camino del 5.2. Muestre la que corresponda a lo que eligió el participante.
 
-## Paso 1 - `/lab-5-2-paso-1-plan-incremental java` (modo Ask)
+## Camino B: el reporte reutiliza el cálculo de la liquidación (corrida s16, Java)
 
-Segundos: 14 s de lectura y análisis (la redacción de la respuesta no se cronometró por separado) (solo lectura, sin modificar archivos; incluye la lectura de las dos calculadoras, `PlanComisiones`, `UtilidadesFecha`, `Liquidacion` y `escenario/README.md`)
+---
 
-### Respuesta del chat (verbatim)
+# 5.2 paso 1: `/lab-5-2-paso-1-planificar java`
 
-Escenario: Java. No modifiqué ningún archivo.
+Inicio 1791047083, fin 1791047110 (27 s). Comandos de terminal del agente: 2 (`date +%H:%M`,
+`bash scripts/proyecto/entregar.sh formato-del-reporte`).
 
-**1. Valores de negocio escritos como literal**
+## Respuesta del agente
 
-Archivos: `CalculadoraLiquidacion.java` (CL) y `CalculadoraComision.java` (CC), en `escenario/java/src/main/java/pe/pasarelaandina/calculo/`.
+Anoté Desarrollo a las **14:04** en el registro de tiempos y entregué la especificación
+técnica: `docs/proyecto/backlog/formato-del-reporte.md`. La leí junto con la historia, la
+decisión 0004 y el código Java que menciona.
 
-| Valor | Dónde aparece | Regla de `escenario/README.md` | Observación |
+**Lo que fija la especificación:** invocación con `--reporte-medios` como primer argumento y
+periodo y ruta después; encabezado de seis líneas con el mismo marco y fechas que la
+liquidación; tabla de anchos 15/16/18/16/16; filas por código de medio en orden alfabético;
+81 guiones; pie con `Ajuste por tope` (negativo), `Ajuste por redondeo` (total − filas −
+ajuste por tope, siempre visible) y `Total` (como en la liquidación, por comercio). Montos
+`S/ ` con punto y dos decimales; porcentaje con dos decimales y ` %`. Esto resuelve las
+preguntas de formato, orden y decimales que la historia dejó «pendiente».
+
+**El punto delicado de la decisión 0004:** `procesarLiquidacionCompleta`
+(`CalculadoraLiquidacion.java:82`) calcula y además imprime toda la liquidación. Para
+reutilizar su resultado sin esa salida hay dos caminos: refactorizar la clase para separar
+el cálculo de la impresión, o no tocarla y descartar su salida de consola mientras el
+reporte la llama. Propongo el segundo: evita refactorizar un método de casi trescientas
+líneas y la liquidación no puede cambiar en un byte porque su código no se modifica.
+
+### Plan
+
+| Paso | Archivo | Qué hace | Cómo se valida |
 |---|---|---|---|
-| Recargo por cuota: 0,5 puntos por cada cuota sobre la primera | CL línea 171 (`(transaccion.getCuotas() - 1) * 0.5`); CC línea 52 (`(cuotas - 1) * 0.5`) | Regla 3: 0,5 % adicional por cada cuota sobre la primera | Coincide en las dos. Escrito dos veces. |
-| Condición de cuotas `> 1` | CL línea 169; CC línea 49 (`<= 1`) | Regla 3 | Equivalentes. |
-| Máximo del recargo | CL línea 173-174: `3.0`. CC línea 53-54: `3.5` | Regla 3: máximo de 3 % | **No coinciden.** CL cumple la regla (3,0). CC no (3,5). |
-| Divisor porcentual `100.0` | CL líneas 164, 177; CC líneas 39, 56 | (convención de porcentaje) | Repetido en ambas. |
-| Retención de garantía: `0.05` | CL línea 241 (`baseRetencion * 0.05`). No aparece en CC | Regla 7: 5 % sobre el monto neto | Solo en CL. Ver nota abajo sobre la base. |
-| Antigüedad para la retención: `6` meses | CL línea 236 (`meses < 6`) | Regla 7: menos de seis meses de afiliación | Solo en CL. |
-| Redondeo a dos decimales: `100.0` con `Math.round` | CL líneas 246-249 y 258; CC línea 72 (`redondear`) | Regla 9: dos decimales, medio hacia arriba | Duplicado en las dos clases. |
-| Moneda `"PEN"` | CL línea 66 | Todos los montos en soles | Solo en CL. |
-| Largo del registro tributario `11` y prefijos `"10"`, `"20"`, `"15"`, `"17"` | CL líneas 268-273 | No definido en las reglas de negocio | No es una regla de comisión, pero es literal de negocio dentro del mismo método. |
-| Límite de tramo: `>= montoDesde && < montoHasta` | CL líneas 148-149; CC línea 23 usa `<= montoHasta` | Regla 1 y 2 (no define si el borde superior es inclusivo) | **No coinciden** en el borde: un monto igual al `montoHasta` cae en un tramo en CL y en el siguiente en CC. |
-| Tope mensual | No es literal: viene de `plan.getTopeMensual()` (CL línea 202) | Regla 6 | Sin duplicación. |
+| 1 | `AplicacionLiquidacion.java` | Si el primer argumento es `--reporte-medios`, lo consume; periodo y ruta siguen con sus valores por omisión. Sin ese argumento, el flujo de la liquidación queda idéntico | `mvn -q clean package` y `bash scripts/integracion-local.sh --paso equivalencia` en verde |
+| 2 | `reporte/ReporteMediosPago.java` (nuevo) | Recibe las liquidaciones del periodo; agrupa el detalle por medio de pago (cantidad, monto, comisión antes del tope); calcula participación, ajuste por tope (lo que exceden los comercios con tope aplicado), total como suma de `getTotalComisiones()` y ajuste por redondeo; arma el texto con el formato exacto | Compila; equivalencia en verde |
+| 3 | `AplicacionLiquidacion.java` | En el camino del reporte: carga datos, llama a `procesarLiquidacionCompleta` con `System.out` apuntando a un flujo que descarta, lo restaura e imprime el encabezado con las mismas fechas y formato que la liquidación, y el reporte | Equivalencia en verde; ejecución de `--reporte-medios 2026-06` comparada a ojo con el ejemplo de forma; el paso 3 del laboratorio corre `verificar-reporte.sh` |
 
-Notas de negocio que conviene tener presentes antes de tocar nada:
-- La regla 7 dice «5 % sobre el monto neto». CL calcula la base como `totalTransado - totalComisiones - totalContracargos` (líneas 238-241), que es el neto antes de retenciones. Es coherente con la regla.
-- La regla 8 pide el periodo en hora de Lima. `UtilidadesFecha.calendarioDeTrabajo()` usa la zona horaria del sistema, según su propio comentario. No es un literal de CL ni CC, pero afecta al borde del periodo.
-- El comentario de la clase `PlanComisiones` dice que los tramos son acumulativos. La regla 2 dice que **no** lo son, y el código de CL y CC aplica el porcentaje al monto completo. El código y la regla coinciden; el comentario no. No lo toco.
-- El comentario de `CalculadoraComision` dice que el monto incluye el IGV y que la comisión se aplica sobre el valor de venta neto, pero el código multiplica el monto completo. No hay regla en el README que respalde el comentario.
+No hay paso de refactor: no se modifica `CalculadoraLiquidacion`. Las pruebas del reporte
+quedan para el 5.3.
 
-**2. Incrementos propuestos**
+**Riesgo conocido:** con la alternativa A el reporte hereda la selección de tramo de la
+liquidación, que excluye el límite superior (`CalculadoraLiquidacion.java:149`), mientras el
+negocio respondió que es inclusivo. El total cuadrará con la liquidación, pero los criterios
+4 y 5 de la historia pueden no cumplirse. No lo corrijo en este laboratorio.
 
-| # | Qué se extrae o se mueve | Qué debe seguir igual | Cómo se valida |
+**¿Apruebas el plan o qué cambias?**
+
+## Respuesta del participante
+
+«Aprobado.»
+
+## Medición
+
+- Archivos: `docs/proyecto/backlog/formato-del-reporte.md` (entregado),
+  `docs/proyecto/registro-de-tiempos.md` (M).
+- Salida esperada: sí. Plan con validación por paso y pregunta de aprobación.
+- Restricciones: respetadas. Solo se modificó el registro de tiempos y el documento entregado.
+
+
+---
+
+# 5.2 paso 2: `/lab-5-2-paso-2-implementar-reporte java`
+
+Inicio 1791047132, fin 1791047224 (92 s). Comandos de terminal del agente: 4 (tres de
+compilación más `integracion-local.sh --paso equivalencia`, uno por paso del plan, y un `sed`
+para agregar dos `import`).
+
+## Respuesta del agente
+
+Seguí el plan aprobado en orden. Después de cada paso compilé y corrí
+`bash scripts/integracion-local.sh --paso equivalencia`.
+
+| Paso | Archivo | Cambio | Equivalencia |
 |---|---|---|---|
-| 1 | De `procesarLiquidacionCompleta`, el bloque que va de `double montoTransaccion` (línea 140) hasta `liquidacion.agregarDetalle(linea);` (línea 190) pasa a un método privado de la misma clase que recibe `plan` y `transaccion` y devuelve el `DetalleLiquidacion`. Los acumuladores leen `linea.getMontoTransaccion()` y `linea.getComisionTotal()` | Todos los literales (`0.5`, `3.0`, `100.0`), los tipos `double`, el orden de las operaciones y el orden en que se agregan los detalles | `cd escenario/java && mvn -q clean package` y luego, desde la raíz, `bash scripts/comparar-escenarios.sh` (debe terminar en 0) |
-| 2 | El desglose por medio de pago: el cálculo (líneas 284-315) y la impresión (líneas 330-347) pasan a un método privado que recibe la liquidación | Texto impreso carácter por carácter, el criterio `> 0` de cada línea y el contador de cuotas | `mvn -q clean package` y `bash scripts/comparar-escenarios.sh` |
-| 3 | El recorrido de contracargos aprobados (líneas 207-226) a un método privado que devuelve `totalContracargos` | Se suma solo con estado `APROBADO`, fecha no nula y dentro de `[inicioPeriodo, finPeriodo]` | `mvn -q clean package`, `bash scripts/comparar-escenarios.sh` y `mvn test` |
-| 4 | El cálculo de la retención (líneas 228-244) a un método privado que recibe fecha de afiliación, inicio del periodo y los totales, y devuelve `retenciones` | La antigüedad `meses < 6`, el `0.05`, la base y el orden respecto del redondeo de la línea 249 | `mvn -q clean package`, `bash scripts/comparar-escenarios.sh`, y revisar a mano un comercio con menos de seis meses de afiliación en la salida |
-| 5 | La observación del registro tributario (líneas 261-282) a un método privado que devuelve `observacionRegistro` | El bloque `catch` vacío tal como está y los textos de la observación | `bash scripts/comparar-escenarios.sh` y `mvn test` |
+| 1 | `AplicacionLiquidacion.java` | Constante `--reporte-medios`; si es el primer argumento se consume y el periodo y la ruta se leen de los siguientes, con los mismos valores por omisión | 2026-04, 05 y 06 OK |
+| 2 | `reporte/ReporteMediosPago.java` (nuevo, 128 líneas) | Agrupa el detalle de las liquidaciones por medio (`TreeMap`, orden alfabético); comisión de fila antes del tope, redondeada al final; participación sobre la suma de filas; ajuste por tope = −(comisiones del comercio − total con tope) de los comercios con tope; total = suma de `getTotalComisiones()`; ajuste por redondeo = total − filas − ajuste por tope; formato con anchos 15/16/18/16/16 y pie 49/16 | 2026-04, 05 y 06 OK |
+| 3 | `AplicacionLiquidacion.java` | `emitirReporteMedios`: llama a `procesarLiquidacionCompleta` con `System.out` apuntando a `OutputStream.nullOutputStream()`, restaura la consola en `finally` e imprime el reporte. El camino sin `--reporte-medios` no cambia | 2026-04, 05 y 06 OK |
 
-Orden sugerido: el 1 primero porque es el que más acorta el método y tiene la frontera más clara; del 2 al 5 son independientes entre sí.
+`CalculadoraLiquidacion` no se modificó.
 
-**3. Qué incremento no conviene hacer todavía**
-
-No conviene hacer todavía **ningún incremento que sustituya el cálculo de `CalculadoraLiquidacion` por una llamada a `CalculadoraComision`** (por ejemplo, hacer que el método de cierre use `calcularComisionTotal`). Hay dos diferencias de comportamiento entre ambas clases: el máximo del recargo (3,0 en CL, 3,5 en CC) y el borde superior del tramo (`<` en CL, `<=` en CC). Unificarlas cambiaría la salida para las transacciones en 7 o más cuotas y para los montos exactamente iguales al límite de un tramo, y rompería la comparación entre escenarios. Antes de unificar hay que decidir cuál de las dos copias es la correcta (la regla 3 apunta a 3,0 %; la regla 1 no fija el borde del tramo) y tener pruebas que fijen el comportamiento. Tampoco conviene el incremento 4 antes de tener un caso de prueba con un comercio de menos de seis meses, porque es la zona donde el redondeo y el orden de las operaciones afectan más a la salida.
-
-**Otros problemas vistos y no tocados**
-- Montos en `double` en todo el cálculo.
-- `procesarLiquidacionCompleta` tiene unas 280 líneas y muchos niveles de anidamiento.
-- `catch (Exception e) { }` vacío en las líneas 281-282.
-- Uso de `Date` y `Calendar` en lugar de la API de fecha y hora moderna.
-- Dos copias de la lógica de comisión (CL y CC) con las diferencias descritas arriba.
-- Comentario de `PlanComisiones` («tramos acumulativos») que contradice la regla 2; comentario de `CalculadoraComision` sobre el IGV que el código no implementa.
-- `Liquidacion.obtenerMontoNeto()` se llama como consulta pero asigna `montoNeto`.
-- Zona horaria del sistema en `UtilidadesFecha` frente a la regla 8 (hora de Lima).
-
-### Verificación del «Salida esperada»
-La tabla de valores de negocio, la tabla de incrementos y la advertencia del punto 3: entregadas.
-
-## Paso 2 - `/lab-5-2-paso-2-extraer-comision java` (modo Agent)
-
-Segundos: 14 (edición más `mvn -q clean package` y comparador, medidos desde el inicio de la edición)
-
-### Respuesta del chat (verbatim)
-
-Extraje el bloque de cálculo de comisión a un método privado nuevo y modifiqué un solo archivo: `escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java`.
-
-1. Método nuevo: `private DetalleLiquidacion calcularDetalleDeTransaccion(PlanComisiones plan, Transaccion transaccion)`. Contiene, sin cambios, la búsqueda del tramo, el porcentaje más el monto fijo, el recargo por cuotas y la construcción del `DetalleLiquidacion`. Lo dejé justo antes de `formatearMonto`.
-2. En `procesarLiquidacionCompleta` queda `DetalleLiquidacion linea = calcularDetalleDeTransaccion(plan, transaccion);` seguido de `liquidacion.agregarDetalle(linea);`. Los acumuladores `totalTransado`, `totalComisiones` y `acumuladoGeneralComisiones` ahora leen `linea.getMontoTransaccion()` y `linea.getComisionTotal()`, porque `montoTransaccion` y `comisionTotal` ya no existen en ese método.
-3. Compilación: `cd escenario/java && mvn -q clean package` terminó sin errores (código 0).
-4. Verificación: `bash scripts/comparar-escenarios.sh` compiló los dos escenarios y dijo «Las salidas son identicas» (554 líneas, 20457 bytes). Terminó en código cero.
-
-Lo que no toqué y que vi (dejado como estaba):
-- Montos en `double` en todo el cálculo.
-- Literales `0.5`, `3.0` y `100.0` copiados tal cual al método nuevo, sin pasarlos a constantes. El máximo del recargo es `3.0` aquí y `3.5` en `CalculadoraComision.calcularRecargoCuotas`. La regla 3 de `escenario/README.md` habla de un máximo de 3 %.
-- El borde superior del tramo es `<` en este método y `<=` en `CalculadoraComision.determinarTramo`.
-- `procesarLiquidacionCompleta` sigue siendo largo y anidado.
-- `catch (Exception e) { }` vacío en la observación del registro tributario.
-- `Date` y `Calendar` en lugar de la API moderna de fecha y hora.
-- El comentario de `PlanComisiones` dice que los tramos son acumulativos, cosa que contradice la regla 2 del README y lo que hace el código.
-- `Liquidacion.obtenerMontoNeto()` consulta y además asigna `montoNeto`.
-
-### Resultado de los comandos
+Salida de `java -jar target/liquidacion-comercios.jar --reporte-medios 2026-06`:
 
 ```
-$ cd escenario/java && mvn -q clean package
-(sin salida) exit 0
-$ bash scripts/comparar-escenarios.sh
-Comparacion de escenarios, taller de GitHub Copilot
-Script version 1.0.0
-Periodo: 2026-06
-Repositorio: /private/tmp/claude-501/-Users-rodrigosilva-GITHUB-COPILOT-github-copilot-netec/6e2f2b1e-040c-4c7f-bc41-827f7128af25/scratchpad/s11/l3
+==========================================================
+  PASARELA ANDINA - COMISIONES POR MEDIO DE PAGO
+  Periodo: 2026-06
+  Desde: 01/06/2026 00:00
+  Hasta: 30/06/2026 23:59
+==========================================================
 
-== Requisitos ==
-  [ OK ] JDK disponible
-  [ OK ] Apache Maven disponible
-  [ OK ] SDK de .NET disponible
-  [ OK ] diff disponible
-  [ OK ] java encontrado
-  [ OK ] dotnet encontrado
-  [ OK ] datos encontrado
-
-== Compilacion ==
-  [ OK ] Escenario Java compilado
-  [ OK ] Escenario .NET compilado
-
-== Ejecucion ==
-  [ OK ] Escenario Java ejecutado (554 lineas)
-  [ OK ] Escenario .NET ejecutado (554 lineas)
-
-== Comparacion ==
-  [ OK ] Las salidas son identicas
-       554 lineas, 20457 bytes
-
-== Resumen ==
-  Escenarios equivalentes. Java y .NET producen la misma salida para 2026-06.
+Medio de pago     Transacciones    Monto transado        Comision   Participacion
+BILLETERA_MOVIL             181      S/ 552504.92     S/ 14326.75         23.75 %
+TARJETA_CREDITO             159      S/ 557033.77     S/ 14395.78         23.87 %
+TARJETA_DEBITO              203      S/ 760564.01     S/ 19147.92         31.75 %
+TRANSFERENCIA               170      S/ 492042.49     S/ 12443.22         20.63 %
+---------------------------------------------------------------------------------
+Ajuste por tope                                      S/ -23698.32
+Ajuste por redondeo                                      S/ -0.04
+Total                                                 S/ 36615.31
 ```
 
-### git diff
+**Última validación:** `integracion-local.sh --paso equivalencia`, los tres periodos coinciden
+con el hash esperado.
 
-```diff
-diff --git a/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java b/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
-index 45e65aa..fa93c9e 100644
---- a/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
-+++ b/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
-@@ -137,63 +137,14 @@ public class CalculadoraLiquidacion {
- 
-                             if (transaccion.getEstado() == EstadoTransaccion.APROBADA) {
- 
--                                double montoTransaccion = transaccion.getMonto();
--                                double porcentajeAplicado = 0.0;
--                                boolean tramoEncontrado = false;
--
--                                for (TramoComision tramo : plan.getTramos()) {
--
--                                    if (!tramoEncontrado) {
--
--                                        if (montoTransaccion >= tramo.getMontoDesde()
--                                                && montoTransaccion < tramo.getMontoHasta()) {
--
--                                            porcentajeAplicado = tramo.getPorcentaje();
--                                            tramoEncontrado = true;
--                                        }
--                                    }
--                                }
--
--                                if (!tramoEncontrado) {
--                                    if (!plan.getTramos().isEmpty()) {
--                                        porcentajeAplicado = plan.getTramos()
--                                                .get(plan.getTramos().size() - 1).getPorcentaje();
--                                    }
--                                }
--
--                                double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
--                                comisionBase = comisionBase + plan.getMontoFijoPorTransaccion();
--
--                                double recargo = 0.0;
--
--                                if (transaccion.getCuotas() > 1) {
--
--                                    double porcentajeRecargo = (transaccion.getCuotas() - 1) * 0.5;
--
--                                    if (porcentajeRecargo > 3.0) {
--                                        porcentajeRecargo = 3.0;
--                                    }
--
--                                    recargo = comisionBase * porcentajeRecargo / 100.0;
--                                }
--
--                                double comisionTotal = comisionBase + recargo;
--
--                                DetalleLiquidacion linea = new DetalleLiquidacion();
--                                linea.setIdTransaccion(transaccion.getId());
--                                linea.setMontoTransaccion(montoTransaccion);
--                                linea.setComisionBase(comisionBase);
--                                linea.setRecargoCuotas(recargo);
--                                linea.setComisionTotal(comisionTotal);
--                                linea.setCuotas(transaccion.getCuotas());
--                                linea.setMedioPago(transaccion.getMedioPago().name());
-+                                DetalleLiquidacion linea = calcularDetalleDeTransaccion(plan, transaccion);
-                                 liquidacion.agregarDetalle(linea);
- 
--                                totalTransado = totalTransado + montoTransaccion;
--                                totalComisiones = totalComisiones + comisionTotal;
-+                                totalTransado = totalTransado + linea.getMontoTransaccion();
-+                                totalComisiones = totalComisiones + linea.getComisionTotal();
-                                 cantidadTransacciones++;
- 
--                                acumuladoGeneralComisiones = acumuladoGeneralComisiones + comisionTotal;
-+                                acumuladoGeneralComisiones = acumuladoGeneralComisiones + linea.getComisionTotal();
-                             }
-                         }
-                     }
-@@ -363,6 +314,64 @@ public class CalculadoraLiquidacion {
-         return resultado;
-     }
- 
-+    /**
-+     * Calcula la comision de una transaccion segun el plan y arma su linea de detalle.
-+     */
-+    private DetalleLiquidacion calcularDetalleDeTransaccion(PlanComisiones plan, Transaccion transaccion) {
-+        double montoTransaccion = transaccion.getMonto();
-+        double porcentajeAplicado = 0.0;
-+        boolean tramoEncontrado = false;
-+
-+        for (TramoComision tramo : plan.getTramos()) {
-+
-+            if (!tramoEncontrado) {
-+
-+                if (montoTransaccion >= tramo.getMontoDesde()
-+                        && montoTransaccion < tramo.getMontoHasta()) {
-+
-+                    porcentajeAplicado = tramo.getPorcentaje();
-+                    tramoEncontrado = true;
-+                }
-+            }
-+        }
-+
-+        if (!tramoEncontrado) {
-+            if (!plan.getTramos().isEmpty()) {
-+                porcentajeAplicado = plan.getTramos()
-+                        .get(plan.getTramos().size() - 1).getPorcentaje();
-+            }
-+        }
-+
-+        double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
-+        comisionBase = comisionBase + plan.getMontoFijoPorTransaccion();
-+
-+        double recargo = 0.0;
-+
-+        if (transaccion.getCuotas() > 1) {
-+
-+            double porcentajeRecargo = (transaccion.getCuotas() - 1) * 0.5;
-+
-+            if (porcentajeRecargo > 3.0) {
-+                porcentajeRecargo = 3.0;
-+            }
-+
-+            recargo = comisionBase * porcentajeRecargo / 100.0;
-+        }
-+
-+        double comisionTotal = comisionBase + recargo;
-+
-+        DetalleLiquidacion linea = new DetalleLiquidacion();
-+        linea.setIdTransaccion(transaccion.getId());
-+        linea.setMontoTransaccion(montoTransaccion);
-+        linea.setComisionBase(comisionBase);
-+        linea.setRecargoCuotas(recargo);
-+        linea.setComisionTotal(comisionTotal);
-+        linea.setCuotas(transaccion.getCuotas());
-+        linea.setMedioPago(transaccion.getMedioPago().name());
-+
-+        return linea;
-+    }
-+
-     private String formatearMonto(double monto) {
-         return String.format(ConfiguracionRegional.REGION_DE_SALIDA, "%.2f", monto);
-     }
+**Lo que vi y no toqué:**
+
+- El total de junio es 36 615,31. La historia (criterio 7) calculó 36 637,34 con las reglas
+  del negocio y decimal exacto: hay 22,03 de diferencia. Es lo esperable con la alternativa A,
+  porque la liquidación manda los montos en el límite al tramo superior. Queda para el
+  paso 3 y el 5.3.
+- Ajuste por redondeo de −0,04 en junio: el total por comercio en `double` y la suma de filas
+  no coinciden al centavo.
+
+No escribí pruebas del reporte (son el 5.3) ni toqué el escenario .NET, los datos ni los
+hashes esperados.
+
+## Medición
+
+- Archivos: `AplicacionLiquidacion.java` (M), `reporte/ReporteMediosPago.java` (nuevo).
+- Salida esperada: sí. Diff por archivo y resultado de la última validación.
+- Restricciones: respetadas. Solo Java; sin cambios en hashes, datos ni en la liquidación.
+
+
+---
+
+# 5.2 paso 3: `/lab-5-2-paso-3-verificar-reporte java`
+
+Inicio 1791047243, fin 1791047272 (29 s). Comandos de terminal del agente: 4
+(`verificar-reporte.sh` tres veces e `integracion-local.sh`).
+
+## Respuesta del agente
+
+| Comprobación | Resultado |
+|---|---|
+| `bash scripts/verificar-reporte.sh java 2026-04` | Coincide con la salida esperada (código 0) |
+| `bash scripts/verificar-reporte.sh java 2026-05` | Coincide con la salida esperada (código 0) |
+| `bash scripts/verificar-reporte.sh java 2026-06` | **No coincide** (código 1). Esperado `f1667ce7…86d7`, obtenido `ae7f4a6d…e1b8` |
+| `bash scripts/integracion-local.sh` | **Verde**. Java compila, 20 pruebas pasan; equivalencia de la liquidación OK en los tres periodos; .NET omitido por stack `java` |
+
+### Pendiente para el 5.3
+
+El script solo guarda el hash, no la salida esperada, así que no puedo mostrar en qué
+líneas difiere. Lo que sí sé:
+
+- Abril y mayo coinciden byte a byte, de modo que el formato (encabezado, anchos, orden,
+  pie) está bien. La diferencia de junio es de valores, no de forma.
+- Junio es el único periodo con transacciones en el límite de un tramo (TX002001 y TX002003
+  por 500,00; TX002002 y TX002004 por 2 000,00, todas de plan PL01). La liquidación las
+  asigna al tramo superior (`CalculadoraLiquidacion.java:149`, `<`), y el negocio dijo que el
+  límite superior es inclusivo. Eso explicaría 22,00 de diferencia: (17,80 − 14,80) × 2 +
+  (58,30 − 50,30) × 2.
+- Nuestro total de junio es 36 615,31; la historia calculó 36 637,34. La diferencia es 22,03,
+  así que hay 0,03 que el límite de tramo no explica. Las líneas candidatas de nuestra
+  salida son las filas `BILLETERA_MOVIL`, `TARJETA_CREDITO`, `TARJETA_DEBITO`,
+  `TRANSFERENCIA`, `Ajuste por redondeo` y `Total`.
+
+No corregí nada.
+
+El pipeline local está en verde. Te propongo confirmar el reporte:
+
+```bash
+git add escenario && git commit -m "Reporte de comisiones por medio de pago"
 ```
 
-### Verificación del «Salida esperada»
-Método privado nuevo con nombre en español: sí. Método de cierre acortado con acumuladores leyendo del detalle: sí. Compila: sí. Comparador en cero: sí. Lista de otros problemas: sí. Un solo archivo modificado: sí.
+¿Lo confirmas? Yo no hago el commit.
 
-## Paso 3 - `/lab-5-2-paso-3-extraer-desglose-medios java` (modo Agent)
+## Respuesta del participante
 
-Segundos: 14 (edición más compilación y comparador)
+«Sí, lo confirmo.» Ejecutó el commit (`5e06f23`).
 
-### Respuesta del chat (verbatim)
+## Medición
 
-Extraje el desglose por medio de pago a un método privado y modifiqué un solo archivo: `escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java`.
+- Archivos: ninguno modificado por el agente. El commit del participante incluyó
+  `AplicacionLiquidacion.java` y `reporte/ReporteMediosPago.java`.
+- Salida esperada: sí. Tabla de comprobaciones y pendiente para el 5.3.
+- Restricciones: respetadas. No modificó archivos ni hizo el commit.
 
-Antes de mover el cálculo al lugar de la impresión comprobé que es seguro. Entre el final del recorrido del detalle y la impresión solo ocurren `resultado.add(liquidacion)` y varios `System.out.println`, ninguno modifica `liquidacion.getDetalle()`. Y el desglose solo se imprime dentro de `cantidadTransacciones > 0`, así que cuando esa condición es falsa el cálculo anterior no tenía efecto observable.
 
-1. Método nuevo: `private void imprimirDesgloseMediosDePago(Liquidacion liquidacion)`. Recorre `liquidacion.getDetalle()`, suma los montos por medio de pago y cuenta las transacciones en cuotas de tarjeta de crédito, e imprime el desglose con el mismo texto, los mismos espacios y las mismas condiciones `> 0` de antes. Quedó antes de `formatearMonto`.
-2. Se borró del método de cierre el bloque que declaraba `montoCredito`, `montoDebito`, `montoBilletera`, `montoTransferencia` y `transaccionesEnCuotas`, y el recorrido del detalle.
-3. Donde estaba el bloque de impresión queda `imprimirDesgloseMediosDePago(liquidacion);`. La condición `if (montoCredito > 0 || ...)` se fue dentro del método nuevo, porque depende de los montos calculados allí.
-4. Compilación: `mvn -q clean package` en `escenario/java/` terminó sin errores (código 0).
-5. `bash scripts/comparar-escenarios.sh` terminó en código 0: «Las salidas son identicas» (554 líneas, 20457 bytes).
+## Camino A: el reporte calcula por su cuenta con decimal exacto (corrida s16-a, .NET)
 
-Otros problemas que vi y no toqué:
-- La cadena de `if` anidados para el medio de pago compara con literales de texto (`"TARJETA_CREDITO"`, `"TARJETA_DEBITO"`, `"BILLETERA_MOVIL"`), y cualquier otro valor cae en «Transferencia».
-- Los montos del desglose se suman en `double` y se imprimen sin el redondeo intermedio que sí se hace a los totales.
-- `catch (Exception e) { }` vacío en la observación del registro tributario, que sigue en el método de cierre.
-- `procesarLiquidacionCompleta` sigue siendo largo, con anidamiento profundo, y mezcla cálculo, acumulación e impresión.
-- El máximo del recargo (`3.0` aquí, `3.5` en `CalculadoraComision`) y el borde del tramo (`<` aquí, `<=` allá) siguen sin coincidir.
+---
 
-### Resultado de los comandos
+# 5.2 paso 1. `/lab-5-2-paso-1-planificar dotnet`
 
-```
-$ cd escenario/java && mvn -q clean package
-(sin salida) exit 0
-$ bash scripts/comparar-escenarios.sh   -> exit 0
-== Comparacion ==
-  [ OK ] Las salidas son identicas
-       554 lineas, 20457 bytes
+**Participante:** `/lab-5-2-paso-1-planificar dotnet`. Quiero que el reporte calcule la comisión
+con `decimal` exacto y las reglas de `escenario/README.md`, sin reutilizar ni tocar el
+cálculo de la liquidación.
 
-== Resumen ==
-  Escenarios equivalentes. Java y .NET producen la misma salida para 2026-06.
-```
+**Copilot (agente):**
 
-### git diff (cambio de este paso; el git diff acumulado de pasos 2 y 3 queda al final del paso 4)
-
-```diff
---- /private/tmp/claude-501/-Users-rodrigosilva-GITHUB-COPILOT-github-copilot-netec/6e2f2b1e-040c-4c7f-bc41-827f7128af25/scratchpad/s11/tmp2/paso2.java	2026-10-01 22:29:40
-+++ escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java	2026-10-01 22:29:32
-@@ -230,39 +230,6 @@
-                         }
-                     }
-                 } catch (Exception e) {
--                }
--
--                double montoCredito = 0.0;
--                double montoDebito = 0.0;
--                double montoBilletera = 0.0;
--                double montoTransferencia = 0.0;
--                int transaccionesEnCuotas = 0;
--
--                for (DetalleLiquidacion linea : liquidacion.getDetalle()) {
--
--                    if (linea.getMedioPago() != null) {
--
--                        if (linea.getMedioPago().equals("TARJETA_CREDITO")) {
--
--                            montoCredito = montoCredito + linea.getMontoTransaccion();
--
--                            if (linea.getCuotas() > 1) {
--                                transaccionesEnCuotas++;
--                            }
--                        } else {
--
--                            if (linea.getMedioPago().equals("TARJETA_DEBITO")) {
--                                montoDebito = montoDebito + linea.getMontoTransaccion();
--                            } else {
--
--                                if (linea.getMedioPago().equals("BILLETERA_MOVIL")) {
--                                    montoBilletera = montoBilletera + linea.getMontoTransaccion();
--                                } else {
--                                    montoTransferencia = montoTransferencia + linea.getMontoTransaccion();
--                                }
--                            }
--                        }
--                    }
-                 }
- 
-                 if (cantidadTransacciones > 0) {
-@@ -278,25 +245,8 @@
-                     System.out.println("  Retenciones              : S/ " + formatearMonto(retenciones));
-                     System.out.println("  Monto neto a pagar       : S/ " + formatearMonto(neto));
- 
--                    if (montoCredito > 0 || montoDebito > 0 || montoBilletera > 0 || montoTransferencia > 0) {
-+                    imprimirDesgloseMediosDePago(liquidacion);
- 
--                        System.out.println("  Desglose por medio de pago:");
--
--                        if (montoCredito > 0) {
--                            System.out.println("    Tarjeta de credito     : S/ " + formatearMonto(montoCredito)
--                                    + (transaccionesEnCuotas > 0 ? "  (" + transaccionesEnCuotas + " en cuotas)" : ""));
--                        }
--                        if (montoDebito > 0) {
--                            System.out.println("    Tarjeta de debito      : S/ " + formatearMonto(montoDebito));
--                        }
--                        if (montoBilletera > 0) {
--                            System.out.println("    Billetera movil        : S/ " + formatearMonto(montoBilletera));
--                        }
--                        if (montoTransferencia > 0) {
--                            System.out.println("    Transferencia          : S/ " + formatearMonto(montoTransferencia));
--                        }
--                    }
--
-                     if (!observacionRegistro.isEmpty()) {
-                         System.out.println("  Observacion              : " + observacionRegistro);
-                     }
-@@ -372,6 +322,63 @@
-         return linea;
-     }
- 
-+    /**
-+     * Calcula los montos por medio de pago a partir del detalle e imprime el desglose.
-+     */
-+    private void imprimirDesgloseMediosDePago(Liquidacion liquidacion) {
-+double montoCredito = 0.0;
-+double montoDebito = 0.0;
-+double montoBilletera = 0.0;
-+double montoTransferencia = 0.0;
-+int transaccionesEnCuotas = 0;
-+
-+for (DetalleLiquidacion linea : liquidacion.getDetalle()) {
-+
-+    if (linea.getMedioPago() != null) {
-+
-+        if (linea.getMedioPago().equals("TARJETA_CREDITO")) {
-+
-+            montoCredito = montoCredito + linea.getMontoTransaccion();
-+
-+            if (linea.getCuotas() > 1) {
-+                transaccionesEnCuotas++;
-+            }
-+        } else {
-+
-+            if (linea.getMedioPago().equals("TARJETA_DEBITO")) {
-+                montoDebito = montoDebito + linea.getMontoTransaccion();
-+            } else {
-+
-+                if (linea.getMedioPago().equals("BILLETERA_MOVIL")) {
-+                    montoBilletera = montoBilletera + linea.getMontoTransaccion();
-+                } else {
-+                    montoTransferencia = montoTransferencia + linea.getMontoTransaccion();
-+                }
-+            }
-+        }
-+    }
-+}
-+
-+    if (montoCredito > 0 || montoDebito > 0 || montoBilletera > 0 || montoTransferencia > 0) {
-+
-+        System.out.println("  Desglose por medio de pago:");
-+
-+        if (montoCredito > 0) {
-+            System.out.println("    Tarjeta de credito     : S/ " + formatearMonto(montoCredito)
-+                    + (transaccionesEnCuotas > 0 ? "  (" + transaccionesEnCuotas + " en cuotas)" : ""));
-+        }
-+        if (montoDebito > 0) {
-+            System.out.println("    Tarjeta de debito      : S/ " + formatearMonto(montoDebito));
-+        }
-+        if (montoBilletera > 0) {
-+            System.out.println("    Billetera movil        : S/ " + formatearMonto(montoBilletera));
-+        }
-+        if (montoTransferencia > 0) {
-+            System.out.println("    Transferencia          : S/ " + formatearMonto(montoTransferencia));
-+        }
-+    }
-+    }
-+
-     private String formatearMonto(double monto) {
-         return String.format(ConfiguracionRegional.REGION_DE_SALIDA, "%.2f", monto);
-     }
-```
-
-### Verificación del «Salida esperada»
-Método privado que calcula e imprime: sí. Método de cierre sin el cálculo y con la llamada: sí. Compila: sí. Comparador en cero: sí. Otros problemas listados: sí.
-
-## Paso 4 - `/lab-5-2-paso-4-validar-equivalencia java` (modo Agent)
-
-Segundos: 5 (git status, comparador completo con compilación de ambos escenarios, `mvn test`)
-
-### Respuesta del chat (verbatim)
-
-**1. Archivos de `escenario/` cambiados respecto del último commit** (`git status --short escenario/`):
+Anoté 14:27 en Desarrollo en `docs/proyecto/registro-de-tiempos.md` y entregué la
+especificación técnica:
 
 ```
- M escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
+$ bash scripts/proyecto/entregar.sh formato-del-reporte
+Documento entregado: docs/proyecto/backlog/formato-del-reporte.md
 ```
 
-Solo cambió la clase de cálculo de la liquidación.
+Leí la especificación, la historia, la decisión 0004 y el código .NET que menciona
+(`Calculo/CalculadoraLiquidacion.cs`, `Calculo/CalculadoraComision.cs`,
+`Repositorio/RepositorioMemoria.cs`, `Calculo/UtilidadesFecha.cs`,
+`AplicacionLiquidacion.cs`, `Util/CompatibilidadJava.cs`).
 
-**2. Comparador** (`bash scripts/comparar-escenarios.sh`): código de salida **0**. Compiló ambos escenarios, ejecutó Java y .NET para 2026-06 (554 líneas cada uno) y dijo «Las salidas son identicas» (554 líneas, 20457 bytes).
+Lo que condiciona el plan:
 
-**3. Interpretación:** código 0, la refactorización de los pasos 2 y 3 no cambió la salida. No hay primera línea distinta que identificar.
+- La decisión 0004 y tu pedido: el reporte calcula por su cuenta, con `decimal`, sin
+  reutilizar `CalculadoraLiquidacion` ni `CalculadoraComision` y sin modificarlas.
+- La historia: límite superior del tramo inclusivo (500,00 va al tramo 0–500), redondeo al
+  final, tope por comercio con fila de ajuste, y el total igual a la suma de las
+  liquidaciones al centavo.
+- La especificación: `--reporte-medios` como primer argumento de la misma clase
+  ejecutable; sin él la liquidación no cambia un byte.
+- No hay refactor: no reutilizo código de cálculo, así que no hay nada que refactorizar
+  antes. Solo reutilizo, en modo lectura, el repositorio en memoria y
+  `UtilidadesFecha.InicioDePeriodo` y `FinDePeriodo` para las fechas del encabezado y el
+  filtro de periodo, que deben ser las mismas de la liquidación.
 
-**4. Pruebas del escenario Java** (`mvn test` en `escenario/java/`): 20 pruebas, 0 fallos, 0 errores, 0 omitidas. `BUILD SUCCESS`. Corresponden a `ValidadorFormatoTest` (8), `ComercioTest` (6) y `TransaccionTest` (6). Cabe señalar que ninguna cubre la lógica de cálculo, así que el comparador es la verificación que realmente protege este cambio.
+## Plan
 
-No modifiqué ningún archivo en este paso.
+1. **Crear `escenario/dotnet/LiquidacionComercios/Reporte/CalculadoraReporteMediosPago.cs`.**
+   Clase nueva que recibe el `RepositorioMemoria` y el periodo, y devuelve las filas y el
+   pie. Reglas, todas en `decimal`:
+   - Comercios: todos menos `DE_BAJA`, con plan existente.
+   - Transacciones: `APROBADA`, moneda `PEN`, monto mayor que cero, fecha dentro del
+     periodo (mismos límites que la liquidación).
+   - Comisión: porcentaje del tramo donde `desde <= monto <= hasta` (primero que coincide,
+     límite superior inclusivo; si ninguno coincide, el último tramo) × monto / 100 + fijo;
+     recargo de 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base.
+   - El `double` del modelo se convierte a `decimal` con su representación de ida y vuelta
+     (`"R"`), que para montos leídos con dos decimales da el valor exacto.
+   - Filas: suma exacta por medio de pago, redondeada al final.
+   - Por comercio: suma exacta; si supera el tope se cobra el tope; el total del comercio se
+     redondea. Total = suma de los totales por comercio.
+   - Ajuste por tope = −(suma exacta de lo descontado), redondeado.
+   - Ajuste por redondeo = Total − suma de filas − ajuste por tope.
+   - Redondeo medio hacia arriba con `Math.Round(valor, 2, MidpointRounding.AwayFromZero)`
+     sobre `decimal`. Ver la nota al final sobre `CompatibilidadJava`.
 
-### Salida de los comandos
+   *Valida:* `dotnet build LiquidacionComercios -c Release` compila y
+   `bash scripts/integracion-local.sh --paso equivalencia` sigue en verde (la clase no se
+   usa todavía).
+
+2. **Crear `escenario/dotnet/LiquidacionComercios/Reporte/FormateadorReporteMediosPago.cs`.**
+   Arma el texto exacto de la especificación: encabezado de seis líneas con 58 `=`, línea en
+   blanco, títulos y filas con anchos 15/16/18/16/16 en orden alfabético del código, 81
+   guiones, pie con etiqueta en 49 y monto en 16. Montos `S/ ` + dos decimales sin
+   separador de miles; porcentaje con dos decimales y ` %`. Fin de línea `\n`.
+
+   *Valida:* compila y `--paso equivalencia` en verde.
+
+3. **Modificar `escenario/dotnet/LiquidacionComercios/AplicacionLiquidacion.cs`.** Si el
+   primer argumento es `--reporte-medios`, se desplazan los argumentos, se cargan los datos
+   y se imprime solo el reporte; si no, el flujo actual sigue idéntico.
+
+   *Valida:* `bash scripts/integracion-local.sh --paso equivalencia` en verde (la
+   liquidación sin cambio de un byte) y una ejecución manual de
+   `dotnet LiquidacionComercios/bin/Release/net10.0/LiquidacionComercios.dll --reporte-medios 2026-06`
+   para revisar la forma.
+
+4. **Verificación final** en el paso 3: `bash scripts/verificar-reporte.sh dotnet` para
+   2026-04, 2026-05 y 2026-06, y `bash scripts/integracion-local.sh` completo.
+
+No toco el escenario Java, los datos, `liquidacion-esperada.sha256`, la liquidación ni
+`CalculadoraComision`. Las pruebas del reporte quedan para el 5.3 paso 1.
+
+## Lo que vi y no voy a tocar
+
+- La liquidación (`CalculadoraLiquidacion.cs`, línea 145) usa `monto < tramo.MontoHasta`,
+  de modo que un monto exactamente en el límite cae en el tramo superior. La regla del
+  negocio, confirmada en la historia, es que pertenece al inferior. Además todo el cálculo
+  usa `double`. Como el reporte aplica la regla con `decimal`, **es probable que la
+  conciliación del criterio 6 no cuadre al centavo** en los periodos con montos en el
+  límite (en junio hay al menos cuatro: TX002001 a TX002004). No lo corrijo: queda para el
+  5.3.
+- `CalculadoraComision.cs` usa `<=` (línea 25) y tope de recargo 3,5 (línea 60), distinto de
+  la liquidación (3,0) y del README (3 %).
+- `PlanComisiones.cs` dice en su comentario que los tramos son acumulativos; el README
+  (regla 2) dice que no. Sigo el README.
+- `.github/instructions/dotnet.instructions.md` pide que todo redondeo pase por
+  `CompatibilidadJava`. Esa clase trabaja con `double`; pasar el `decimal` exacto por ella
+  reintroduce el error que el pedido quiere evitar (por ejemplo, 137,825 de CM0011).
+  Propongo redondear el `decimal` con `MidpointRounding.AwayFromZero`, que es el medio
+  hacia arriba de la regla 9 y equivale a `BigDecimal` `HALF_UP` de Java, y formatear el
+  valor ya redondeado con `CompatibilidadJava.FormatearDosDecimales`. Es una desviación de
+  la instrucción que necesito que apruebes.
+
+¿Apruebas el plan, incluida la desviación del redondeo, o qué cambias?
+
+**Participante:** Apruebo el plan tal como está, con el redondeo de `decimal` que propones.
+
+
+---
+
+# 5.2 paso 2. `/lab-5-2-paso-2-implementar-reporte dotnet`
+
+**Participante:** `/lab-5-2-paso-2-implementar-reporte dotnet`
+
+**Copilot (agente):**
+
+Seguí el plan aprobado en orden. Después de cada paso compilé y corrí la equivalencia.
+
+## Paso 1 del plan: `Reporte/CalculadoraReporteMediosPago.cs` (nuevo, 200 líneas)
+
+Clase que recibe el `RepositorioMemoria` y calcula en `decimal`, sin usar
+`CalculadoraLiquidacion` ni `CalculadoraComision`:
+
+- Comercios distintos de `DE_BAJA` con plan; transacciones `APROBADA`, `PEN`, monto > 0,
+  dentro del periodo (`UtilidadesFecha.InicioDePeriodo` y `FinDePeriodo`, en lectura).
+- Tramo con `desde <= monto <= hasta` (límite superior inclusivo, primer tramo que
+  coincide), más fijo, más recargo de 0,5 % por cuota sobre la primera con máximo 3 %.
+- Filas: suma exacta por medio, redondeo al final. Total: por comercio, con tope, redondeado
+  por comercio y sumado. Ajuste por tope = −(descontado exacto) redondeado. Ajuste por
+  redondeo = total − filas − ajuste por tope.
+- Redondeo `Math.Round(decimal, 2, MidpointRounding.AwayFromZero)`, desviación aprobada en
+  el paso 1.
 
 ```
-$ git status --short escenario/
- M escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
-$ bash scripts/comparar-escenarios.sh
-Comparacion de escenarios, taller de GitHub Copilot
-Script version 1.0.0
-Periodo: 2026-06
-Repositorio: /private/tmp/claude-501/-Users-rodrigosilva-GITHUB-COPILOT-github-copilot-netec/6e2f2b1e-040c-4c7f-bc41-827f7128af25/scratchpad/s11/l3
-
-== Requisitos ==
-  [ OK ] JDK disponible
-  [ OK ] Apache Maven disponible
-  [ OK ] SDK de .NET disponible
-  [ OK ] diff disponible
-  [ OK ] java encontrado
-  [ OK ] dotnet encontrado
-  [ OK ] datos encontrado
-
-== Compilacion ==
-  [ OK ] Escenario Java compilado
-  [ OK ] Escenario .NET compilado
-
-== Ejecucion ==
-  [ OK ] Escenario Java ejecutado (554 lineas)
-  [ OK ] Escenario .NET ejecutado (554 lineas)
-
-== Comparacion ==
-  [ OK ] Las salidas son identicas
-       554 lineas, 20457 bytes
-
-== Resumen ==
-  Escenarios equivalentes. Java y .NET producen la misma salida para 2026-06.
-cmp exit 0
-$ cd escenario/java && mvn test (líneas relevantes)
-[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.044 s -- in pe.pasarelaandina.util.ValidadorFormatoTest
-[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in pe.pasarelaandina.modelo.ComercioTest
-[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in pe.pasarelaandina.modelo.TransaccionTest
-[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
-[INFO] BUILD SUCCESS
+$ dotnet build LiquidacionComercios -c Release        -> 0 Error(s)
+$ bash scripts/integracion-local.sh --paso equivalencia
+  [ OK ] dotnet 2026-04 coincide con el hash esperado
+  [ OK ] dotnet 2026-05 coincide con el hash esperado
+  [ OK ] dotnet 2026-06 coincide con el hash esperado
 ```
 
-### git diff acumulado de pasos 2 y 3
+## Paso 2 del plan: `Reporte/FormateadorReporteMediosPago.cs` (nuevo, 70 líneas)
 
-```diff
-diff --git a/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java b/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
-index 45e65aa..718a17e 100644
---- a/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
-+++ b/escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
-@@ -137,63 +137,14 @@ public class CalculadoraLiquidacion {
- 
-                             if (transaccion.getEstado() == EstadoTransaccion.APROBADA) {
- 
--                                double montoTransaccion = transaccion.getMonto();
--                                double porcentajeAplicado = 0.0;
--                                boolean tramoEncontrado = false;
--
--                                for (TramoComision tramo : plan.getTramos()) {
--
--                                    if (!tramoEncontrado) {
--
--                                        if (montoTransaccion >= tramo.getMontoDesde()
--                                                && montoTransaccion < tramo.getMontoHasta()) {
--
--                                            porcentajeAplicado = tramo.getPorcentaje();
--                                            tramoEncontrado = true;
--                                        }
--                                    }
--                                }
--
--                                if (!tramoEncontrado) {
--                                    if (!plan.getTramos().isEmpty()) {
--                                        porcentajeAplicado = plan.getTramos()
--                                                .get(plan.getTramos().size() - 1).getPorcentaje();
--                                    }
--                                }
--
--                                double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
--                                comisionBase = comisionBase + plan.getMontoFijoPorTransaccion();
--
--                                double recargo = 0.0;
--
--                                if (transaccion.getCuotas() > 1) {
--
--                                    double porcentajeRecargo = (transaccion.getCuotas() - 1) * 0.5;
--
--                                    if (porcentajeRecargo > 3.0) {
--                                        porcentajeRecargo = 3.0;
--                                    }
--
--                                    recargo = comisionBase * porcentajeRecargo / 100.0;
--                                }
--
--                                double comisionTotal = comisionBase + recargo;
--
--                                DetalleLiquidacion linea = new DetalleLiquidacion();
--                                linea.setIdTransaccion(transaccion.getId());
--                                linea.setMontoTransaccion(montoTransaccion);
--                                linea.setComisionBase(comisionBase);
--                                linea.setRecargoCuotas(recargo);
--                                linea.setComisionTotal(comisionTotal);
--                                linea.setCuotas(transaccion.getCuotas());
--                                linea.setMedioPago(transaccion.getMedioPago().name());
-+                                DetalleLiquidacion linea = calcularDetalleDeTransaccion(plan, transaccion);
-                                 liquidacion.agregarDetalle(linea);
- 
--                                totalTransado = totalTransado + montoTransaccion;
--                                totalComisiones = totalComisiones + comisionTotal;
-+                                totalTransado = totalTransado + linea.getMontoTransaccion();
-+                                totalComisiones = totalComisiones + linea.getComisionTotal();
-                                 cantidadTransacciones++;
- 
--                                acumuladoGeneralComisiones = acumuladoGeneralComisiones + comisionTotal;
-+                                acumuladoGeneralComisiones = acumuladoGeneralComisiones + linea.getComisionTotal();
-                             }
-                         }
-                     }
-@@ -281,39 +232,6 @@ public class CalculadoraLiquidacion {
-                 } catch (Exception e) {
-                 }
- 
--                double montoCredito = 0.0;
--                double montoDebito = 0.0;
--                double montoBilletera = 0.0;
--                double montoTransferencia = 0.0;
--                int transaccionesEnCuotas = 0;
--
--                for (DetalleLiquidacion linea : liquidacion.getDetalle()) {
--
--                    if (linea.getMedioPago() != null) {
--
--                        if (linea.getMedioPago().equals("TARJETA_CREDITO")) {
--
--                            montoCredito = montoCredito + linea.getMontoTransaccion();
--
--                            if (linea.getCuotas() > 1) {
--                                transaccionesEnCuotas++;
--                            }
--                        } else {
--
--                            if (linea.getMedioPago().equals("TARJETA_DEBITO")) {
--                                montoDebito = montoDebito + linea.getMontoTransaccion();
--                            } else {
--
--                                if (linea.getMedioPago().equals("BILLETERA_MOVIL")) {
--                                    montoBilletera = montoBilletera + linea.getMontoTransaccion();
--                                } else {
--                                    montoTransferencia = montoTransferencia + linea.getMontoTransaccion();
--                                }
--                            }
--                        }
--                    }
--                }
--
-                 if (cantidadTransacciones > 0) {
- 
-                     resultado.add(liquidacion);
-@@ -327,24 +245,7 @@ public class CalculadoraLiquidacion {
-                     System.out.println("  Retenciones              : S/ " + formatearMonto(retenciones));
-                     System.out.println("  Monto neto a pagar       : S/ " + formatearMonto(neto));
- 
--                    if (montoCredito > 0 || montoDebito > 0 || montoBilletera > 0 || montoTransferencia > 0) {
--
--                        System.out.println("  Desglose por medio de pago:");
--
--                        if (montoCredito > 0) {
--                            System.out.println("    Tarjeta de credito     : S/ " + formatearMonto(montoCredito)
--                                    + (transaccionesEnCuotas > 0 ? "  (" + transaccionesEnCuotas + " en cuotas)" : ""));
--                        }
--                        if (montoDebito > 0) {
--                            System.out.println("    Tarjeta de debito      : S/ " + formatearMonto(montoDebito));
--                        }
--                        if (montoBilletera > 0) {
--                            System.out.println("    Billetera movil        : S/ " + formatearMonto(montoBilletera));
--                        }
--                        if (montoTransferencia > 0) {
--                            System.out.println("    Transferencia          : S/ " + formatearMonto(montoTransferencia));
--                        }
--                    }
-+                    imprimirDesgloseMediosDePago(liquidacion);
- 
-                     if (!observacionRegistro.isEmpty()) {
-                         System.out.println("  Observacion              : " + observacionRegistro);
-@@ -363,6 +264,121 @@ public class CalculadoraLiquidacion {
-         return resultado;
-     }
- 
-+    /**
-+     * Calcula la comision de una transaccion segun el plan y arma su linea de detalle.
-+     */
-+    private DetalleLiquidacion calcularDetalleDeTransaccion(PlanComisiones plan, Transaccion transaccion) {
-+        double montoTransaccion = transaccion.getMonto();
-+        double porcentajeAplicado = 0.0;
-+        boolean tramoEncontrado = false;
-+
-+        for (TramoComision tramo : plan.getTramos()) {
-+
-+            if (!tramoEncontrado) {
-+
-+                if (montoTransaccion >= tramo.getMontoDesde()
-+                        && montoTransaccion < tramo.getMontoHasta()) {
-+
-+                    porcentajeAplicado = tramo.getPorcentaje();
-+                    tramoEncontrado = true;
-+                }
-+            }
-+        }
-+
-+        if (!tramoEncontrado) {
-+            if (!plan.getTramos().isEmpty()) {
-+                porcentajeAplicado = plan.getTramos()
-+                        .get(plan.getTramos().size() - 1).getPorcentaje();
-+            }
-+        }
-+
-+        double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
-+        comisionBase = comisionBase + plan.getMontoFijoPorTransaccion();
-+
-+        double recargo = 0.0;
-+
-+        if (transaccion.getCuotas() > 1) {
-+
-+            double porcentajeRecargo = (transaccion.getCuotas() - 1) * 0.5;
-+
-+            if (porcentajeRecargo > 3.0) {
-+                porcentajeRecargo = 3.0;
-+            }
-+
-+            recargo = comisionBase * porcentajeRecargo / 100.0;
-+        }
-+
-+        double comisionTotal = comisionBase + recargo;
-+
-+        DetalleLiquidacion linea = new DetalleLiquidacion();
-+        linea.setIdTransaccion(transaccion.getId());
-+        linea.setMontoTransaccion(montoTransaccion);
-+        linea.setComisionBase(comisionBase);
-+        linea.setRecargoCuotas(recargo);
-+        linea.setComisionTotal(comisionTotal);
-+        linea.setCuotas(transaccion.getCuotas());
-+        linea.setMedioPago(transaccion.getMedioPago().name());
-+
-+        return linea;
-+    }
-+
-+    /**
-+     * Calcula los montos por medio de pago a partir del detalle e imprime el desglose.
-+     */
-+    private void imprimirDesgloseMediosDePago(Liquidacion liquidacion) {
-+double montoCredito = 0.0;
-+double montoDebito = 0.0;
-+double montoBilletera = 0.0;
-+double montoTransferencia = 0.0;
-+int transaccionesEnCuotas = 0;
-+
-+for (DetalleLiquidacion linea : liquidacion.getDetalle()) {
-+
-+    if (linea.getMedioPago() != null) {
-+
-+        if (linea.getMedioPago().equals("TARJETA_CREDITO")) {
-+
-+            montoCredito = montoCredito + linea.getMontoTransaccion();
-+
-+            if (linea.getCuotas() > 1) {
-+                transaccionesEnCuotas++;
-+            }
-+        } else {
-+
-+            if (linea.getMedioPago().equals("TARJETA_DEBITO")) {
-+                montoDebito = montoDebito + linea.getMontoTransaccion();
-+            } else {
-+
-+                if (linea.getMedioPago().equals("BILLETERA_MOVIL")) {
-+                    montoBilletera = montoBilletera + linea.getMontoTransaccion();
-+                } else {
-+                    montoTransferencia = montoTransferencia + linea.getMontoTransaccion();
-+                }
-+            }
-+        }
-+    }
-+}
-+
-+    if (montoCredito > 0 || montoDebito > 0 || montoBilletera > 0 || montoTransferencia > 0) {
-+
-+        System.out.println("  Desglose por medio de pago:");
-+
-+        if (montoCredito > 0) {
-+            System.out.println("    Tarjeta de credito     : S/ " + formatearMonto(montoCredito)
-+                    + (transaccionesEnCuotas > 0 ? "  (" + transaccionesEnCuotas + " en cuotas)" : ""));
-+        }
-+        if (montoDebito > 0) {
-+            System.out.println("    Tarjeta de debito      : S/ " + formatearMonto(montoDebito));
-+        }
-+        if (montoBilletera > 0) {
-+            System.out.println("    Billetera movil        : S/ " + formatearMonto(montoBilletera));
-+        }
-+        if (montoTransferencia > 0) {
-+            System.out.println("    Transferencia          : S/ " + formatearMonto(montoTransferencia));
-+        }
-+    }
-+    }
-+
-     private String formatearMonto(double monto) {
-         return String.format(ConfiguracionRegional.REGION_DE_SALIDA, "%.2f", monto);
-     }
+Texto exacto de la especificación: marco de 58 `=`, títulos y filas con anchos
+15/16/18/16/16, 81 guiones, pie con 49 + 16, fin de línea `\n`. Los montos ya redondeados se
+formatean con `CompatibilidadJava.FormatearDosDecimales`.
+
+Validación: compila, equivalencia `[ OK ]` en los tres periodos.
+
+## Paso 3 del plan: `AplicacionLiquidacion.cs` (+17 líneas)
+
+Si `args[0]` es `--reporte-medios`, se toma el periodo y la ruta de los argumentos
+siguientes (con los mismos valores por omisión), se cargan los datos con
+`CalculadoraLiquidacion.PrepararDatos` y se imprime solo el reporte. Sin el argumento, el
+flujo es el mismo de antes.
+
+```
+$ bash scripts/integracion-local.sh --paso equivalencia
+  [ OK ] dotnet 2026-04 coincide con el hash esperado
+  [ OK ] dotnet 2026-05 coincide con el hash esperado
+  [ OK ] dotnet 2026-06 coincide con el hash esperado
+
+$ dotnet LiquidacionComercios/bin/Release/net10.0/LiquidacionComercios.dll --reporte-medios 2026-06
+==========================================================
+  PASARELA ANDINA - COMISIONES POR MEDIO DE PAGO
+  Periodo: 2026-06
+  Desde: 01/06/2026 00:00
+  Hasta: 30/06/2026 23:59
+==========================================================
+
+Medio de pago     Transacciones    Monto transado        Comision   Participacion
+BILLETERA_MOVIL             181      S/ 552504.92     S/ 14326.75         23.75 %
+TARJETA_CREDITO             159      S/ 557033.77     S/ 14395.78         23.86 %
+TARJETA_DEBITO              203      S/ 760564.01     S/ 19169.92         31.77 %
+TRANSFERENCIA               170      S/ 492042.49     S/ 12443.22         20.62 %
+---------------------------------------------------------------------------------
+Ajuste por tope                                      S/ -23698.32
+Ajuste por redondeo                                      S/ -0.01
+Total                                                 S/ 36637.34
 ```
 
-### Verificación del «Salida esperada»
-Archivos cambiados, código de salida, interpretación y resultado de pruebas: entregados.
+## Diff resumido
+
+| Archivo | Cambio |
+|---|---|
+| `escenario/dotnet/LiquidacionComercios/Reporte/CalculadoraReporteMediosPago.cs` | Nuevo |
+| `escenario/dotnet/LiquidacionComercios/Reporte/FormateadorReporteMediosPago.cs` | Nuevo |
+| `escenario/dotnet/LiquidacionComercios/AplicacionLiquidacion.cs` | +17, rama `--reporte-medios` |
+
+Última validación: equivalencia en verde en los tres periodos. No toqué Java, los datos, los
+hashes, la liquidación ni `CalculadoraComision`. No escribí pruebas (5.3 paso 1).
+
+Observaciones, sin tocar: el total del reporte se calcula con la regla del límite inclusivo y
+`decimal`; la liquidación usa `<` en el límite (`CalculadoraLiquidacion.cs`, línea 145) y
+`double`. Es esperable que el total no coincida con la suma de las liquidaciones de junio;
+eso lo mide la conciliación del 5.3.
+
+
+---
+
+# 5.2 paso 3. `/lab-5-2-paso-3-verificar-reporte dotnet`
+
+**Participante:** `/lab-5-2-paso-3-verificar-reporte dotnet`
+
+**Copilot (agente):**
+
+```
+$ bash scripts/verificar-reporte.sh dotnet 2026-04
+El reporte de dotnet para 2026-04 coincide con la salida esperada.
+$ bash scripts/verificar-reporte.sh dotnet 2026-05
+El reporte de dotnet para 2026-05 coincide con la salida esperada.
+$ bash scripts/verificar-reporte.sh dotnet 2026-06
+El reporte de dotnet para 2026-06 coincide con la salida esperada.
+$ bash scripts/integracion-local.sh
+== Java: compilar y ejecutar las pruebas ==        [AVISO] Stack dotnet: se omite Java.
+== Java: dependencias ==                           [AVISO] Stack dotnet: se omite Java.
+== .NET: compilar y ejecutar las pruebas ==        Passed! Failed: 0, Passed: 20
+== .NET: dependencias ==                           [AVISO] Sin acceso a nuget.org, ...
+== Equivalencia ==                                 [ OK ] dotnet 2026-04, 2026-05, 2026-06
+== Resumen (stack: dotnet) ==                      Todos los pasos pasan.
+```
+
+| Comprobación | Resultado |
+|---|---|
+| `verificar-reporte.sh dotnet 2026-04` | Coincide (código 0) |
+| `verificar-reporte.sh dotnet 2026-05` | Coincide (código 0) |
+| `verificar-reporte.sh dotnet 2026-06` | Coincide (código 0) |
+| `integracion-local.sh`: compilar y probar .NET | 20 pruebas, 0 fallas |
+| `integracion-local.sh`: dependencias .NET | Informativo, sin red |
+| `integracion-local.sh`: equivalencia de la liquidación | Tres periodos `[ OK ]` |
+| Pipeline local | Verde |
+
+Los tres periodos coinciden con la salida esperada, así que no hay diferencias de formato ni
+de valores del reporte que anotar.
+
+## Pendiente para el 5.3
+
+- El reporte coincide con la salida esperada, que está calculada con las reglas del
+  negocio. Eso no dice nada de la liquidación: el criterio 6 de la historia (total del
+  reporte igual a la suma de las liquidaciones al centavo) todavía no se comprobó. Por el
+  límite de tramo de `CalculadoraLiquidacion.cs` (línea 145, `<`) esperamos que junio no
+  cuadre. Lo mide la conciliación del 5.3.
+
+El pipeline local está en verde. Te propongo el commit:
+
+```bash
+git add escenario && git commit -m "Reporte de comisiones por medio de pago"
+```
+
+**Participante:** Confirmo. *(Ejecutó el commit: `3f32ad1 Reporte de comisiones por medio de pago`.)*
+

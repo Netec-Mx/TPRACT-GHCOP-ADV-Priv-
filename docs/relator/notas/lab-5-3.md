@@ -60,6 +60,16 @@ sección «Comportamientos no planificados». No se corrige.
 [`../demos/demo-5-3-pipeline-en-github.md`](../demos/demo-5-3-pipeline-en-github.md) muestra en
 GitHub lo que la sala hizo en local. Se presenta desde el respaldo grabado.
 
+**Corregir en .NET choca con una instrucción.** `dotnet.instructions.md` pide que todo
+redondeo pase por `CompatibilidadJava` y prohíbe `Math.Round`, pero la corrección en `decimal`
+necesita redondear un `decimal`, y esa clase solo trabaja con `double`. En la verificación el
+agente lo señaló y pidió confirmación. Si pasa en la sala, es una buena conversación: una
+instrucción escrita para proteger un comportamiento puede tener que cambiar cuando el negocio
+decide cambiar ese comportamiento, y ese cambio también se revisa.
+
+**Un solo stack.** Quien corrige solo su stack deja al otro distinto: `comparar-escenarios.sh`
+falla en junio y es lo esperado. El pipeline con un solo stack declarado no compara los dos.
+
 ## Errores típicos
 
 - Cambiar la prueba que falla en lugar de entender por qué falla.
@@ -71,10 +81,10 @@ GitHub lo que la sala hizo en local. Se presenta desde el respaldo grabado.
 
 | Paso | Estimado | Observado en la verificación |
 |---|---|---|
-| 1 | 8 min | Se completa en la verificación de SPEC-016 |
-| 2 | 8 min | Se completa en la verificación de SPEC-016 |
-| 3 | 15 min | Se completa en la verificación de SPEC-016 |
-| 4 | 8 min | Se completa en la verificación de SPEC-016 |
+| 1 | 8 min | 41 a 80 s de agente y 2 a 3 comandos, en 4 corridas |
+| 2 | 8 min | 38 a 58 s de agente y 2 a 3 comandos, en 4 corridas |
+| 3 | 15 min | 125 a 311 s de agente y 9 a 17 comandos, en 4 corridas |
+| 4 | 8 min | 47 a 73 s de agente y 4 a 5 comandos, en 4 corridas |
 
 Suma 39. Quedan 6 para la puesta en común.
 

@@ -1,272 +1,281 @@
-> Los tiempos de este respaldo son aproximados. Miden los comandos de cada paso, no la
-> generación del texto.
+> Salida real grabada en la verificación de SPEC-016, el 3 de octubre de 2026, corrida s16, stack Java, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
 
-> **Paso 1, usar la salida del final.** En la ejecución de verificación, la máquina no
-> tenía el SDK de .NET 10 y la línea base salió en rojo. Esa salida no sirve como respaldo.
-> La sección «Paso 1, ejecución real con .NET 10», al final, es la que se muestra en clase.
+# Lab 5-1 salida grabada de respaldo
 
-# Lab 5.1 salida grabada de respaldo
+Los tres pasos del 5.1 en una misma rama. En el paso 1 el participante llevó al relator las preguntas que listó el agente y volvió con las respuestas de la hoja.
 
-Nota sobre los segundos: son los medidos entre el inicio y el fin de los comandos de cada paso. No incluyen el tiempo de generación del texto. Sin llamadas MCP en este lab. Reinicio previo con `bash scripts/reiniciar-lab.sh lab-5-1 --si`: ya estaba en el punto de partida.
 
-## Paso 1: `/lab-5-1-paso-1-levantar-y-verificar`
+---
 
-Segundos: 12 en total (mvn 3, build .NET 0,3, test .NET 1, comparador 2, más lecturas).
+# 5.1 paso 1: `/lab-5-1-paso-1-historia-de-usuario java`
 
-**El paso no resultó: la compilación .NET falla por el ambiente.** Según el skill, ante un fallo hay que detenerse, mostrar el error y no arreglarlo. Se ejecutaron los cuatro comandos seguidos en una sola llamada de terminal, así que los comandos 3 y 4 corrieron igualmente (no se corrigió nada ni se instaló nada). Los pasos 2 a 4 se ejecutaron después, solo con el escenario Java.
+Inicio 1791046837, fin 1791046941 (104 s). Comandos de terminal del agente: 3 (`date +%H:%M`,
+un perfil de los datos con `awk`, un cálculo decimal de comprobación con `python3`).
 
-### Respuesta final del chat
+## Primera respuesta del agente
 
-Línea base: **no está en verde**. Hay un fallo de ambiente en .NET y debes avisar al relator antes de seguir.
+Preparé el material de partida:
 
-| Comando | Resultado | Duración aproximada | Observación |
+- Creé `docs/proyecto/registro-de-tiempos.md` desde la plantilla, con Requerimientos a las
+  **14:00** (`date +%H:%M`).
+- Dejé `java` en la última línea de `scripts/integracion/stack.txt`.
+
+Leí la solicitud del área comercial, las reglas de `escenario/README.md` y los datos. Antes
+de escribir criterios, estas son las preguntas abiertas: lo que la solicitud no dice y que
+cambia el resultado.
+
+**Qué entra al reporte**
+
+1. **¿Qué transacciones entran?** La solicitud solo excluye las anuladas, pero los datos
+   tienen además 21 pendientes y 53 rechazadas. ¿Cuentan?
+2. **¿Qué comercios entran?** Hay un comercio dado de baja (CM0036) y uno suspendido
+   (CM0031). ¿Entran sus transacciones?
+
+**Casos límite de las reglas que toca**
+
+3. **¿A qué tramo pertenece un monto que cae exactamente en el límite?** Por ejemplo, 500,00
+   en el plan Básico: ¿tramo 0–500 al 3,5 % o tramo 500–2 000 al 2,9 %? Las reglas 1 y 2 no
+   lo deciden, y hay transacciones reales en 500,00 y 2 000,00 en junio.
+4. **¿Cómo se trata el tope mensual (regla 6)?** El tope es por comercio; el reporte es por
+   medio de pago. ¿Se reparte el tope entre medios, se muestra antes o después del tope?
+5. **¿La comisión incluye el monto fijo y el recargo por cuotas?**
+6. **¿Se descuentan los contracargos del periodo?**
+
+**Redondeo y presentación**
+
+7. **¿En qué momento se redondea?** Por transacción, por fila de medio de pago o solo el
+   total. Con montos en `double` el resultado cambia según el momento.
+8. **¿Con cuántos decimales va el porcentaje y sobre qué base?**
+9. **¿Cómo se ordenan las filas, qué pasa con un medio sin transacciones, y es un periodo por
+   ejecución?** La solicitud pide «comparar mes a mes».
+10. **¿El monto transado es el monto bruto de la transacción?**
+
+**Comprobación**
+
+11. **¿Contra qué se va a comprobar que el total es correcto?** ¿Debe cuadrar con el total
+    de comisiones de la liquidación del mismo periodo?
+
+Me detengo aquí. En esta sala el negocio es el relator: llévale estas preguntas y vuelve
+con las respuestas. No voy a responderlas yo.
+
+## Participante con el relator
+
+El participante llevó las 11 preguntas, tal como las listó el agente.
+
+| Pregunta llevada | Respuesta del relator (texto de la hoja) |
+|---|---|
+| 1. Qué transacciones entran | «Las mismas que la liquidación: aprobadas, en soles, monto mayor que cero, dentro del periodo. Ni anuladas, ni pendientes, ni rechazadas» |
+| 2. Qué comercios entran | «Los que se liquidan: activos y suspendidos con plan. No los dados de baja» |
+| 3. Monto en el límite de un tramo | «Pertenece al tramo inferior. El límite superior es inclusivo» |
+| 4. El tope | «Es por comercio, no se reparte. Las filas van antes del tope y una fila de ajuste muestra lo descontado» |
+| 5. Monto fijo y recargo | Sin respuesta en la hoja |
+| 6. Contracargos | Sin respuesta en la hoja |
+| 7. El redondeo | «Al final: cada fila suma exacto y redondea; el total se calcula por comercio, como la liquidación» |
+| 8. Decimales del porcentaje | Sin respuesta en la hoja |
+| 9. Orden y formato | Sin respuesta en la hoja |
+| 10. Monto bruto | Sin respuesta en la hoja |
+| 11. Contra qué se comprueba | «El total del reporte es igual a la suma del total de comisiones de las liquidaciones, al centavo» |
+
+El participante pegó en el chat las seis respuestas y dijo que las otras cinco no tuvieron
+respuesta.
+
+## Segunda respuesta del agente
+
+Creé `docs/proyecto/historia-reporte-medios-de-pago.md` con la plantilla. Resumen:
+
+- **Historia:** como Gerencia Comercial, quiero un reporte mensual por medio de pago con
+  cantidad, monto transado, comisión y porcentaje, para negociar con números que cuadren
+  con la liquidación.
+- **Preguntas abiertas:** las once, seis respondidas por el relator y cinco «pendiente».
+- **Ocho criterios de aceptación**, entre ellos:
+  - **Límite de tramo (criterio 4).** TX002001 de CM0001, plan PL01, 500,00 en una cuota →
+    tramo 0–500 al 3,5 %: 500,00 × 3,5 % = 17,50 + 0,30 = **17,80**. TX002002, 2 000,00 →
+    tramo 500–2 000 al 2,9 %: 58,00 + 0,30 = **58,30**.
+  - **Más de dos decimales (criterio 5).** CM0011, plan PL02, junio: la suma exacta de sus
+    ocho comisiones es **137,825**, que redondeada medio hacia arriba da **137,83**. La cuenta
+    transacción por transacción está en la historia.
+  - **Tope (criterio 6).** CM0004 suma 28 698,32 en junio contra un tope de 5 000,00: filas
+    antes del tope y una fila de ajuste.
+  - **Cuadratura (criterio 7).** El total del reporte es igual a la suma de las
+    liquidaciones al centavo. Calculado con estas reglas y decimal exacto, junio da
+    **36 637,34**.
+
+**Siguen pendientes:** si la comisión incluye monto fijo y recargo (lo deduzco de la
+cuadratura con la liquidación, pero no está confirmado), contracargos, decimales y base del
+porcentaje, orden y formato de las filas, y si el monto transado es bruto. El criterio 8
+deja el formato como «pendiente».
+
+**Lo que vi y no toqué** (no forma parte de este paso):
+
+- `CalculadoraLiquidacion` asigna el tramo con `monto < montoHasta`, de modo que 500,00 cae
+  en el tramo superior. Eso contradice la respuesta del negocio (límite superior inclusivo).
+  `CalculadoraComision.determinarTramo` usa `<=` y sí la cumple. Con la respuesta del
+  negocio, el criterio 7 (cuadrar con la liquidación) y el criterio 4 no pueden cumplirse a
+  la vez mientras la liquidación siga así.
+- `CalculadoraComision.calcularRecargoCuotas` topa el recargo en 3,5 %; la regla 3 dice
+  «con un máximo de 3 %». La liquidación usa 3,0.
+- El comentario de `PlanComisiones` dice que los tramos son acumulativos; la regla 2 dice
+  que «no son acumulativos». El código de la liquidación no los acumula.
+- `RepositorioMemoria.buscarComerciosActivos` devuelve todos los comercios sin filtrar.
+
+No modifiqué código.
+
+## Medición
+
+- Archivos: `scripts/integracion/stack.txt` (M), `docs/proyecto/historia-reporte-medios-de-pago.md`
+  (nuevo), `docs/proyecto/registro-de-tiempos.md` (nuevo).
+- Salida esperada: sí. Preguntas antes de criterios, historia creada, pendientes informados.
+- Restricciones: respetadas. Sin cambios de código, no respondió preguntas del negocio.
+
+
+---
+
+# 5.1 paso 2: `/lab-5-1-paso-2-estimar`
+
+Inicio 1791046972, fin 1791046997 (25 s). Comandos de terminal del agente: 2 (`date +%H:%M`,
+`date +%F`). La actualización del registro se hizo con edición de archivo.
+
+## Primera respuesta del agente
+
+Anoté Estimación a las **14:02** en `docs/proyecto/registro-de-tiempos.md`.
+
+Antes de estimar, una sola pregunta, porque cambia tanto el «sin IA» como el «con IA»:
+**¿cuánta experiencia tienes con Java y cuánta con Copilot en modo agente?**
+
+## Respuesta del participante
+
+«Unos seis años con Java. Uso Copilot en el chat desde hace unos meses, el modo agente muy
+poco.»
+
+## Segunda respuesta del agente
+
+Creé `docs/proyecto/estimacion.md` como funcionalidad nueva y copié el total de la persona
+con IA de cada fase en la columna «Estimado con IA» del registro de tiempos.
+
+| Fase | Sin IA | Con IA, persona | Con IA, agente |
 |---|---|---|---|
-| `mvn -q clean package` (en `escenario/java/`) | Correcto, código 0; generó `target/liquidacion-comercios.jar` | 3 s | Sin errores ni advertencias visibles |
-| `dotnet build LiquidacionComercios -c Release` (en `escenario/dotnet/`) | **Falla**: `error NETSDK1045: The current .NET SDK does not support targeting .NET 10.0` | menos de 1 s | El SDK instalado es 8.0.401 y el proyecto apunta a `net10.0`. No lo arreglé ni instalé nada |
-| `dotnet test LiquidacionComercios.Pruebas` (en `escenario/dotnet/`) | **Falla** por el mismo error NETSDK1045 | 1 s | No corrió ninguna prueba .NET |
-| `bash scripts/comparar-escenarios.sh` (raíz) | **Falla**, código 2: «El escenario .NET no compila»; el Java sí compiló | 2 s | No llegó a comparar salidas |
+| Requerimientos | 40 | 15 | 3 |
+| Estimación | 25 | 10 | 2 |
+| Análisis y diseño | 40 | 15 | 3 |
+| Desarrollo | 120 | 45 | 15 |
+| Pruebas | 60 | 20 | 6 |
+| Revisión de código | 30 | 15 | 3 |
+| Seguridad | 15 | 8 | 2 |
+| Integración continua | 45 | 20 | 5 |
+| Liberación | 30 | 12 | 3 |
+| Operación y soporte | 45 | 20 | 4 |
+| Mantención | 60 | 25 | 8 |
+| **Total** | **510** | **205** | **54** |
 
-Pruebas que corrieron: 20 (Java: 6 de `ComercioTest`, 6 de `TransaccionTest` y 8 de `ValidadorFormatoTest`, todas correctas; leídas de `target/surefire-reports`). Pruebas .NET: 0.
+Créditos de IA (45) y minutos de integración continua (16) quedan como cantidades, sin
+precios. Cada fase tiene su supuesto principal en el documento. No hay datos reales de
+trabajos parecidos en el repositorio: el registro de tiempos recién empieza, así que todo
+es supuesto y lo digo en la fila de Estimación.
 
-Última línea del comparador: `Time Elapsed 00:00:00.26` (del log de compilación .NET que muestra, con `Build FAILED.` y `0 Warning(s)`, `1 Error(s)` justo antes). El comparador no imprimió el resumen de equivalencia.
+**Las dos fases con más incertidumbre:**
 
-Fuera del alcance, no tocado: ninguno adicional; el problema es la versión del SDK de .NET de esta máquina, no el código.
+1. **Integración continua.** El negocio dijo que un monto en el límite de un tramo va al
+   tramo inferior, y la liquidación actual lo manda al superior. Si el pipeline compara el
+   reporte con la liquidación, va a quedar en rojo y no sé cuánto cuesta aclararlo.
+2. **Desarrollo.** Quedan cinco preguntas pendientes, entre ellas el formato y los decimales
+   del porcentaje. La salida se compara por hash con `verificar-reporte.sh`, que no muestra
+   la salida esperada: cualquier diferencia de formato obliga a iterar.
 
-Salida esperada (tabla y cantidad de pruebas y última línea del comparador): entregada, pero la línea base NO quedó en verde, por lo que el objetivo del paso (todo en verde) no se cumplió en este ambiente.
+Donde la IA más cambia la estimación: Desarrollo (120 → 45) y Pruebas (60 → 20), porque el
+agente escribe el código y las pruebas desde los criterios, y la persona revisa.
 
-## Paso 2: `/lab-5-1-paso-2-mapa-del-sistema java`
+No modifiqué código.
 
-Segundos: 29. Archivos leídos: todos los de `escenario/java/src/main/java/...` relevantes. Verificación posterior: se comprobó con un script que las rutas citadas existen.
+## Medición
 
-### Respuesta final del chat
+- Archivos: `docs/proyecto/estimacion.md` (nuevo), `docs/proyecto/registro-de-tiempos.md`
+  (actualizado).
+- Salida esperada: sí. Estimación creada, dos fases inciertas con su razón.
+- Restricciones: respetadas. Sin precios, sin código, una sola pregunta al participante.
 
-He creado `labs/cap5/lab-5-1-preparacion/entregables/mapa-del-sistema.md` con la tabla de componentes (rutas reales), el diagrama Mermaid de dependencias y el recorrido de los datos desde `escenario/datos/*.txt` hasta la salida impresa. Comprobé que todas las rutas del documento existen en el repositorio.
 
-Observaciones fuera del alcance, sin tocar: `CalculadoraLiquidacion` no usa `CalculadoraComision` y repite el cálculo en línea; `ValidadorFormato` solo lo usan las pruebas.
+---
 
-Salida esperada (documento creado): cumplida.
+# 5.1 paso 3: `/lab-5-1-paso-3-ubicar-en-arquitectura java`
 
-### Archivo creado: `mapa-del-sistema.md`
+Inicio 1791047016, fin 1791047057 (41 s). Comandos de terminal del agente: 1 (`date +%H:%M`).
 
-# Mapa del sistema (escenario Java)
+## Primera respuesta del agente
 
-Rutas relativas a la raíz del repositorio. Código en
-`escenario/java/src/main/java/pe/pasarelaandina/` (en la tabla se abrevia `P/`). Datos en
-`escenario/datos/`.
+Anoté Análisis y diseño a las **14:03** en el registro de tiempos.
 
-## 1. Componentes
+**Dónde cae en el mapeo BIAN** ([bian-mapeo.md](../v16j/docs/arquitectura/bian-mapeo.md)):
 
-| Clase | Ruta real | Responsabilidad |
-|---|---|---|
-| AplicacionLiquidacion | `escenario/java/src/main/java/pe/pasarelaandina/AplicacionLiquidacion.java` | Punto de entrada: fija UTF-8, lee periodo y ruta de datos, orquesta la carga, la liquidación, el reporte y la simulación |
-| CalculadoraLiquidacion | `P/calculo/CalculadoraLiquidacion.java` | Cierre mensual: filtra transacciones, calcula comisiones, tope, contracargos, retención e imprime por consola |
-| CalculadoraComision | `P/calculo/CalculadoraComision.java` | Comisión de una transacción (tramo, monto fijo, recargo); solo la usa el simulador |
-| SimuladorComision | `P/calculo/SimuladorComision.java` | Estima la comisión de una venta hipotética para un comercio |
-| UtilidadesFecha | `P/calculo/UtilidadesFecha.java` | Parseo y formato de fechas, inicio y fin de periodo, meses entre fechas |
-| CargadorDatos | `P/repositorio/CargadorDatos.java` | Lee los cuatro archivos de texto y llena el repositorio |
-| RepositorioMemoria | `P/repositorio/RepositorioMemoria.java` | Almacén en memoria de comercios, planes, transacciones y contracargos, con búsquedas |
-| FormateadorReporte | `P/reporte/FormateadorReporte.java` | Arma el resumen general y el detalle de una liquidación |
-| ConfiguracionRegional | `P/util/ConfiguracionRegional.java` | Constante `Locale.ROOT` para todo formateo de salida |
-| ValidadorFormato | `P/util/ValidadorFormato.java` | Validaciones de formato (registro tributario, código de autorización, id, periodo) |
-| Comercio, Transaccion, Contracargo, PlanComisiones, TramoComision | `P/modelo/` | Entidades de entrada |
-| Liquidacion, DetalleLiquidacion | `P/modelo/Liquidacion.java`, `P/modelo/DetalleLiquidacion.java` | Resultado del cierre y sus líneas |
-| CategoriaNegocio, EstadoComercio, EstadoContracargo, EstadoTransaccion, MedioPago, MotivoContracargo | `P/modelo/` | Enumeraciones |
-| Pruebas | `escenario/java/src/test/java/pe/pasarelaandina/modelo/ComercioTest.java`, `escenario/java/src/test/java/pe/pasarelaandina/modelo/TransaccionTest.java`, `escenario/java/src/test/java/pe/pasarelaandina/util/ValidadorFormatoTest.java` | Pruebas JUnit |
+- El reporte resume las comisiones cobradas a los comercios. El cálculo de comisiones y la
+  liquidación pertenecen a **Merchant Acquiring Facility**.
+- El medio de pago es un atributo de la transacción, que pertenece a **Card Transaction
+  Capture** (`modelo/Transaccion.java`, `modelo/MedioPago.java`).
+- Un reporte de análisis como responsabilidad propia no figura en el mapeo. Lo ubico dentro
+  de Merchant Acquiring Facility porque resume el cobro de comisiones; si crece hasta ser un
+  servicio aparte, conviene revisar el panorama de servicios de BIAN antes de asignarle otro
+  dominio.
 
-## 2. Dependencias
+**Qué necesita leer** (rutas bajo `escenario/java/src/main/java/pe/pasarelaandina/`):
 
-```mermaid
-graph TD
-    App[AplicacionLiquidacion] --> CalcLiq[CalculadoraLiquidacion]
-    App --> Sim[SimuladorComision]
-    App --> Fmt[FormateadorReporte]
-    App --> Repo[RepositorioMemoria]
-    App --> Reg[ConfiguracionRegional]
-    CalcLiq --> Repo
-    CalcLiq --> Carg[CargadorDatos]
-    CalcLiq --> Fecha[UtilidadesFecha]
-    CalcLiq --> Reg
-    CalcLiq --> Modelo[modelo]
-    Carg --> Repo
-    Carg --> Fecha
-    Carg --> Modelo
-    Sim --> Repo
-    Sim --> CalcCom[CalculadoraComision]
-    CalcCom --> Modelo
-    Fecha --> Reg
-    Fmt --> Reg
-    Fmt --> Modelo
-    Repo --> Modelo
+- `calculo/CalculadoraLiquidacion.java:82`, `procesarLiquidacionCompleta`: calcula la comisión
+  de cada transacción, guarda el medio de pago en el detalle (línea 189) y aplica el tope por
+  comercio (202 a 205). Además imprime toda la liquidación en la consola (98 a 103, 321 a 361).
+- `modelo/DetalleLiquidacion.java:13` y `:15`: comisión total y medio de pago por transacción.
+- `modelo/Liquidacion.java:16` y `:22`: total de comisiones y si se aplicó el tope.
+- `AplicacionLiquidacion.java:46`: lectura de argumentos, donde entraría `--reporte-medios`.
+
+**Alternativas:**
+
+| | Dónde vive | Reutiliza | Duplica |
+|---|---|---|---|
+| A | Clase propia en `reporte/` que agrupa el detalle de las liquidaciones | Todo el cálculo de la liquidación; el total cuadra por construcción | Nada del cálculo. Pero tiene que obtener las liquidaciones sin la impresión de consola, y hereda el límite de tramo de la liquidación |
+| B | Clase propia con cálculo propio vía `CalculadoraComision` | La selección de tramo con límite inclusivo | El filtrado de transacciones y comercios, el tope; además `CalculadoraComision` topa el recargo en 3,5 % y no en 3 %, así que no cuadraría con la liquidación |
+| C | Método nuevo en `CalculadoraLiquidacion` o `FormateadorReporte` | Los datos ya calculados | Nada, pero agranda una clase que ya mezcla varias responsabilidades |
+
+**¿Qué alternativa eliges?**
+
+## Respuesta del participante
+
+«La A. El negocio quiere que cuadre con la liquidación al centavo, así que prefiero que salga
+del mismo cálculo. Clase propia en `reporte/`.»
+
+## Segunda respuesta del agente
+
+Registré la decisión con la skill `pasarela-registrar-decision`:
+
+- `docs/arquitectura/decisiones/0004-reporte-de-medios-de-pago-sobre-la-liquidacion.md`, estado
+  «Propuesta», con las tres alternativas (B y C marcadas como propuesta del agente),
+  consecuencias buenas y malas, y verificación con `verificar-reporte.sh`,
+  `integracion-local.sh --paso equivalencia` y una prueba de cuadratura.
+- Fila nueva en el índice `docs/arquitectura/decisiones/README.md`.
+
+No se mueve ninguna responsabilidad entre dominios: el reporte queda en Merchant Acquiring
+Facility, junto a la liquidación.
+
+**Qué va a tocar el 5.2:**
+
+- Nuevo: `reporte/` una clase del reporte por medio de pago.
+- Modificado: `AplicacionLiquidacion.java`, para reconocer `--reporte-medios <periodo>`.
+- Probablemente: `calculo/CalculadoraLiquidacion.java`, para obtener las liquidaciones sin la
+  impresión de consola, sin cambiar un byte de la salida de la liquidación.
+- Solo lectura: `modelo/Liquidacion.java`, `modelo/DetalleLiquidacion.java`.
+
+**Lo que vi y no toqué:** la liquidación excluye el límite superior del tramo
+(`CalculadoraLiquidacion.java:149`, `montoTransaccion < tramo.getMontoHasta()`), y el negocio
+dijo que es inclusivo. Con la alternativa A, el reporte hereda esa diferencia. Lo dejo
+anotado en las consecuencias de la decisión; no modifiqué código.
+
+## Participante: commit del laboratorio
+
+```bash
+git add docs scripts/integracion/stack.txt && git commit -m "Historia, estimacion y decision del reporte"
 ```
 
-`ValidadorFormato` no tiene dependientes en el código principal; solo lo usan las pruebas.
-`CalculadoraLiquidacion` no usa `CalculadoraComision`: repite el cálculo en línea.
+## Medición
 
-## 3. Recorrido de los datos
+- Archivos: `docs/arquitectura/decisiones/0004-...md` (nuevo), `docs/arquitectura/decisiones/README.md`
+  (M), `docs/proyecto/registro-de-tiempos.md` (M).
+- Salida esperada: sí. Decisión registrada con alternativas y consecuencias; componentes del
+  5.2 listados.
+- Restricciones: respetadas. Sin cambios de código; nombres BIAN del mapeo, en inglés.
 
-1. `AplicacionLiquidacion.main` toma el periodo (por omisión `2026-06`) y la ruta de datos
-   (por omisión `../datos`, es decir `escenario/datos/` al ejecutar desde `escenario/java/`).
-2. `CalculadoraLiquidacion.prepararDatos` crea un `RepositorioMemoria` y llama a
-   `CargadorDatos.cargarTodo`.
-3. `CargadorDatos` lee, en este orden, `escenario/datos/planes.txt`, `escenario/datos/comercios.txt`,
-   `escenario/datos/transacciones.txt` y `escenario/datos/contracargos.txt`, separados por punto y
-   coma, y deja objetos del paquete `modelo` en el repositorio.
-4. `CalculadoraLiquidacion.procesarLiquidacionCompleta` recorre los comercios; por cada uno busca el
-   plan, sus transacciones y sus contracargos en el repositorio, calcula y arma un objeto `Liquidacion`
-   con sus `DetalleLiquidacion`.
-5. Por cada comercio con transacciones liquidadas se imprime un bloque por consola.
-6. `FormateadorReporte` imprime el resumen general y el detalle de la primera liquidación.
-7. `SimuladorComision` imprime la simulación de una venta de 1500.00 en 3 cuotas para los tres primeros
-   comercios liquidados.
-
-## Paso 3: `/lab-5-1-paso-3-inventario-de-riesgos java`
-
-Segundos: 65. Se ejecutó `java -jar target/liquidacion-comercios.jar 2026-06` desde `escenario/java/` y un cálculo en Python con `Decimal` (script temporal fuera del repositorio) para la regla 9.
-
-### Respuesta final del chat
-
-He creado `labs/cap5/lab-5-1-preparacion/entregables/inventario-de-riesgos.md` con la tabla de las nueve reglas y el inventario priorizado, y no corregí nada.
-
-Demostración de la regla 9: recalculé con aritmética decimal exacta las comisiones de 2026-06 de los 39 comercios liquidados y las comparé con la salida del programa. Coinciden 36. Difieren tres, en un centavo, y los tres exactos caen en un punto medio: CM0011 (137.825 exacto, el programa imprime 137.82), CM0016 (493.995, imprime 493.99) y CM0025 (957.185, imprime 957.18). Es consecuencia de usar `double` y `Math.round(x * 100.0) / 100.0`.
-
-Hallazgos principales: montos en `double` (3 comercios con 0.01 de diferencia); dos copias del cálculo con tope de recargo 3.0 frente a 3.5 y límite de tramo `<` frente a `<=` (`CalculadoraLiquidacion.java:149,173-175` y `CalculadoraComision.java:23,53-55`); el comentario de `PlanComisiones.java:9-10` que contradice la regla 2; excepciones tragadas en `CargadorDatos.java` y `CalculadoraLiquidacion.java:281-282`; método de unas 280 líneas; ausencia de pruebas de lógica de negocio. Todos quedaron registrados sin corregir.
-
-Nota de entorno: la línea base de .NET no pudo verificarse (paso 1), por lo que el inventario analiza solo Java.
-
-Salida esperada (tabla de nueve reglas y tabla de inventario): cumplida.
-
-### Archivo creado: `inventario-de-riesgos.md`
-
-# Inventario de riesgos (escenario Java, periodo 2026-06)
-
-Contraste de las nueve reglas de `escenario/README.md` con el código. Nada se corrigió.
-Abreviaturas de ruta, dentro de `escenario/java/src/main/java/pe/pasarelaandina/`:
-`Liq` = `calculo/CalculadoraLiquidacion.java`, `Com` = `calculo/CalculadoraComision.java`,
-`Plan` = `modelo/PlanComisiones.java`, `Fecha` = `calculo/UtilidadesFecha.java`,
-`Carg` = `repositorio/CargadorDatos.java`.
-
-## 1. Las nueve reglas
-
-| # | Regla | Dónde se implementa | ¿Se cumple? | Cuándo podría dejar de cumplirse |
-|---|---|---|---|---|
-| 1 | Porcentaje del tramo más monto fijo | `Liq:144-165`; también `Com:33-42` | Sí | Si un monto cae exactamente en un límite de tramo: `Liq:149` usa `<` y `Com:23` usa `<=`, y los dos cálculos darían porcentajes distintos |
-| 2 | Tramos no acumulativos | `Liq:164`, `Com:39` | Sí | Quien tome como especificación el comentario de `Plan:9-10` (dice «acumulativos») reescribiría el cálculo al revés |
-| 3 | Recargo 0,5 % por cuota sobre la primera, máximo 3 % | `Liq:169-178` (tope 3.0); `Com:48-57` (tope 3.5) | Sí en la liquidación; no en `CalculadoraComision` | `SimuladorComision` usa `Com`: con 8 o más cuotas estima un recargo mayor al de la liquidación real |
-| 4 | Anuladas no generan comisión | `Liq:138` (solo `APROBADA`) | Sí | Si se agrega un estado nuevo que deba comisionar, queda excluido sin aviso |
-| 5 | Contracargos aprobados, en el periodo en que se aprueban | `Liq:211-226`; el contracargo se asocia al comercio por su transacción (`repositorio/RepositorioMemoria.java:101-109`) | Sí | Si el contracargo apunta a una transacción que no se cargó, se pierde sin aviso (catch vacío en `Carg:156-157`) |
-| 6 | Si el total supera el tope, se cobra el tope | `Liq:202-205` | Sí (CM0004 queda en 5000.00 con tope aplicado) | El acumulado general de comisiones se suma antes del tope (`Liq:196`), por lo que no coincide con lo cobrado |
-| 7 | Retención del 5 % con menos de seis meses | `Liq:230-244`, `Fecha:125-143` | Sí, con la interpretación de «monto neto» como transado menos comisiones menos contracargos | Los literales `6` y `0.05` (`Liq:236`, `Liq:241`) están repetidos en código; cualquier cambio de regla exige buscarlos |
-| 8 | Periodo del primer día 00:00:00 al último 23:59:59, hora de Lima | `Fecha:77-108` | Sí en la práctica, sin garantía | Las fechas se interpretan con la zona horaria del sistema (`Fecha:34-36`, `util/ConfiguracionRegional.java:34-35`). Mientras los datos y los límites se interpreten con la misma zona el resultado es estable, pero la regla pide Lima y el código no la fija |
-| 9 | Dos decimales, medio hacia arriba | `Liq:246-249`, `Liq:257-259`, `Com:71-73` | **No del todo** | Los montos son `double`. Ver el cálculo exacto más abajo |
-
-## 2. Verificación de la regla 9 con aritmética decimal exacta
-
-Se recalculó el total de comisiones del periodo 2026-06 con decimales exactos, aplicando la misma lógica
-del código (tramo con `<`, monto fijo, recargo con tope 3.0, filtros de periodo, moneda y estado) y se
-comparó con lo que imprime `java -jar target/liquidacion-comercios.jar 2026-06`. Coinciden 36 de los 39
-comercios liquidados. Difieren tres, en un centavo:
-
-| Comercio | Total exacto | Imprime el programa | Diferencia |
-|---|---|---|---|
-| CM0011 | 137.825 → 137.83 | 137.82 | 0.01 |
-| CM0016 | 493.995 → 494.00 | 493.99 | 0.01 |
-| CM0025 | 957.185 → 957.19 | 957.18 | 0.01 |
-
-Los tres exactos caen en un punto medio y el `double` acumulado queda apenas por debajo, de modo que
-`Math.round(x * 100.0) / 100.0` (`Liq:247`) redondea hacia abajo. Ejemplo completo: CM0001 da
-727.34022175 exacto y 727.34 impreso, sin diferencia.
-
-## 3. Inventario priorizado
-
-| Problema | Ubicación | Regla afectada | Impacto | Esfuerzo | Prioridad |
-|---|---|---|---|---|---|
-| Montos en `double`: errores de redondeo en los puntos medios (3 de 39 comercios con 0.01 de diferencia en 2026-06) | `Liq:124-125`, `Liq:164-165`, `Liq:192-193`, `Liq:246-249`; `Com:33-42`; `modelo/Transaccion.java:12` | 9 (y 1, 3, 6, 7) | Alto: afecta dinero pagado y cualquier cambio de datos puede ampliarlo | Alto: transversal y debe mantener la equivalencia con .NET | 1 |
-| Dos copias del cálculo de comisión con diferencias: tope 3.0 frente a 3.5 y límite `<` frente a `<=` | `Liq:149`, `Liq:173-175`; `Com:23`, `Com:53-55` | 1 y 3 | Medio: la simulación comercial promete comisiones que la liquidación no cobra | Medio | 2 |
-| Comentario que afirma tramos acumulativos, contrario al código y a la regla 2 | `Plan:9-10` | 2 | Alto si alguien lo toma como especificación, nulo hoy | Bajo | 3 |
-| Excepciones tragadas: líneas inválidas de los archivos de datos se descartan sin aviso | `Carg:65-66`, `Carg:95-96`, `Carg:127-128`, `Carg:156-157`, `Carg:170-171`; `Liq:281-282` | 1 a 7 (cualquier dato perdido) | Alto: comercios, transacciones o contracargos faltantes no dejan rastro | Bajo | 4 |
-| Método de cálculo de unas 280 líneas con anidamiento profundo | `Liq:82-364` | 1 a 7 | Medio: bloquea la prueba aislada y la refactorización | Alto | 5 |
-| Sin pruebas de la lógica de negocio: las pruebas existentes cubren modelos y validación de formato | `escenario/java/src/test/java/pe/pasarelaandina/modelo/ComercioTest.java`, `.../modelo/TransaccionTest.java`, `.../util/ValidadorFormatoTest.java` | 1 a 9 | Alto: no hay red de seguridad para cambiar nada | Medio | 6 |
-| Zona horaria del sistema en lugar de Lima | `Fecha:34-36`; `util/ConfiguracionRegional.java:34-35`; `Liq:122` | 8 | Medio: depende de la máquina si cambia el origen de las fechas | Bajo | 7 |
-| Números mágicos repetidos (`0.05`, `6`, `0.5`, `3.0`, `"PEN"`) | `Liq:66`, `Liq:171-174`, `Liq:236`, `Liq:241`; `Com:52-54` | 3, 7 | Medio: un cambio de regla se aplica en un lugar y no en el otro | Bajo | 8 |
-| Estado mutable y efectos al validar: `validarTransaccion` valida y además suma acumulados y descartadas; `acumuladoGeneralComisiones` suma antes del tope | `Liq:34-36`, `Liq:57-76`, `Liq:196` | 6 | Bajo: son datos de control, no el monto liquidado | Medio | 9 |
-| Nombres que no describen: `buscarComerciosActivos` devuelve todos los comercios y el filtro de baja ocurre en el cálculo | `repositorio/RepositorioMemoria.java:56-62`, `Liq:110-112` | ninguna | Bajo: confunde al leer; los suspendidos sí se liquidan | Bajo | 10 |
-| Fechas con `Date` y `Calendar` | `Fecha:1-155`, `Liq:92-93`, `Liq:134-136` | 8 | Bajo | Medio | 11 |
-
-## 4. Observaciones del entorno de esta ejecución
-
-- El comparador `bash scripts/comparar-escenarios.sh` y la compilación .NET no pudieron ejecutarse: la
-  máquina tiene el SDK de .NET 8.0.401 y el proyecto apunta a .NET 10.0 (error NETSDK1045). No es un
-  problema del código del escenario; se informó al relator.
-
-## Paso 4: `/lab-5-1-paso-4-criterios-de-evaluacion`
-
-Segundos: menos de 1 de comandos; generación no medida.
-
-### Respuesta final del chat
-
-He creado `labs/cap5/lab-5-1-preparacion/entregables/criterios-de-evaluacion.md` a partir del inventario de riesgos, con 10 criterios. Cada uno dice cómo se comprueba y qué resultado lo da por cumplido. Incluye equivalencia entre escenarios (criterios 3 y 4), alcance del cambio (criterio 5), y criterios de reglas 2, 3, 9 y límites de tramo respaldados en los hallazgos. Los criterios 1 a 3 dependen de que el SDK de .NET del ambiente permita compilar (hoy falla, ver paso 1). Recuerda acordar estos criterios en sala antes de pasar al 5.2.
-
-Tabla de salida:
-
-| N.º | Criterio | Cómo se comprueba | Se cumple si |
-|---|---|---|---|
-| 1 | Los dos escenarios compilan | Java: `cd escenario/java && mvn -q clean package`. .NET: `cd escenario/dotnet && dotnet build LiquidacionComercios -c Release` | Ambos comandos terminan con código 0 y sin errores |
-| 2 | Las pruebas existentes siguen pasando | Java: `cd escenario/java && mvn test`. .NET: `cd escenario/dotnet && dotnet test LiquidacionComercios.Pruebas` | Ambos terminan con código 0 y 0 pruebas fallidas; Java ejecuta al menos las 20 pruebas de la línea base |
-| 3 | Equivalencia entre escenarios | `bash scripts/comparar-escenarios.sh` | Termina con código 0 y dice «Las salidas son identicas» |
-| 4 | La salida del periodo 2026-06 no cambia en un refactor sin cambio de comportamiento | Guardar `java -jar target/liquidacion-comercios.jar 2026-06` desde `escenario/java/` antes y después, y comparar con `diff` | `diff` no muestra diferencias, línea por línea, en las 554 líneas de la línea base |
-| 5 | Alcance del cambio | `git diff --name-only` y `git status --short` | Solo aparecen los archivos que el laboratorio nombra y cada línea modificada de `git diff -U0 -- escenario` pertenece a la parte que el laboratorio pidió tocar; ningún archivo de `escenario/datos/` ni de `escenario/java/src/test/` ni de `escenario/dotnet/LiquidacionComercios.Pruebas/` cambia salvo que el laboratorio lo pida |
-| 6 | Regla 3: el recargo por cuotas tiene el mismo tope en la liquidación y en la simulación | Prueba que compare `CalculadoraComision.calcularRecargoCuotas` y el recargo de la liquidación con 8 y 10 cuotas sobre un mismo plan | Ambas dan el mismo valor para 8 y 10 cuotas; hoy difieren (3.5 y 3.0) |
-| 7 | Regla 2: los tramos siguen sin ser acumulativos | Prueba con un plan de tramos y un monto de 1500.00 en el plan PL01 (tramo 500 a 2000, 2.9 %) | La comisión base es `1500.00 * 2.9 / 100 + 0.30 = 43.80`, no una suma repartida entre tramos |
-| 8 | Regla 9: totales con redondeo medio hacia arriba sobre decimales exactos, si el laboratorio toca la aritmética | Prueba o salida de 2026-06 para CM0011, CM0016 y CM0025 | Imprimen 137.83, 494.00 y 957.19 respectivamente; hoy imprimen 137.82, 493.99 y 957.18 |
-| 9 | Un cambio de estructura no altera los límites de tramo | Prueba con montos exactamente iguales a un límite de tramo (por ejemplo 500.00 en PL01) | El porcentaje aplicado es el del tramo siguiente, como hoy en la liquidación (`monto < hasta`) |
-| 10 | Las pruebas nuevas prueban lógica de negocio y no solo formato | Revisión: cada prueba nueva llama a `CalculadoraComision` o `CalculadoraLiquidacion` y verifica un monto | Existe al menos una prueba por regla tocada y ninguna verifica solo getters |
-
-Salida esperada (tabla Criterio, Cómo se comprueba, Se cumple si): cumplida (la columna lleva además un número).
-
-### Archivo creado: `criterios-de-evaluacion.md`
-
-# Criterios de evaluación para los laboratorios 5.2 y 5.3
-
-Parten de `labs/cap5/lab-5-1-preparacion/entregables/inventario-de-riesgos.md`. Todos se
-comprueban con un comando, una prueba o una revisión concreta. Los comandos se ejecutan desde la
-raíz del repositorio, salvo que se indique otro directorio.
-
-| N.º | Criterio | Cómo se comprueba | Se cumple si |
-|---|---|---|---|
-| 1 | Los dos escenarios compilan | Java: `cd escenario/java && mvn -q clean package`. .NET: `cd escenario/dotnet && dotnet build LiquidacionComercios -c Release` | Ambos comandos terminan con código 0 y sin errores |
-| 2 | Las pruebas existentes siguen pasando | Java: `cd escenario/java && mvn test`. .NET: `cd escenario/dotnet && dotnet test LiquidacionComercios.Pruebas` | Ambos terminan con código 0 y 0 pruebas fallidas; Java ejecuta al menos las 20 pruebas de la línea base |
-| 3 | Equivalencia entre escenarios | `bash scripts/comparar-escenarios.sh` | Termina con código 0 y dice «Las salidas son identicas» |
-| 4 | La salida del periodo 2026-06 no cambia en un refactor sin cambio de comportamiento | Guardar `java -jar target/liquidacion-comercios.jar 2026-06` desde `escenario/java/` antes y después, y comparar con `diff` | `diff` no muestra diferencias, línea por línea, en las 554 líneas de la línea base |
-| 5 | Alcance del cambio | `git diff --name-only` y `git status --short` | Solo aparecen los archivos que el laboratorio nombra y cada línea modificada de `git diff -U0 -- escenario` pertenece a la parte que el laboratorio pidió tocar; ningún archivo de `escenario/datos/` ni de `escenario/java/src/test/` ni de `escenario/dotnet/LiquidacionComercios.Pruebas/` cambia salvo que el laboratorio lo pida |
-| 6 | Regla 3: el recargo por cuotas tiene el mismo tope en la liquidación y en la simulación | Prueba que compare `CalculadoraComision.calcularRecargoCuotas` y el recargo de la liquidación con 8 y 10 cuotas sobre un mismo plan | Ambas dan el mismo valor para 8 y 10 cuotas; hoy difieren (3.5 y 3.0) |
-| 7 | Regla 2: los tramos siguen sin ser acumulativos | Prueba con un plan de tramos y un monto de 1500.00 en el plan PL01 (tramo 500 a 2000, 2.9 %) | La comisión base es `1500.00 * 2.9 / 100 + 0.30 = 43.80`, no una suma repartida entre tramos |
-| 8 | Regla 9: totales con redondeo medio hacia arriba sobre decimales exactos, si el laboratorio toca la aritmética | Prueba o salida de 2026-06 para CM0011, CM0016 y CM0025 | Imprimen 137.83, 494.00 y 957.19 respectivamente; hoy imprimen 137.82, 493.99 y 957.18 |
-| 9 | Un cambio de estructura no altera los límites de tramo | Prueba con montos exactamente iguales a un límite de tramo (por ejemplo 500.00 en PL01) | El porcentaje aplicado es el del tramo siguiente, como hoy en la liquidación (`monto < hasta`) |
-| 10 | Las pruebas nuevas prueban lógica de negocio y no solo formato | Revisión: cada prueba nueva llama a `CalculadoraComision` o `CalculadoraLiquidacion` y verifica un monto | Existe al menos una prueba por regla tocada y ninguna verifica solo getters |
-
-
-## Paso 1, ejecución real con .NET 10
-
-Salida de los cuatro comandos del paso 1 sobre una copia limpia del repositorio de
-participantes, con JDK 21 y SDK de .NET 10.0.401.
-
-```
-$ cd escenario/java && mvn -q clean package
-rc=0
-
-$ cd escenario/dotnet && dotnet build LiquidacionComercios -c Release
-    0 Errores
-
-Tiempo transcurrido 00:00:00.95
-
-$ cd escenario/dotnet && dotnet test LiquidacionComercios.Pruebas
-Correctas! - Con error:     0, Superado:    20, Omitido:     0, Total:    20, Duración: 20 ms - LiquidacionComercios.Pruebas.dll (net10.0)
-
-$ bash scripts/comparar-escenarios.sh
-== Comparacion ==
-  [ OK ] Las salidas son identicas
-       554 lineas, 20457 bytes
-
-== Resumen ==
-  Escenarios equivalentes. Java y .NET producen la misma salida para 2026-06.
-```

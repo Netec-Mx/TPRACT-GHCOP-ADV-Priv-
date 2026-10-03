@@ -40,9 +40,9 @@ No sugiera ninguna. Cualquiera sirve.
 
 | Paso | Estimado | Observado en la verificación |
 |---|---|---|
-| 1 | 15 min | Se completa en la verificación de SPEC-016 |
-| 2 | 10 min | Se completa en la verificación de SPEC-016 |
-| 3 | 10 min | Se completa en la verificación de SPEC-016 |
+| 1 | 15 min | 104 a 116 s de agente y 3 a 8 comandos, en 4 corridas |
+| 2 | 10 min | 20 a 25 s de agente y 1 a 2 comandos, en 4 corridas |
+| 3 | 10 min | 26 a 41 s de agente y 1 a 4 comandos, en 4 corridas |
 
 Suma 35. Quedan 10 para la puesta en común.
 

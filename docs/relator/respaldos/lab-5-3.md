@@ -1,389 +1,861 @@
-> Los tiempos de este respaldo son de reloj del agente de verificación y no incluyen la
-> lectura de la sala.
+> Salida real grabada en la verificación de SPEC-016, el 3 de octubre de 2026, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
 
-# Lab 5.3 - Estrategia de pruebas, documentación y checklist de revisión (Java)
+# Lab 5-3 salida grabada de respaldo
 
-Partida: sobre el resultado del lab 5.2, sin reiniciar (el README del 5.3 lo permite). Por eso el `git diff` incluye también los cambios de `CalculadoraLiquidacion.java` del 5.2.
+Hay dos grabaciones, una por cada camino del 5.2. Muestre la que corresponda a lo que eligió el participante.
 
-## Paso 1 - `/lab-5-3-paso-1-probar-tramos java` (modo Agent)
+## Camino B: el reporte reutiliza el cálculo de la liquidación (corrida s16, Java)
 
-Segundos: 18 (lectura de código y datos, creación del archivo y `mvn test`)
+---
 
-### Respuesta del chat (verbatim)
+# 5.3 paso 1: `/lab-5-3-paso-1-probar-criterios java`
 
-Creé un archivo nuevo: `escenario/java/src/test/java/pe/pasarelaandina/calculo/CalculadoraComisionTest.java`, con 13 pruebas de `determinarTramo` y el plan PL01 (0-500 al 3,5 %, 500-2000 al 2,9 %, 2000-10000 al 2,5 %, 10000-999999 al 2,1 %). No modifiqué ningún archivo existente en este paso. Las pruebas reflejan lo que el código hace hoy.
+Inicio 1791047302, fin 1791047343 (41 s). Comandos de terminal del agente: 2 (`date +%H:%M`,
+`mvn test`).
 
-`mvn test` en `escenario/java/`: 33 pruebas, 0 fallos (las 20 existentes más las 13 nuevas), `BUILD SUCCESS`.
+## Primera respuesta del agente
 
-Pruebas incluidas: un monto interior por cada uno de los cuatro tramos (250, 1000, 5000, 50000); el monto 0; los bordes 500.00, 2000.00 y 10000.00; un centavo sobre cada borde (500.01, 2000.01, 10000.01); un monto por debajo del primer tramo (-1.00); un monto por encima del último (1000000.00); un plan sin tramos y un plan nulo.
+Anoté Pruebas a las **14:08**. Leí la historia. El criterio 8 dice «Formato, orden y decimales
+del porcentaje: pendiente». ¿Ya tienes la respuesta del negocio para eso?
 
-**Bordes: calculadora de comisión frente al cierre de la liquidación**
+## Respuesta del participante
 
-| Monto en el borde | Calculadora de comisión (`CalculadoraComision.determinarTramo`, usa `<= montoHasta`) | Cierre de la liquidación (`CalculadoraLiquidacion`, usa `>= montoDesde && < montoHasta`) |
+«El formato lo fijó la especificación técnica del 5.2, `formato-del-reporte.md`, y
+`verificar-reporte.sh` lo comprueba. Del negocio no tengo más respuestas.»
+
+## Segunda respuesta del agente
+
+Entonces el criterio 8 queda cubierto por `verificar-reporte.sh` y no por una prueba unitaria;
+lo dejo fuera de este archivo. Escribí `src/test/java/pe/pasarelaandina/reporte/ReporteMediosPagoTest.java`
+(archivo nuevo, JUnit 5, nombres en español en camelCase), con los datos reales de
+`escenario/datos` y el periodo 2026-06. Ejecuté `mvn test`.
+
+| Criterio | Prueba | Resultado |
 |---|---|---|
-| 500.00 | 3,5 % (primer tramo) | 2,9 % (segundo tramo) |
-| 2000.00 | 2,9 % (segundo tramo) | 2,5 % (tercer tramo) |
-| 10000.00 | 2,5 % (tercer tramo) | 2,1 % (cuarto tramo) |
+| 1. Solo transacciones liquidables | `cuentaSoloLasTransaccionesAprobadasDeCM0011EnJunio` | Pasa |
+| 2. Comercios liquidables | `excluyeAlComercioDadoDeBajaEIncluyeAlSuspendido` | Pasa |
+| 3. Una fila por medio de pago | `muestraUnaFilaPorMedioDePagoEnOrdenAlfabetico` | Pasa |
+| 4. Monto en el límite de un tramo | `unMontoDe500EnElPlanBasicoPagaElPorcentajeDelTramoInferior` | **Falla**: esperado 17,80, obtenido 14,80 |
+| 4. Monto en el límite de un tramo | `unMontoDe2000EnElPlanBasicoPagaElPorcentajeDelTramoInferior` | **Falla**: esperado 58,30, obtenido 50,30 |
+| 5. Redondeo al final | `lasComisionesDeCM0011EnJunioSumanExactoYRedondeanMedioHaciaArriba` | **Falla**: esperado 137,83, obtenido 137,82 |
+| 6. Tope con fila de ajuste | `elTopeDeCM0004SeMuestraComoAjusteYElComercioAportaSuTope` | Pasa |
+| 7. Total cuadra con la liquidación | `elTotalDelReporteEsLaSumaDeLasLiquidacionesAlCentavo` | Pasa |
+| 7. Total cuadra con la liquidación | `elTotalDeJunioEsElCalculadoConLasReglasDelNegocio` | **Falla**: esperado 36 637,34, obtenido 36 615,31 |
+| Pie del reporte (especificación) | `elAjustePorRedondeoSeMuestraSiempre` | Pasa |
+| 8. Salida verificable | Fuera de las pruebas unitarias: `verificar-reporte.sh` | Abril y mayo coinciden, junio no (5.2) |
 
-El dato del cierre sale de leer el bloque de selección de tramo en `CalculadoraLiquidacion` (hoy en el método privado `calcularDetalleDeTransaccion`, que salió del método de cierre en el lab 5.2). No escribí pruebas de la liquidación.
+Total: 30 pruebas, 4 fallan, todas del reporte.
 
-**Discrepancia encontrada, sin corregir.** Las dos partes del sistema no coinciden en el borde: la calculadora de comisión trata el límite superior como inclusivo y el cierre como exclusivo. Una transacción de exactamente S/ 500,00 paga 3,5 % si la calcula `CalculadoraComision` (por ejemplo desde `SimuladorComision`) y 2,9 % si la calcula el cierre. Lo que el sistema le cobra realmente al comercio es lo del cierre.
+**Criterios que no se cumplen:** el 4 (límite de tramo: la liquidación aplica el porcentaje del
+tramo superior), el 5 (CM0011 queda en 137,82 en vez de 137,83) y el valor del 7 (el total
+cuadra con la liquidación, pero no con el calculado con las reglas del negocio). No cambié
+las pruebas ni el código; se diagnostica en el paso 3.
 
-Qué dicen las reglas de `escenario/README.md`: la regla 1 dice que se aplica «el porcentaje del tramo que corresponde a su monto» y la regla 2 que el monto completo se multiplica por el porcentaje del tramo en que cae. Ninguna dice si el límite superior pertenece al tramo de abajo o al de arriba. **Las reglas no alcanzan para decidir cuál de las dos es la correcta.** Eso requiere una decisión de negocio. En los datos, los tramos se escriben `0:500`, `500:2000`, que sugiere intervalos semiabiertos `[desde, hasta)`, lo que coincidiría con el cierre, pero es una inferencia y no una regla.
+**Lo que vi y no toqué:** la diferencia de CM0011 es de un centavo y su suma exacta es
+137,825, justo en la mitad: apunta a punto flotante en la suma con `double`.
 
-**Otras observaciones, sin tocar nada:**
-- Un monto por debajo del primer tramo (por ejemplo -1.00) hace que `determinarTramo` devuelva el último tramo (2,1 %), porque no cae en ninguno y el método cae al `return` final. La prueba lo documenta como comportamiento actual. Las reglas no dicen nada sobre montos negativos.
-- Las dos copias de la lógica difieren también en el máximo del recargo por cuotas: 3,0 en el cierre y 3,5 en `CalculadoraComision.calcularRecargoCuotas`. La regla 3 dice máximo 3 %. Este paso no lo prueba.
-- El comentario de la clase `PlanComisiones` dice que los tramos son acumulativos. La regla 2 dice que no lo son y el código no los acumula.
-- El comentario de `CalculadoraComision` habla del IGV y de «valor de venta neto», cosa que el código no hace.
-- Los montos siguen en `double` y el cierre tiene un `catch` vacío. Fuera del alcance.
+## Medición
 
-### Archivo nuevo (contenido completo)
+- Archivos: `src/test/java/pe/pasarelaandina/reporte/ReporteMediosPagoTest.java` (nuevo),
+  `docs/proyecto/registro-de-tiempos.md` (M).
+- Salida esperada: sí. Tabla criterio por criterio.
+- Restricciones: respetadas. Solo archivo de prueba nuevo; no tocó producción ni pruebas
+  existentes; sin commit.
 
-```java
-package pe.pasarelaandina.calculo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+---
 
-import org.junit.jupiter.api.Test;
+# 5.3 paso 2: `/lab-5-3-paso-2-conciliacion-en-pipeline`
 
-import pe.pasarelaandina.modelo.PlanComisiones;
-import pe.pasarelaandina.modelo.TramoComision;
+Inicio 1791047360, fin 1791047405 (45 s). Comandos de terminal del agente: 2 (`date +%H:%M`,
+`bash scripts/integracion-local.sh`). Las ediciones de los dos archivos se hicieron con
+edición de archivo.
 
-/**
- * Pruebas de la seleccion de tramo de la calculadora de comision.
- *
- * Las pruebas documentan lo que el codigo hace hoy, no lo que las reglas de negocio
- * dicen que deberia hacer. Usan los tramos del plan PL01 de planes.txt.
- */
-class CalculadoraComisionTest {
+## Respuesta del agente
 
-    private final CalculadoraComision calculadora = new CalculadoraComision();
+Anoté Integración continua a las **14:09**.
 
-    private final TramoComision tramo1 = new TramoComision(0, 500, 3.5);
-    private final TramoComision tramo2 = new TramoComision(500, 2000, 2.9);
-    private final TramoComision tramo3 = new TramoComision(2000, 10000, 2.5);
-    private final TramoComision tramo4 = new TramoComision(10000, 999999, 2.1);
+### Diff de `scripts/integracion-local.sh`
 
-    private PlanComisiones planPL01() {
-        PlanComisiones plan = new PlanComisiones("PL01", "Basico", 0.30, 8000.00);
-        plan.agregarTramo(tramo1);
-        plan.agregarTramo(tramo2);
-        plan.agregarTramo(tramo3);
-        plan.agregarTramo(tramo4);
-        return plan;
-    }
+- `PASOS` termina ahora en `conciliacion`.
+- Funciones nuevas:
+  - `a_centavos`: convierte `1234.56` o `-0.04` en centavos enteros, con `awk` y aritmética
+    entera, sin punto flotante.
+  - `suma_liquidacion_en_centavos`: suma el «Total comisiones» de cada comercio. Se detiene en
+    `RESUMEN DEL PERIODO`, porque el resumen general repite la etiqueta, y toma solo el campo
+    que sigue a `S/`, de modo que `(tope aplicado)` al final de la línea no estorba.
+  - `total_reporte_en_centavos`: toma el monto de la línea `Total` del pie del reporte.
+  - `paso_conciliacion`: compila sin pruebas el stack declarado, y para 2026-04, 2026-05 y
+    2026-06 ejecuta la liquidación y el reporte, compara en centavos, muestra la diferencia y
+    falla si alguna no es cero.
+- `correr` reconoce `conciliacion`.
 
-    @Test
-    void eligeElPrimerTramoParaUnMontoInterior() {
-        assertSame(tramo1, calculadora.determinarTramo(planPL01(), 250.00));
-    }
+### Diff de `.github/workflows/integracion-continua.yml`
 
-    @Test
-    void eligeElSegundoTramoParaUnMontoInterior() {
-        assertSame(tramo2, calculadora.determinarTramo(planPL01(), 1000.00));
-    }
-
-    @Test
-    void eligeElTercerTramoParaUnMontoInterior() {
-        assertSame(tramo3, calculadora.determinarTramo(planPL01(), 5000.00));
-    }
-
-    @Test
-    void eligeElCuartoTramoParaUnMontoInterior() {
-        assertSame(tramo4, calculadora.determinarTramo(planPL01(), 50000.00));
-    }
-
-    @Test
-    void elMontoCeroCaeEnElPrimerTramo() {
-        assertSame(tramo1, calculadora.determinarTramo(planPL01(), 0.00));
-    }
-
-    @Test
-    void elMontoExactoDe500CaeEnElPrimerTramoPorqueElLimiteSuperiorEsInclusivo() {
-        assertSame(tramo1, calculadora.determinarTramo(planPL01(), 500.00));
-        assertEquals(3.5, calculadora.determinarTramo(planPL01(), 500.00).getPorcentaje());
-    }
-
-    @Test
-    void elMontoExactoDe2000CaeEnElSegundoTramoPorqueElLimiteSuperiorEsInclusivo() {
-        assertSame(tramo2, calculadora.determinarTramo(planPL01(), 2000.00));
-        assertEquals(2.9, calculadora.determinarTramo(planPL01(), 2000.00).getPorcentaje());
-    }
-
-    @Test
-    void elMontoExactoDe10000CaeEnElTercerTramoPorqueElLimiteSuperiorEsInclusivo() {
-        assertSame(tramo3, calculadora.determinarTramo(planPL01(), 10000.00));
-        assertEquals(2.5, calculadora.determinarTramo(planPL01(), 10000.00).getPorcentaje());
-    }
-
-    @Test
-    void unCentimoSobreElBordeCaeEnElTramoSiguiente() {
-        assertSame(tramo2, calculadora.determinarTramo(planPL01(), 500.01));
-        assertSame(tramo3, calculadora.determinarTramo(planPL01(), 2000.01));
-        assertSame(tramo4, calculadora.determinarTramo(planPL01(), 10000.01));
-    }
-
-    @Test
-    void unMontoPorDebajoDelPrimerTramoDevuelveElUltimoTramo() {
-        // Comportamiento actual: un monto negativo no cae en ningun tramo y el metodo
-        // devuelve el ultimo. Las reglas de negocio no definen que pasa con montos negativos.
-        assertSame(tramo4, calculadora.determinarTramo(planPL01(), -1.00));
-    }
-
-    @Test
-    void unMontoPorEncimaDelUltimoTramoDevuelveElUltimoTramo() {
-        assertSame(tramo4, calculadora.determinarTramo(planPL01(), 1000000.00));
-    }
-
-    @Test
-    void unPlanSinTramosDevuelveNulo() {
-        PlanComisiones planSinTramos = new PlanComisiones("PLXX", "Vacio", 0.30, 8000.00);
-        assertNull(calculadora.determinarTramo(planSinTramos, 100.00));
-    }
-
-    @Test
-    void unPlanNuloDevuelveNulo() {
-        assertNull(calculadora.determinarTramo(null, 100.00));
-    }
-}
+```diff
+       - name: Liquidar los tres periodos y comparar
+         run: bash scripts/integracion-local.sh --paso equivalencia
++      - name: Conciliar el total del reporte con las liquidaciones
++        run: bash scripts/integracion-local.sh --paso conciliacion
 ```
 
-### Salida de `mvn test`
+En el trabajo `equivalencia`, después del paso de equivalencia.
 
-```
-[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.040 s -- in pe.pasarelaandina.util.ValidadorFormatoTest
-[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in pe.pasarelaandina.modelo.ComercioTest
-[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in pe.pasarelaandina.modelo.TransaccionTest
-[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in pe.pasarelaandina.calculo.CalculadoraComisionTest
-[INFO] Tests run: 33, Failures: 0, Errors: 0, Skipped: 0
-[INFO] BUILD SUCCESS
-```
+### Pipeline local, paso por paso
 
-### Verificación del «Salida esperada»
-Archivo nuevo en la ruta indicada: sí. Ningún archivo existente modificado por este paso: sí (el único archivo modificado en el árbol viene del lab 5.2). Pruebas en verde, 20 existentes más 13 nuevas: sí. Tabla de tres bordes: sí. Discrepancia explicada, con lo que dicen las reglas y sin corregir: sí.
-
-## Paso 2 - `/lab-5-3-paso-2-documentar-estrategia java` (modo Agent)
-
-Segundos: 19 (lectura de pruebas existentes y redacción del documento)
-
-### Respuesta del chat (verbatim)
-
-Creé `labs/cap5/lab-5-3-pruebas-y-revision/entregables/estrategia-de-pruebas.md` (unas 900 palabras, dentro de las dos páginas). No escribí pruebas ni toqué código.
-
-Resumen del contenido:
-1. **Qué cubren hoy las pruebas.** `ValidadorFormatoTest` (8), `ComercioTest` (6) y `TransaccionTest` (6) cubren getters, setters, enumerados y formato; `CalculadoraComisionTest` (13, del paso 1) cubre solo `determinarTramo`. Total 33, ninguna ejecuta cálculo de dinero más allá de elegir el tramo.
-2. **Reglas sin ninguna prueba:** las nueve. Las reglas 1 y 2 tienen cubierta solo la elección del tramo, no la comisión resultante. Las reglas 3 (recargo por cuotas), 4 (anuladas), 5 (contracargos), 6 (tope), 7 (retención), 8 (periodo en hora de Lima) y 9 (redondeo) no tienen ninguna prueba.
-3. **Valores de borde**, regla por regla: 500, 2000 y 10000 para tramos; 1, 2, 3, 6, 7 y 8 cuotas; 2026-06-01 00:00:00 y 2026-06-30 23:59:59 con sus vecinos para periodo y contracargos; tope exacto, un centavo sobre y un centavo bajo; antigüedad de 5 meses, 6 meses y 6 meses menos un día para la retención; montos con 5 en la tercera decimal para el redondeo.
-4. **Qué reveló el paso 1:** la calculadora de comisión y el cierre de la liquidación discrepan en los bordes de tramo (inclusivo frente a exclusivo). Las reglas 1 y 2 no definen a qué tramo pertenece el límite, así que hace falta una decisión de negocio de quien es dueño del tarifario. El documento lo dice y no lo resuelve.
-5. **Orden recomendado:** comisión de punta a punta probando primero el cierre, luego redondeo y tope, luego retención, luego contracargos y periodo, y por último anuladas.
-
-Otros problemas que vi y no toqué: máximo del recargo distinto entre las dos calculadoras (3,0 y 3,5) frente al 3 % de la regla 3; la regla 8 pide hora de Lima y `UtilidadesFecha` usa la zona horaria del sistema; montos en `double`; comentarios de `PlanComisiones` y `CalculadoraComision` que contradicen el código o las reglas.
-
-### Archivo nuevo (contenido completo)
-
-````markdown
-# Estrategia de pruebas del escenario Pasarela Andina (Java)
-
-Estado al momento de escribir este documento: 33 pruebas, todas en verde (`mvn test`). Las
-reglas de negocio citadas son las de `escenario/README.md`.
-
-## 1. Qué cubren hoy las pruebas
-
-| Clase de prueba | Pruebas | Qué cubre |
-|---|---|---|
-| `util/ValidadorFormatoTest` | 8 | Formato del registro tributario, del código de autorización, del identificador de comercio y del periodo `aaaa-mm`. |
-| `modelo/ComercioTest` | 6 | Constructores, setters, `toString` y que los enumerados de categoría y estado estén completos. |
-| `modelo/TransaccionTest` | 6 | Constructores, setters, `toString`, enumerados de medio de pago y estado, y los valores guardados por `DetalleLiquidacion`. |
-| `calculo/CalculadoraComisionTest` (paso 1) | 13 | Solo `determinarTramo`: un monto interior por tramo, los bordes 500, 2000 y 10000, un centavo sobre cada borde, monto negativo, monto sobre el último tramo, plan sin tramos y plan nulo. Documenta el comportamiento actual. |
-
-Las 20 pruebas originales cubren getters, setters y validaciones de formato. Ninguna
-ejecuta cálculo de dinero. Las 13 nuevas cubren una sola función de `CalculadoraComision`.
-
-## 2. Reglas de negocio sin ninguna prueba
-
-| Regla | Estado |
+| Paso | Resultado |
 |---|---|
-| 1. Porcentaje del tramo más monto fijo | Sin prueba. Solo se prueba qué tramo se elige, no la comisión resultante. |
-| 2. Tramos no acumulativos | Sin prueba. |
-| 3. Recargo por cuotas, 0,5 % por cuota sobre la primera, máximo 3 % | Sin prueba. |
-| 4. Las transacciones anuladas no generan comisión | Sin prueba. |
-| 5. Contracargos aprobados se descuentan en el periodo de su aprobación | Sin prueba. |
-| 6. Tope mensual del plan | Sin prueba. |
-| 7. Retención de garantía del 5 % con menos de seis meses de afiliación | Sin prueba. |
-| 8. Periodo del primer día 00:00:00 al último 23:59:59 en hora de Lima | Sin prueba. Solo se valida el formato del texto `aaaa-mm`. |
-| 9. Redondeo a dos decimales, medio hacia arriba | Sin prueba. |
+| `java` | **FALLA**: 30 pruebas, 4 fallan (las del reporte del paso 1: límite de tramo 17,80/14,80 y 58,30/50,30; CM0011 137,83/137,82; total de junio 36 637,34/36 615,31) |
+| `dependencias-java` | Pasa, con el aviso de que no hay revisión de vulnerabilidades sin red |
+| `dotnet`, `dependencias-dotnet` | Omitidos: stack `java` |
+| `equivalencia` | Pasa en los tres periodos |
+| `conciliacion` | **Pasa** en los tres periodos: 2026-04 3 038 455 = 3 038 455 centavos, 2026-05 3 138 564 = 3 138 564, 2026-06 3 661 531 = 3 661 531. Diferencia 0 |
+| Resumen | Rojo, 1 paso falló (código 1) |
 
-## 3. Casos de borde que importan
+**El pipeline queda en rojo por las pruebas del reporte, no por la conciliación.** La
+conciliación pasa en los tres periodos porque nuestro reporte se construye sobre las
+liquidaciones (decisión 0004): el total sale del mismo cálculo y por construcción no puede
+diferir. Esto significa que, con este diseño, la conciliación no detecta los errores de la
+liquidación; los detectan las pruebas con los valores calculados a mano. No corregí nada:
+se diagnostica en el paso 3.
 
-Tramos de PL01: 0-500 al 3,5 %, 500-2000 al 2,9 %, 2000-10000 al 2,5 %, 10000-999999 al 2,1 %,
-fijo 0,30 y tope 8000,00.
+## Medición
 
-- **Reglas 1 y 2.** Montos 500.00, 2000.00 y 10000.00 en las dos calculadoras. Un monto de 1000.00
-  debe dar 1000 x 2,9 % + 0,30 = 29,30, lo que comprueba que el monto completo se multiplica y no se reparte.
-- **Regla 3.** 1, 2, 3, 6, 7 y 8 cuotas. Con 7 cuotas el recargo es de 3,0 % en las dos calculadoras;
-  con 8 cuotas es de 3,0 % en el cierre y de 3,5 % en la calculadora de comisión.
-- **Regla 4.** Una transacción en estado anulado entre transacciones aprobadas, en el periodo.
-- **Regla 5.** Contracargo aprobado con fecha 2026-06-01 00:00:00 y 2026-06-30 23:59:59 (dentro),
-  2026-05-31 23:59:59 y 2026-07-01 00:00:00 (fuera); contracargo no aprobado.
-- **Regla 6.** Total de comisiones justo en el tope (8000.00), un centavo sobre el tope y un centavo bajo.
-- **Regla 7.** Afiliación hace exactamente 5 meses, 6 meses y 6 meses menos un día respecto del
-  primer día del periodo; base de retención cero o negativa; fecha de afiliación nula.
-- **Regla 8.** Transacción a las 2026-06-01 00:00:00 y 2026-06-30 23:59:59 (dentro), 2026-05-31 23:59:59
-  y 2026-07-01 00:00:00 (fuera), y una máquina con zona horaria distinta de Lima.
-- **Regla 9.** Montos terminados en 5 en la tercera decimal (por ejemplo 0.125 y 2.675). Con `double`
-  el medio exacto puede no ser exacto.
+- Archivos: `scripts/integracion-local.sh` (M), `.github/workflows/integracion-continua.yml`
+  (M), `docs/proyecto/registro-de-tiempos.md` (M).
+- Salida esperada: sí. Diff de los dos archivos y pipeline paso por paso. El README esperaba
+  ver «en qué periodos queda en rojo» la conciliación: con el camino de reutilizar la
+  liquidación no queda en rojo en ninguno.
+- Restricciones: respetadas. Sin cambios en el escenario ni en los hashes; sin commit.
 
-## 4. Qué reveló el paso 1
 
-Al probar `determinarTramo` apareció una discrepancia entre dos partes del sistema. La calculadora de
-comisión trata el límite superior como inclusivo (`monto <= montoHasta`) y el cierre de la liquidación
-como exclusivo (`monto < montoHasta`). En los tres bordes el resultado difiere:
+---
 
-| Monto | Calculadora de comisión | Cierre |
+# 5.3 paso 3: `/lab-5-3-paso-3-diagnosticar-y-corregir java`
+
+Inicio 1791047426, fin 1791047737 (311 s). Comandos de terminal del agente: 17 (hora y
+registro; liquidación de los tres periodos y comparación por comercio con un cálculo decimal
+exacto; inspección de datos; una prueba de `double` en Java; tres compilaciones de prototipo
+de la corrección; `integracion-local.sh` para reproducir el rojo; aplicar la corrección;
+liquidación de junio antes y después; actualizar el hash; `integracion-local.sh` final;
+`verificar-reporte.sh` para los tres periodos).
+
+Nota de la verificación: el agente probó la corrección como prototipo antes de pedir la
+aprobación (para comprobar que la suma de causas cerraba al centavo), la revirtió, la
+presentó y la aplicó después de la aprobación. En Visual Studio Code esas compilaciones de
+prototipo serían tres aprobaciones de terminal más.
+
+## Primera respuesta del agente
+
+Anoté Mantención a las **14:10**. Reproduje el rojo con `bash scripts/integracion-local.sh`:
+falla el paso `java` por 4 pruebas del reporte; equivalencia y conciliación pasan.
+
+**Diferencia a explicar:** junio, total calculado con las reglas 36 637,34 contra 36 615,31 del
+reporte y la liquidación: **22,03**. Abril y mayo: diferencia 0 en todos los comercios.
+
+Comparé el «Total comisiones» de cada comercio de la liquidación Java contra el mismo total
+recalculado con aritmética decimal exacta. Difieren cinco comercios, todos en junio:
+
+| Causa | Comercio | Transacciones | Liquidación | Exacto | Aporte | Regla en juego |
+|---|---|---|---|---|---|---|
+| 1. Monto en el límite de un tramo va al tramo superior | CM0001 (PL01) | TX002001 500,00: 2,9 % → 14,80 en vez de 3,5 % → 17,80 (+3,00); TX002002 2 000,00: 2,5 % → 50,30 en vez de 2,9 % → 58,30 (+8,00) | 727,34 | 738,34 | 11,00 | Reglas 1 y 2: el README no dice a qué tramo pertenece el límite |
+| 1. | CM0007 (PL01) | TX002003 500,00 (+3,00); TX002004 2 000,00 (+8,00) | 907,11 | 918,11 | 11,00 | Ídem |
+| 2. Suma en `double` que termina exactamente en 5 cae apenas por debajo y redondea hacia abajo | CM0011 (PL02) | Sus 8 transacciones, suma exacta 137,825; en `double` 137,82499999999998… | 137,82 | 137,83 | 0,01 | Regla 9: redondeo a dos decimales, medio hacia arriba |
+| 2. | CM0016 (PL02) | Sus 15 transacciones, suma exacta 493,995 | 493,99 | 494,00 | 0,01 | Regla 9 |
+| 2. | CM0025 (PL01) | Sus 12 transacciones, suma exacta 957,185 | 957,18 | 957,19 | 0,01 | Regla 9 |
+| **Suma** | | | | | **22,03** | |
+
+Causa 1 suma 22,00 y causa 2 suma 0,03: **22,03, la diferencia completa al centavo.**
+
+La causa 1 está en `CalculadoraLiquidacion.java:149` (`montoTransaccion < tramo.getMontoHasta()`).
+La causa 2 está en `CalculadoraLiquidacion.java:247` (`Math.round(totalComisiones * 100.0) / 100.0`
+sobre una suma en `double`).
+
+**Me detengo:** la causa 1 depende de una regla que `escenario/README.md` no decide. La historia
+registra una respuesta del negocio en el 5.1, pero la decisión cambia la liquidación de dos
+comercios, así que llévale al relator esta pregunta antes de que proponga la corrección:
+**«Un monto que cae exactamente en el límite de un tramo (500,00 o 2 000,00 en el plan Básico),
+¿a qué tramo pertenece? ¿El límite superior es inclusivo?»**
+
+La causa 2 no necesita decisión: la regla 9 ya la decide.
+
+## Participante con el relator
+
+| Pregunta llevada | Respuesta del relator (texto de la hoja, 5.3 paso 3) |
+|---|---|
+| A qué tramo pertenece un monto en el límite; si el límite superior es inclusivo | «Misma respuesta: el límite superior es inclusivo; 500 va al primer tramo, 2000 al segundo, 10000 al tercero.» |
+
+## Segunda respuesta del agente
+
+Con esa decisión, propongo la corrección mínima en `CalculadoraLiquidacion.java`, sin
+refactorizar:
+
+- **Causa 1:** `<` por `<=` en la comparación con el límite superior del tramo (línea 149).
+- **Causa 2:** acumular, junto a la suma en `double`, la misma comisión en `BigDecimal` exacto
+  (monto × porcentaje / 100 + fijo, más el recargo por cuotas con el mismo porcentaje) y
+  redondear esa suma con `HALF_UP` cuando no se aplicó el tope. Para eso `porcentajeRecargo`
+  se declara fuera del `if` de cuotas. Los campos y tipos existentes no cambian. Con tope
+  aplicado se mantiene el redondeo actual.
+
+¿La apruebas?
+
+## Respuesta del participante
+
+«Aprobada.»
+
+## Tercera respuesta del agente
+
+Apliqué la corrección. Diff:
+
+```diff
++import java.math.BigDecimal;
++import java.math.RoundingMode;
+@@
+                 double totalComisiones = 0.0;
++                BigDecimal sumaExactaComisiones = BigDecimal.ZERO;
+@@
+                                         if (montoTransaccion >= tramo.getMontoDesde()
+-                                                && montoTransaccion < tramo.getMontoHasta()) {
++                                                && montoTransaccion <= tramo.getMontoHasta()) {
+@@
+                                 double recargo = 0.0;
++                                double porcentajeRecargo = 0.0;
+                                 if (transaccion.getCuotas() > 1) {
+-                                    double porcentajeRecargo = (transaccion.getCuotas() - 1) * 0.5;
++                                    porcentajeRecargo = (transaccion.getCuotas() - 1) * 0.5;
+@@
+                                 totalComisiones = totalComisiones + comisionTotal;
++                                // La misma comision, en decimal exacto, para redondear la suma (regla 9).
++                                BigDecimal baseExacta = BigDecimal.valueOf(montoTransaccion)
++                                        .multiply(BigDecimal.valueOf(porcentajeAplicado))
++                                        .divide(BigDecimal.valueOf(100))
++                                        .add(BigDecimal.valueOf(plan.getMontoFijoPorTransaccion()));
++                                BigDecimal recargoExacto = baseExacta
++                                        .multiply(BigDecimal.valueOf(porcentajeRecargo))
++                                        .divide(BigDecimal.valueOf(100));
++                                sumaExactaComisiones = sumaExactaComisiones.add(baseExacta).add(recargoExacto);
+@@
+-                totalComisiones = Math.round(totalComisiones * 100.0) / 100.0;
++                // Regla 9: la suma de comisiones se redondea sobre su valor decimal exacto.
++                if (liquidacion.isTopeAplicado()) {
++                    totalComisiones = Math.round(totalComisiones * 100.0) / 100.0;
++                } else {
++                    totalComisiones = sumaExactaComisiones.setScale(2, RoundingMode.HALF_UP).doubleValue();
++                }
+```
+
+**Qué cambia en la liquidación.** Abril y mayo: nada, sus hashes siguen iguales. Junio:
+
+| Comercio | Total comisiones | Retenciones | Monto neto |
+|---|---|---|---|
+| CM0001 | 727,34 → 738,34 | — | 25 346,74 → 25 335,74 |
+| CM0007 | 907,11 → 918,11 | 1 744,39 → 1 743,84 (afiliado hace menos de 6 meses, regla 7) | 33 143,33 → 33 132,88 |
+| CM0011 | 137,82 → 137,83 | — | 3 566,91 → 3 566,90 |
+| CM0016 | 493,99 → 494,00 | — | 14 736,54 → 14 736,53 |
+| CM0025 | 957,18 → 957,19 | — | 39 320,08 → 39 320,07 |
+| Resumen | 36 615,31 → 36 637,34 | 4 061,62 → 4 061,07 | 2 311 874,77 → 2 311 853,29 |
+
+Actualicé en `scripts/integracion/liquidacion-esperada.sha256` **solo el hash de 2026-06**:
+`61f2c13f…32eb` → `cd146630…c498a`. Ese cambio no es para que algo pase: es la consecuencia de
+la decisión del negocio (límite inclusivo) y de la regla 9, y se justifica en la descripción
+del pull request del paso 4.
+
+**Pipeline local:**
+
+| Paso | Resultado |
+|---|---|
+| `java` | 30 pruebas, 0 fallas |
+| `dependencias-java` | Pasa (aviso sin red) |
+| `dotnet`, `dependencias-dotnet` | Omitidos |
+| `equivalencia` | OK en los tres periodos |
+| `conciliacion` | OK; junio 3 663 734 = 3 663 734 centavos |
+| Resumen | **Todos los pasos pasan** |
+
+`verificar-reporte.sh java` coincide ahora en 2026-04, 2026-05 y **2026-06**.
+
+**Lo que vi y no toqué:**
+
+- El escenario .NET mantiene la liquidación anterior: con stack `ambos`,
+  `comparar-escenarios.sh` fallaría en junio. La tarea es solo de Java.
+- El comentario del archivo de hashes dice que el hash «es la misma en los dos stacks»; deja de
+  serlo para junio hasta que .NET reciba la misma corrección.
+- `CalculadoraComision.calcularRecargoCuotas` sigue topando el recargo en 3,5 % (regla 3 dice 3 %).
+  No afecta a la liquidación ni al reporte.
+
+## Medición
+
+- Archivos: `CalculadoraLiquidacion.java` (M), `scripts/integracion/liquidacion-esperada.sha256`
+  (M, solo junio), `docs/proyecto/registro-de-tiempos.md` (M).
+- Salida esperada: sí. Tabla de causas, suma igual a la diferencia, diff y pipeline en verde.
+- Restricciones: respetadas en el resultado (solo Java, sin cambiar pruebas, hash con causa,
+  sin commit). Observación: el prototipo previo a la aprobación tocó el archivo y se revirtió.
+
+
+---
+
+# 5.3 paso 4: `/lab-5-3-paso-4-revision-y-pull-request`
+
+Inicio 1791047775, fin 1791047835 (60 s). Comandos de terminal del agente: 4 (`date +%H:%M`,
+`git diff --stat HEAD`, búsqueda de secretos en el diff, `bash scripts/comparar-escenarios.sh`).
+
+## Primera respuesta del agente
+
+Anoté Revisión de código y Seguridad a las **14:16**.
+
+¿Ya pediste la revisión de Copilot sobre tus cambios sin confirmar, con **Copilot Code Review -
+Uncommitted Changes** en la vista **Source Control**? Si no, hazlo ahora y dime qué comentarios
+dejó y qué decidiste con cada uno: aplicar, descartar o decidir con el equipo.
+
+## Respuesta del participante
+
+«No se pudo pedir: la verificación corre sin Visual Studio Code.»
+
+## Segunda respuesta del agente
+
+Entendido; lo registro así en la descripción, sin comentarios inventados.
+
+- **Decisión registrada** con `pasarela-registrar-decision`:
+  `docs/arquitectura/decisiones/0005-limite-superior-de-tramo-inclusivo.md`, estado «Propuesta»,
+  con la respuesta del negocio, la historia, la corrección, tres alternativas (una marcada como
+  propuesta del agente) y la fila nueva en el índice. Dominio: Merchant Acquiring Facility; no
+  se mueve ninguna responsabilidad.
+- **`docs/proyecto/pull-request.md`** con la plantilla: qué cambia y por qué, qué generó el
+  agente y con qué skill, la revisión de Copilot (no se pudo pedir), la tabla del hash de junio
+  con su causa al centavo (22,00 + 0,03) y los enlaces a las decisiones 0005 y 0004.
+
+**Revisión del diff contra la lista de comprobación:**
+
+| Casilla | Estado | Por qué |
 |---|---|---|
-| 500.00 | 3,5 % | 2,9 % |
-| 2000.00 | 2,9 % | 2,5 % |
-| 10000.00 | 2,5 % | 2,1 % |
+| Una persona revisó cada línea | Sin marcar | La revisión humana no ocurrió todavía y la de Copilot no se pudo pedir |
+| Sin secretos ni datos reales | Marcada | Busqué en el diff; solo datos ficticios de `escenario/datos/` (TX, CM) |
+| No se modificó `escenario/datos/` | Marcada | `git status` no muestra cambios ahí |
+| Pruebas pasan y `comparar-escenarios.sh` en cero | **Sin marcar** | Las 30 pruebas pasan e `integracion-local.sh` (stack java) está en verde, pero `comparar-escenarios.sh` termina en 1: la corrección es solo Java y .NET sigue con la liquidación anterior en junio |
+| Cambio en `.github/` revisado por otra persona | **Sin marcar** | El cambio toca el workflow; falta esa revisión |
 
-Las reglas 1 y 2 no dicen a qué tramo pertenece un monto que cae justo en el límite. **Hace falta una
-decisión de negocio** de quien es dueño del tarifario: si el límite superior pertenece al tramo de abajo
-o al de arriba. Hasta que se decida, las pruebas del paso 1 documentan lo que hace `CalculadoraComision`,
-sin afirmar que sea lo correcto. También se vio que un monto negativo devuelve el último tramo, y que el
-máximo del recargo por cuotas difiere entre las dos calculadoras (3,0 y 3,5) frente al 3 % de la regla 3.
+Hash esperado: solo cambió 2026-06, y su causa está en la descripción.
 
-## 5. Orden recomendado
+Te propongo el commit:
 
-Por riesgo para el dinero del comercio:
-
-1. Comisión de una transacción de punta a punta (reglas 1, 2 y 3, con los bordes de tramo y de cuotas),
-   probando primero el cierre porque es lo que realmente se cobra.
-2. Redondeo (regla 9) y tope mensual (regla 6), porque afectan a todos los montos del comercio.
-3. Retención de garantía (regla 7), con los bordes de antigüedad.
-4. Contracargos y periodo (reglas 5 y 8), que dependen de fechas y de la zona horaria.
-5. Anuladas (regla 4), que es la más simple.
-
-Antes de escribir las pruebas 1 y 2, resolver la decisión de negocio de la sección 4.
-````
-
-### Verificación del «Salida esperada»
-Documento creado, de no más de dos páginas: sí (aprox. 900 palabras). Las cuatro secciones pedidas más el orden recomendado: sí.
-
-## Paso 3 - `/lab-5-3-paso-3-revision-asistida` (modo Ask)
-
-Segundos: 12 (`git diff`, `git status --short` y revisión; sin modificar archivos)
-
-Comandos ejecutados:
-
-```
-$ git status --short
- M escenario/java/src/main/java/pe/pasarelaandina/calculo/CalculadoraLiquidacion.java
-?? escenario/java/src/test/java/pe/pasarelaandina/calculo/
-?? labs/cap5/lab-5-3-pruebas-y-revision/entregables/
-$ git diff --stat
- .../calculo/CalculadoraLiquidacion.java | 224 +++++++++++----------   (120 inserciones, 104 eliminaciones)
+```bash
+git add -A && git commit -m "Pruebas, conciliacion y correccion del borde de tramo"
 ```
 
-### Respuesta del chat (verbatim)
+¿Lo confirmas? Yo no hago el commit.
 
-Revisé el diff acumulado: la refactorización de `CalculadoraLiquidacion.java` (dos métodos privados extraídos), el archivo nuevo `CalculadoraComisionTest.java` y el documento nuevo `estrategia-de-pruebas.md`. No modifiqué ningún archivo.
+## Respuesta del participante
 
-Verifiqué primero que la refactorización es neutra: el bloque de cálculo se movió sin cambiar literales, tipos ni orden de operaciones; los acumuladores leen los mismos valores desde el detalle; el desglose imprime el mismo texto. `bash scripts/comparar-escenarios.sh` termina en 0 y `mvn test` pasa con 33 pruebas.
+«Confirmo.» Ejecutó el commit (`5363eba`).
 
-| Archivo | Línea | Hallazgo | Clasificación | Justificación |
+## Medición
+
+- Archivos: `docs/proyecto/pull-request.md` (nuevo), `docs/arquitectura/decisiones/0005-...md`
+  (nuevo), `docs/arquitectura/decisiones/README.md` (M), `docs/proyecto/registro-de-tiempos.md` (M).
+  El commit incluyó además todo lo del 5.3 y `formato-del-reporte.md`.
+- Salida esperada: sí. Descripción del pull request, decisión registrada y tres casillas sin
+  marcar con su razón.
+- Restricciones: respetadas. No marcó casillas que no se cumplen, no inventó comentarios de la
+  revisión, no hizo el commit.
+
+## Paso 5 opcional
+
+`/lab-5-3-paso-5-opcional-github`: no aplica. El participante no tiene copia en GitHub.
+
+
+## Camino A: el reporte calcula por su cuenta con decimal exacto (corrida s16-a, .NET)
+
+---
+
+# 5.3 paso 1. `/lab-5-3-paso-1-probar-criterios dotnet`
+
+**Participante:** `/lab-5-3-paso-1-probar-criterios dotnet`
+
+**Copilot (agente):**
+
+Anoté 14:30 en Pruebas. Leí la historia; ningún criterio tiene valor «pendiente». Escribí las
+pruebas en un archivo nuevo,
+`escenario/dotnet/LiquidacionComercios.Pruebas/Reporte/CalculadoraReporteMediosPagoPruebas.cs`,
+con xUnit y `[Fact]`, como las existentes. Usan los datos reales de `escenario/datos`
+(buscados hacia arriba desde el directorio de la prueba), salvo los filtros de estado, que
+usan un repositorio sintético de un comercio.
+
+```
+$ cd escenario/dotnet && dotnet test LiquidacionComercios.Pruebas
+  Failed Pe.PasarelaAndina.Pruebas.Reporte.CalculadoraReporteMediosPagoPruebas.ElTotalDeJunioEsIgualALaSumaDeLasLiquidaciones [27 ms]
+   Assert.Equal() Failure: Values differ
+Expected: 36615.31
+Actual:   36637.34
+Failed!  - Failed:     1, Passed:    33, Skipped:     0, Total:    34
+```
+
+| Criterio | Prueba | Resultado |
+|---|---|---|
+| 1. Filtro de transacciones | `NoCuentaLaTransaccionAnuladaDeCM0011EnJunio` (8, no 9) | Pasa |
+| 1. Filtro de transacciones | `NoCuentaTransaccionesPendientesRechazadasEnOtraMonedaNiConMontoCero` | Pasa |
+| 2. Filtro de comercios | `UnComercioDadoDeBajaNoApareceEnElReporte` | Pasa |
+| 2. Filtro de comercios | `UnComercioSuspendidoConPlanApareceEnElReporte` | Pasa |
+| 3. Límite de tramo | `UnMontoEnElLimiteDeUnTramoPerteneceAlTramoInferior` (17,80 y 58,30) | Pasa |
+| 3. Límite de tramo | `LasTransaccionesEnElLimiteDeCM0001EnJunioSumanConElTramoInferior` | Pasa |
+| 4. Más de dos decimales | `LaSumaExactaDeCM0011EnJunioRedondeaA137Con83` (137,825 → 137,83) | Pasa |
+| 4. Más de dos decimales | `ElRedondeoEsMedioHaciaArriba` | Pasa |
+| 5. Tope mensual | `CM0004EnJunioMuestraLasFilasSinTopeYUnAjustePorTope` | Pasa |
+| 6. Conciliación abril | `ElTotalDeAbrilEsIgualALaSumaDeLasLiquidaciones` | Pasa |
+| 6. Conciliación mayo | `ElTotalDeMayoEsIgualALaSumaDeLasLiquidaciones` | Pasa |
+| 6. Conciliación junio | `ElTotalDeJunioEsIgualALaSumaDeLasLiquidaciones` | **Falla** |
+| 7. Columnas | `LasParticipacionesSumanCienSalvoRedondeo` | Pasa |
+| 8. Periodos | `ElReporteSeGeneraParaLosTresPeriodos` | Pasa |
+
+Las 20 pruebas existentes siguen pasando (34 en total, 14 nuevas).
+
+## Criterio que no se cumple
+
+**Criterio 6, junio.** El total del reporte debe ser igual, al centavo, a la suma del total
+de comisiones de las liquidaciones.
+
+- Esperado (suma de las liquidaciones de junio): **36 615,31**
+- Obtenido (total del reporte): **36 637,34**
+- Diferencia: **22,03** (el reporte cobra más)
+
+No cambié la prueba ni el código. Se diagnostica en el paso 3.
+
+Observación, sin tocar: la prueba del criterio 3 comprueba el valor de la regla del negocio
+sobre el cálculo del reporte; la liquidación (`CalculadoraLiquidacion.cs`, línea 145, `<`)
+asigna 500,00 y 2000,00 al tramo superior, y eso es candidato a explicar parte de la
+diferencia de junio.
+
+
+---
+
+# 5.3 paso 2. `/lab-5-3-paso-2-conciliacion-en-pipeline`
+
+**Participante:** `/lab-5-3-paso-2-conciliacion-en-pipeline`
+
+**Copilot (agente):**
+
+Anoté 14:32 en Integración continua. Leí `scripts/integracion-local.sh` y
+`.github/workflows/integracion-continua.yml`.
+
+## Diff
+
+`scripts/integracion-local.sh`: el paso `conciliacion` al final de `PASOS`, dos funciones de
+apoyo en centavos enteros (`a_centavos`, `a_monto`, con aritmética de bash, sin punto
+flotante) y `paso_conciliacion`. Para cada stack declarado y cada periodo ejecuta la
+liquidación y el reporte, suma el «Total comisiones» solo dentro de los bloques de comercio
+(de `Comercio ` a la línea en blanco), para no sumar el resumen general, toma solo el monto
+aunque la línea siga con `(tope aplicado)`, y lo compara con la fila `Total` del reporte.
+
+`.github/workflows/integracion-continua.yml`: un paso nuevo en el trabajo `equivalencia`,
+después del de equivalencia.
+
+```diff
+diff --git a/.github/workflows/integracion-continua.yml b/.github/workflows/integracion-continua.yml
+index af88601..34566c8 100644
+--- a/.github/workflows/integracion-continua.yml
++++ b/.github/workflows/integracion-continua.yml
+@@ -113,3 +113,5 @@ jobs:
+           dotnet-version: ${{ env.VERSION_DOTNET }}
+       - name: Liquidar los tres periodos y comparar
+         run: bash scripts/integracion-local.sh --paso equivalencia
++      - name: Conciliar el total del reporte con las liquidaciones
++        run: bash scripts/integracion-local.sh --paso conciliacion
+diff --git a/scripts/integracion-local.sh b/scripts/integracion-local.sh
+index d4a337d..3aff19e 100755
+--- a/scripts/integracion-local.sh
++++ b/scripts/integracion-local.sh
+@@ -25,7 +25,7 @@ set -u
+ readonly VERSION_SCRIPT="1.1.0"
+ 
+ # Orden de los pasos. El workflow tiene que llamarlos en este mismo orden.
+-readonly PASOS=(java dependencias-java dotnet dependencias-dotnet equivalencia)
++readonly PASOS=(java dependencias-java dotnet dependencias-dotnet equivalencia conciliacion)
+ 
+ readonly PERIODOS=(2026-04 2026-05 2026-06)
+ 
+@@ -160,6 +160,74 @@ paso_equivalencia() {
+     [ "$fallas" -eq 0 ]
+ }
+ 
++# Convierte un monto con dos decimales, como 1234.56 o -0.01, a centavos enteros, sin
++# punto flotante.
++a_centavos() {
++    local v="$1" signo=""
++    case "$v" in -*) signo="-"; v="${v#-}" ;; esac
++    local entero="${v%%.*}" decimales="${v#*.}"
++    [ "$entero" = "$v" ] && decimales="00"
++    decimales="${decimales}00"; decimales="${decimales:0:2}"
++    echo "${signo}$((10#$entero * 100 + 10#$decimales))"
++}
++
++# Muestra centavos enteros como monto con dos decimales.
++a_monto() {
++    local c="$1" signo=""
++    [ "$c" -lt 0 ] && { signo="-"; c=$((-c)); }
++    printf '%s%d.%02d' "$signo" $((c / 100)) $((c % 100))
++}
++
++paso_conciliacion() {
++    titulo "Conciliacion: total del reporte contra la suma de las liquidaciones (stack: $stack)"
++    local periodo s fallas=0 temporal monto suma total diferencia
++    temporal=$(mktemp -d 2>/dev/null || mktemp -d -t conciliacion)
++    if usa java; then
++        (cd "$raiz/escenario/java" && mvn -q clean package -DskipTests) || { rm -rf "$temporal"; return 1; }
++    fi
++    if usa dotnet; then
++        (cd "$raiz/escenario/dotnet" && dotnet build LiquidacionComercios -c Release > "$temporal/build.log") \
++            || { cat "$temporal/build.log"; rm -rf "$temporal"; return 1; }
++    fi
++    for s in java dotnet; do
++        usa "$s" || continue
++        for periodo in "${PERIODOS[@]}"; do
++            liquidar "$s" "$periodo" > "$temporal/liquidacion.txt" 2>/dev/null
++            liquidar "$s" --reporte-medios "$periodo" > "$temporal/reporte.txt" 2>/dev/null
++            # Solo las lineas de cada comercio: el bloque empieza en "Comercio " y termina en
++            # una linea en blanco. El resumen general tambien dice "Total comisiones" y no
++            # se suma. Algunas lineas siguen con texto despues del monto.
++            suma=0
++            while IFS= read -r monto; do
++                suma=$((suma + $(a_centavos "$monto")))
++            done < <(tr -d '\r' < "$temporal/liquidacion.txt" | awk '
++                /^Comercio / { en_comercio = 1; next }
++                /^[[:space:]]*$/ { en_comercio = 0; next }
++                en_comercio && /^  Total comisiones[[:space:]]*: S\/ / {
++                    linea = $0; sub(/.*: S\/ /, "", linea); split(linea, partes, " "); print partes[1]
++                }')
++            total=$(tr -d '\r' < "$temporal/reporte.txt" | awk '/^Total / { print $NF }')
++            if [ -z "$total" ]; then
++                printf '  [FALLA] %s %s el reporte no tiene la fila Total\n' "$s" "$periodo"
++                fallas=$((fallas + 1))
++                continue
++            fi
++            total=$(a_centavos "$total")
++            diferencia=$((total - suma))
++            if [ "$diferencia" -eq 0 ]; then
++                printf '  [ OK ] %s %s reporte %s, liquidaciones %s, diferencia 0.00\n' \
++                    "$s" "$periodo" "$(a_monto "$total")" "$(a_monto "$suma")"
++            else
++                printf '  [FALLA] %s %s reporte %s, liquidaciones %s, diferencia %s\n' \
++                    "$s" "$periodo" "$(a_monto "$total")" "$(a_monto "$suma")" "$(a_monto "$diferencia")"
++                fallas=$((fallas + 1))
++            fi
++        done
++    done
++    rm -rf "$temporal"
++    [ "$fallas" -eq 0 ]
++}
++
+ correr() {
+     case "$1" in
+         java)                paso_java ;;
+@@ -167,6 +235,7 @@ correr() {
+         dotnet)              paso_dotnet ;;
+         dependencias-dotnet) paso_dependencias_dotnet ;;
+         equivalencia)        paso_equivalencia ;;
++        conciliacion)        paso_conciliacion ;;
+         *) printf 'Paso desconocido: %s\n' "$1" >&2; return 2 ;;
+     esac
+ }
+```
+
+## Pipeline local
+
+```
+$ bash scripts/integracion-local.sh
+== Java: compilar y ejecutar las pruebas ==
+  [AVISO] Stack dotnet: se omite Java.
+== Java: dependencias ==
+  [AVISO] Stack dotnet: se omite Java.
+== .NET: compilar y ejecutar las pruebas ==
+  Failed Pe.PasarelaAndina.Pruebas.Reporte.CalculadoraReporteMediosPagoPruebas.ElTotalDeJunioEsIgualALaSumaDeLasLiquidaciones [25 ms]
+Expected: 36615.31
+Actual:   36637.34
+Failed!  - Failed:     1, Passed:    33, Skipped:     0, Total:    34, Duration: 134 ms - LiquidacionComercios.Pruebas.dll (net10.0)
+  [FALLA] dotnet
+== .NET: dependencias ==
+  [AVISO] Sin acceso a nuget.org, la revision de vulnerabilidades de LiquidacionComercios.Pruebas no esta disponible.
+== Equivalencia: liquidacion de los tres periodos (stack: dotnet) ==
+  [ OK ] dotnet 2026-04 coincide con el hash esperado
+  [ OK ] dotnet 2026-05 coincide con el hash esperado
+  [ OK ] dotnet 2026-06 coincide con el hash esperado
+== Conciliacion: total del reporte contra la suma de las liquidaciones (stack: dotnet) ==
+  [ OK ] dotnet 2026-04 reporte 30384.55, liquidaciones 30384.55, diferencia 0.00
+  [ OK ] dotnet 2026-05 reporte 31385.64, liquidaciones 31385.64, diferencia 0.00
+  [FALLA] dotnet 2026-06 reporte 36637.34, liquidaciones 36615.31, diferencia 22.03
+  [FALLA] conciliacion
+== Resumen (stack: dotnet) ==
+  2 paso(s) fallaron.
+```
+
+| Paso | Resultado |
+|---|---|
+| java, dependencias-java | Omitidos (stack dotnet) |
+| dotnet | **Falla**: la prueba del criterio 6 de junio del paso 1 (36 615,31 esperado, 36 637,34 obtenido) |
+| dependencias-dotnet | Informativo, sin red |
+| equivalencia | Verde en los tres periodos |
+| conciliacion | **Falla** en 2026-06; 2026-04 y 2026-05 cuadran |
+
+| Periodo | Reporte | Liquidaciones | Diferencia |
+|---|---|---|---|
+| 2026-04 | 30 384,55 | 30 384,55 | 0,00 |
+| 2026-05 | 31 385,64 | 31 385,64 | 0,00 |
+| 2026-06 | 36 637,34 | 36 615,31 | **22,03** |
+
+El pipeline queda en rojo. No corregí nada: la diferencia de 22,03 en junio se diagnostica en
+el paso 3. No toqué el escenario ni los hashes.
+
+
+---
+
+# 5.3 paso 3. `/lab-5-3-paso-3-diagnosticar-y-corregir dotnet`
+
+**Participante:** `/lab-5-3-paso-3-diagnosticar-y-corregir dotnet`
+
+**Copilot (agente), primera respuesta:**
+
+Anoté 14:33 en Mantención. Reproduje el rojo con `bash scripts/integracion-local.sh`:
+fallan el paso `dotnet` (la prueba `ElTotalDeJunioEsIgualALaSumaDeLasLiquidaciones`) y el
+paso `conciliacion` en 2026-06, con diferencia **22,03**. Abril y mayo cuadran.
+
+## Diagnóstico por comercio (junio)
+
+Comparé el «Total comisiones» de cada comercio en la liquidación de junio con la suma exacta
+de las comisiones del mismo comercio calculada con las reglas del README.
+
+| Comercio | Liquidación | Suma exacta | Redondeada | Diferencia |
 |---|---|---|---|---|
-| `escenario/java/.../calculo/CalculadoraLiquidacion.java` | 270-322 | `calcularDetalleDeTransaccion` es una copia fiel del bloque original, incluidos `0.5`, `3.0` y `100.0` y el tramo con `<` | Descartar | Es lo que pedía el paso 2: mover sin cambiar. El comparador en cero lo respalda. |
-| `escenario/java/.../calculo/CalculadoraLiquidacion.java` | 328-359 | `imprimirDesgloseMediosDePago` incluye la condición `> 0` y las impresiones tal como estaban | Descartar | Cumple el paso 3. El cálculo se movió al punto de la impresión sin alterar el resultado. |
-| `escenario/java/.../calculo/CalculadoraLiquidacion.java` | 304-305 | El máximo del recargo es `3.0`, mientras `CalculadoraComision.calcularRecargoCuotas` usa `3.5` | Decidir | La regla 3 dice «máximo de 3 %», lo que respalda 3.0, pero cambiar una de las dos copias altera la salida de uno de los caminos. Decide el dueño de negocio y el equipo. Fuera del alcance del cambio. |
-| `escenario/java/.../calculo/CalculadoraLiquidacion.java` | 279-280 (dentro del método extraído) | El tramo usa `< montoHasta` y `CalculadoraComision` usa `<= montoHasta` | Decidir | Las reglas 1 y 2 no fijan a qué tramo pertenece el borde. Requiere una decisión de negocio que el agente no puede tomar. |
-| `escenario/java/.../calculo/CalculadoraLiquidacion.java` | 232-233 | `catch (Exception e) { }` vacío | Descartar | Fuera del alcance del cambio. Ya existía en código que el cambio no tocó. |
-| `escenario/java/.../calculo/CalculadoraLiquidacion.java` | 187, 192 | Literales `6` y `0.05` de la retención, sin nombre | Descartar | Fuera del alcance del cambio. Existían antes y no se tocaron. |
-| `escenario/java/.../calculo/CalculadoraLiquidacion.java` | (cierre) | Método de cierre todavía largo, con `double` y `Date`/`Calendar` | Descartar | Fuera del alcance del cambio. Es la deuda previa del escenario. |
-| `escenario/java/src/test/.../calculo/CalculadoraComisionTest.java` | 62-76 | Los nombres de las tres pruebas de borde dicen «porque el límite superior es inclusivo», lo que presenta como regla algo que las reglas de negocio no definen | Decidir | Las pruebas fijan el comportamiento actual, y hoy hay dos comportamientos distintos en el sistema. Si negocio decide el borde exclusivo, estas tres pruebas se invierten. Conviene que quien revisa sepa que no certifican corrección. |
-| `escenario/java/src/test/.../calculo/CalculadoraComisionTest.java` | 86-91 | La prueba del monto -1.00 fija que se devuelve el último tramo (2,1 %) | Decidir | Es el comportamiento actual, probablemente no intencional. Las reglas no hablan de montos negativos. Decide negocio si debe existir una prueba que lo congele. |
-| `escenario/java/src/test/.../calculo/CalculadoraComisionTest.java` | 1-108 | Archivo nuevo en el paquete y estilo del proyecto, sin dependencias nuevas, 13 pruebas en verde | Descartar | No hay nada que corregir. Es parte del cambio y cumple las convenciones de `java.instructions.md`. |
-| `labs/cap5/lab-5-3-pruebas-y-revision/entregables/estrategia-de-pruebas.md` | sección 4 | El documento presenta la discrepancia de bordes y dice que requiere decisión de negocio, sin resolverla | Descartar | Es correcto. Registra la pregunta para quien corresponde. |
-| `labs/cap5/lab-5-3-pruebas-y-revision/entregables/estrategia-de-pruebas.md` | sección 3 | Los valores de borde de las reglas 5, 7 y 8 y de redondeo son propuestas no verificadas con pruebas ejecutadas | Decidir | Son valores razonables, pero conviene que un humano confirme, por ejemplo, el criterio de los seis meses y la zona horaria, antes de convertirlos en pruebas. |
-| (varios) | (varios) | Comentario de `PlanComisiones` («tramos acumulativos») y de `CalculadoraComision` (IGV) que no coinciden con el código | Descartar | Fuera del alcance del cambio. Ya existían y el cambio no los tocó. |
+| CM0001 | 727,34 | 738,34022175 | 738,34 | 11,00 |
+| CM0007 | 907,11 | 918,11199 | 918,11 | 11,00 |
+| CM0011 | 137,82 | 137,825 | 137,83 | 0,01 |
+| CM0016 | 493,99 | 493,995 | 494,00 | 0,01 |
+| CM0025 | 957,18 | 957,185 | 957,19 | 0,01 |
+| Los otros 33 comercios | | | | 0,00 |
+| **Total** | | | | **22,03** |
 
-No hay hallazgos en **Aplicar**: nada del cambio tiene que corregirse antes de aceptarlo.
+## Causas
 
-**Recomendación: aceptar.** La refactorización conserva la salida (comparador en 0, 33 pruebas en verde), los dos archivos nuevos cumplen lo pedido, y lo pendiente son decisiones de negocio (borde del tramo y máximo del recargo) que el cambio no cierra ni debía cerrar. Lo único que hay que tener presente al aceptar es que las pruebas de borde documentan el comportamiento actual, no una regla confirmada.
+| # | Causa | Transacciones | Comercios | Monto | Regla |
+|---|---|---|---|---|---|
+| 1 | Monto exactamente en el límite de un tramo: la liquidación usa `monto < tramo.MontoHasta` (`CalculadoraLiquidacion.cs`, línea 145) y lo manda al tramo superior | TX002001 (500,00: 3,5 % → 17,80 frente a 2,9 % → 14,80, +3,00), TX002002 (2000,00: 2,9 % → 58,30 frente a 2,5 % → 50,30, +8,00), TX002003 (+3,00), TX002004 (+8,00) | CM0001 (+11,00), CM0007 (+11,00) | **22,00** | Regla 2 (tramo en que cae el monto). El README no dice a qué tramo pertenece el límite |
+| 2 | Punto flotante: la liquidación acumula las comisiones en `double`; la suma exacta cae justo en medio centavo (x,xx5) y el `double` queda un poco por debajo, así que `RedondearADosDecimales` baja en vez de subir | Todas las del mes de cada comercio; ninguna transacción por sí sola | CM0011 (137,825), CM0016 (493,995), CM0025 (957,185) | **0,03** | Regla 9 (redondeo a dos decimales, medio hacia arriba) |
+| | **Suma de las causas** | | | **22,03** | Igual a la diferencia de la conciliación, al centavo |
 
-Otros problemas vistos y no tocados: `Liquidacion.obtenerMontoNeto()` consulta y además asigna; `UtilidadesFecha` usa la zona horaria del sistema y la regla 8 pide hora de Lima.
+## Decisión del negocio
 
-### Verificación del «Salida esperada»
-Tabla con las columnas Archivo, Línea, Hallazgo, Clasificación y Justificación: sí. Recomendación final: sí (aceptar). Problemas anteriores al cambio clasificados como Descartar con nota «fuera del alcance del cambio»: sí.
+La causa 1 depende de una regla que el README no decide: a qué tramo pertenece un monto
+exactamente en el límite. **No la elijo yo.** En este caso la pregunta ya se le hizo al
+negocio en el 5.1 y la respuesta está registrada en
+`docs/proyecto/historia-reporte-medios-de-pago.md`: «Pertenece al tramo inferior. El límite
+superior es inclusivo», respondida por el relator. ¿Confirmas que esa es la decisión vigente,
+o quieres volver a llevarla al relator?
 
-## Paso 4 - `/lab-5-3-paso-4-checklist-humano` (modo Agent)
+La causa 2 no requiere decisión: la regla 9 la decide.
 
-Segundos: 15 (redacción del checklist; se comprobó que no existe `criterios-de-evaluacion.md`)
+## Corrección mínima propuesta (no aplicada)
 
-### Respuesta del chat (verbatim)
+Solo en `escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs`:
 
-Creé `labs/cap5/lab-5-3-pruebas-y-revision/entregables/checklist-de-revision.md` con 15 puntos agrupados en Alcance (3), Comportamiento (3), Pruebas (3), Decisiones de negocio (3) y Lo que el agente no ve (3). Cada punto se responde con sí o no y dice cómo se verifica. No modifiqué código.
+1. **Causa 1**, línea 145: `montoTransaccion < tramo.MontoHasta` → `montoTransaccion <= tramo.MontoHasta`.
+2. **Causa 2**: una variable local `decimal totalComisionesExacto` que acumula
+   `(decimal)comisionTotal` de cada transacción (la conversión de `double` a `decimal`
+   conserva 15 dígitos significativos, que recupera el valor exacto de cada comisión de
+   estos datos), toma el tope si se aplica, y se redondea con
+   `Math.Round(totalComisionesExacto, 2, MidpointRounding.AwayFromZero)` en lugar de
+   `CompatibilidadJava.RedondearADosDecimales(totalComisiones)` (línea 247). El resto del
+   cálculo, incluida la retención, sigue en `double` como está.
 
-`labs/cap5/lab-5-1-preparacion/entregables/criterios-de-evaluacion.md` no existe en este repositorio (el laboratorio 5.1 no dejó entregables), así que no pude incorporar sus criterios. El punto 15 deja dicho que se revise ese documento cuando exista.
+**Esto toca reglas del repositorio que exigen pedido explícito:**
 
-Los puntos que un agente no podría responder por sí solo son el 8 (quién decidió que lo que congelan las pruebas es lo correcto), el 10 (quién es el dueño de cada discrepancia abierta), el 13 (impacto en el dinero de comercios reales), el 14 (configuración del ambiente de producción) y el 15 (criterios acordados por el equipo). Todos dependen de contexto o de autoridad que no está en el repositorio.
+- `AGENTS.md` y `.github/copilot-instructions.md`: «No cambies tipos de datos». La causa 2
+  introduce un acumulado `decimal` (no cambia el tipo de ningún campo ni de ninguna API).
+- `.github/instructions/dotnet.instructions.md`: «Todo redondeo y todo formateo de montos
+  pasa por `CompatibilidadJava`». La causa 2 redondea ese total fuera de esa clase.
+- Equivalencia con Java: el escenario Java no se toca (solo el stack indicado), así que con
+  la corrección la liquidación .NET de junio se separa de la Java y
+  `scripts/comparar-escenarios.sh` va a fallar para junio. El pipeline está declarado como
+  `dotnet` y no compara con Java, pero el hash esperado de junio deja de valer para Java.
 
-Otros problemas que vi y no toqué: ninguno nuevo respecto de los pasos anteriores (borde de tramo y máximo del recargo distintos entre las dos calculadoras, zona horaria, montos en `double`).
+Efecto esperado: solo cambia la liquidación de 2026-06, en CM0001 y CM0007 (comisiones +11,00
+cada uno, y con ellas el neto; CM0007 tiene menos de seis meses, así que también su
+retención) y en CM0011, CM0016 y CM0025 (comisiones +0,01 y neto −0,01). Abril y mayo no
+tienen montos en el límite ni sumas en medio centavo que cambien. Habría que actualizar solo
+el hash de 2026-06 en `scripts/integracion/liquidacion-esperada.sha256`.
 
-### Archivo nuevo (contenido completo)
+¿Apruebas la corrección?
 
-````markdown
-# Checklist de revisión humana de un cambio hecho con ayuda de un agente
+**Participante:** Confirmo la decisión del negocio registrada en la historia (no hay pregunta
+nueva para el relator). Apruebo la corrección propuesta, incluida la desviación de tipo y de
+redondeo en ese acumulado.
 
-Para aplicar a un pull request. Cada punto se responde con sí o no. Un «no» en cualquier
-punto de Alcance o Comportamiento detiene la aceptación hasta que se aclare.
+**Copilot (agente), segunda respuesta, después de la aprobación:**
 
-## 1. Alcance
+Apliqué la corrección aprobada.
 
-1. **¿El diff toca solo los archivos que la tarea nombraba?**
-   Verificación: `git diff --stat` y comparar la lista con el enunciado de la tarea.
-2. **¿Cada cambio del diff responde a algo que se pidió?** (sin renombres, sin reformateo, sin literales extraídos, sin tipos cambiados por iniciativa del agente)
-   Verificación: leer el diff completo, no el resumen del agente; buscar líneas cambiadas que no estén dentro del bloque pedido.
-3. **¿Los problemas que el agente vio y no pertenecían a la tarea están anotados y no corregidos?**
-   Verificación: la respuesta del agente tiene su lista de «otros problemas» y el diff no los toca.
+```diff
+diff --git a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+index 3a3c1a7..09c32ca 100644
+--- a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
++++ b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+@@ -119,6 +119,7 @@ namespace Pe.PasarelaAndina.Calculo
+ 
+                     double totalTransado = 0.0;
+                     double totalComisiones = 0.0;
++                    decimal totalComisionesExacto = 0m;
+                     int cantidadTransacciones = 0;
+ 
+                     List<Transaccion> transacciones = repositorio.BuscarTransaccionesDeComercio(comercio.Id);
+@@ -142,7 +143,7 @@ namespace Pe.PasarelaAndina.Calculo
+                                         if (!tramoEncontrado)
+                                         {
+                                             if (montoTransaccion >= tramo.MontoDesde
+-                                                    && montoTransaccion < tramo.MontoHasta)
++                                                    && montoTransaccion <= tramo.MontoHasta)
+                                             {
+                                                 porcentajeAplicado = tramo.Porcentaje;
+                                                 tramoEncontrado = true;
+@@ -189,6 +190,7 @@ namespace Pe.PasarelaAndina.Calculo
+ 
+                                     totalTransado = totalTransado + montoTransaccion;
+                                     totalComisiones = totalComisiones + comisionTotal;
++                                    totalComisionesExacto = totalComisionesExacto + (decimal)comisionTotal;
+                                     cantidadTransacciones++;
+ 
+                                     acumuladoGeneralComisiones = acumuladoGeneralComisiones + comisionTotal;
+@@ -200,6 +202,7 @@ namespace Pe.PasarelaAndina.Calculo
+                     if (totalComisiones > plan.TopeMensual)
+                     {
+                         totalComisiones = plan.TopeMensual;
++                        totalComisionesExacto = (decimal)plan.TopeMensual;
+                         liquidacion.TopeAplicado = true;
+                     }
+ 
+@@ -244,7 +247,7 @@ namespace Pe.PasarelaAndina.Calculo
+                     }
+ 
+                     totalTransado = CompatibilidadJava.RedondearADosDecimales(totalTransado);
+-                    totalComisiones = CompatibilidadJava.RedondearADosDecimales(totalComisiones);
++                    totalComisiones = (double)Math.Round(totalComisionesExacto, 2, MidpointRounding.AwayFromZero);
+                     totalContracargos = CompatibilidadJava.RedondearADosDecimales(totalContracargos);
+                     retenciones = CompatibilidadJava.RedondearADosDecimales(retenciones);
+ 
+```
 
-## 2. Comportamiento
+## Qué cambió en la liquidación
 
-4. **¿La salida del programa es idéntica antes y después en un cambio que no debía alterarla?**
-   Verificación: `bash scripts/comparar-escenarios.sh` termina en 0 y dice «Las salidas son identicas».
-5. **¿El proyecto compila y todas las pruebas pasan?**
-   Verificación: `cd escenario/java && mvn -q clean package && mvn test`, o `dotnet test LiquidacionComercios.Pruebas` desde `escenario/dotnet/`; contar las pruebas y comparar con las esperadas.
-6. **¿Se probó con un periodo distinto del periodo por omisión?**
-   Verificación: `bash scripts/comparar-escenarios.sh --periodo 2026-05` y `--periodo 2026-04`.
+`bash scripts/integracion-local.sh --paso equivalencia` después de la corrección:
 
-## 3. Pruebas
+```
+  [ OK ] dotnet 2026-04 coincide con el hash esperado
+  [ OK ] dotnet 2026-05 coincide con el hash esperado
+  [FALLA] dotnet 2026-06 no coincide con el hash esperado
+          esperado 61f2c13fed35a2ea2f0189dcc30e78227325bee57765baa9b1c31cff94e432eb
+          obtenido cd1466305e636d89e4f5af11421a98f97fc75f9dc677083caee8aed83a8c498a
+```
 
-7. **¿Cada prueba nueva declara en su nombre qué espera, y se sabe si documenta el comportamiento actual o el deseado?**
-   Verificación: leer los nombres y los comentarios del archivo; el agente debe haberlo dicho en su respuesta.
-8. **¿Alguien con autoridad sobre la regla decidió que lo que las pruebas congelan es lo correcto?**
-   Verificación: preguntar quién lo decidió y dónde consta. Si una prueba afirma un valor que las reglas de `escenario/README.md` no definen, la respuesta es no.
-9. **¿Las pruebas fallarían si el comportamiento cambiara?** (no solo ejercen el código)
-   Verificación: cambiar a mano un valor de borde en el código bajo prueba, correr `mvn test` y comprobar que alguna prueba falla; revertir el cambio.
+Solo cambia junio. Diferencias de la salida de junio, antes y después:
 
-## 4. Decisiones de negocio
+| Comercio | Comisiones | Retenciones | Neto | Causa |
+|---|---|---|---|---|
+| CM0001 | 727,34 → 738,34 | sin cambio | 25 346,74 → 25 335,74 | 1 |
+| CM0007 | 907,11 → 918,11 | 1 744,39 → 1 743,84 | 33 143,33 → 33 132,88 | 1 (afiliado hace menos de seis meses) |
+| CM0011 | 137,82 → 137,83 | sin cambio | 3 566,91 → 3 566,90 | 2 |
+| CM0016 | 493,99 → 494,00 | sin cambio | 14 736,54 → 14 736,53 | 2 |
+| CM0025 | 957,18 → 957,19 | sin cambio | 39 320,08 → 39 320,07 | 2 |
+| Resumen general | 36 615,31 → 36 637,34 | 4 061,62 → 4 061,07 | 2 311 874,77 → 2 311 853,29 | |
 
-10. **¿Cada discrepancia entre dos partes del sistema o entre el código y las reglas está listada con su dueño?**
-    Verificación: el cambio o su descripción nombra las discrepancias (por ejemplo, el borde de tramo y el máximo del recargo por cuotas) y a quién corresponde decidirlas.
-11. **¿Se verificó la regla en `escenario/README.md` y no un comentario del código?**
-    Verificación: para cada afirmación del agente sobre comportamiento correcto, localizar el número de regla; si solo hay un comentario como respaldo, la respuesta es no.
-12. **¿Ninguna discrepancia abierta se resolvió en silencio dentro de este cambio?**
-    Verificación: buscar en el diff modificaciones de `<`/`<=`, de topes o de porcentajes.
+Actualicé en `scripts/integracion/liquidacion-esperada.sha256` solo el hash de 2026-06:
 
-## 5. Lo que el agente no ve
+```diff
+-61f2c13fed35a2ea2f0189dcc30e78227325bee57765baa9b1c31cff94e432eb  2026-06
++cd1466305e636d89e4f5af11421a98f97fc75f9dc677083caee8aed83a8c498a  2026-06
+```
 
-13. **¿Alguien del equipo confirmó el impacto en el dinero de los comercios reales?** (el agente solo ve los datos de ejemplo)
-    Verificación: una persona de negocio o de finanzas firma que los montos cambiados, si los hay, son aceptables.
-14. **¿Se consideraron las restricciones del entorno que no están en el repositorio?** (zona horaria del servidor frente a la hora de Lima, cultura de la máquina, versión del JDK o del SDK de producción)
-    Verificación: comparar con la configuración del ambiente donde corre el proceso de cierre.
-15. **¿El cambio respeta los criterios de evaluación acordados por el equipo?**
-    Verificación: revisar `labs/cap5/lab-5-1-preparacion/entregables/criterios-de-evaluacion.md` cuando exista; si el equipo todavía no lo tiene, acordarlo antes de aceptar.
-````
+Ese cambio es intencional y se justifica en la descripción del pull request del paso 4: la
+liquidación de junio cambia por las dos causas de la tabla, nada más.
 
-### Verificación del «Salida esperada»
-Checklist creado con entre diez y quince puntos (15), agrupado en las cinco categorías, con sí/no y modo de verificación: sí. Criterios del 5.1 incorporados: no aplica, el archivo no existe.
+## Pipeline
+
+```
+$ bash scripts/integracion-local.sh
+== .NET: compilar y ejecutar las pruebas ==   Passed! Failed: 0, Passed: 34
+== Equivalencia ==                            [ OK ] 2026-04, 2026-05, 2026-06
+== Conciliacion ==
+  [ OK ] dotnet 2026-04 reporte 30384.55, liquidaciones 30384.55, diferencia 0.00
+  [ OK ] dotnet 2026-05 reporte 31385.64, liquidaciones 31385.64, diferencia 0.00
+  [ OK ] dotnet 2026-06 reporte 36637.34, liquidaciones 36637.34, diferencia 0.00
+== Resumen (stack: dotnet) ==
+  Todos los pasos pasan.
+```
+
+`verificar-reporte.sh dotnet` sigue coincidiendo en los tres periodos.
+
+## Lo que queda fuera y hay que vigilar
+
+- `bash scripts/comparar-escenarios.sh --periodo 2026-06` ahora termina en 1: la liquidación
+  Java de junio no tiene la corrección. No toqué Java (solo el stack indicado). Si el stack
+  del pipeline vuelve a `ambos`, junio falla hasta que Java tenga la misma corrección. El
+  mensaje de ese script sugiere revisar `CompatibilidadJava.cs`, que aquí no es la causa.
+- `CalculadoraComision.cs` (usada por el simulador) sigue con tope de recargo 3,5, distinto
+  de la regla 3 (3 %). No lo toqué.
+- El comentario de `PlanComisiones.cs` sobre tramos acumulativos contradice la regla 2. No lo
+  toqué.
+
+
+---
+
+# 5.3 paso 4. `/lab-5-3-paso-4-revision-y-pull-request`
+
+**Participante:** `/lab-5-3-paso-4-revision-y-pull-request`
+
+**Copilot (agente):**
+
+Anoté 14:35 en Revisión de código y en Seguridad.
+
+¿Ya pediste la revisión de Copilot sobre los cambios sin confirmar, con **Copilot Code
+Review - Uncommitted Changes** en la vista **Source Control**? Si no, pídela ahora y dime qué
+comentarios dejó y qué decidiste con cada uno.
+
+**Participante:** No se pudo pedir: la verificación corre sin Visual Studio Code.
+
+**Copilot (agente):**
+
+Lo dejo así en la descripción, sin comentarios inventados.
+
+## Decisión registrada
+
+`docs/arquitectura/decisiones/0005-limite-superior-de-tramo-inclusivo.md`, estado
+«Propuesta», con su fila en el índice. Cita la respuesta del negocio de la historia, las
+cuatro transacciones de junio (TX002001 a TX002004), la corrección en
+`CalculadoraLiquidacion.cs` y la verificación (prueba del límite y paso `conciliacion`).
+
+## Descripción del pull request
+
+`docs/proyecto/pull-request.md`, con la plantilla: qué cambia y por qué, qué generó el
+agente por skill, las comprobaciones, el hash de 2026-06 con los cinco comercios que cambian
+y las dos causas (22,00 por el límite de tramo y 0,03 por `double`), la revisión de Copilot
+(«No se pudo pedir: la verificación corre sin Visual Studio Code») y los enlaces a 0005 y
+0004.
+
+## Revisión del diff contra la lista de comprobación
+
+| Casilla | Estado | Por qué |
+|---|---|---|
+| Una persona revisó cada línea | **Sin marcar** | No puedo afirmarlo yo; la marca el participante cuando lea el diff |
+| Sin secretos ni datos reales | Marcada | Busqué en el diff; solo hay datos ficticios del escenario (IDs de comercios y transacciones) |
+| `escenario/datos/` sin cambios | Marcada | `git diff` contra el punto de partida no muestra cambios en `escenario/datos/` |
+| Pipeline en verde para el stack declarado | Marcada | Stack `dotnet`; `bash scripts/integracion-local.sh` termina con «Todos los pasos pasan» |
+| Cada hash que cambió con su causa | Marcada | Solo 2026-06, con los cinco comercios y las dos causas |
+| Cambio en `.github/` revisado por otra persona | **Sin marcar** | El cambio toca `.github/workflows/integracion-continua.yml` y nadie más lo revisó todavía |
+
+Te propongo el commit:
+
+```bash
+git add -A && git commit -m "Pruebas, conciliacion y correccion del borde de tramo"
+```
+
+Incluye también `docs/proyecto/backlog/formato-del-reporte.md`, que entregó el 5.2 y no
+estaba confirmado.
+
+**Participante:** Confirmo. *(Commit `ae3e5dc Pruebas, conciliacion y correccion del borde de tramo`.)*
+
+Observación, sin tocar: `scripts/comparar-escenarios.sh` falla en junio porque Java no
+tiene la corrección; está declarado en la descripción del pull request.
+

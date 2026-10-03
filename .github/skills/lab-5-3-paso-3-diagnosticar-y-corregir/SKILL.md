@@ -23,11 +23,15 @@ nada más hasta que responda.
    sepáralas: para cada una, qué transacciones la producen, cuánto suma y qué regla de
    `escenario/README.md` está en juego. No te detengas en la causa más grande: la suma de
    las causas tiene que dar la diferencia completa, al centavo.
-4. Si una causa depende de una regla que el README no decide, detente y dile al participante
-   que le lleve la pregunta al negocio, que en esta sala es el relator. No elijas tú.
+4. Si una causa depende de una regla que el README no decide, busca primero la respuesta del
+   negocio en la tabla de preguntas de `docs/proyecto/historia-reporte-medios-de-pago.md`. Si
+   está, úsala y cítala. Si no está, detente y dile al participante que le lleve la pregunta
+   al negocio, que en esta sala es el relator. No elijas tú.
 5. Con la decisión del negocio, propón la corrección mínima en el escenario del stack: solo
-   lo necesario para cada causa, sin refactorizar. Espera la aprobación del participante y
-   aplícala.
+   lo necesario para cada causa, sin refactorizar. Si la corrección exige algo que las
+   instrucciones del repositorio prohíben salvo pedido explícito, como cambiar un tipo de
+   dato o una forma de redondear, dilo y muestra qué regla toca. Espera la aprobación del
+   participante y recién entonces aplícala.
 6. La corrección cambia la liquidación de algún periodo a propósito. Muestra qué periodos y
    qué comercios cambian, y actualiza en `scripts/integracion/liquidacion-esperada.sha256`
    solo los hashes de esos periodos. Explica al participante que ese cambio se justifica en

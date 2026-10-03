@@ -15,6 +15,7 @@ Responda solo lo que pregunten.
 | El tope | Es por comercio, no se reparte. Las filas van antes del tope y una fila de ajuste muestra lo descontado |
 | El redondeo | Al final: cada fila suma exacto y redondea; el total se calcula por comercio, como la liquidación |
 | Un monto en el límite de un tramo | Pertenece al tramo inferior. El límite superior es inclusivo |
+| Orden, formato o decimales | Los fija la especificación técnica que el repositorio entrega en el 5.2 |
 
 En la puesta en común: una historia que solo excluye las anuladas difiere de las
 liquidaciones en 3 415,01, 4 065,43 y 2 521,97 soles en abril, mayo y junio.

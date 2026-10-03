@@ -41,9 +41,9 @@ diagnostica en el 5.3.
 
 | Paso | Estimado | Observado en la verificación |
 |---|---|---|
-| 1 | 10 min | Se completa en la verificación de SPEC-016 |
-| 2 | 20 min | Se completa en la verificación de SPEC-016 |
-| 3 | 8 min | Se completa en la verificación de SPEC-016 |
+| 1 | 10 min | 26 a 66 s de agente y 2 comandos, en 4 corridas |
+| 2 | 20 min | 61 a 92 s de agente y 4 a 7 comandos, en 4 corridas |
+| 3 | 8 min | 25 a 41 s de agente y 4 a 5 comandos, en 4 corridas |
 
 Suma 38. Quedan 7 para la puesta en común.
 

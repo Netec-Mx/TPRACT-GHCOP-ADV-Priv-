@@ -1,6 +1,6 @@
-# SHA-256 de la salida de la liquidacion de cada periodo, con fin de linea \n. Es la misma
-# en los dos stacks. Si un cambio altera la liquidacion a proposito, el hash nuevo se
-# actualiza aqui y el cambio se justifica en el pull request.
+# SHA-256 de la salida de la liquidacion de cada periodo, con fin de linea \n. Se comprueba
+# en el stack declarado en stack.txt, o en los dos. Si un cambio altera la liquidacion a
+# proposito, el hash nuevo se actualiza aqui y el cambio se justifica en el pull request.
 d47a700cb69776d8125649c116728020be4529db1075bafea908764b2aa41a21  2026-04
 b80d54152371f23f37b9dc7f6cfd46200520c41b6eb2ebaf46ee24025b22e82c  2026-05
 61f2c13fed35a2ea2f0189dcc30e78227325bee57765baa9b1c31cff94e432eb  2026-06

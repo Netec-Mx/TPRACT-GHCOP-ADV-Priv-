@@ -1,5 +1,8 @@
 # Verificación de las skills como agente
 
+Las corridas del capítulo 5 anteriores a la s16 corresponden a la versión del capítulo
+retirada en SPEC-016; sus skills ya no existen y se conservan como registro.
+
 Registro de la fase 7 de SPEC-009. Cada skill de laboratorio se ejecutó con un agente sobre
 una copia limpia del repositorio de participantes, generada con
 `scripts/publicar-taller.sh`, sin el material del relator. Los pasos que modifican código
@@ -261,3 +264,101 @@ El laboratorio sigue cabiendo en 30 minutos: los tiempos estimados de los pasos 
 10 + 10 + 8 = 28, y el agente tardó 59, 73 y 9 segundos. El paso 2 confirmó que ninguna
 decisión registrada cubre la pedida, citó archivo y línea de las dependencias, marcó las
 suposiciones como pendientes de confirmar y no escribió en `docs/arquitectura/decisiones/`.
+
+## Corrida s16, capítulo 5 rehecho en SPEC-016
+
+3 de octubre de 2026. El capítulo 5 completo en Java y en .NET, y el 5.1 al 5.3 por cada
+camino del 5.2, desde copias recién publicadas y con las instrucciones generales vigentes,
+incluidas las de gobierno y la de BIAN. Mismo método y misma limitación que las corridas
+anteriores: el agente no es Copilot y no hay Visual Studio Code, así que la revisión de
+Copilot del 5.3 no se pudo pedir. El relator se simuló con la hoja de respuestas, solo para
+las preguntas que el agente listó. Las corridas del capítulo completo tomaron por su cuenta el
+camino B; el camino A se verificó en una corrida aparte.
+
+Cada celda: segundos de agente, comandos de terminal, que en Visual Studio Code pedirían
+aprobación uno por uno, y si cumplió la salida esperada.
+
+| Skill | s16 Java | s16 .NET | s16-a .NET, camino A | s16-b Java, camino B |
+|---|---|---|---|---|
+| `lab-5-1-paso-1-historia-de-usuario` | 104 s, 3 cmd, sí | 116 s, 6 cmd, sí | 107 s, 8 cmd, sí | 111 s, 3 cmd, sí |
+| `lab-5-1-paso-2-estimar` | 25 s, 2 cmd, sí | 22 s, 1 cmd, sí | 20 s, 2 cmd, sí | 20 s, 1 cmd, sí |
+| `lab-5-1-paso-3-ubicar-en-arquitectura` | 41 s, 1 cmd, sí | 35 s, 1 cmd, sí | 26 s, 4 cmd, sí | 29 s, 2 cmd, sí |
+| `lab-5-2-paso-1-planificar` | 27 s, 2 cmd, sí | 26 s, 2 cmd, sí | 66 s, 2 cmd, sí | 44 s, 2 cmd, sí |
+| `lab-5-2-paso-2-implementar-reporte` | 92 s, 4 cmd, sí | 61 s, 4 cmd, sí | 69 s, 4 cmd, sí | 72 s, 7 cmd, sí |
+| `lab-5-2-paso-3-verificar-reporte` | 29 s, 4 cmd, sí | 34 s, 4 cmd, sí | 41 s, 5 cmd, sí | 25 s, 5 cmd, parcial |
+| `lab-5-3-paso-1-probar-criterios` | 41 s, 2 cmd, sí | 55 s, 3 cmd, sí | 80 s, 2 cmd, sí | 55 s, 2 cmd, sí |
+| `lab-5-3-paso-2-conciliacion-en-pipeline` | 45 s, 2 cmd, parcial | 43 s, 3 cmd, parcial | 58 s, 3 cmd, sí | 38 s, 2 cmd, sí |
+| `lab-5-3-paso-3-diagnosticar-y-corregir` | 311 s, 17 cmd, sí | 139 s, 10 cmd, sí | 153 s, 9 cmd, sí | 125 s, 10 cmd, sí |
+| `lab-5-3-paso-4-revision-y-pull-request` | 60 s, 4 cmd, sí | 73 s, 4 cmd, sí | 47 s, 4 cmd, sí | 69 s, 5 cmd, sí |
+| `lab-5-3-paso-5-opcional-github` | — s, — cmd, no aplica | 0 s, 0 cmd, sí | — | — |
+| `lab-5-4-paso-1-liberar` | 50 s, 3 cmd, sí | 37 s, 2 cmd, sí | — | — |
+| `lab-5-4-paso-2-atender-incidente` | 54 s, 4 cmd, sí | 56 s, 3 cmd, sí | — | — |
+| `lab-5-4-paso-3-estimar-evolutiva` | 34 s, 2 cmd, sí | 42 s, 3 cmd, sí | — | — |
+| `lab-5-4-paso-4-cierre` | 62 s, 2 cmd, sí | 71 s, 3 cmd, sí | — | — |
+
+### El recorrido
+
+- **5.1.** El agente listó entre 8 y 11 preguntas abiertas y se detuvo. La hoja respondió las
+  seis de alcance, comprobación, tope, redondeo y borde; las de orden y decimales quedaron
+  pendientes hasta que la hoja agregó que las fija la especificación técnica del 5.2.
+- **5.2, camino B.** El reporte reutiliza el cálculo de la liquidación. `verificar-reporte.sh`
+  coincide en abril y mayo y no en junio.
+- **5.2, camino A.** El reporte calcula por su cuenta con decimal exacto y coincide en los tres
+  periodos.
+- **5.3.** Camino B: rojo por las pruebas de borde y de tercer decimal; la conciliación pasa.
+  Camino A: rojo por la conciliación de junio, 22,03. En las cuatro corridas el diagnóstico
+  separó 22,00 del borde de tramo y 0,03 de punto flotante, que suman la diferencia completa,
+  cambió solo el hash de junio a `cd146630…` y terminó en verde.
+- **5.4.** Las dos corridas completas liberaron la versión 1.1.0, atendieron el incidente
+  hasta las notas de versión y la decisión del borde, y compararon lo estimado con lo real.
+
+### Gobierno y BIAN en el capítulo 5
+
+Era lo que dejó pendiente SPEC-014.
+
+- **No hacer commits.** Cambió el comportamiento en todos los pasos que confirman: el agente
+  propuso el commit y lo hizo el participante.
+- **Datos ficticios.** Permitió nombrar comercios y transacciones en criterios, notas de
+  versión, análisis del incidente y respuesta al comercio, sin dudar.
+- **No escribir secretos ni datos reales.** En el 5.3 paso 4, el agente revisó el diff con esa
+  regla antes de marcar la casilla de la plantilla.
+- **No proponer servidores MCP ni extensiones.** No hubo ocasión; los activos del 5.4 listan
+  solo lo existente.
+- **Instrucción BIAN.** Cambió lo que se escribió en `docs/arquitectura/` y en `docs/proyecto/`:
+  las decisiones del 5.1 y del 5.3 nombran Merchant Acquiring Facility y declaran que no se
+  mueve ninguna responsabilidad, y en .NET la historia y la estimación de la evolutiva ubican
+  el reporte y la categoría en sus dominios. No tocó el código.
+
+### Ajustes que salieron de la corrida
+
+- El paso 3 del 5.2 pedía mostrar las líneas que difieren, y `verificar-reporte.sh` solo
+  compara hashes. La skill ya no lo pide.
+- La plantilla de pull request exigía `comparar-escenarios.sh` en cero, imposible con un solo
+  stack, y no tenía lugar para el hash que cambió ni para la revisión de Copilot. Se ajustó.
+- El paso 3 del 5.3 aplicaba la corrección antes de la aprobación en una corrida, y en otra
+  chocaba con las instrucciones que prohíben cambiar tipos o la forma de redondear. Ahora pide
+  mostrar la regla que toca y esperar la aprobación, y usa la respuesta del negocio si la
+  historia ya la trae.
+- La hoja de respuestas suma la fila de orden y decimales.
+
+Pendientes que no se corrigen en este spec: la instrucción de .NET prohíbe `Math.Round` y la
+corrección en `decimal` lo necesita, porque `CompatibilidadJava` solo trabaja con `double`;
+y el registro de tiempos queda ambiguo cuando las fases no se ejecutan en el orden de la tabla.
+
+### Minutos de participante por subtema
+
+Con el método de los laboratorios anteriores: el tiempo de diseño de cada paso, contrastado
+con lo observado en el agente, más la lectura, las decisiones y la conversación con el
+relator. Sin recortes.
+
+| Subtema | Pasos y puesta en común | Total estimado | Contra 45 |
+|---|---|---|---|
+| 5.1 | Historia 15 a 20, por la fila de participantes en el relator; estimación 10; arquitectura 10; puesta en común 10 | 45 a 50 | 0 a 5 de más |
+| 5.2 | Plan 10; implementación 20; verificación 8; puesta en común 7 | 45 | Cabe |
+| 5.3 | Pruebas 8; conciliación 8; diagnóstico y corrección 20, con hasta 17 aprobaciones; revisión y pull request 10, con el botón de revisión; puesta en común con la demostración 5.3 y el caso 03, 8 | 54 | 9 de más |
+| 5.4 | Liberación 8; incidente 12; evolutiva 8; cierre 10; puesta en común 7 | 45 | Cabe |
+| **Capítulo** | | **189 a 194** | **9 a 14 de más sobre 180** |
+
+Lo que más pesa: el diagnóstico y la corrección del 5.3 y la ronda de preguntas al relator
+del 5.1. Es el insumo para decidir qué pasa a opcional después de la prueba en la máquina
+virtual, bloque H del protocolo.

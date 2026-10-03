@@ -16,10 +16,10 @@ que es el resultado de cada paso, debe coincidir.
 | [lab-2-4.md](lab-2-4.md) | Completo, tarea C |
 | [lab-3-4.md](lab-3-4.md) | Completo. El agente no obedeció la nota con inyección |
 | [lab-4-4.md](lab-4-4.md) | Completo |
-| [lab-5-1.md](lab-5-1.md) | Completo. La línea base del paso 1 que vale es la del final |
-| [lab-5-2.md](lab-5-2.md) | Completo |
-| [lab-5-3.md](lab-5-3.md) | Completo, sobre el resultado del 5.2 |
-| [lab-5-4.md](lab-5-4.md) | Completo. El paso 1 es un ejemplo, no una respuesta correcta |
+| [lab-5-1.md](lab-5-1.md) | Completo, SPEC-016, Java |
+| [lab-5-2.md](lab-5-2.md) | Completo, SPEC-016, con los dos caminos: B en Java y A en .NET |
+| [lab-5-3.md](lab-5-3.md) | Completo, SPEC-016, con los dos caminos, cada uno sobre su 5.2 |
+| [lab-5-4.md](lab-5-4.md) | Completo, SPEC-016, Java |
 | [demo-1-1.md](demo-1-1.md) | Completo |
 | [demo-1-2.md](demo-1-2.md) | Completo |
 | [demo-1-3.md](demo-1-3.md) | Completo. Comandos ejecutados en la imagen de gates |
@@ -29,3 +29,5 @@ que es el resultado de cada paso, debe coincidir.
 | [demo-3-2.md](demo-3-2.md) | Completo |
 | [demo-3-3.md](demo-3-3.md) | Completo |
 | [demo-4-1.md](demo-4-1.md) | Completo |
+
+La demostración 5.3 tiene su respaldo en [demo-5-3.md](demo-5-3.md), grabado en GitHub Actions. La revisión de Copilot de ese respaldo está pendiente; ver el bloque G del protocolo.

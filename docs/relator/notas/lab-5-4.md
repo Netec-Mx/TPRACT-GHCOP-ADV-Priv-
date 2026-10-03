@@ -38,10 +38,10 @@ no del agente.
 
 | Paso | Estimado | Observado en la verificación |
 |---|---|---|
-| 1 | 8 min | Se completa en la verificación de SPEC-016 |
-| 2 | 12 min | Se completa en la verificación de SPEC-016 |
-| 3 | 8 min | Se completa en la verificación de SPEC-016 |
-| 4 | 10 min | Se completa en la verificación de SPEC-016 |
+| 1 | 8 min | 37 a 50 s de agente y 2 a 3 comandos, en 2 corridas |
+| 2 | 12 min | 54 a 56 s de agente y 3 a 4 comandos, en 2 corridas |
+| 3 | 8 min | 34 a 42 s de agente y 2 a 3 comandos, en 2 corridas |
+| 4 | 10 min | 62 a 71 s de agente y 2 a 3 comandos, en 2 corridas |
 
 Suma 38. Quedan 7 para la puesta en común y el cierre del taller.
 
