@@ -165,7 +165,7 @@ retenciones y la liquidación a Merchant Acquiring Facility.
 
 La instrucción tiene tres decisiones que vale la pena señalar.
 
-- **Su patrón apunta a los documentos, no al código.** `applyTo: 'docs/arquitectura/**'`.
+- **Su patrón apunta a los documentos, no al código.** `applyTo: 'docs/arquitectura/**,docs/proyecto/**'`.
   Se aplica cuando el agente escribe un documento de arquitectura. Sobre el código del
   escenario no cambia nada, y eso es deliberado: el vocabulario de arquitectura se pide
   donde se diseña, no en cada edición.

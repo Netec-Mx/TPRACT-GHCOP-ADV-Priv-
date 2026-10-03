@@ -122,11 +122,14 @@ mecanismos son los mismos y que el taller usa un solo editor para que todos vean
 | `09-bitacora-de-construccion.md` | Por qué el repositorio es como es |
 | `10-mantenimiento.md` | Qué revisar antes de cada dictado |
 | `notas/` | Notas por laboratorio y del hook |
+| `capitulo-5-hoja-de-respuestas.md` | Todo lo que el relator dice o entrega en el capítulo 5, en una página |
+| `funcionalidad-reporte.md` | Verdad funcional del reporte que construye el capítulo 5 |
+| `entregas/` | Fuentes del formato del reporte y del incidente, que el repositorio entrega codificados |
 | `teoria/` | Contenido de cada subtema de teoría. Empieza en [`teoria/00-indice.md`](teoria/00-indice.md) |
-| `demos/` | Las nueve demostraciones |
+| `demos/` | Las demostraciones, una por subtema que la necesita, más la del 5.3 |
 | `respaldos/` | Salidas grabadas de laboratorios y demostraciones |
 | `casos-de-clase/` | Tres casos reales para proyectar |
-| `soluciones/` | Soluciones de referencia de los laboratorios que modifican código |
+| `soluciones/` | Soluciones de referencia de los laboratorios, incluido el reporte del capítulo 5 |
 | `respaldo-lab-2-4/` | Agente e instrucción de respaldo para el laboratorio 2.4 |
 
 ---
@@ -167,14 +170,14 @@ cada uno.
 
 | Defecto | Qué es | Dónde | Laboratorio que lo ejercita |
 |---|---|---|---|
-| DEF-01 | Dinero en punto flotante. CM0011, CM0016 y CM0025 reciben un centavo menos | Todo el modelo | 5.1 paso 3, y 5.4 si alguien lo elige |
-| DEF-02 | Método de 282 líneas con nueve niveles de anidamiento | `CalculadoraLiquidacion` | 1.4, 1.5 paso 1, 5.2 pasos 2 y 3 |
-| DEF-03 | Números mágicos. El tope del recargo vale 3.0 en un archivo y 3.5 en otro | Las dos calculadoras | 5.2 paso 1 |
-| DEF-04 | Fechas sin zona horaria | `UtilidadesFecha` y el modelo | 5.1 paso 3 |
-| DEF-05 | Veinte pruebas que no cubren la lógica de negocio | Las pruebas | 5.3 pasos 1 y 2 |
-| DEF-06 | Responsabilidades mezcladas. La clase de cálculo lee archivos e imprime | `CalculadoraLiquidacion` | 1.5 paso 1, 5.2 paso 3 |
+| DEF-01 | Dinero en punto flotante. CM0011, CM0016 y CM0025 reciben un centavo menos | Todo el modelo | 5.3 paso 3, como una de las dos causas de la conciliación |
+| DEF-02 | Método de 282 líneas con nueve niveles de anidamiento | `CalculadoraLiquidacion` | 1.4, 1.5 paso 1, 5.2 si el plan refactoriza |
+| DEF-03 | Números mágicos. El tope del recargo vale 3.0 en un archivo y 3.5 en otro | Las dos calculadoras | 5.2 si el plan reutiliza la calculadora de comisión |
+| DEF-04 | Fechas sin zona horaria | `UtilidadesFecha` y el modelo | 4.4 paso 1, en la regla 8 |
+| DEF-05 | Veinte pruebas que no cubren la lógica de negocio | Las pruebas | 5.3 paso 1, donde aparecen las primeras pruebas de negocio |
+| DEF-06 | Responsabilidades mezcladas. La clase de cálculo lee archivos e imprime | `CalculadoraLiquidacion` | 1.5 paso 1, 5.1 paso 3 al decidir dónde vive el reporte |
 | DEF-07 | Errores tragados en silencio | `CargadorDatos` | 1.5 paso 2 |
-| DEF-08 | Selección de tramo duplicada y divergente en los bordes | Las dos calculadoras | 5.3 paso 1 |
+| DEF-08 | Selección de tramo duplicada y divergente en los bordes | Las dos calculadoras | 5.2, si un refactor unifica los tramos, y 5.3 paso 3, como la causa grande de la conciliación |
 | DEF-09 | Nombres que mienten. CM0031 está suspendido y se liquida | Tres métodos | 1.5 paso 3 |
 | DEF-10 | Comentarios que contradicen al código | Tres comentarios | 1.4 como observación, 4.4 paso 1 |
 
@@ -304,46 +307,38 @@ está deshabilitado. El verificador detecta los dos casos.
 | 0:20 | 20 | 4.2 Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting. Exposición | Teoría del subtema, con las tres decisiones de [`arquitectura/decisiones/`](../arquitectura/decisiones/README.md) |
 | 0:40 | 20 | 4.3 Buenas prácticas para preparar documentación compatible con Confluence. Exposición | Teoría del subtema |
 | 1:00 | 30 | 4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | Laboratorio 4.4. El paso 4, runbook, es opcional y queda fuera de los 30 minutos |
-| 1:30 | 45 | 5.1 Preparación del escenario integrador y criterios de evaluación | Laboratorio 5.1 |
-| 2:15 | 45 | 5.2 Planeación de mejora, refactorización y validación incremental | Laboratorio 5.2 |
-| 3:00 | 45 | 5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión | Laboratorio 5.3 y casos de clase 01 y 03 en el paso 3 |
-| 3:45 | 45 | 5.4 Laboratorio final: construcción de activos reutilizables para el equipo | Laboratorio 5.4 |
+| 1:30 | 45 | 5.1 Preparación del escenario integrador y criterios de evaluación | Laboratorio 5.1: Requerimientos, Estimación y Análisis y diseño. Abra proyectando [`CICLO-DE-VIDA.md`](../../CICLO-DE-VIDA.md) |
+| 2:15 | 45 | 5.2 Planeación de mejora, refactorización y validación incremental | Laboratorio 5.2: Desarrollo del reporte |
+| 3:00 | 45 | 5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión | Laboratorio 5.3: Pruebas, Integración continua, Mantención correctiva, Revisión y Seguridad. En la puesta en común, [`demos/demo-5-3-pipeline-en-github.md`](demos/demo-5-3-pipeline-en-github.md) desde su respaldo y el caso de clase 03 |
+| 3:45 | 45 | 5.4 Laboratorio final: construcción de activos reutilizables para el equipo | Laboratorio 5.4: Liberación, Operación y soporte, Mantención evolutiva y cierre |
 | 4:30 | | Fin | |
 
 Aritmética. Teoría del capítulo 4, 12 + 8 + 20 + 20 = 60. Laboratorio 4.4, 30. Capítulo 5,
 45 + 45 + 45 + 45 = 180. Total 270.
 
 **Recorte.** La sesión no tiene pausas en sus 270 minutos. Si el horario las incluye o la
-sesión se atrasa, se recorta en este orden, que es el de
-[`notas/README.md`](notas/README.md).
+sesión se atrasa, el único recorte definido es el del capítulo 4: el paso 3 del 4.4,
+Confluence, se muestra en pantalla y se recuperan 8 minutos. Qué pasos del capítulo 5 pasan
+a opcionales se decide después de la prueba en la máquina virtual, con la medición de tiempos
+de SPEC-016. Hasta entonces el capítulo 5 no tiene recortes definidos.
 
-| Orden | Qué se recorta | Se recupera |
-|---|---|---|
-| 1 | 4.4 paso 3, Confluence, se muestra en pantalla | 8 min |
-| 2 | 5.1 paso 2, mapa del sistema, lo proyecta el relator | 10 min |
-| 3 | 5.2 paso 3, independiente del paso 2 | 12 min |
-| 4 | 5.3 paso 3, se reemplaza por el caso de clase 01 proyectado | 9 min |
-| 5 | 5.4 paso 1, de 32 a 20 minutos | 12 min |
+**El capítulo 5 es una sola historia.** Cada participante elige un stack y trabaja en una
+rama local, sin GitHub. Los cuatro laboratorios trabajan sobre el mismo repositorio, cada uno
+sobre lo que dejó el anterior: el 5.2 usa la historia y la decisión del 5.1, el 5.3 prueba
+los criterios del 5.1 sobre el reporte del 5.2, y el 5.4 libera lo que dejó el 5.3. El 5.4
+no se reinicia; el script de reinicio advierte y pide confirmación explícita. Lo que usted
+dice o entrega en todo el capítulo está en una página,
+[`capitulo-5-hoja-de-respuestas.md`](capitulo-5-hoja-de-respuestas.md), con el comando exacto
+para poner al día a quien se atrase.
 
-Con los cinco recortes se recuperan 51 minutos. No se recortan el paso 2 del 5.4, que es un
-entregable comprometido, ni el paso 1 del 5.3, que es el único que ejercita la selección de
-tramo duplicada.
+**Antes de empezar.** La hoja de respuestas y las notas de los cuatro laboratorios abiertas
+en su segunda pantalla. El respaldo de la demostración 5.3 y el caso de clase 03 listos
+para proyectar. No hay que instalar ni preparar nada más: el formato del reporte y el
+incidente los entrega el repositorio.
 
-**El capítulo 5 es un solo flujo.** Los cuatro laboratorios trabajan sobre el mismo
-repositorio, cada uno sobre lo que dejó el anterior. El 5.3 usa los criterios de evaluación
-del 5.1. A quien llegue al 5.3 sin haber hecho el 5.1, entréguele
-`soluciones/lab-5-1/criterios-de-evaluacion.md` para que lo guarde en
-`labs/cap5/lab-5-1-preparacion/entregables/`. El 5.4 no se reinicia. Continúa sobre el
-estado que dejó el 5.3, y el script de reinicio advierte y pide confirmación explícita si
-alguien lo intenta.
-
-**Antes de empezar.** Las notas de los cinco laboratorios abiertas en su segunda pantalla.
-Los casos de clase 01 y 03 listos para proyectar. La respuesta de negocio sobre los bordes
-de tramo a mano, ver la sección 6.
-
-**Qué suele fallar.** El comparador tarda en la máquina virtual porque compila los dos
-escenarios. Cuéntelo antes de que alguien piense que se colgó. Quien rompió la compilación
-en el 5.2 reinicia el laboratorio y sigue.
+**Qué suele fallar.** `integracion-local.sh` tarda en la máquina virtual porque compila el
+escenario. Cuéntelo antes de que alguien piense que se colgó. Quien rompió la compilación en
+el 5.2 reinicia el 5.2 y sigue; su historia del 5.1 no se pierde.
 
 ### Cuando el agente se demora o la red se cae
 
@@ -390,7 +385,9 @@ bash scripts/reiniciar-lab.sh lab-5-2
 
 Muestra qué se va a perder y pide escribir `si`. Los commits del participante no se pierden.
 Los activos que el participante construyó en el 2.4 no se tocan al reiniciar otro
-laboratorio.
+laboratorio. En el capítulo 5 el reinicio sigue la historia: el 5.1 vuelve todo el proyecto
+al punto de partida, el 5.2 solo el escenario, el 5.3 solo el pipeline y la descripción del
+pull request, y el 5.4 no se reinicia.
 
 **Cerrar un laboratorio que toca código.** Siempre con el comparador. Una refactorización
 correcta no cambia la salida, y el comparador lo dice en segundos.
@@ -440,8 +437,9 @@ usa otro método a propósito. Si en alguna pantalla el documento generado dice
 
 ### La decisión de negocio sobre los bordes de tramo
 
-En el 5.3 aparece que la calculadora de comisión y el cierre de la liquidación eligen
-tramos distintos para 500, 2000 y 10000. Las reglas no dicen a qué tramo pertenece un monto
+Aparece en el 5.1 si alguien pregunta por los límites de los tramos al escribir la historia,
+y si no, en el 5.3, cuando la conciliación o las pruebas muestran que el cierre de la
+liquidación cobra el tramo siguiente en 500, 2000 y 10000. Las reglas no dicen a qué tramo pertenece un monto
 en el límite, a propósito. El participante tiene que detectar la ambigüedad y escalarla, y
 en la sala el negocio es usted.
 
@@ -527,6 +525,24 @@ con el contexto acotado, se mira el costo de cada respuesta pasando el puntero s
 el total de la sesión en el control de la ventana de contexto, y con eso el equipo arma su
 propia línea base. La guía
 [`uso-responsable-de-tokens.md`](../gobierno/uso-responsable-de-tokens.md) explica cómo.
+
+**«¿Es confiable la estimación con IA?»**
+Como rango, sí; como compromiso, no. El 5.1 estima y el 5.4 compara con el registro de
+tiempos real, fase por fase. La IA acorta mucho el desarrollo y la redacción, poco la
+revisión y nada las preguntas al negocio. Lo que hace confiable una estimación con IA es lo
+mismo que sin IA: supuestos escritos y comparación con lo real. La estimación de referencia
+de SPEC-015 se construyó con mediciones, no con promesas.
+
+**«¿Qué pasa si el pipeline no corre en la sala?»**
+El pipeline es `scripts/integracion-local.sh`, el mismo script que corre en GitHub, y no
+necesita red ni GitHub. Todo el capítulo 5 se hace en local. Lo que la sala no ve en vivo es
+Actions, y para eso está la demostración 5.3, que se presenta desde su respaldo grabado.
+
+**«¿Cambiar el hash esperado no es hacer trampa?»**
+Sería trampa sin causa. En el 5.3 el hash de junio cambia porque la corrección cambia lo
+que se cobra a cinco comercios, por una decisión de negocio registrada. El cambio queda en
+el diff, la descripción del pull request lo justifica y alguien lo revisa. Lo que se prohíbe
+es cambiar un hash, o una prueba, para que el pipeline pase sin saber por qué.
 
 **«¿Qué pasa si Copilot se actualiza durante el taller?»**
 Puede pasar, porque Visual Studio Code se actualiza solo. El material se revisó contra la

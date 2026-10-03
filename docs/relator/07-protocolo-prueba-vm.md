@@ -30,11 +30,12 @@ es lo de menor riesgo.
 |---|---|---|
 | A | Copilot, sesión, repositorio, ambiente y hook | Muy poca |
 | B | Las dos comprobaciones de skills pendientes de SPEC-009 y la carga automática | Poca |
-| C | Pasos que modifican código, incluidos los dos de calibración | Sí |
+| C | Un paso que modifica código, del capítulo 1 | Sí |
 | D | Laboratorio 3.4 de extremo a extremo | Sí |
 | E | Laboratorio 2.4 | Sí |
 | F | Muestra de pasos de análisis | Sí |
-| G | Las nueve demostraciones del relator | Sí |
+| G | Las diez demostraciones del relator | Sí |
+| H | Capítulo 5 de extremo a extremo, en local | Sí, la más alta |
 
 Cada paso tiene una casilla, el resultado esperado y una línea para anotar lo observado.
 Si un paso no se puede hacer, anote por qué y siga con el siguiente. Si la cuota se agota,
@@ -242,62 +243,25 @@ Si aparece una skill `lab-`, detenga el protocolo y avise. Es un bloqueo.
 
 Antes de cada prueba ejecute `bash scripts/reiniciar-lab.sh` con el laboratorio indicado.
 Cuando el agente pida permiso para ejecutar un comando, léalo y haga clic en **Allow** o
-**Continue**.
+**Continue**. Los pasos del capítulo 5 que modifican código están en el bloque H.
 
-### C1. Calibración. Lab 5.2 paso 2, Java
-
-1. `bash scripts/reiniciar-lab.sh lab-5-2`
-2. Chat nuevo, modo **Agent**. `/lab-5-2-paso-2-extraer-comision java`
-3. Al terminar, en Git Bash: `git status` y luego `bash scripts/comparar-escenarios.sh`.
-
-- [ ] **Esperado:** un único archivo modificado, `CalculadoraLiquidacion.java`, y el
-      comparador con «Las salidas son identicas».
-- Hora de inicio y fin: ______________
-- Observado. Señales de alarma: otro archivo modificado, `double` cambiado por otro
-  tipo, números convertidos en constantes, el 3.0 o el 3.5 cambiados, métodos renombrados:
-  ______________________________________________
-
-### C2. Calibración. Lab 5.3 paso 1, .NET
-
-1. `bash scripts/reiniciar-lab.sh lab-5-3`
-2. Chat nuevo, modo **Agent**. `/lab-5-3-paso-1-probar-tramos dotnet`
-3. Al terminar, en Git Bash:
-
-   ```bash
-   dotnet test escenario/dotnet/LiquidacionComercios.Pruebas
-   ```
-
-- [ ] **Esperado:** un único archivo nuevo, `CalculadoraComisionPruebas.cs`, las pruebas en
-      verde y en la respuesta una tabla con 500, 2000 y 10000 con dos porcentajes distintos
-      en cada uno.
-- Hora de inicio y fin: ______________
-- Observado. Señal de alarma: el agente modificó `CalculadoraComision.cs` o
-  `CalculadoraLiquidacion.cs`: ______________________________________________
-
-### C3. Lab 1.5 paso 5, Java
+### C1. Lab 1.5 paso 5, Java
 
 1. `bash scripts/reiniciar-lab.sh lab-1-5`
 2. Chat nuevo, modo **Agent**. `/lab-1-5-paso-5-extraer-retencion java`
 3. `git status` y `bash scripts/comparar-escenarios.sh`.
 
 - [ ] **Esperado:** un único archivo modificado y el comparador en verde.
-- Observado: ______________________________________________
+- Hora de inicio y fin: ______________
+- Observado. Señales de alarma: otro archivo modificado, `double` cambiado por otro tipo,
+  números convertidos en constantes, métodos renombrados:
+  ______________________________________________
 
-### C4. Lab 5.2 paso 3, .NET
+### C2. Dejar el repositorio limpio
 
-1. `bash scripts/reiniciar-lab.sh lab-5-2`
-2. Chat nuevo, modo **Agent**. `/lab-5-2-paso-3-extraer-desglose-medios dotnet`
-3. `git status` y `bash scripts/comparar-escenarios.sh`.
+1. `bash scripts/reiniciar-lab.sh lab-1-5`
 
-- [ ] **Esperado:** un único archivo modificado, `CalculadoraLiquidacion.cs`, y el
-      comparador en verde.
-- Observado: ______________________________________________
-
-### C5. Dejar el repositorio limpio
-
-1. `bash scripts/reiniciar-lab.sh lab-5-3`
-
-- [ ] **Esperado:** «lab-5-3 listo para empezar».
+- [ ] **Esperado:** «lab-1-5 listo para empezar».
 - Observado: ______________________________________________
 
 ---
@@ -387,15 +351,9 @@ Antes de empezar, `bash scripts/reiniciar-lab.sh lab-1-4`.
 - [ ] **Esperado:** el documento dice que los tramos **no** son acumulativos.
 - Observado: ______________________________________________
 
-6. Modo **Agent**. `/lab-5-1-paso-3-inventario-de-riesgos java`.
-
-- [ ] **Esperado:** el inventario menciona a CM0011, CM0016 o CM0025 con un centavo de
-      diferencia, y la zona horaria del sistema en la regla 8.
-- Observado: ______________________________________________
-
 ---
 
-## Bloque G. Las nueve demostraciones del relator
+## Bloque G. Las diez demostraciones del relator
 
 Las demostraciones están en `docs/relator/demos/` del repositorio de construcción. Ábralas
 en otra máquina o impresas, nunca en la máquina virtual. Siga cada una tal como está
@@ -475,17 +433,125 @@ Siga `docs/relator/demos/demo-4-1-documentacion-contra-ejecucion.md`.
 - Duración real: ______________
 - Observado: ______________________________________________
 
+### G10. Demostración 5.3, la revisión de Copilot pendiente
+
+La demostración se presenta desde `docs/relator/respaldos/demo-5-3.md`, grabado en
+`RodrigoMSB/github-copilot-netec-demo`. Falta grabar una sola parte: la revisión de Copilot en
+el pull request. La cuenta con la que se grabó no la tiene disponible.
+
+Para grabarla hace falta una cuenta con la revisión de Copilot en pull requests y acceso al
+repositorio de demostración. La cuenta `RoSilva26` no tiene acceso a ese repositorio, y no
+está verificado que su plan gratuito incluya la revisión en pull requests. Antes de esta
+prueba, el propietario decide si la invita o usa otra cuenta. No use el repositorio de
+participantes para esto: un pull request deja allí su referencia para siempre.
+
+1. En el repositorio de demostración, una rama con la corrección: siga los pasos en vivo de
+   `docs/relator/demos/demo-5-3-pipeline-en-github.md`.
+2. En el pull request, pida la revisión de Copilot desde **Reviewers**.
+3. Copie a mano los comentarios en la sección «Revisión de Copilot» del respaldo.
+4. Cierre el pull request sin integrar y borre la rama.
+
+- [ ] **Pendiente:** revisión de Copilot grabada en el respaldo.
+- Cuenta usada y si tuvo la revisión disponible: ______________
+- Observado: ______________________________________________
+
+---
+
+## Bloque H. Capítulo 5 de extremo a extremo, en local
+
+Se hace todo en la máquina virtual, sin push y sin GitHub. Abra impresa o en otra máquina la
+hoja de respuestas, `docs/relator/capitulo-5-hoja-de-respuestas.md`: usted hace de negocio.
+Elija un stack y úselo en todo el bloque. Anote la hora de inicio y fin de cada paso, que es
+la medición que decide qué pasa a opcional.
+
+### H1. Las herramientas del capítulo funcionan en Git Bash
+
+1. `bash scripts/integracion-local.sh --stack java` y `bash scripts/integracion-local.sh --stack dotnet`.
+
+- [ ] **Esperado:** los dos terminan con «Todos los pasos pasan». Los pasos de dependencias
+      pueden avisar que falta red o el complemento de Maven; no fallan.
+- Duración de cada uno: ______________
+
+2. `bash scripts/verificar-reporte.sh java 2026-06`.
+
+- [ ] **Esperado:** dice que el reporte todavía no existe.
+
+3. `bash scripts/proyecto/entregar.sh formato-del-reporte`, y después `git status`.
+
+- [ ] **Esperado:** crea `docs/proyecto/backlog/formato-del-reporte.md` legible. Si dice que
+      no encuentra `base64` o `gunzip`, anótelo: el 5.2 y el 5.4 lo necesitan.
+- Observado: ______________________________________________
+
+4. `bash scripts/reiniciar-lab.sh lab-5-1` y responda `si`.
+
+### H2. Laboratorio 5.1
+
+1. Siga `labs/cap5/lab-5-1-preparacion/README.md`, prerrequisitos incluidos.
+
+- [ ] **Esperado:** el paso 1 lista preguntas antes de escribir criterios y se detiene. Con
+      las respuestas de la hoja, la historia trae un criterio de borde y uno de tercer
+      decimal con valor esperado.
+- [ ] **Esperado:** el paso 3 crea una decisión 0004 en `docs/arquitectura/decisiones/`.
+- Hora de inicio y fin de cada paso: ______________
+- Observado: ______________________________________________
+
+### H3. Laboratorio 5.2
+
+1. Siga `labs/cap5/lab-5-2-refactorizacion/README.md`.
+
+- [ ] **Esperado:** el paso 1 entrega el formato y arma un plan sin tocar archivos. El paso 2
+      no cambia la liquidación. El paso 3 muestra el resultado de `verificar-reporte.sh` en
+      los tres periodos.
+- Camino que tomó el agente, cálculo propio o reutilizando la liquidación: ______________
+- Hora de inicio y fin de cada paso: ______________
+- Observado: ______________________________________________
+
+### H4. Laboratorio 5.3
+
+1. Siga `labs/cap5/lab-5-3-pruebas-y-revision/README.md`. Antes del paso 4 use el botón
+   **Copilot Code Review - Uncommitted Changes** de la vista **Source Control**.
+
+- [ ] **Esperado:** después del paso 2, `integracion-local.sh` en rojo, por la conciliación de
+      junio o por las pruebas de borde y de tercer decimal.
+- [ ] **Esperado:** el paso 3 separa dos causas que suman la diferencia completa, pide la
+      decisión del borde, corrige y actualiza solo el hash de junio.
+- [ ] **Esperado:** el pipeline local termina en verde.
+- [ ] **Esperado:** la revisión de Copilot sobre los cambios sin confirmar deja comentarios
+      en los archivos o en **Problems**. Si el botón no aparece o pide otro plan, anótelo.
+- [ ] **Esperado:** el paso 5 dice que no aplica, porque la cuenta no tiene copia propia.
+      No empuje nada.
+- Hora de inicio y fin de cada paso: ______________
+- Observado: ______________________________________________
+
+### H5. Laboratorio 5.4
+
+1. Siga `labs/cap5/lab-5-4-laboratorio-final/README.md`.
+
+- [ ] **Esperado:** el paso 2 crea `docs/proyecto/incidentes/INC-2026-0042.md` con
+      `entregar.sh` y el análisis llega a las notas de versión y a la decisión del borde.
+- [ ] **Esperado:** el paso 4 compara la estimación con el registro de tiempos.
+- Hora de inicio y fin de cada paso: ______________
+- Observado: ______________________________________________
+
+### H6. Volver al punto de partida
+
+1. `bash scripts/reiniciar-lab.sh lab-5-4` y escriba `descartar`.
+2. `git switch main` y `git branch -D reporte-medios-de-pago`.
+
+- [ ] **Esperado:** `git status` limpio y la rama borrada.
+- Observado: ______________________________________________
+
 ---
 
 ## Al terminar
 
 1. Ejecute `bash scripts/reiniciar-lab.sh lab-2-4`, después `bash scripts/reiniciar-lab.sh lab-3-4`
-   y después `bash scripts/reiniciar-lab.sh lab-5-3`, respondiendo `si` cada vez. El 5.4 no se
+   y después `bash scripts/reiniciar-lab.sh lab-5-1`, respondiendo `si` cada vez. El 5.4 no se
    reinicia, ver la prueba siguiente.
 2. Ejecute `bash scripts/reiniciar-lab.sh lab-5-4`.
 
 - [ ] **Esperado:** dos avisos que dicen que el 5.4 no tiene punto de partida propio y que
-      reiniciarlo descarta el trabajo del 5.2 y el 5.3. Si hay algo que descartar, pide
+      reiniciarlo descarta el trabajo de todo el capítulo 5. Si hay algo que descartar, pide
       escribir `descartar`. Responda `si`, y debe cancelar sin tocar nada.
 - Observado: ______________________________________________
 

@@ -771,8 +771,9 @@ clasificación tiene que estar escrito en el pedido.
 
 ### Dónde aplica esto en el taller
 
-En el 4.4 y en el 5.1. Si dos participantes, o el mismo participante en los dos
-laboratorios, clasifican distinto la regla 8, no es un error de ninguno. Es la ocasión de
+En el 4.4. Desde SPEC-016 el 5.1 ya no clasifica reglas: escribe una historia de usuario.
+La observación de arriba sobre el 5.1 queda como registro de la versión anterior. Si dos
+participantes clasifican distinto la regla 8 en el 4.4, no es un error de ninguno. Es la ocasión de
 preguntar qué criterio usó cada uno y cuál pondría el equipo por escrito.
 
 ## HALLAZGO-08. Un ejemplo del README del escenario no cargaba datos

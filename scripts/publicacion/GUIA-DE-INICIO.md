@@ -15,8 +15,10 @@ local. Lo que construyas en los laboratorios queda aquí.
 | `escenario/` | El sistema de ejemplo, en `java/` y `dotnet/`, con datos compartidos en `datos/` |
 | `.github/` | Instrucciones, agentes, skills y hooks de Copilot |
 | `mcp/` | Servidor MCP local de consulta |
+| `CICLO-DE-VIDA.md` | El mapa del ciclo de vida que recorre el capítulo 5 |
+| `CHANGELOG.md` | Registro de cambios del sistema |
 | `scripts/` | Verificación de ambiente, comparación de escenarios, reinicio de laboratorios, validación de skills, pipeline local (`integracion-local.sh`) y verificación del reporte (`verificar-reporte.sh`) |
-| `docs/` | Preparación del ambiente, solución de problemas, arquitectura de referencia y decisiones (`arquitectura/`), política de uso de IA y uso de tokens (`gobierno/`) y plantilla de runbook (`operacion/`) |
+| `docs/` | Preparación del ambiente, solución de problemas, arquitectura de referencia y decisiones (`arquitectura/`), política de uso de IA y uso de tokens (`gobierno/`), plantilla de runbook (`operacion/`) y el proyecto del capítulo 5, con su backlog y plantillas (`proyecto/`) |
 
 ## El escenario
 
@@ -86,6 +88,10 @@ bash scripts/reiniciar-lab.sh lab-5-2
 El script muestra qué se va a perder y pide que escribas `si`. Si quieres conservar algo,
 haz `git commit` antes. Lo que construyes en el laboratorio 2.4 no se borra al reiniciar
 otro laboratorio.
+
+En el capítulo 5 cada laboratorio continúa el anterior. Reiniciar el 5.1 devuelve todo el
+proyecto al punto de partida; el 5.2, solo el escenario; el 5.3, solo el pipeline y la
+descripción del pull request. El 5.4 no se reinicia.
 
 ## Si algo no funciona
 

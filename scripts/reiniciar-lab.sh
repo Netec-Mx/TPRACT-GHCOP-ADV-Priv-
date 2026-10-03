@@ -2,10 +2,12 @@
 #
 # Deja el repositorio en el punto de partida de un laboratorio.
 #
-# Cada laboratorio empieza con el escenario tal como se publico, sin depender de lo que
-# se haya hecho en los anteriores. Este script restaura las rutas que el laboratorio usa y
-# borra lo que el participante haya creado en ellas. Antes de tocar nada muestra que se va
-# a perder y pide confirmacion.
+# Los laboratorios de los capitulos 1 a 4 empiezan con el escenario tal como se publico, sin
+# depender de lo que se haya hecho en los anteriores. El capitulo 5 es una sola historia: el
+# 5.1 deja el proyecto entero en el punto de partida, el 5.2 solo el escenario, el 5.3 solo
+# el pipeline y su descripcion de pull request, y el 5.4 no tiene punto de partida propio.
+# Este script restaura las rutas que el laboratorio usa y borra lo que el participante haya
+# creado en ellas. Antes de tocar nada muestra que se va a perder y pide confirmacion.
 #
 # El estado de referencia es la etiqueta punto-de-partida, que crea la publicacion del
 # repositorio de participantes. Si no existe, se usa el ultimo commit (HEAD).
@@ -17,7 +19,7 @@
 
 set -u
 
-readonly VERSION_SCRIPT="1.0.0"
+readonly VERSION_SCRIPT="1.1.0"
 readonly ETIQUETA_PARTIDA="punto-de-partida"
 
 if [ -t 1 ] && [ "${NO_COLOR:-}" = "" ]; then
@@ -49,7 +51,7 @@ Opciones:
               descartar cambios. No vale para lab-5-4.
   --confirmo-descartar-5-2-y-5-3
               Solo para lab-5-4. Confirma de antemano que se descarta el trabajo
-              de los laboratorios 5.2 y 5.3.
+              de todo el capitulo 5.
   --ayuda     Muestra esta ayuda y termina.
   --version   Muestra la version del script y termina.
 
@@ -71,10 +73,10 @@ rutas_del_laboratorio() {
         lab-2-4) echo "escenario labs/cap2/lab-2-4-agente-o-instruccion/entregables .github/agents .github/instructions" ;;
         lab-3-4) echo "escenario labs/cap3/lab-3-4-mcp-local/entregables .vscode/mcp.json mcp" ;;
         lab-4-4) echo "escenario labs/cap4/lab-4-4-documentacion/entregables" ;;
-        lab-5-1) echo "escenario labs/cap5/lab-5-1-preparacion/entregables" ;;
-        lab-5-2) echo "escenario labs/cap5/lab-5-2-refactorizacion/entregables" ;;
-        lab-5-3) echo "escenario labs/cap5/lab-5-3-pruebas-y-revision/entregables" ;;
-        lab-5-4) echo "escenario labs/cap5/lab-5-4-laboratorio-final/entregables" ;;
+        lab-5-1) echo "escenario docs/proyecto docs/arquitectura/decisiones scripts/integracion scripts/integracion-local.sh .github/workflows CHANGELOG.md" ;;
+        lab-5-2) echo "escenario" ;;
+        lab-5-3) echo "scripts/integracion scripts/integracion-local.sh .github/workflows docs/proyecto/pull-request.md" ;;
+        lab-5-4) echo "escenario docs/proyecto docs/arquitectura/decisiones scripts/integracion scripts/integracion-local.sh .github/workflows CHANGELOG.md" ;;
         *) return 1 ;;
     esac
 }
@@ -132,12 +134,17 @@ else
 fi
 
 # El laboratorio 5.4 no tiene punto de partida propio. Se trabaja sobre lo que dejaron el
-# 5.2 y el 5.3, asi que reiniciarlo descarta ese trabajo. Se advierte siempre y se pide una
+# 5.1 al 5.3, asi que reiniciarlo descarta todo el capitulo. Se advierte siempre y se pide una
 # confirmacion distinta de la habitual, que --si no reemplaza.
 if [ "$laboratorio" = "lab-5-4" ]; then
     titulo "Advertencia"
-    aviso "El laboratorio 5.4 no tiene punto de partida propio. Se trabaja sobre lo que dejaron los laboratorios 5.2 y 5.3."
-    aviso "Reiniciarlo devuelve el escenario a su version original y descarta la refactorizacion del 5.2 y las pruebas del 5.3."
+    aviso "El laboratorio 5.4 no tiene punto de partida propio. Se trabaja sobre lo que dejaron los laboratorios 5.1 a 5.3."
+    aviso "Reiniciarlo devuelve el proyecto a su version original y descarta la historia, el reporte, las pruebas y la correccion de todo el capitulo 5."
+fi
+if [ "$laboratorio" = "lab-5-3" ]; then
+    titulo "Advertencia"
+    aviso "Reiniciar el 5.3 deshace solo el pipeline, los hashes esperados y la descripcion del pull request."
+    aviso "No deshace el reporte, las pruebas ni la correccion en el escenario. Para eso, reinicia el 5.2."
 fi
 
 titulo "Punto de partida de $laboratorio"
@@ -187,7 +194,7 @@ if [ "$laboratorio" = "lab-5-4" ] && [ "$confirmado_5_4" -eq 0 ]; then
         falla "Hace falta confirmar y no hay una terminal interactiva. Repetir con --confirmo-descartar-5-2-y-5-3."
         exit 1
     fi
-    printf '\n  Escribe descartar para perder el trabajo del 5.2 y el 5.3, cualquier otra cosa para cancelar: '
+    printf '\n  Escribe descartar para perder el trabajo de todo el capitulo 5, cualquier otra cosa para cancelar: '
     read -r respuesta
     respuesta="$(printf '%s' "$respuesta" | tr -d '\r ' | tr '[:upper:]' '[:lower:]')"
     if [ "$respuesta" != "descartar" ]; then

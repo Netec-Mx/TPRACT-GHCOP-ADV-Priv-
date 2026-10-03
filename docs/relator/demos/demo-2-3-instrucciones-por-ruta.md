@@ -31,7 +31,7 @@ línea de comandos.
 
 4. Abra `.github/instructions/arquitectura-bian.instructions.md` y, al lado,
    `docs/arquitectura/bian-mapeo.md`. Muestre que su `applyTo` apunta a
-   `docs/arquitectura/**` y no al código.
+   `docs/arquitectura/**` y `docs/proyecto/**`, no al código.
 
    Diga: «Esta es una instrucción de repositorio corporativo. No es de un lenguaje, es de
    la arquitectura de referencia del banco. Pide usar el vocabulario de los dominios de

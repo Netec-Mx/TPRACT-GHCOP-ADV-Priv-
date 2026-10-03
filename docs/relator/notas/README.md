@@ -14,7 +14,7 @@ paso, qué hacer si alguien se atrasa y dónde está la solución de referencia.
 | 2.4 | [lab-2-4.md](lab-2-4.md) | Respaldo en [`../respaldo-lab-2-4/`](../respaldo-lab-2-4/) |
 | 3.4 | [lab-3-4.md](lab-3-4.md) | `.vscode/mcp.json` del repositorio de construcción |
 | 4.4 | [lab-4-4.md](lab-4-4.md) | No modifica código |
-| 5.1 | [lab-5-1.md](lab-5-1.md) | No modifica código |
+| 5.1 | [lab-5-1.md](lab-5-1.md) | [`../soluciones/lab-5-1/`](../soluciones/lab-5-1/) |
 | 5.2 | [lab-5-2.md](lab-5-2.md) | [`../soluciones/lab-5-2/`](../soluciones/lab-5-2/) |
 | 5.3 | [lab-5-3.md](lab-5-3.md) | [`../soluciones/lab-5-3/`](../soluciones/lab-5-3/) |
 | 5.4 | [lab-5-4.md](lab-5-4.md) | [`../soluciones/lab-5-4/`](../soluciones/lab-5-4/) |
@@ -40,16 +40,9 @@ laboratorio 4.4, y el capítulo 5 completo, 180 minutos con los laboratorios 5.1
 270 minutos no incluyen pausas. Si el horario del cliente tiene pausas dentro de esas
 horas, el tiempo de trabajo real es menor y hay que recortar desde el inicio.
 
-Orden de recorte, del primero al último. Cada línea dice qué se saca y cuánto se recupera.
+El único recorte definido es el del capítulo 4: el paso 3 del 4.4, Confluence, se muestra en
+pantalla en lugar de hacerlo, y se recuperan 8 minutos.
 
-| Orden | Qué se recorta | Se recupera | Qué se conserva |
-|---|---|---|---|
-| 1 | Laboratorio 4.4 paso 3, Confluence. Se muestra en pantalla en lugar de hacerlo | 8 min | Los pasos 1 y 2, que tienen el momento clave |
-| 2 | Laboratorio 5.1 paso 2, mapa del sistema. El relator proyecta uno ya hecho | 10 min | La línea base y el inventario |
-| 3 | Laboratorio 5.2 paso 3. Es independiente del paso 2 y enseña lo mismo | 12 min | Paso 2 y la validación del paso 4 |
-| 4 | Laboratorio 5.3 paso 3, revisión asistida. Se reemplaza por el caso de clase 01 proyectado | 9 min | Pruebas, estrategia y checklist |
-| 5 | Laboratorio 5.4 paso 1, de 32 a 20 minutos | 12 min | El paso 2, que es un entregable del temario |
-
-Con los cinco recortes se recuperan 51 minutos. No se recorta el paso 2 del 5.4, porque el
-documento de medición y presupuesto es un entregable comprometido. Tampoco se recorta el
-paso 1 del 5.3, que es el único que ejercita la lógica duplicada de los tramos.
+El capítulo 5 se rehízo en SPEC-016 como un solo recorrido del ciclo de vida. Qué pasos pasan
+a opcionales se decide después de la prueba en la máquina virtual, con la medición de tiempos
+de cada paso. Hasta entonces no tiene recortes definidos.

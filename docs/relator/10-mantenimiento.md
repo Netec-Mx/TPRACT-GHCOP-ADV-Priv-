@@ -155,7 +155,8 @@ entregable.
 https://docs.github.com/en/copilot/concepts/billing, con sus páginas para individuos y
 para organizaciones.
 
-**Archivos que dependen.** `.github/skills/lab-5-4-paso-2-medicion-y-presupuesto/SKILL.md`,
+**Archivos que dependen.** `.github/skills/lab-5-4-paso-4-cierre/SKILL.md`,
+`.github/skills/pasarela-estimar/SKILL.md`, `docs/gobierno/uso-responsable-de-tokens.md`,
 `notas/lab-5-4.md`, `notas/README.md` y `docs/00-setup-ambiente.md`, sección 4.
 
 **Gate.** Ninguno. Revisión manual. La skill del 5.4 prohíbe inventar precios, así que un

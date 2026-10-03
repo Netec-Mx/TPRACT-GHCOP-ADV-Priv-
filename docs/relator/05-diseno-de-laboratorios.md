@@ -34,18 +34,20 @@ nada, y por eso la mayoría de los pasos son de análisis.
 | lab-2-4 | 45 min | 4 | 37 min | 8 min | ninguno |
 | lab-3-4 | 45 min | 4 | 36 min | 9 min | ninguno |
 | lab-4-4 | 30 min | 3 | 28 min | 2 min | ninguno |
-| lab-5-1 | 45 min | 4 | 40 min | 5 min | ninguno |
-| lab-5-2 | 45 min | 4 | 42 min | 3 min | 2 |
-| lab-5-3 | 45 min | 4 | 38 min | 7 min | 1 |
-| lab-5-4 | 45 min | 2 | 40 min | 5 min | 1 |
-| **Total** | **390 min** | **34** | **340 min** | **50 min** | **5** |
+| lab-5-1 | 45 min | 3 | 35 min | 10 min | ninguno |
+| lab-5-2 | 45 min | 3 | 38 min | 7 min | 1 |
+| lab-5-3 | 45 min | 4 | 39 min | 6 min | 3 |
+| lab-5-4 | 45 min | 4 | 38 min | 7 min | ninguno |
+| **Total** | **390 min** | **34** | **330 min** | **60 min** | **5** |
 
 Aritmética de la tabla, para que se pueda revisar sin recalcular:
 
 - Duraciones: 30 + 60 + 45 + 45 + 30 + 45 + 45 + 45 + 45 = 390.
-- Pasos: 4 + 5 + 4 + 4 + 3 + 4 + 4 + 4 + 2 = 34.
-- Suma estimada: 25 + 54 + 37 + 36 + 28 + 40 + 42 + 38 + 40 = 340.
-- Holgura: 5 + 6 + 8 + 9 + 2 + 5 + 3 + 7 + 5 = 50, que es 390 − 340.
+- Pasos obligatorios: 4 + 5 + 4 + 4 + 3 + 3 + 3 + 4 + 4 = 34. Los opcionales, el paso 4 del
+  4.4 y el paso 5 del 5.3, no se cuentan.
+- Suma estimada: 25 + 54 + 37 + 36 + 28 + 35 + 38 + 39 + 38 = 330.
+- Holgura: 5 + 6 + 8 + 9 + 2 + 10 + 7 + 6 + 7 = 60, que es 390 − 330. Las estimaciones del
+  capítulo 5 son de diseño; la medición de SPEC-016 está en `08-verificacion-de-skills.md`.
 
 Una skill de laboratorio por paso, más la variante del paso 2 del `lab-2-4`, que tiene una
 skill para agente y otra para instrucción. La lista vigente sale de
@@ -227,138 +229,35 @@ el mejor ejemplo del taller sobre por qué la documentación generada se revisa.
 
 ---
 
-## lab-5-1. Preparación del escenario integrador
+## Capítulo 5. El ciclo de vida completo
 
-**Duración** 45 minutos. **Capítulo 5.**
+Desde SPEC-016 el capítulo 5 recorre las once fases de `CICLO-DE-VIDA.md` con una sola
+historia, el reporte de comisiones por medio de pago. Cada participante elige un stack y
+trabaja en una rama local; GitHub es un paso opcional. La verdad funcional está en
+`funcionalidad-reporte.md` y lo que dice el relator, en `capitulo-5-hoja-de-respuestas.md`.
 
-**Objetivo.** Levantar el escenario, entenderlo con los activos del capítulo 2 y fijar los
-criterios con que se evaluarán los dos laboratorios siguientes.
-
-**Defectos que ejercita.** Los diez, como objeto de inventario. Ninguno se corrige.
-
-| Paso | Nombre | Propósito | Tiempo |
+| Laboratorio | Pasos | Fases | Modifica código |
 |---|---|---|---|
-| 1 | `paso-1-levantar-y-verificar` | Compilar, ejecutar y correr el comparador de escenarios, para tener una línea base verificada antes de tocar nada | 8 min |
-| 2 | `paso-2-mapa-del-sistema` | Producir el mapa de componentes y dependencias con las rutas reales del proyecto | 10 min |
-| 3 | `paso-3-inventario-de-riesgos` | Inventario priorizado de problemas, con impacto y esfuerzo, sin corregir ninguno | 12 min |
-| 4 | `paso-4-criterios-de-evaluacion` | Convertir el inventario en criterios verificables, no en opiniones | 10 min |
+| lab-5-1 | Historia de usuario, 15 min; estimación, 10; ubicación en la arquitectura, 10 | Requerimientos, Estimación, Análisis y diseño | No |
+| lab-5-2 | Plan, 10; implementación, 20; verificación, 8 | Desarrollo | Paso 2 |
+| lab-5-3 | Pruebas, 8; conciliación en el pipeline, 8; diagnóstico y corrección, 15; revisión y pull request, 8; GitHub, opcional | Pruebas, Integración continua, Mantención correctiva, Revisión, Seguridad | Pasos 1 a 3 |
+| lab-5-4 | Liberación, 8; incidente, 12; evolutiva, 8; cierre, 10 | Liberación, Operación y soporte, Mantención evolutiva | No |
 
-**Punto de partida.** El paso 1 establece la línea base ejecutando `comparar-escenarios.sh`.
-Que el laboratorio empiece con un gate en verde es deliberado: sin línea base, los dos
-laboratorios siguientes no tienen contra qué comparar.
+**Decisiones de diseño.**
 
-**Puesta en común.** Los criterios del paso 4 se acuerdan en sala y se usan en 5.2 y 5.3.
-
----
-
-## lab-5-2. Refactorización y validación incremental
-
-**Duración** 45 minutos. **Capítulo 5.**
-
-**Objetivo.** Ejecutar una mejora con el modo agente en incrementos, validando cada uno.
-
-**Defectos que ejercita.** DEF-02 y DEF-06. **No DEF-01:** migrar el dinero a tipo decimal
-cambiaría la salida y rompería la equivalencia entre escenarios, que es lo que el paso 4
-verifica. Ese ejercicio se plantea en 5.4, donde ya no hay laboratorios posteriores que
-dependan del escenario.
-
-| Paso | Nombre | Propósito | Tiempo |
-|---|---|---|---|
-| 1 | `paso-1-plan-incremental` | Tabla de los valores de negocio escritos como literales en las dos clases de cálculo, con su archivo, su línea y su regla. Después, el plan de refactorización en incrementos validables. Sin tocar código | 10 min |
-| 2 | `paso-2-extraer-calculo-comision` | **Modifica código.** Extraer a un método el bloque que calcula la comisión de una transacción | 12 min |
-| 3 | `paso-3-extraer-desglose-medios` | **Modifica código.** Extraer a un método el cálculo y la impresión del desglose por medio de pago. Es una zona distinta del mismo archivo, de modo que no depende del paso 2 | 12 min |
-| 4 | `paso-4-validar-equivalencia` | Ejecutar el comparador y comprobar que la refactorización no cambió la salida. Funciona igual si el participante no alcanzó a hacer los pasos 2 y 3 | 8 min |
-
-**El paso 4 es el que enseña.** Una refactorización correcta no cambia la salida. El
-comparador lo dice en un segundo, y si alguien rompió algo, lo dice con la línea exacta.
-
-**Independencia.** Los pasos 2 y 3 tocan bloques distintos de `CalculadoraLiquidacion`.
-Quien hizo solo uno de los dos puede ejecutar el otro sin conflicto.
-
-**Puesta en común.** Quién rompió la equivalencia y en qué, y cuánto habría tardado en
-notarlo sin el comparador.
-
----
-
-## lab-5-3. Estrategia de pruebas, documentación y checklist de revisión
-
-**Duración** 45 minutos. **Capítulo 5.**
-
-**Objetivo.** Cubrir con pruebas una parte de la lógica que hoy no tiene ninguna,
-documentar en Markdown la estrategia de pruebas, y revisar el resultado con criterio
-humano.
-
-**Cobertura del enunciado contratado.** Pruebas en el paso 1, documentación Markdown en el
-paso 2, revisión y checklist en los pasos 3 y 4.
-
-**Defectos que ejercita.** DEF-05 de forma directa: las veinte pruebas existentes no cubren
-nada de la lógica de negocio. DEF-08 aparece solo en cuanto se escriben pruebas del borde
-de tramos.
-
-| Paso | Nombre | Propósito | Tiempo |
-|---|---|---|---|
-| 1 | `paso-1-probar-tramos` | **Modifica código.** Generar pruebas de la selección de tramo, incluidos los bordes exactos, y contrastar cada borde con el tramo que aplica el cierre de la liquidación. Archivo nuevo, no toca los existentes | 12 min |
-| 2 | `paso-2-documentar-estrategia` | Producir un documento Markdown con la estrategia de pruebas: qué se prueba, qué queda fuera y por qué, qué bordes importan según las reglas de negocio, y qué inconsistencias reveló el paso 1 | 9 min |
-| 3 | `paso-3-revision-asistida` | Revisar el diff acumulado con criterio de revisor, y clasificar cada hallazgo en aplicar o descartar | 9 min |
-| 4 | `paso-4-checklist-humano` | Producir el checklist de revisión humana que el equipo se lleva, con lo que un agente no puede decidir | 8 min |
-
-Suma: 12 + 9 + 9 + 8 = 38 minutos. Holgura: 45 − 38 = 7 minutos.
-
-**Momento clave.** Al probar el borde de tramo en 500.00, las pruebas del paso 1 van a
-exponer DEF-08: las dos implementaciones no coinciden. Las reglas de negocio no dicen a qué
-tramo pertenece un monto en el límite, así que la conclusión es que hace falta una
-decisión de negocio y que las dos implementaciones deben coincidir.
-
-**Extensión para quien termina antes.** Pruebas del tope mensual y de la retención de
-garantía, en un archivo nuevo distinto del paso 1. Ahí aparece DEF-03. No tiene tiempo
-asignado y no forma parte de la puesta en común.
-
-**Cruce con el caso 01.** El paso 3 es el momento de proyectar
-`docs/relator/casos-de-clase/caso-01-escaner-vs-defectos-plantados.md`.
-
-**Independencia.** El paso 2 funciona sin el paso 1: si no hay pruebas nuevas, documenta la
-estrategia a partir de las reglas de negocio y de las pruebas existentes. El paso 3
-funciona con cualquier diff, incluido uno vacío, en cuyo caso revisa el escenario tal como
-está.
-
----
-
-## lab-5-4. Laboratorio final de activos reutilizables
-
-**Duración** 45 minutos. **Capítulo 5.**
-
-**Objetivo.** Soltar el agente sobre una tarea completa y observar cómo se comporta sin
-guía paso a paso, y dejar el entregable de medición y presupuesto que el equipo se lleva.
-
-**Defectos que ejercita.** Los que el participante elija. Es el único laboratorio donde
-tocar DEF-01 es aceptable, porque no hay laboratorios posteriores que dependan del
-escenario.
-
-| Paso | Nombre | Propósito | Tiempo |
-|---|---|---|---|
-| 1 | `paso-1-consolidar-activos` | Un único prompt que pide consolidar lo aprendido en un conjunto de activos aplicables al repositorio real del equipo, con el agente decidiendo el orden y el alcance | 32 min |
-| 2 | `paso-2-medicion-y-presupuesto` | Producir un documento corto con la línea base de medición de adopción y la propuesta de presupuesto de créditos para el equipo | 8 min |
-
-Suma: 32 + 8 = 40 minutos. Holgura: 45 − 40 = 5 minutos.
-
-**Por qué el paso 1 rompe la regla de granularidad.** A esta altura los participantes ya
-saben descomponer. Lo que no han visto es qué hace un agente cuando nadie lo acota, y eso
-solo se observa dándole una tarea grande. El contraste con `lab-1-4`, donde el prompt vago
-producía una respuesta inútil, es el arco del taller completo.
-
-**Contenido del entregable del paso 2.** La línea base: qué se mide antes de adoptar, con
-qué fuente y cada cuánto. El presupuesto: créditos por usuario al mes, qué modos de trabajo
-consumen más, que se trataron en el subtema 1.3, y qué se hace cuando un usuario se acerca
-al límite. Es un activo reutilizable: el equipo lo completa con sus propios números.
-
-**Independencia.** El paso 2 no lee el resultado del paso 1. Si el paso 1 se extiende, el
-relator lo corta a los 32 minutos para que todos lleguen al paso 2.
-
-**Conducción.** Se lanza el paso 1, se deja correr y el relator recorre la sala mirando
-pantallas. La puesta en común ocupa los últimos minutos: quién obtuvo algo aplicable, quién
-obtuvo una pila de archivos sin uso, y qué diferenció a unos de otros.
-
----
+- La solicitud del negocio es ambigua sobre el alcance y no contiene decisiones del relator.
+  Las preguntas abiertas son la fase de Requerimientos.
+- El formato exacto del reporte y el incidente del 5.4 los entrega
+  `scripts/proyecto/entregar.sh`, codificados, cuando la skill del paso los pide. El relator no
+  reparte nada.
+- El 5.2 admite dos caminos, cálculo propio o reutilización de la liquidación, y los dos
+  llevan a un pipeline en rojo en el 5.3: por la conciliación o por las pruebas de borde y de
+  tercer decimal.
+- La mantención correctiva cambia la liquidación de junio a propósito, y el participante
+  actualiza ese hash esperado y lo justifica en la descripción del pull request.
+- La revisión de código usa la revisión de Copilot sobre los cambios sin confirmar, por eso
+  el 5.3 no confirma nada hasta el paso 4.
+- El 5.3 depende del 5.1 y del 5.2, y el 5.4 no se reinicia.
 
 ## Restricción común a todas las skills de laboratorio
 
@@ -379,20 +278,21 @@ Cada defecto queda ejercitado por el camino obligatorio de al menos un laborator
 
 | Defecto | Laboratorio y paso | Cómo aparece |
 |---|---|---|
-| DEF-01 | 5.1 paso 3 | La skill pide verificar la regla 9 con aritmética decimal exacta contra la salida del programa |
-| DEF-02 | 1.4 pasos 1 a 4, 1.5 paso 1, 5.2 pasos 2 y 3 | Objeto de observación, inventario y extracción |
-| DEF-03 | 5.2 paso 1 | La tabla de valores de negocio muestra el tope del recargo en 3.0 y en 3.5 |
-| DEF-04 | 5.1 paso 3 | La skill pide evaluar la regla 8 considerando el entorno donde corre el programa |
-| DEF-05 | 5.3 pasos 1 y 2 | No hay pruebas de la lógica y la estrategia lo documenta |
-| DEF-06 | 1.5 paso 1, 5.2 paso 3 | Inventario de responsabilidades y extracción del desglose impreso |
+| DEF-01 | 5.3 paso 3 | Una de las dos causas de la conciliación de junio: tres centavos de punto flotante |
+| DEF-02 | 1.4 pasos 1 a 4, 1.5 paso 1 | Objeto de observación, inventario y extracción |
+| DEF-03 | 4.4 paso 1 | La documentación del cálculo muestra el tope del recargo en 3.0 en una calculadora y 3.5 en la otra |
+| DEF-04 | 4.4 paso 1 | El contraste con la regla 8 depende del entorno donde corre el programa |
+| DEF-05 | 5.3 paso 1 | No hay pruebas de la lógica de negocio hasta que el participante escribe las del reporte |
+| DEF-06 | 1.5 paso 1 | Inventario de responsabilidades |
 | DEF-07 | 1.5 paso 2 | Rastreo de una línea mal formada |
-| DEF-08 | 5.3 paso 1 | Tabla de bordes, calculadora contra cierre |
+| DEF-08 | 5.3 paso 3 | La causa grande de la conciliación de junio, 22,00, en los bordes de tramo |
 | DEF-09 | 1.5 paso 3 | Contraste de nombres, con CM0031 suspendido y liquidado |
 | DEF-10 | 4.4 paso 1 | La documentación derivada del código contradice el comentario de los tramos |
 
-DEF-03 no tenía cobertura directa desde SPEC-008. Se ubicó en el paso 1 del 5.2 porque ese
-paso ya prepara la refactorización de la clase de cálculo, y saber qué valores están
-duplicados es condición para planear la extracción. No cambia la duración del paso.
+DEF-03 y DEF-04 pasaron al 4.4 en SPEC-016, cuando el capítulo 5 dejó de inventariar riesgos.
+Las dos verificaciones del 4.4 documentaron la diferencia del tope del recargo y el contraste
+de la regla 8. DEF-02, DEF-03 y DEF-08 vuelven a aparecer en el 5.2 si el plan del
+participante refactoriza o reutiliza la calculadora de comisión.
 
 ## Variantes por stack
 

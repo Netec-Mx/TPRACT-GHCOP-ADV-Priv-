@@ -29,18 +29,23 @@ faltante, revisa [`docs/00-setup-ambiente.md`](docs/00-setup-ambiente.md) y
 | 4 | Documentación técnica con GitHub Copilot y Markdown | 90 min |
 | 5 | Laboratorio integrador Java/.NET | 180 min |
 
-Los nueve laboratorios están en [`labs/`](labs/README.md).
+Los nueve laboratorios están en [`labs/`](labs/README.md). El capítulo 5 recorre el ciclo de vida
+completo de una funcionalidad nueva, en tu máquina y en un solo stack; el mapa está en
+[`CICLO-DE-VIDA.md`](CICLO-DE-VIDA.md) y la forma de trabajar en
+[`GUIA-DE-INICIO.md`](GUIA-DE-INICIO.md).
 
 ## Mapa del repositorio
 
 | Ruta | Contenido |
 |---|---|
 | `.github/` | Instrucciones, agentes, skills y hooks de Copilot |
-| `docs/` | Preparación del ambiente, solución de problemas, arquitectura de referencia y decisiones (`arquitectura/`), política de uso de IA y uso de tokens (`gobierno/`) y plantilla de runbook (`operacion/`) |
+| `docs/` | Preparación del ambiente, solución de problemas, arquitectura de referencia y decisiones (`arquitectura/`), política de uso de IA y uso de tokens (`gobierno/`), plantilla de runbook (`operacion/`) y el proyecto del capítulo 5, con su backlog y plantillas (`proyecto/`) |
 | `escenario/` | Código base Java y .NET de los laboratorios |
 | `labs/` | Enunciados de los laboratorios |
 | `mcp/` | Servidor MCP local de consulta |
-| `scripts/` | Verificación de ambiente, comparación de escenarios, reinicio de laboratorios y validación de skills |
+| `scripts/` | Verificación de ambiente, comparación de escenarios, reinicio de laboratorios, validación de skills, pipeline local (`integracion-local.sh`), verificación del reporte (`verificar-reporte.sh`) y el stack declarado (`integracion/stack.txt`) |
+| `CICLO-DE-VIDA.md` | El mapa de las once fases que recorre el capítulo 5 |
+| `CHANGELOG.md` | Registro de cambios del sistema, con la versión del punto de partida |
 
 ## Volver al punto de partida de un laboratorio
 

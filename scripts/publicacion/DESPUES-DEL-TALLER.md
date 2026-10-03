@@ -15,8 +15,12 @@ siguientes.
 | Hook | `.github/hooks/` | Un control que bloquea acciones del agente antes de que ocurran |
 | Servidor MCP | `mcp/` | Ejemplo de acceso a datos internos por un proceso local, sin red y de solo lectura |
 | Tu agente o instrucción | `.github/agents/` o `.github/instructions/` | Lo que construiste en el laboratorio 2.4 |
-| Entregables | `labs/*/*/entregables/` | Documentos, checklist y activos de los laboratorios |
-| Medición y presupuesto | `labs/cap5/lab-5-4-laboratorio-final/entregables/medicion-y-presupuesto.md` | Línea base de adopción y presupuesto de créditos |
+| Entregables | `labs/*/*/entregables/` | Documentos de los laboratorios de los capítulos 1 a 4 |
+| El ciclo de vida | `CICLO-DE-VIDA.md` y `docs/proyecto/` | La historia, la estimación, el registro de tiempos, el pull request, las notas de versión y el incidente del capítulo 5 |
+| Skills del ciclo | `.github/skills/pasarela-*` | Historia de usuario, estimación, decisiones de arquitectura, notas de versión y análisis de incidentes, reutilizables en otro proyecto |
+| Plantillas | `docs/proyecto/plantillas/` y `docs/operacion/` | Historia, estimación, registro de tiempos, notas de versión y runbook |
+| Pipeline | `scripts/integracion-local.sh` y `.github/workflows/` | El mismo pipeline en local y en GitHub Actions, con la conciliación que agregaste |
+| Medición y presupuesto | `docs/proyecto/medicion-y-presupuesto.md` | Línea base de adopción y presupuesto de créditos |
 
 ## Cómo llevarlo a un repositorio del equipo
 
@@ -34,7 +38,12 @@ siguientes.
 6. **Convierte en skill una tarea que se repita.** Una carpeta en `.github/skills/` con un
    `SKILL.md`. Si no quieres que el agente la cargue solo, declara
    `disable-model-invocation: true`.
-7. **Revisa todo en un pull request,** como cualquier otro código. Estos archivos cambian el
+7. **Lleva el ciclo.** Las skills `pasarela-historia-de-usuario`, `pasarela-estimar`,
+   `pasarela-registrar-decision`, `pasarela-notas-de-version` y `pasarela-analizar-incidente`
+   y sus plantillas sirven en cualquier proyecto. Cambia las rutas y las reglas del dominio.
+   Tu `docs/proyecto/registro-de-tiempos.md` es el primer dato real para estimar el próximo
+   cambio.
+8. **Revisa todo en un pull request,** como cualquier otro código. Estos archivos cambian el
    comportamiento del agente para todo el equipo.
 
 `scripts/validar-skills.sh` sirve también en tu repositorio para revisar el formato de las
@@ -42,7 +51,8 @@ skills.
 
 ## La medición
 
-El documento del laboratorio 5.4 tiene una línea base con campos a completar.
+`docs/proyecto/medicion-y-presupuesto.md`, del laboratorio 5.4, tiene una línea base con
+campos a completar.
 
 - **Antes de extender el uso.** Completa los valores actuales con datos reales del equipo y
   anota la fuente de cada uno.

@@ -5,12 +5,13 @@
 | Capítulo y sesión | Capítulo 5, sesión 4 |
 | Duración | Sin minutos propios. Se dicta en los primeros minutos de cada bloque, ya contados en las notas de laboratorio |
 | Demostración | No tiene |
-| Artefactos que se proyectan | `labs/cap5/*/README.md`, `.github/skills/lab-5-4-paso-2-medicion-y-presupuesto/SKILL.md` |
+| Artefactos que se proyectan | `CICLO-DE-VIDA.md`, `labs/cap5/*/README.md`, `.github/skills/lab-5-4-paso-4-cierre/SKILL.md` |
 
 ## La idea en una frase
 
-Los cuatro bloques repiten el ciclo del taller sobre un mismo sistema, y en cada uno el
-agente produce y la persona verifica, porque la verificación es el trabajo que no se delega.
+Los cuatro bloques recorren las once fases del ciclo de vida con una sola historia, y en cada
+fase el agente produce y la persona verifica, porque la verificación es el trabajo que no se
+delega.
 
 ## Contenido
 
@@ -23,29 +24,28 @@ Cada apertura dura pocos minutos y sale del tiempo del laboratorio.
 
 ### El hilo de los cuatro bloques
 
-Los cuatro laboratorios trabajan sobre el mismo escenario y se encadenan. Lo que produce uno
-es la entrada del siguiente.
+Los cuatro laboratorios recorren el ciclo de vida que presentó el subtema 1.3, con una sola
+historia: el reporte de comisiones por medio de pago que pide el área comercial. Cada
+participante elige un stack y trabaja en una rama local, sin GitHub. Lo que produce un bloque
+es la entrada del siguiente. Abra cada bloque proyectando `CICLO-DE-VIDA.md` y señalando en
+qué fila está la sala.
 
-**5.1, preparación y criterios.** Se levanta el escenario con una línea base verificada, se
-arma un mapa del sistema, un inventario de riesgos y los criterios con que se van a evaluar
-los dos bloques siguientes. Retoma el capítulo 1: contexto antes de pedir y un pedido que
-dice qué es éxito.
+**5.1, Requerimientos, Estimación y Análisis y diseño.** La solicitud del negocio es ambigua a
+propósito. El agente lista preguntas, el relator responde como negocio, y la historia queda
+con criterios comprobables. Se estima con y sin IA y se decide dónde vive el reporte. Retoma
+el capítulo 1, el pedido, y el 2, la arquitectura de referencia.
 
-**5.2, mejora incremental.** Se planea una mejora del método que calcula la liquidación y se
-ejecuta en incrementos, cada uno validado contra el otro escenario. Retoma el flujo del
-subtema 1.3, analizar, planear, implementar y validar, y los agentes por rol del capítulo 2.
+**5.2, Desarrollo.** Se planifica antes de implementar y cada paso se valida contra la
+liquidación. Retoma el ciclo corto del 1.3: analizar, planear, implementar y validar.
 
-**5.3, pruebas, documentación y revisión.** Se cubre con pruebas una parte de la lógica de
-negocio, se documenta la estrategia y se revisa el resultado con un checklist humano.
-Retoma el capítulo 4.
+**5.3, Pruebas, Integración continua, Mantención correctiva, Revisión y Seguridad.** Las
+pruebas salen de los criterios, la conciliación entra al pipeline, el pipeline se pone en
+rojo y la mantención correctiva lo devuelve a verde entendiendo cada causa. Retoma el
+capítulo 3, la política de uso de IA, y el 4, la documentación del cambio.
 
-**5.4, activos para el equipo.** El agente trabaja sobre una tarea completa sin guía paso a
-paso y consolida lo aprendido en activos que el equipo pueda llevar a sus repositorios. Y se
-deja el documento de medición y presupuesto.
-
-Al abrir cada bloque, conviene decir en una frase de qué capítulo viene lo que se va a usar.
-La sala ve así que el integrador no es un ejercicio nuevo sino el taller entero sobre un solo
-sistema.
+**5.4, Liberación, Operación y soporte, Mantención evolutiva y cierre.** Se libera con notas
+para el negocio, se atiende el primer incidente, se estima el siguiente cambio y se compara
+lo estimado con lo real. Quedan los activos del equipo y la línea base de medición.
 
 ### La verificación como trabajo humano
 
@@ -59,26 +59,25 @@ automatizadas y herramientas para comprobar su trabajo.
 
 Cada bloque del integrador tiene un punto donde esa verificación es explícita.
 
-- **En el 5.1**, cada criterio de evaluación tiene que poder comprobarse con un comando o
-  una prueba. Un criterio que no se puede comprobar no es un criterio.
-- **En el 5.2**, cada incremento se valida con el comparador de escenarios. Si la salida
-  cambió, se sabe en qué línea.
-- **En el 5.3**, la pregunta es si las pruebas documentan lo que el código hace o lo que
-  debería hacer. El agente escribe pruebas que pasan. Decidir si lo que pasa es correcto
-  es de la persona.
-- **En el 5.4**, se observa qué decide el agente cuando nadie lo acota, y se revisa el
-  documento de presupuesto buscando valores inventados.
+- **En el 5.1**, cada criterio de aceptación tiene que poder comprobarse con un comando o
+  una prueba, y lo que el negocio no respondió queda como pendiente, no como supuesto.
+- **En el 5.2**, cada paso se valida contra los hashes esperados de la liquidación. Un
+  refactor que cambia un byte está mal, aunque parezca una mejora.
+- **En el 5.3**, el pipeline en rojo se diagnostica hasta que las causas sumen la diferencia
+  completa. Cambiar un hash esperado o una prueba sin causa explicada sería hacer trampa.
+- **En el 5.4**, las notas de versión y la respuesta al incidente se revisan buscando montos
+  inventados y promesas que nadie puede cumplir.
 
-En el 5.1 y en el 5.3 el agente va a encontrar comportamientos del sistema que merecen una
-decisión. No las anticipe al abrir el bloque. Las notas de cada laboratorio dicen cuándo y
-cómo se cierran.
+En el 5.1 y en el 5.3 aparecen decisiones de negocio que no están escritas. No las anticipe
+al abrir el bloque. La hoja de respuestas dice cuándo y cómo se entregan.
 
 ### El marco para la medición y el presupuesto
 
-El paso 2 del 5.4 produce un documento corto con dos partes, una línea base de medición y
-una propuesta de presupuesto de créditos. El agente lo escribe con campos a completar. Lo
-que sigue es lo que el relator necesita saber para abrir ese paso y responder preguntas. No
-se dan cifras en clase, porque cambian y porque dependen del plan de la organización.
+El paso 4 del 5.4 produce, entre otros, un documento corto con dos partes, una línea base
+de medición y una propuesta de presupuesto de créditos. El agente lo escribe con campos a
+completar. Lo que sigue es lo que el relator necesita saber para abrir ese paso y responder
+preguntas. No se dan cifras en clase, porque cambian y porque dependen del plan de la
+organización.
 
 #### Cómo se cobra hoy
 
