@@ -454,9 +454,14 @@ participantes: un pull request deja allí su referencia para siempre.
    sección «Revisión de Copilot» del respaldo con el texto real, cierra el pull request sin
    integrar y borra la rama.
 
-- [ ] **Esperado:** Copilot aparece en **Reviewers** y deja una revisión en el pull request.
-- [ ] **Hecho por el ejecutor:** respaldo completado, pull request #2 cerrado y rama borrada.
-- Observado: ______________________________________________
+- [x] **Esperado:** Copilot aparece en **Reviewers** y deja una revisión en el pull request.
+- [x] **Hecho por el ejecutor:** respaldo completado, pull request #2 cerrado y rama borrada.
+- Observado: hecho el 3 de octubre de 2026 con la cuenta `RodrigoMSB`, que activó Copilot
+  Pro, con `gh pr edit 2 --add-reviewer @copilot`, porque Copilot no aparecía en
+  **Reviewers** al buscarlo. El primer intento devolvió «Copilot encountered an error and
+  was unable to review this pull request». El reintento, 15 minutos después, dejó la
+  revisión con cuatro comentarios en unos cuatro minutos. Si en la sala falla, espere unos
+  minutos y vuelva a pedirla.
 
 ---
 
