@@ -97,3 +97,62 @@ Pendiente. `01-guia-del-relator.md` sigue siendo un índice.
 - Protocolo de prueba reescrito solo con mouse y con casillas.
 - SPEC-010-A versionó la imagen de gates, `scripts/gates.sh`, este documento, el contexto
   del proyecto y la guía de mantenimiento.
+
+## SPEC-011. Guía del relator, demostraciones y material del participante
+
+1 de octubre de 2026, con la enmienda B del mismo día.
+
+- `01-guia-del-relator.md` completa, con el plan minuto a minuto de las cuatro sesiones,
+  la conducción de laboratorios, las trampas y las preguntas difíciles. El `README.md`
+  incorpora la tabla de subtemas del temario contratado.
+- Nueve demostraciones en `demos/`, salidas grabadas en `respaldos/` y el bloque G del
+  protocolo de la máquina virtual.
+- `GUIA-DE-INICIO.md` y `DESPUES-DEL-TALLER.md` para la raíz del repositorio de
+  participantes.
+- Las demostraciones 1.3 y 2.2 quedaron sin ejecutar por el control de permisos del entorno
+  de verificación. SPEC-011-B las ejecutó con autorización dentro de la imagen de gates.
+- SPEC-011-B corrigió ocho inconsistencias. El 5.4 no se reinicia sin escribir `descartar`.
+  El comercio suspendido no se liquida, como decisión de las notas del 1.5. La regla 8
+  clasificada distinto quedó como HALLAZGO-07. `entrega_spec24.zip` quedó en `.gitignore`,
+  sin borrarlo.
+
+## SPEC-012. Material de teoría
+
+2 de octubre de 2026.
+
+- `docs/relator/teoria/` con índice y un documento por subtema de teoría, de 1.1 a 4.3, más
+  el encuadre del capítulo 5. Seis partes por documento y extensión de una página de 500
+  palabras por cada diez minutos.
+- Toda afirmación técnica con fuente oficial, URL y fecha. Las fuentes del capítulo 1 se
+  volvieron a consultar para que todo quede con la misma fecha.
+- `10-mantenimiento.md` registra una ruta de cobro que daba 404 como ejemplo de por qué las
+  fuentes se revisan antes de cada dictado.
+- Inconsistencias reportadas y no corregidas: la demostración 3.2 atribuía a
+  `readOnlyHint` un efecto que la documentación no confirma, y la skill del paso 3 del 4.4
+  hablaba de importar Markdown en Confluence, cosa que la importación nativa no hace.
+
+## SPEC-013. Paquete de entrega
+
+Pendiente. Por decisión del Product Owner va después de SPEC-016, reducido al paquete de
+entrega del relator.
+
+## SPEC-014. Arquitectura de referencia, gobierno de la IA y ciclo de vida
+
+3 de octubre de 2026.
+
+- `docs/arquitectura/bian-mapeo.md` con los dominios de servicio BIAN 14.0.0 Merchant
+  Relations, Merchant Acquiring Facility, Card Transaction Capture y Card Case, tomados de
+  las Semantic APIs publicadas bajo Apache-2.0. Instrucción BIAN con alcance solo sobre
+  `docs/arquitectura/**`, para no cambiar los laboratorios verificados.
+- `docs/arquitectura/decisiones/` con plantilla y tres decisiones. El formato es el de
+  Nygard con agregados de MADR, como complemento de TOGAF. El texto oficial de TOGAF exige
+  registro y se verificó por lo que exponen sus páginas oficiales.
+- Política de uso de IA de Pasarela Andina con ocho reglas, guía de uso responsable de
+  tokens y plantilla de runbook. Las reglas que dependen de instrucciones quedaron en la
+  sección «Gobierno» de las instrucciones generales.
+- Tarea E del 2.4, paso 4 opcional del 4.4, apertura del 1.1, las once fases del ciclo de
+  vida en el 1.3 y la guía del relator con el nuevo marco.
+- Los laboratorios 1.5, 2.4, 3.4 y 4.4 se volvieron a ejecutar como agente. Ninguna regla de
+  gobierno produjo regresiones. El capítulo 5 queda para verificar en SPEC-016.
+- Hallazgo no planificado: el ejemplo de `escenario/README.md`, línea 69, carga cero
+  comercios.
