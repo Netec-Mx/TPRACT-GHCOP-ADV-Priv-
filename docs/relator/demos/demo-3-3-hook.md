@@ -33,6 +33,10 @@
    Diga: «El control es un archivo del repositorio, versionado y revisable. Corre antes de
    cada herramienta y decide si la deja pasar.»
 
+   Abra `docs/gobierno/politica-uso-ia.md` en la regla 3. Diga: «Esta es la regla de la
+   política que el hook impone. Las reglas que solo están en las instrucciones se le piden
+   al agente. Esta se le impide.»
+
 4. En Git Bash, `git status`. Limpio.
 
 ## Plan alternativo

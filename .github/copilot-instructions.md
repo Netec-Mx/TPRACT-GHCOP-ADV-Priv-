@@ -43,6 +43,17 @@ bash scripts/comparar-escenarios.sh
 Termina en cero si las salidas son idénticas. Si modificas un solo escenario, este script
 te dice si te alejaste del otro.
 
+## Gobierno
+
+Estas reglas vienen de la política de uso de IA de Pasarela Andina,
+`docs/gobierno/politica-uso-ia.md`.
+
+- No escribas secretos, credenciales, datos personales ni datos reales de clientes en
+  código, documentos ni respuestas. Si encuentras alguno en el contexto, no lo repitas y
+  avisa. Los datos de `escenario/datos/` y `mcp/datos/` son ficticios y se pueden mostrar.
+- No agregues ni propongas servidores MCP ni extensiones nuevos. Los aprueba el equipo.
+- No hagas commits ni push. Los cambios los revisa e integra una persona.
+
 ## Ambiente
 
 - Los scripts se ejecutan en Git Bash. No propongas PowerShell.

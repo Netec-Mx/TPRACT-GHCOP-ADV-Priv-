@@ -5,7 +5,7 @@
 | Capítulo y sesión | Capítulo 3, sesión 3 |
 | Duración | 45 minutos. 40 de exposición y 5 de demostración |
 | Demostración | [El hook que protege los datos](../demos/demo-3-3-hook.md) |
-| Artefactos que se proyectan | `.github/hooks/proteger-datos-escenario.json`, `.github/hooks/proteger-datos-escenario.js` |
+| Artefactos que se proyectan | `docs/gobierno/politica-uso-ia.md`, `.github/copilot-instructions.md`, `.github/hooks/proteger-datos-escenario.json`, `.github/hooks/proteger-datos-escenario.js` |
 
 ## La idea en una frase
 
@@ -16,14 +16,11 @@ que los controles que valen son los que actúan antes de la acción, no los que 
 
 ### Por qué este subtema va después de MCP
 
-Los dos subtemas anteriores mostraron que el agente puede consultar fuentes fuera del
-repositorio y que esas consultas son acciones. Este subtema reúne los riesgos que eso abre y
-los controles que existen. El temario nombra tres riesgos. Se agregan dos que la
-documentación de Visual Studio Code trata en la misma página y que el laboratorio 3.4 pide
-incluir: la inyección indirecta y la ejecución sin revisión.
-
-Para cada riesgo conviene dar un escenario concreto, del taller o del trabajo diario de la
-sala. Un riesgo sin escenario se olvida.
+Los subtemas anteriores mostraron que el agente consulta fuentes fuera del repositorio y que
+esas consultas son acciones. Este reúne los riesgos y los controles. A los tres riesgos
+del temario se suman dos que el laboratorio 3.4 pide incluir: la inyección indirecta y la
+ejecución sin revisión. Cada riesgo va con un escenario concreto, porque un riesgo sin
+escenario se olvida.
 
 ### Exposición de información
 
@@ -36,12 +33,10 @@ escenario y copia registros completos, con razón social y registro tributario, 
 de pruebas nuevo. El archivo se versiona. En un banco, lo mismo con un extracto de
 producción que alguien dejó en una carpeta del repositorio.
 
-**Qué lo reduce.** No tener datos reales en el repositorio, para empezar. Revisar el diff de
-lo que el agente crea. No poner secretos en ningún archivo de personalización. La
-documentación de seguridad de Visual Studio Code recuerda que el contenido de los archivos,
-la salida de la terminal y los diagnósticos del espacio de trabajo se envían como contexto a
-los modelos y a las herramientas, y propone exigir aprobación manual para editar archivos
-sensibles, como los de configuración o credenciales, con el ajuste
+**Qué lo reduce.** No tener datos reales en el repositorio y revisar el diff de lo que el
+agente crea. Visual Studio Code recuerda que el contenido de los archivos, la salida de la
+terminal y los diagnósticos se envían como contexto a los modelos y a las herramientas, y
+propone exigir aprobación manual para editar archivos sensibles con el ajuste
 `chat.tools.edits.autoApprove`.
 
 ### Conectores no autorizados
@@ -49,12 +44,11 @@ sensibles, como los de configuración o credenciales, con el ajuste
 **Qué es.** Un servidor MCP, una extensión o cualquier integración que alguien conecta al
 agente sin que la organización lo haya evaluado.
 
-**Escenario.** Un desarrollador encuentra en internet un servidor MCP que promete consultar
-la base de datos con lenguaje natural. Lo agrega al `.vscode/mcp.json` del repositorio del
-equipo y lo sube en un pull request que nadie revisa con atención, porque es un archivo de
-configuración. Cada compañero que clona el repositorio y confía en la carpeta lo ejecuta en
-su máquina. Visual Studio Code es explícito: un servidor local puede ejecutar código
-arbitrario, y los servidores del espacio de trabajo heredan la confianza de la carpeta.
+**Escenario.** Un desarrollador encuentra en internet un servidor MCP que consulta la base
+de datos con lenguaje natural, lo agrega al `.vscode/mcp.json` del equipo y nadie revisa el
+pull request con atención, porque es configuración. Cada compañero que confía en la carpeta
+lo ejecuta en su máquina. Visual Studio Code advierte que un servidor local puede ejecutar
+código arbitrario, y que los del espacio de trabajo heredan la confianza de la carpeta.
 
 **Qué lo reduce.** La política de la organización sobre servidores MCP en Copilot. La revisión
 de `.vscode/mcp.json` con el mismo cuidado que un script de despliegue. Y la regla de equipo
@@ -65,16 +59,11 @@ de no confiar en una carpeta sin mirar antes su configuración.
 **Qué es.** Información del contexto que sale hacia un sistema que no debería recibirla,
 casi siempre como parámetro de una herramienta.
 
-**Escenario.** El agente tiene en el contexto la clase que calcula las comisiones. El pedido
-es buscar una mejor forma de redondear montos, y el agente tiene conectada una herramienta
-de búsqueda externa. Para buscar, manda como parámetro un fragmento de la clase, con la
-lógica de cálculo incluida. La lógica de negocio acaba de salir de la red, sin que nadie
-haya pedido compartirla.
-
-La documentación de seguridad de Visual Studio Code describe una variante que conviene
-nombrar: el encadenamiento de salidas de herramientas. La salida de una herramienta se
-convierte en la entrada de otra, y así un dato leído en un paso termina enviado en el
-siguiente.
+**Escenario.** El agente tiene en el contexto la clase que calcula las comisiones y una
+herramienta de búsqueda externa conectada. Para buscar cómo mejorar el reporte, manda como
+parámetro un fragmento de la clase. La lógica de negocio salió de la red sin que nadie lo
+pidiera. Visual Studio Code nombra una variante, el encadenamiento de salidas: lo que
+devuelve una herramienta es la entrada de otra.
 
 **Qué lo reduce.** Leer los parámetros en cada diálogo de aprobación. La especificación de MCP
 pide justamente que la aplicación muestre los datos que se enviarán antes de llamar al
@@ -83,18 +72,14 @@ externas que la tarea no necesita.
 
 ### Inyección indirecta
 
-Este riesgo hay que explicarlo antes del laboratorio, y con cuidado, porque es el menos
-intuitivo para un desarrollador.
-
 **Qué es.** El modelo lee todo el contexto por el mismo canal. El pedido de la persona, las
 instrucciones del repositorio, el contenido de un archivo y la respuesta de una herramienta
 llegan como texto. Si una fuente que el agente consulta contiene texto escrito como una
 orden, el modelo puede tratarlo como una orden. Nadie le habló al agente directamente. La
 instrucción llegó escondida en un dato, y por eso se llama indirecta.
 
-La documentación de seguridad de Visual Studio Code da un ejemplo de este tipo. Una
-instrucción oculta en el contenido que devuelve un servidor MCP o una página consultada con
-`#fetch`, que lleva al agente a hacer algo que el usuario no pidió.
+Visual Studio Code da un ejemplo: una instrucción oculta en lo que devuelve un servidor MCP o
+una página consultada con `#fetch`.
 
 **Escenario.** Un equipo usa una herramienta que lee los comentarios de los tickets de
 incidentes para ayudar a diagnosticar. Un comentario, escrito por alguien externo en un
@@ -137,9 +122,8 @@ la documentación de GitHub.
 > Content exclusion is currently not supported in Edit and Agent modes of Copilot Chat in
 > Visual Studio Code and other editors.
 
-Es decir, la exclusión de contenido no se aplica hoy en los modos Edit y Agent de Copilot
-Chat, que son justamente los que se usan en este taller. La documentación agrega dos límites
-más.
+Es decir, no se aplica hoy en los modos Edit y Agent, los que usa este taller. La
+documentación agrega dos límites.
 
 > Currently, content exclusions do not apply to symbolic links (symlinks) and repositories
 > located on remote filesystems.
@@ -155,10 +139,9 @@ de trabajo.
 
 Las instrucciones le piden al agente que no haga algo. Un hook se lo impide.
 
-Según la documentación de Visual Studio Code, los hooks ejecutan acciones propias en puntos
-definidos del ciclo de vida del agente, para validar operaciones, dejar registro o aplicar
-políticas, con independencia del modelo. Uno de esos puntos es antes de usar cada
-herramienta.
+Según Visual Studio Code, los hooks ejecutan acciones en puntos del ciclo de vida del
+agente, para validar operaciones, dejar registro o aplicar políticas, con independencia del
+modelo. Uno de esos puntos es antes de cada herramienta.
 
 Conviene proyectar el hook del repositorio. Son dos archivos en `.github/hooks/`.
 
@@ -186,8 +169,8 @@ compartido. Un hook también se revisa en pull request.
 ### El aislamiento como control más fuerte
 
 Visual Studio Code documenta el aislamiento del agente como la protección más fuerte contra
-comandos de terminal maliciosos. Restringe el acceso al sistema de archivos y a la red de los comandos que el
-agente ejecuta. Está disponible en macOS y Linux, y en Windows es experimental.
+comandos de terminal maliciosos. Restringe el sistema de archivos y la red de los comandos
+que el agente ejecuta, en macOS y Linux, y en Windows es experimental.
 
 Tiene límites que también están documentados. No cubre las herramientas de archivos
 integradas del editor. Y detener una sesión o restaurar un punto anterior no revierte los
@@ -195,6 +178,30 @@ comandos de terminal ya ejecutados ni los pedidos de red ya enviados.
 
 A esto se suma la confianza del espacio de trabajo. Una carpeta abierta en modo restringido
 deshabilita los agentes.
+
+### De la política a los controles
+
+Una organización no empieza por los controles. Empieza por una política, y la convierte en
+reglas que el agente sigue y en controles que lo bloquean. El repositorio trae un ejemplo:
+la política de uso de IA de Pasarela Andina, en `docs/gobierno/politica-uso-ia.md`. Es de la
+empresa ficticia del escenario y está hecha para adaptarla.
+
+Tiene ocho reglas, y cada una dice qué mecanismo la aplica. Conviene proyectarla y recorrer
+tres columnas mentales.
+
+- **Lo que se pide con instrucciones.** No escribir secretos ni datos personales, no
+  proponer servidores MCP nuevos, no hacer commits. Están en la sección «Gobierno» de
+  `.github/copilot-instructions.md`, que entra en todos los pedidos. El agente las sigue casi
+  siempre, y casi siempre no alcanza para lo que no puede pasar.
+- **Lo que se impone en el repositorio.** Los datos del escenario no se modifican. Lo impone el
+  hook que se ve en la demostración.
+- **Lo que depende de la organización.** La cuenta y el plan, la exclusión de contenido, la
+  política de servidores MCP, la protección de la rama principal, las métricas y los
+  presupuestos. El repositorio no puede imponerlas, y la política lo dice en lugar de
+  aparentarlo.
+
+La pregunta para la sala es cuál de sus reglas reales está hoy solo en un documento, y qué
+haría falta para que alguna se impusiera.
 
 ### Lo que va a preguntar un área de seguridad
 
@@ -217,7 +224,8 @@ equipo de cuenta, no el taller.
 ## Cómo se conecta
 
 - **Demostración.** La [demostración 3.3](../demos/demo-3-3-hook.md) muestra el bloqueo de una
-  escritura y la lectura permitida sobre el mismo archivo.
+  escritura y la lectura permitida sobre el mismo archivo. Es la regla 3 de la política,
+  impuesta por un hook.
 - **Laboratorio.** En el [3.4](../../../labs/cap3/lab-3-4-mcp-local/README.md) la sección de
   riesgos del caso de uso debe incluir la inyección indirecta, la ejecución sin revisión y el
   contenido que no debería llegar al contexto.
@@ -246,6 +254,7 @@ como un hook o el aislamiento.
 | Aislamiento de sistema de archivos y red, plataformas, no cubre herramientas de archivos integradas, detener o restaurar no revierte comandos ni pedidos de red | https://code.visualstudio.com/docs/agents/concepts/trust-and-safety | 2 de octubre de 2026 |
 | Exclusión de contenido, configuración por administradores del repositorio y dueños de organización o empresa, citas textuales sobre Edit y Agent, enlaces simbólicos e información semántica | https://docs.github.com/en/copilot/concepts/context/content-exclusion | 2 de octubre de 2026 |
 | Hooks: definición, uso para auditoría y políticas, `.github/hooks/`, decisión de rechazo, vista previa, `chat.useHooks` habilitado por omisión, advertencia de permisos | https://code.visualstudio.com/docs/agent-customization/hooks | 2 de octubre de 2026 |
+| Planes con gestión centralizada y políticas, base de la regla de cuentas de la política | https://docs.github.com/en/copilot/get-started/plans | 3 de octubre de 2026 |
 | Código arbitrario en servidores locales, confianza heredada del espacio de trabajo | https://code.visualstudio.com/docs/agent-customization/mcp-servers | 2 de octubre de 2026 |
 | Mostrar los datos antes de llamar al servidor para evitar la exfiltración | https://modelcontextprotocol.io/specification/2026-07-28/server/tools | 2 de octubre de 2026 |
 | **Chat: Reset Tool Confirmations**, aprobación permanente | https://code.visualstudio.com/docs/agents/approvals | 2 de octubre de 2026 |
