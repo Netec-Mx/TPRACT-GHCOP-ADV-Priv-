@@ -1,0 +1,80 @@
+diff --git a/.github/workflows/integracion-continua.yml b/.github/workflows/integracion-continua.yml
+index af88601..0dcb7f0 100644
+--- a/.github/workflows/integracion-continua.yml
++++ b/.github/workflows/integracion-continua.yml
+@@ -113,3 +113,5 @@ jobs:
+           dotnet-version: ${{ env.VERSION_DOTNET }}
+       - name: Liquidar los tres periodos y comparar
+         run: bash scripts/integracion-local.sh --paso equivalencia
++      - name: Conciliar el reporte con las liquidaciones
++        run: bash scripts/integracion-local.sh --paso conciliacion
+diff --git a/scripts/integracion-local.sh b/scripts/integracion-local.sh
+index d4a337d..94ea530 100755
+--- a/scripts/integracion-local.sh
++++ b/scripts/integracion-local.sh
+@@ -25,7 +25,7 @@ set -u
+ readonly VERSION_SCRIPT="1.1.0"
+ 
+ # Orden de los pasos. El workflow tiene que llamarlos en este mismo orden.
+-readonly PASOS=(java dependencias-java dotnet dependencias-dotnet equivalencia)
++readonly PASOS=(java dependencias-java dotnet dependencias-dotnet equivalencia conciliacion)
+ 
+ readonly PERIODOS=(2026-04 2026-05 2026-06)
+ 
+@@ -160,6 +160,48 @@ paso_equivalencia() {
+     [ "$fallas" -eq 0 ]
+ }
+ 
++# Centavos enteros del monto que sigue a «S/», aunque la linea siga con texto.
++centavos() {
++    awk '{ sub(/\r$/, ""); sub(/.*S\/ /, ""); split($0, c, " "); v = c[1]; s = 1
++           if (substr(v, 1, 1) == "-") { s = -1; v = substr(v, 2) }
++           split(v, p, "."); print s * (p[1] * 100 + p[2]) }'
++}
++
++paso_conciliacion() {
++    titulo "Conciliacion: total del reporte contra las liquidaciones (stack: $stack)"
++    local periodo s fallas=0 temporal liquidado reporte diferencia
++    temporal=$(mktemp -d 2>/dev/null || mktemp -d -t conciliacion)
++    for s in java dotnet; do
++        usa "$s" || continue
++        if [ "$s" = "java" ]; then
++            (cd "$raiz/escenario/java" && mvn -q clean package -DskipTests) || { rm -rf "$temporal"; return 1; }
++        else
++            (cd "$raiz/escenario/dotnet" && dotnet build LiquidacionComercios -c Release > "$temporal/build.log") \
++                || { cat "$temporal/build.log"; rm -rf "$temporal"; return 1; }
++        fi
++        for periodo in "${PERIODOS[@]}"; do
++            liquidar "$s" "$periodo" > "$temporal/liq.txt" 2>/dev/null
++            liquidar "$s" --reporte-medios "$periodo" > "$temporal/rep.txt" 2>/dev/null
++            # Solo las lineas de cada comercio: la del resumen general lleva un espacio mas.
++            liquidado=$(grep "^  Total comisiones         : S/ " "$temporal/liq.txt" | centavos | awk '{ t += $1 } END { print t + 0 }')
++            reporte=$(grep "^Total " "$temporal/rep.txt" | centavos)
++            if [ -z "$reporte" ]; then
++                printf '  [FALLA] %s %s: el reporte no tiene fila Total\n' "$s" "$periodo"
++                fallas=$((fallas + 1)); continue
++            fi
++            diferencia=$((reporte - liquidado))
++            if [ "$diferencia" -eq 0 ]; then
++                printf '  [ OK ] %s %s concilia\n' "$s" "$periodo"
++            else
++                printf '  [FALLA] %s %s no concilia: reporte menos liquidaciones = %d centavos\n' "$s" "$periodo" "$diferencia"
++                fallas=$((fallas + 1))
++            fi
++        done
++    done
++    rm -rf "$temporal"
++    [ "$fallas" -eq 0 ]
++}
++
+ correr() {
+     case "$1" in
+         java)                paso_java ;;
+@@ -167,6 +209,7 @@ correr() {
+         dotnet)              paso_dotnet ;;
+         dependencias-dotnet) paso_dependencias_dotnet ;;
+         equivalencia)        paso_equivalencia ;;
++        conciliacion)        paso_conciliacion ;;
+         *) printf 'Paso desconocido: %s\n' "$1" >&2; return 2 ;;
+     esac
+ }

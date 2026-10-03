@@ -1,6 +1,6 @@
 # Caso 3. El verificador dice que la máquina no sirve
 
-> Capítulo 5, revisión asistida y checklist de revisión humana. Se usa junto con el caso 1.
+> Capítulo 5, laboratorio 5.3, puesta en común: cuando lo obsoleto es la verificación.
 > Material para proyectar. La resolución está al final, en las notas del relator.
 
 ---

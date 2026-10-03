@@ -1,0 +1,10 @@
+diff --git a/scripts/integracion/liquidacion-esperada.sha256 b/scripts/integracion/liquidacion-esperada.sha256
+index ab5b769..e182c7d 100644
+--- a/scripts/integracion/liquidacion-esperada.sha256
++++ b/scripts/integracion/liquidacion-esperada.sha256
+@@ -3,4 +3,4 @@
+ # actualiza aqui y el cambio se justifica en el pull request.
+ d47a700cb69776d8125649c116728020be4529db1075bafea908764b2aa41a21  2026-04
+ b80d54152371f23f37b9dc7f6cfd46200520c41b6eb2ebaf46ee24025b22e82c  2026-05
+-61f2c13fed35a2ea2f0189dcc30e78227325bee57765baa9b1c31cff94e432eb  2026-06
++cd1466305e636d89e4f5af11421a98f97fc75f9dc677083caee8aed83a8c498a  2026-06

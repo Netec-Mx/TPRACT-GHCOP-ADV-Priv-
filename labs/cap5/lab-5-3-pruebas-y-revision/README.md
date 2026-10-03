@@ -1,10 +1,12 @@
-# Laboratorio 5.3. Estrategia de pruebas, documentación y checklist de revisión
+# Laboratorio 5.3. Estrategia de pruebas, documentación Markdown y checklist de revisión
 
 ## Objetivo del laboratorio
 
-Cubrir con pruebas una parte de la lógica de negocio que hoy no tiene ninguna, documentar
-en Markdown la estrategia de pruebas y revisar el resultado con un checklist de revisión
-humana.
+Probar el reporte contra sus criterios de aceptación, agregar al pipeline la comprobación
+central de la historia, corregir lo que el pipeline encuentre entendiendo cada causa, y dejar
+el cambio revisado y documentado para integrarse. Son las fases de Pruebas, Integración
+continua, Mantención correctiva, Revisión de código y Seguridad de
+[`CICLO-DE-VIDA.md`](../../../CICLO-DE-VIDA.md).
 
 ## Duración
 
@@ -12,51 +14,47 @@ humana.
 
 ## Prerrequisitos
 
-- **El 5.1 hecho en este repositorio.** El capítulo 5 es un solo flujo sobre el mismo
-  repositorio. El paso 4 usa los criterios de evaluación que dejó el 5.1 en
-  `labs/cap5/lab-5-1-preparacion/entregables/criterios-de-evaluacion.md`. Si no hiciste el
-  5.1, pide ese documento al relator y guárdalo en esa ruta antes de empezar.
-- Punto de partida. Este laboratorio puede empezar sobre el resultado del 5.2 o desde
-  cero. Para empezar desde cero, desde la raíz del repositorio, en Git Bash:
-
-  ```bash
-  bash scripts/reiniciar-lab.sh lab-5-3
-  ```
-
-- Los pasos 1, 2 y 4 se hacen en modo **Agent**. El paso 3 en modo **Ask**.
+- Los laboratorios 5.1 y 5.2 terminados y confirmados en tu rama. Este laboratorio usa los
+  criterios de aceptación del 5.1 y el reporte del 5.2.
+- Todos los pasos se hacen en modo **Agent**.
+- No hagas commit hasta el paso 4. La revisión de Copilot revisa los cambios sin confirmar.
 
 ## Pasos
 
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
-| 1 | `/lab-5-3-paso-1-probar-tramos java` | Si las pruebas documentan lo que el código hace o lo que debería hacer, y la tabla de bordes que entrega al final | 12 min |
-| 2 | `/lab-5-3-paso-2-documentar-estrategia java` | Qué reglas de negocio quedan sin ninguna prueba | 9 min |
-| 3 | `/lab-5-3-paso-3-revision-asistida` | Qué hallazgos clasifica como fuera del alcance del cambio | 9 min |
-| 4 | `/lab-5-3-paso-4-checklist-humano` | Qué puntos del checklist no podría responder un agente | 8 min |
+| 1 | `/lab-5-3-paso-1-probar-criterios java` | Qué criterios quedan cubiertos por una prueba y cuáles fallan | 8 min |
+| 2 | `/lab-5-3-paso-2-conciliacion-en-pipeline` | Cómo agrega el paso nuevo al script y al workflow, y en qué periodos queda en rojo | 8 min |
+| 3 | `/lab-5-3-paso-3-diagnosticar-y-corregir java` | Si separa todas las causas hasta que sumen la diferencia completa. Cuando te pida una decisión de negocio, llévasela al relator | 15 min |
+| 4 | `/lab-5-3-paso-4-revision-y-pull-request` | Qué comenta la revisión de Copilot y qué casillas de la lista de comprobación quedan sin marcar | 8 min |
+| 5, opcional | `/lab-5-3-paso-5-opcional-github` | Solo si tienes una copia del repositorio en GitHub. Nada depende de este paso | Fuera de los 45 min |
 
 Reemplaza `java` por `dotnet` si trabajas con .NET.
 
-Si el paso 1 te muestra dos partes del sistema que no coinciden, no lo corrijas. Busca en
-`escenario/README.md` cuál es el comportamiento correcto. Si las reglas no alcanzan para
-decidirlo, esa es la pregunta que llevas a la puesta en común.
+Antes del paso 4, pide la revisión de Copilot: en la vista **Source Control** (menú
+**View**, **Source Control**), pasa el puntero sobre **CHANGES** y haz clic en **Copilot
+Code Review - Uncommitted Changes**. Los comentarios aparecen en los archivos y en la pestaña
+**Problems**.
 
-## Opcional, fuera del camino obligatorio
+El pipeline que corres es el mismo que corre en GitHub:
 
-Si terminas antes, pide pruebas del recargo por cuotas con su máximo, del tope mensual y
-de la retención de garantía, en un archivo nuevo distinto del paso 1. No tiene tiempo asignado ni entra en
-la puesta en común.
+```bash
+bash scripts/integracion-local.sh
+```
 
 ## Resultado esperado
 
-- Un archivo de pruebas nuevo de la calculadora de comisión, con las pruebas en verde.
-- `labs/cap5/lab-5-3-pruebas-y-revision/entregables/estrategia-de-pruebas.md`.
-- Una revisión del diff en el chat, con cada hallazgo clasificado.
-- `labs/cap5/lab-5-3-pruebas-y-revision/entregables/checklist-de-revision.md`.
+- Pruebas nuevas del reporte, una por criterio comprobable.
+- El paso `conciliacion` en `scripts/integracion-local.sh` y en el workflow.
+- La corrección en tu stack y el hash esperado del periodo que cambió, con su causa.
+- El pipeline local en verde.
+- `docs/proyecto/pull-request.md` y una decisión nueva en `docs/arquitectura/decisiones/`.
+- Un commit en tu rama con todo lo anterior.
 
 ## Criterios de revisión
 
-- [ ] Las pruebas nuevas pasan junto con las veinte que ya existían.
-- [ ] Ningún archivo existente fue modificado por el paso 1.
-- [ ] La estrategia dice qué reglas no tienen pruebas y qué valores de borde importan.
-- [ ] La revisión clasifica cada hallazgo en aplicar, descartar o decidir.
-- [ ] El checklist tiene puntos que se responden con sí o no y dice cómo verificar cada uno.
+- [ ] Ninguna prueba ni hash esperado se cambió para que algo pase sin una causa explicada.
+- [ ] El diagnóstico separa las causas y su suma da la diferencia completa, al centavo.
+- [ ] La regla que el README no decidía se consultó al negocio y quedó registrada.
+- [ ] La descripción del pull request justifica cada hash esperado que cambió.
+- [ ] La lista de comprobación tiene marcadas solo las casillas que se cumplen.

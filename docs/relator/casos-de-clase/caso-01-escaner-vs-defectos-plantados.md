@@ -1,6 +1,7 @@
 # Caso 1. Un escáner de seguridad revisa este repositorio
 
-> Capítulo 5, revisión asistida de pull requests.
+> Material de apoyo para la pregunta difícil «¿Copilot encuentra solo los diez defectos?» de
+> la guía del relator. No pertenece a ningún laboratorio.
 > Material para proyectar. La resolución está al final, en las notas del relator.
 
 ---

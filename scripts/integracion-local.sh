@@ -116,11 +116,13 @@ paso_dependencias_dotnet() {
     return 0
 }
 
+# Ejecuta el escenario del stack indicado con el resto de los argumentos.
 liquidar() {
-    if [ "$1" = "java" ]; then
-        (cd "$raiz/escenario/java" && java -jar target/liquidacion-comercios.jar "$2")
+    local s="$1"; shift
+    if [ "$s" = "java" ]; then
+        (cd "$raiz/escenario/java" && java -jar target/liquidacion-comercios.jar "$@")
     else
-        (cd "$raiz/escenario/dotnet" && dotnet LiquidacionComercios/bin/Release/net10.0/LiquidacionComercios.dll "$2")
+        (cd "$raiz/escenario/dotnet" && dotnet LiquidacionComercios/bin/Release/net10.0/LiquidacionComercios.dll "$@")
     fi
 }
 
