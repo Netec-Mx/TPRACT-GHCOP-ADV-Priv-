@@ -54,8 +54,10 @@ al revés (HALLAZGO-05).
 
 ## 2. Skills
 
-**Por qué importa.** Los 35 pasos de laboratorio son skills. Un cambio en los campos
-admitidos, en la invocación con la barra o en la carga automática deja sin laboratorios.
+**Por qué importa.** Cada paso de laboratorio es una skill con prefijo `lab-`. La lista
+completa sale de `ls -d .github/skills/lab-*`, y `bash scripts/validar-skills.sh` informa
+cuántas revisó. Un cambio en los campos admitidos, en la invocación con la barra o en la
+carga automática deja sin laboratorios.
 
 **Fuente.** https://code.visualstudio.com/docs/agent-customization/agent-skills y
 https://agentskills.io/specification.

@@ -115,8 +115,9 @@ nombre `lab-`, restringida a invocación explícita. El diseño está en
 `docs/relator/05-diseno-de-laboratorios.md` y las notas por laboratorio en
 `docs/relator/notas/`.
 
-**Los activos de referencia.** Instrucciones de repositorio y por ruta, cinco agentes y dos
-skills del dominio en `.github/`.
+**Los activos de referencia.** Instrucciones de repositorio y por ruta, agentes y skills
+del dominio, con prefijo `pasarela-`, en `.github/`. `ls .github/agents .github/skills`
+los lista.
 
 **El servidor MCP.** `mcp/servidor-local/`, de solo lectura, sin red, lanzado con el modelo
 de permisos de Node.

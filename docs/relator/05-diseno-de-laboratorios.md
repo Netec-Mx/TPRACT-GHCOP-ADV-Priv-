@@ -47,8 +47,9 @@ Aritmética de la tabla, para que se pueda revisar sin recalcular:
 - Suma estimada: 25 + 54 + 37 + 36 + 28 + 40 + 42 + 38 + 40 = 340.
 - Holgura: 5 + 6 + 8 + 9 + 2 + 5 + 3 + 7 + 5 = 50, que es 390 − 340.
 
-Treinta y cinco skills de laboratorio. Una por paso, más la variante del paso 2 del
-`lab-2-4`, que tiene una skill para agente y otra para instrucción. Cinco pasos modifican
+Una skill de laboratorio por paso, más la variante del paso 2 del `lab-2-4`, que tiene una
+skill para agente y otra para instrucción. La lista vigente sale de
+`ls -d .github/skills/lab-*`. Cinco pasos modifican
 código. El resto produce análisis, documentos o artefactos en `.github/` y se puede repetir
 sin restaurar nada. `scripts/reiniciar-lab.sh` deja cualquier laboratorio en su punto de
 partida.
@@ -359,7 +360,7 @@ obtuvo una pila de archivos sin uso, y qué diferenció a unos de otros.
 
 ---
 
-## Restricción común a las treinta y cinco skills
+## Restricción común a todas las skills de laboratorio
 
 Todas llevan de forma explícita la instrucción de no corregir lo que no forme parte del
 paso pedido, y todas declaran `disable-model-invocation: true` para que el agente no las
