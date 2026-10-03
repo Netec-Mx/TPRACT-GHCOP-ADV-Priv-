@@ -182,3 +182,28 @@ porque una verificación falló.
 El segundo stack tardó menos en los dos trabajos porque tuvo el primero como referencia.
 Ninguna corrección fue en el código de producción. Todas fueron en pruebas o en comandos de
 verificación.
+
+### Corrida real del pipeline base
+
+En el repositorio de participantes, pull request #1 desde una rama con el contenido que se iba
+a publicar y un cambio trivial en `docs/02-troubleshooting.md`. Se cerró sin integrar y la
+rama se borró. GitHub conserva la referencia `refs/pull/1/head`, que no se puede borrar.
+
+| Corrida | Resultado | Java | .NET | Equivalencia | Minutos de Actions |
+|---|---|---|---|---|---|
+| 1 | Falla en la preparación del JDK | 7 s | 27 s | 6 s | 3 |
+| 2 | En verde | 24 s | 33 s | 38 s | 3 |
+
+La primera corrida falló porque `setup-java` no acepta `25.0.4.1+1`: no admite el número de
+compilación en una versión de cuatro campos. Con `25.0.4.1` resolvió la misma compilación de
+Temurin que trae la imagen. Los minutos se calculan con la regla de GitHub, que redondea cada
+trabajo al minuto entero; la API de tiempos de la corrida devolvió cero minutos facturables.
+
+### Pipeline de referencia
+
+El token disponible no tiene permiso para borrar repositorios, así que crear un repositorio de
+prueba en GitHub habría dejado rastro. Se corrió con `integracion-local.sh` adaptado, dentro de
+la imagen de gates y sin red, sobre el punto de partida con los parches del reporte: los cinco
+pasos base, las pruebas del reporte en los dos stacks y la conciliación de los tres periodos
+en los dos stacks. 36 segundos en total. Todo pasa salvo la conciliación de 2026-06, en Java y
+en .NET, con diferencia 22,03.

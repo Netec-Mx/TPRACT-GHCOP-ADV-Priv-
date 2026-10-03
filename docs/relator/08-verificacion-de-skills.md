@@ -245,3 +245,19 @@ El capítulo 5 no se volvió a ejecutar. Las reglas de «Gobierno» entran en to
 pueden cambiar su comportamiento, en particular la de no hacer commits en el 5.2 y el 5.4 y
 la aclaración sobre datos ficticios en el 5.1. SPEC-016 tiene que volver a verificar los
 cuatro laboratorios del capítulo.
+
+## Corrida s15, laboratorio 4.4 después de reescribir el paso 2
+
+SPEC-015, 3 de octubre de 2026, sobre una copia recién publicada y reiniciada con
+`reiniciar-lab.sh lab-4-4`. Mismo método y misma limitación que las corridas anteriores.
+
+| Corrida | Skill | Escenario | Segundos | Archivos | Salida esperada | Restricciones | Observación |
+|---|---|---|---|---|---|---|---|
+| s15 | `lab-4-4-paso-1-documentar-reglas` | java | 59 | `?? entregables/calculo-de-comisiones.md` | Cumple: documento con citas archivo y línea, sección de contraste y conteo en la respuesta (6 coinciden, 3 en parte: 3, 8 y 9) | Cumple: un solo archivo, sin cambios en código ni comentarios | Detecta el comentario de tramos acumulativos de `PlanComisiones` 9-10 y no lo toma como especificación; reporta tope 3,5 en `CalculadoraComision` y límite `<` frente a `<=` |
+| s15 | `lab-4-4-paso-2-documentar-decisiones` | java y dotnet (el paso no lleva argumento) | 73 | `?? entregables/decisiones.md` | Cumple: una decisión con contexto, alternativas, decisión, consecuencias y verificación; la respuesta lista seis pendientes | Cumple: un solo archivo, sin `pasarela-registrar-decision`, sin escribir en `docs/arquitectura/decisiones/` | `mvn dependency:list` falla sin red (plugin no precargado); se usó `grep`. `dotnet list package` funciona pero crea `obj/` ignorado en el escenario, que se borró |
+| s15 | `lab-4-4-paso-3-preparar-para-confluence` | sin argumento, usa `calculo-de-comisiones.md` | 9 | `?? entregables/calculo-de-comisiones-confluence.md` | Cumple: copia con sufijo y sección «Qué se perdió en el traslado» | Cumple: original sin cambios | Solo había enlaces relativos (6); ninguna tabla multilínea, bloque sin lenguaje ni HTML |
+
+El laboratorio sigue cabiendo en 30 minutos: los tiempos estimados de los pasos no cambian,
+10 + 10 + 8 = 28, y el agente tardó 59, 73 y 9 segundos. El paso 2 confirmó que ninguna
+decisión registrada cubre la pedida, citó archivo y línea de las dependencias, marcó las
+suposiciones como pendientes de confirmar y no escribió en `docs/arquitectura/decisiones/`.

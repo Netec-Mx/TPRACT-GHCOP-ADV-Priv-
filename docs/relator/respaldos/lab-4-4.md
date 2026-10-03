@@ -134,118 +134,173 @@ Resumen: coinciden 7 reglas (1, 2, 4, 5, 6, 7, 9). No coinciden o coinciden solo
 
 ## Paso 2: `/lab-4-4-paso-2-documentar-decisiones`
 
-Segundos: 22. Archivos leídos: `escenario/README.md`, `ConfiguracionRegional.java`, `CompatibilidadJava.cs`, `scripts/comparar-escenarios.sh`, `AplicacionLiquidacion.java` y `.cs`.
-
-### Pregunta del skill al participante y respuesta
-Pregunta: «Dos decisiones salen del material de partida (configuración regional fija en Java y aritmética decimal compatible con Java en .NET). ¿Cuál quieres como tercera?»
-Respuesta: «Que los datos de ejemplo vivan en escenario/datos, compartidos por los dos escenarios»
+Grabado en SPEC-015, después de reescribir el paso. Segundos: 73. Archivos leídos: el índice
+de `docs/arquitectura/decisiones/`, la plantilla, `pom.xml`, los dos `.csproj` y
+`escenario/README.md`.
 
 ### Respuesta final del chat
 
-He creado `labs/cap4/lab-4-4-documentacion/entregables/decisiones.md` con tres decisiones, cada una con Contexto, Decisión y Consecuencias, respaldadas con archivo y línea:
-1. Fijar la configuración regional de la salida del escenario Java (`ConfiguracionRegional`).
-2. Reproducir en .NET la aritmética decimal de Java (`CompatibilidadJava`).
-3. Datos de ejemplo en `escenario/datos`, compartidos por los dos escenarios (tu elección).
+**1. ¿Ya está registrada?** No. El índice `docs/arquitectura/decisiones/README.md`
+(líneas 6-10) tiene tres decisiones: 0001 (dos implementaciones con salida idéntica), 0002
+(servidor MCP local de solo lectura) y 0003 (hook de protección de datos). Ninguna trata
+las dependencias del escenario; 0002 habla de dependencias, pero de las del servidor MCP.
 
-Dos matices que dejé escritos como consecuencia verificable: la zona horaria no está fijada por la decisión 1, y la clase de la decisión 2 hoy no cambia ningún resultado observable, según su propio comentario. No modifiqué código. Verificación disponible: `bash scripts/comparar-escenarios.sh` (no la ejecuté porque este paso no la pide).
+**2. Dependencias por proyecto.**
 
-Salida esperada (documento creado): cumplida.
+- Java (`escenario/java/pom.xml`): una sola dependencia, `junit-jupiter` 5.12.2 con
+  `<scope>test</scope>` (líneas 23 y 26-33). Además, tres plugins de construcción con
+  versión fija (37-60).
+- .NET ejecutable (`LiquidacionComercios.csproj`): ninguna `PackageReference`; solo el SDK
+  `Microsoft.NET.Sdk` y `net10.0` (líneas 1 y 5). `dotnet list LiquidacionComercios
+  package` lo confirma.
+- .NET pruebas (`LiquidacionComercios.Pruebas.csproj`): `Microsoft.NET.Test.Sdk`, `xunit` y
+  `xunit.runner.visualstudio` (14-16), más la referencia al proyecto principal (20).
+- El código de producción solo importa `java.*` y `System.*`; JUnit y xUnit aparecen solo
+  en las pruebas.
+
+**3.** Creé `labs/cap4/lab-4-4-documentacion/entregables/decisiones.md` con una sola
+decisión en el formato de la plantilla: contexto, alternativas, decisión, consecuencias y
+verificación. Probé los cuatro comandos de verificación y devuelven lo que dice el
+documento.
+
+**4. Quedaron como pendientes de confirmar con el equipo:**
+
+- Que se evitaron frameworks para que el código se pueda leer completo durante un
+  laboratorio.
+- Que se evitaron dependencias de ejecución por la falta de descargas en la clase.
+- Que se buscó la misma ausencia de dependencias en ambos stacks para mantenerlos
+  comparables (relación con 0001).
+- Que la imagen de la máquina solo necesita precargar las dependencias de prueba y los
+  plugins de Maven.
+- Que un laboratorio que necesite una biblioteca nueva tendría que reabrir la decisión.
+- El responsable de la decisión.
+
+No usé la skill `pasarela-registrar-decision` ni escribí en `docs/arquitectura/decisiones/`.
+No modifiqué código.
+
+Notas:
+
+- `mvn dependency:list` no funciona sin red en esta máquina porque el plugin
+  `maven-dependency-plugin` no está precargado; por eso la verificación de Java usa `grep`.
+- Al ejecutar `dotnet list ... package` se generó `escenario/dotnet/LiquidacionComercios/obj/`,
+  que git ignora; lo borré para dejar el escenario como estaba.
 
 ### Archivo creado: `decisiones.md`
 
-# Registro de decisiones técnicas del escenario
+# NNNN. Escenario sin frameworks ni dependencias de ejecución
 
-Cada decisión cita el archivo y la línea que la respalda. Las rutas son relativas a la raíz
-del repositorio.
+| Campo | Valor |
+|---|---|
+| Estado | Propuesta |
+| Fecha | 2026-10-03 |
+| Responsable | Pendiente de confirmar con el equipo |
 
-## Decisión 1. Fijar la configuración regional de la salida del escenario Java
+> Borrador del laboratorio 4.4. No está registrada en `docs/arquitectura/decisiones/`; el
+> número se asigna si el equipo decide registrarla. Ninguna de las decisiones 0001, 0002 y
+> 0003 del índice trata las dependencias del escenario.
 
-### Contexto
+## Contexto
 
-El formateo de números y fechas en Java depende de la configuración regional de la máquina. El
-mismo programa sobre los mismos datos imprime `26074.08` o `26074,08` según el idioma
-(`escenario/java/src/main/java/pe/pasarelaandina/util/ConfiguracionRegional.java:12-20`). Las
-máquinas virtuales del taller están en Perú y es probable que estén en español
-(`ConfiguracionRegional.java:22-23`). Los dos escenarios deben dar la misma salida hasta el último
-centavo (`escenario/README.md`, sección «Datos de ejemplo»).
+### Lo que respalda el código
 
-### Decisión
+El escenario tiene tres proyectos. Sus dependencias declaradas son estas:
 
-Se creó la clase `ConfiguracionRegional` con una única constante, `REGION_DE_SALIDA = Locale.ROOT`
-(`ConfiguracionRegional.java:42`), y todo formateo de salida la usa, por ejemplo
-`String.format(ConfiguracionRegional.REGION_DE_SALIDA, "%.2f", monto)`
-(`calculo/CalculadoraLiquidacion.java:367`), los formatos de fecha
-(`calculo/UtilidadesFecha.java:40`) y el calendario (`UtilidadesFecha.java:35`). Archivos que la
-referencian: `AplicacionLiquidacion.java`, `FormateadorReporte.java`, `UtilidadesFecha.java` y
-`CalculadoraLiquidacion.java`. El equivalente en .NET fija `CultureInfo.InvariantCulture` al
-arrancar (`escenario/dotnet/LiquidacionComercios/AplicacionLiquidacion.cs:36-39`).
+| Proyecto | Dependencia | Tipo | Respaldo |
+|---|---|---|---|
+| Java, `escenario/java/pom.xml` | `org.junit.jupiter:junit-jupiter` 5.12.2 | Prueba (`<scope>test</scope>`) | `pom.xml` 23 y 26-33 |
+| Java | `maven-compiler-plugin` 3.13.0, `maven-surefire-plugin` 3.5.6, `maven-jar-plugin` 3.4.2 | Plugins de construcción, no se empaquetan con la aplicación | `pom.xml` 37-60 |
+| .NET, `LiquidacionComercios.csproj` | Ninguna `PackageReference` | Solo la plataforma: SDK `Microsoft.NET.Sdk`, destino `net10.0` | `LiquidacionComercios.csproj` 1 y 5; el archivo no tiene `ItemGroup` (1-20) |
+| .NET, `LiquidacionComercios.Pruebas.csproj` | `Microsoft.NET.Test.Sdk` 17.11.1, `xunit` 2.9.2, `xunit.runner.visualstudio` 2.8.2 | Prueba | `LiquidacionComercios.Pruebas.csproj` 14-16 |
+| .NET, pruebas | Referencia al proyecto `LiquidacionComercios` | Proyecto propio | `LiquidacionComercios.Pruebas.csproj` 20 |
 
-### Consecuencias
+El `pom.xml` declara una sola dependencia y es de prueba (26-33). El proyecto .NET
+ejecutable no declara paquetes; `dotnet list LiquidacionComercios package` lo confirma con
+«No packages were found for this framework».
 
-- Se gana una salida que no depende del idioma de la máquina.
-- No cubre la zona horaria: el propio comentario dice que sigue siendo la del sistema
-  (`ConfiguracionRegional.java:34-35`, `UtilidadesFecha.java:30-32`).
-- Obliga a usar `REGION_DE_SALIDA` en cada nuevo `String.format` o formato de fecha de salida; si
-  alguien la quita, la comparación entre escenarios falla en una máquina en español
-  (`ConfiguracionRegional.java:30-32`; `.github/instructions/java.instructions.md`).
-- Verificable con `bash scripts/comparar-escenarios.sh`, que termina en cero si las salidas coinciden.
+El código de producción tampoco usa bibliotecas externas:
 
-## Decisión 2. Reproducir en .NET la aritmética decimal de Java
+- Los `import` de `escenario/java/src/main` son solo de `java.*` y del propio paquete
+  `pe.pasarelaandina`. Los únicos externos están en `src/test` y son de
+  `org.junit.jupiter`.
+- Los `using` de `escenario/dotnet/LiquidacionComercios` son solo de `System.*` y del
+  propio espacio de nombres. `Xunit` aparece únicamente en el proyecto de pruebas.
 
-### Contexto
+No hay base de datos: los datos se leen de archivos de texto y se cargan en memoria al
+arrancar ([escenario/README.md](../../../../escenario/README.md), líneas 117-119). La
+aplicación Java se ejecuta como un jar con clase principal declarada (`pom.xml` 52-58,
+README 61-64) y la .NET como un ejecutable de consola (`LiquidacionComercios.csproj` 4,
+README 82-85).
 
-Java y .NET redondean y formatean distinto. `Math.round(x * 100.0) / 100.0` de Java suma 0,5 y
-trunca, mientras que `Math.Round` de .NET usa redondeo bancario; el comentario cita 957.185, que da
-957.19 en Java y 957.18 en .NET. Además `ToString("F2")` produjo 497 diferencias sobre 6016
-valores (`escenario/dotnet/LiquidacionComercios/Util/CompatibilidadJava.cs:16-28`).
+### Suposiciones sobre el porqué
 
-### Decisión
+- **Pendiente de confirmar con el equipo:** se evitaron frameworks para que el código
+  quepa en la cabeza de un participante en el tiempo de un laboratorio, sin capas de
+  inyección de dependencias ni configuración que leer antes de llegar al cálculo.
+- **Pendiente de confirmar con el equipo:** se evitaron dependencias de ejecución porque
+  las máquinas de clase no tienen descargas durante la sesión. `AGENTS.md` y
+  `.github/copilot-instructions.md` dicen que todo está instalado en la imagen, pero no
+  dicen que esa sea la razón de esta decisión.
+- **Pendiente de confirmar con el equipo:** se mantiene la misma ausencia de dependencias
+  en ambos stacks para que las dos implementaciones sean comparables, en línea con la
+  decisión 0001.
 
-Se creó la clase `CompatibilidadJava` en .NET, que no es idiomática a propósito
-(`CompatibilidadJava.cs:9`). Tiene `RedondearADosDecimales`, que usa
-`Math.Floor(valor * 100.0 + 0.5) / 100.0` (`CompatibilidadJava.cs:57-60`), y `FormatearDosDecimales`,
-que parte de la representación corta `"R"` y redondea con `MidpointRounding.AwayFromZero`
-(`CompatibilidadJava.cs:70-77`). También concentra la lectura de decimales y enteros sin depender de
-la cultura (`CompatibilidadJava.cs:83-94`).
+## Alternativas consideradas
 
-### Consecuencias
+- **Biblioteca estándar más un framework de pruebas (elegida).** Sin descargas en
+  ejecución y con un código que se lee de principio a fin. El costo es que todo lo que un
+  framework daría hecho, como la carga de datos o la configuración, se escribe a mano.
+- **Framework de aplicación en cada stack, por ejemplo Spring Boot y ASP.NET Core.** Más
+  parecido a un sistema de producción. Agrega dependencias de ejecución y estructura que
+  el participante tiene que entender antes de llegar al cálculo.
+- **Bibliotecas puntuales de ejecución, por ejemplo para leer archivos delimitados.**
+  Menos código propio. Cada biblioteca es una dependencia más que precargar en la imagen y
+  una diferencia más entre los dos stacks.
 
-- Se gana equivalencia exacta con Java, verificada según el comentario sobre 6016 valores.
-- Con los datos actuales no cambia ningún resultado observable: sobre los 382 valores que se
-  formatean, las variantes coinciden (`CompatibilidadJava.cs:30-35`). Es protección defensiva.
-- Se pierde el código idiomático de .NET en esa clase, y obliga a pasar por ella todo redondeo y
-  formateo de montos, y a no sustituirla por `Math.Round` ni `ToString("F2")`.
-- Un cambio hecho para limpiar la clase no rompería la comparación hoy (`CompatibilidadJava.cs:45-47`),
-  así que esa comparación no basta como red de seguridad.
+## Decisión
 
-## Decisión 3. Los datos de ejemplo viven en `escenario/datos`, compartidos por los dos escenarios
+El escenario usa solo la biblioteca estándar de cada plataforma en el código de
+producción. Las únicas dependencias externas son las de prueba: JUnit 5 en Java y xUnit
+con su ejecutor en .NET. Los plugins de Maven se usan solo para construir.
 
-La eligió el participante.
+## Consecuencias
 
-### Contexto
+### Respaldadas por el código
 
-El mismo dominio se implementa en Java y en .NET, y ambos deben dar resultados idénticos. Si cada
-proyecto tuviera su copia de los archivos, podrían divergir y la comparación perdería sentido.
+- Construir y ejecutar la aplicación no requiere más paquetes que los de prueba y, en
+  Java, los plugins de construcción (`pom.xml` 26-60, `LiquidacionComercios.csproj` 1-20).
+- La carga de datos, el cálculo y la salida están escritos con clases propias: el código
+  de producción no importa nada fuera de la biblioteca estándar.
+- Las instrucciones por ruta prohíben agregar dependencias:
+  `.github/instructions/java.instructions.md` («No agregues dependencias al `pom.xml`») y
+  `.github/instructions/dotnet.instructions.md` («No agregues paquetes NuGet»).
 
-### Decisión
+### Suposiciones
 
-Los datos están en `escenario/datos/` como archivos de texto plano separados por punto y coma, con
-encabezado, fuera de `java/` y de `dotnet/` (`escenario/README.md`, sección «Datos de ejemplo»).
-Ambos ejecutables apuntan por omisión a `../datos`
-(`escenario/java/src/main/java/pe/pasarelaandina/AplicacionLiquidacion.java:27-29`;
-`escenario/dotnet/LiquidacionComercios/AplicacionLiquidacion.cs:25-27`), y el comentario de cada uno
-dice que es para que ninguno de los dos proyectos sea su dueño. El servidor MCP local también los lee
-(`mcp/servidor-local/servidor.js:21-22`).
+- **Pendiente de confirmar con el equipo:** la imagen de las máquinas virtuales solo
+  necesita precargar las dependencias de prueba y los plugins de Maven para compilar y
+  probar sin red.
+- **Pendiente de confirmar con el equipo:** un laboratorio que necesite una biblioteca
+  nueva tendría que reabrir esta decisión, porque contradice las instrucciones por ruta.
 
-### Consecuencias
+## Verificación
 
-- Se gana una sola fuente de datos y una comparación entre escenarios que depende solo del código.
-- Obliga a ejecutar cada escenario desde su propio directorio, porque la ruta relativa `../datos` solo
-  resuelve desde `escenario/java/` o `escenario/dotnet/` (`escenario/README.md`, sección «Cómo se ejecuta»).
-- Un cambio en los datos altera los resultados de ambos escenarios a la vez; por eso las notas del
-  servidor MCP viven aparte, en `mcp/datos` (`mcp/servidor-local/servidor.js:6-8`).
-- Los dos cargadores deben interpretar el formato igual (punto decimal, separador `;`); .NET lo logra
-  con `CompatibilidadJava.LeerDecimal` (`escenario/dotnet/LiquidacionComercios/Repositorio/CargadorDatos.cs:47-48`).
+Desde la raíz del repositorio, en Git Bash:
+
+```bash
+# Java: una sola dependencia y es de prueba
+grep -c "<dependency>" escenario/java/pom.xml
+grep -A4 "<dependency>" escenario/java/pom.xml | grep "<scope>test</scope>"
+
+# Java: el código de producción solo importa la biblioteca estándar y el propio paquete
+grep -rh "^import " escenario/java/src/main | grep -v "import java\.\|import pe\.pasarelaandina"
+
+# .NET: el proyecto ejecutable no tiene paquetes
+grep -c "PackageReference" escenario/dotnet/LiquidacionComercios/LiquidacionComercios.csproj
+```
+
+El primer comando devuelve 1, el segundo muestra una línea, el tercero no muestra nada y
+el cuarto devuelve 0. En .NET también sirve, desde `escenario/dotnet/`,
+`dotnet list LiquidacionComercios package`, que no debe listar paquetes.
 
 ## Paso 3: `/lab-4-4-paso-3-preparar-para-confluence` (sin argumento)
 
