@@ -24,6 +24,12 @@ participante.
 
 El paso 3 prepara una copia para Confluence y lista lo que se pierde.
 
+El paso 4 es opcional y queda fuera de los 30 minutos. Genera el runbook de troubleshooting
+del cálculo con la plantilla de `docs/operacion/runbook-plantilla.md` y ejecuta cada acción
+antes de marcarla como verificada. Sirve para quien termina antes y como tarea posterior.
+Lo que se revisa es lo mismo que en el paso 1: que nada figure como verificado sin
+evidencia.
+
 **La regla 8 puede salir clasificada distinto.** En la verificación, el mismo agente la
 dio como no cumplida en el 4.4 y como «cumple en la práctica, sin garantía» en el 5.1. Si
 pasa en la sala, no es un error. Pregunte qué criterio usó cada uno y diga que, para comparar
@@ -43,8 +49,10 @@ clasificaciones, el criterio tiene que estar escrito en el pedido. Ver HALLAZGO-
 | 1 | 10 min | 53 s de agente |
 | 2 | 10 min | 41 s de agente |
 | 3 | 8 min | 55 s de agente |
+| 4, opcional | Fuera del tiempo | Pendiente de verificación con agente |
 
-En la verificación el agente documentó los tramos como no acumulativos, desde el código, y señaló el comentario. Con Copilot puede salir distinto. Es el laboratorio con menos holgura del taller, dos minutos. Si la sesión 4 viene
+En la verificación el agente documentó los tramos como no acumulativos, desde el código, y señaló el comentario. Con Copilot puede salir distinto. Es el laboratorio con menos holgura del taller, dos minutos: 10 + 10 + 8 = 28 de 30. Por
+eso el paso 4 del runbook es opcional y no se suma. Si la sesión 4 viene
 atrasada, el paso 3 se muestra en pantalla en lugar de hacerlo.
 
 ## Si alguien se atrasa
