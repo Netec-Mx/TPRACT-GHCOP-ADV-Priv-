@@ -46,6 +46,7 @@ readonly PATRONES_FUGA=(
     '05-diseno-de-laboratorios'
     '06-calibracion'
     '07-protocolo'
+    'guia-prueba-humana'
     'casos-de-clase'
     'traspaso-spec'
     'notas del relator'

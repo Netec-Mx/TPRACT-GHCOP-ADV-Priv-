@@ -117,7 +117,8 @@ mecanismos son los mismos y que el taller usa un solo editor para que todos vean
 | `03-hallazgos.md` | Lo que se aprendió construyendo el material, con sus reglas |
 | `04-defectos-plantados.md` | Catálogo de los diez defectos y comportamientos no planificados |
 | `05-diseno-de-laboratorios.md` | Diseño de los pasos de cada laboratorio |
-| `07-protocolo-prueba-vm.md` | Prueba del material en la máquina virtual |
+| `07-protocolo-prueba-vm.md` | Prueba de la máquina virtual: ambiente, red, cuentas y hook |
+| `guia-prueba-humana.md` | Prueba y ensayo de los nueve laboratorios con Copilot real |
 | `08-verificacion-de-skills.md` | Registro de la verificación de skills y demostraciones |
 | `09-bitacora-de-construccion.md` | Por qué el repositorio es como es |
 | `10-mantenimiento.md` | Qué revisar antes de cada dictado |

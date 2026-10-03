@@ -142,7 +142,7 @@ las skills `lab-3-4-*` y `notas/lab-3-4.md`.
 
 **Gate.** `verificar-ambiente.sh` comprueba las dependencias con versión exacta y que el
 servidor arranque y liste sus herramientas. No detecta un cambio en el cliente. Eso lo
-cubre el bloque D del protocolo.
+cubre la sección del laboratorio 3.4 de `guia-prueba-humana.md`.
 
 ## 7. Modelo de cobro y planes
 

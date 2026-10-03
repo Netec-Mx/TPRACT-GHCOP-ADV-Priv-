@@ -30,4 +30,4 @@ que es el resultado de cada paso, debe coincidir.
 | [demo-3-3.md](demo-3-3.md) | Completo |
 | [demo-4-1.md](demo-4-1.md) | Completo |
 
-La demostración 5.3 tiene su respaldo en [demo-5-3.md](demo-5-3.md), grabado en GitHub Actions. La revisión de Copilot de ese respaldo está pendiente; ver el bloque G del protocolo.
+La demostración 5.3 tiene su respaldo en [demo-5-3.md](demo-5-3.md), grabado en GitHub Actions. Incluye la revisión de Copilot del pull request, con su texto real.
