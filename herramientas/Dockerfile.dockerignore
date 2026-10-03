@@ -7,3 +7,5 @@
 !escenario/datos/**
 !mcp/servidor-local/package.json
 !mcp/servidor-local/package-lock.json
+!herramientas/validar-workflows/package.json
+!herramientas/validar-workflows/package-lock.json

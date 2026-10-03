@@ -1,0 +1,9 @@
+{
+  "name": "validar-workflows",
+  "private": true,
+  "description": "Valida workflows de GitHub Actions con el parser oficial de github.com/actions/languageservices",
+  "type": "module",
+  "dependencies": {
+    "@actions/workflow-parser": "0.3.61"
+  }
+}

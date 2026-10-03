@@ -31,7 +31,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
 COPY escenario/java /precarga/escenario/java
 COPY escenario/dotnet /precarga/escenario/dotnet
 COPY escenario/datos /precarga/escenario/datos
-RUN cd /precarga/escenario/java && mvn -B -q clean package \
+RUN cd /precarga/escenario/java && mvn -B -q clean package && mvn -B -q dependency:tree \
     && cd /precarga/escenario/dotnet \
     && dotnet test LiquidacionComercios.Pruebas \
     && dotnet build LiquidacionComercios -c Release \
@@ -40,5 +40,10 @@ RUN cd /precarga/escenario/java && mvn -B -q clean package \
 # Dependencias del servidor MCP, que gates.sh copia dentro del repositorio en cada corrida.
 COPY mcp/servidor-local/package.json mcp/servidor-local/package-lock.json /opt/mcp/
 RUN cd /opt/mcp && npm ci --no-audit --no-fund
+
+# Validador de workflows de GitHub Actions con el parser oficial, @actions/workflow-parser,
+# de github.com/actions/languageservices, con version exacta en su package-lock.json.
+COPY herramientas/validar-workflows/package.json herramientas/validar-workflows/package-lock.json /opt/validar-workflows/
+RUN cd /opt/validar-workflows && npm ci --no-audit --no-fund
 
 RUN java -version && mvn -v && dotnet --version && node --version && git --version && bash --version | head -1

@@ -13,6 +13,7 @@
 #   3. comparar-escenarios.sh en los tres periodos de los datos
 #   4. Pruebas del escenario Java y del escenario .NET
 #   5. Gate de fugas de publicar-taller.sh
+#   6. Funcionalidad del reporte y pipeline, en herramientas/gate-funcionalidad-reporte.sh
 #
 # Codigo de salida: 0 si todos los gates pasan, 1 si alguno falla, 2 si no se pudo
 # construir o ejecutar la imagen.
@@ -28,6 +29,7 @@ readonly DOCKERFILE="herramientas/Dockerfile"
 # Si cualquiera cambia, se construye una imagen nueva en lugar de usar una desactualizada.
 resumen=$(cd "$raiz" && cat "$DOCKERFILE" herramientas/Dockerfile.dockerignore \
     escenario/java/pom.xml escenario/dotnet/*/*.csproj mcp/servidor-local/package-lock.json \
+    herramientas/validar-workflows/package-lock.json \
     | git hash-object --stdin | cut -c1-12)
 readonly IMAGEN="taller-gates:$resumen"
 
@@ -88,6 +90,10 @@ paso "Gate de fugas"
 NO_COLOR=1 bash scripts/publicar-taller.sh --destino /tmp/publicacion > /tmp/fugas.log 2>&1; rc=$?
 grep "\[FALLA\]" -A5 /tmp/fugas.log | sed "s/^/  /"
 resultado $rc "Sin material del relator en el contenido publicable"
+
+paso "Funcionalidad del reporte y pipeline"
+bash herramientas/gate-funcionalidad-reporte.sh /tmp/r /tmp/publicacion; rc=$?
+resultado $rc "Workflows, parches, oraculo, conciliacion y correccion"
 
 printf "\n== Resumen ==\n"
 if [ "$fallas" -eq 0 ]; then echo "  Todos los gates pasan."; exit 0; fi
