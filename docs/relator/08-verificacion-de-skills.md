@@ -486,10 +486,10 @@ corridas anteriores: un agente que ejecuta la skill, no Copilot.
 | s17 | `lab-5-4-paso-3-estimar-evolutiva` | 35 | Sí | Usa el registro de tiempos |
 | s17 | `lab-5-4-paso-4-cierre` | 55 | Sí | Desarrollo como la fase con más error |
 
-En los veinte pasos, lo que la skill pide mostrar fue practicable; la salida más larga fue la
-del 5.2.2. Las dos parciales del 5.1 son del verificador, que mostró solo la fila nueva del
-registro de tiempos aunque la skill pide el registro completo; la guía de prueba humana pide
-anotar ese caso.
+En los veinte pasos, diecinueve con la skill cambiada y el 5.2.3 sin cambios, lo que la
+skill pide mostrar fue practicable; la salida más larga fue la del 5.2.2. Las dos parciales
+del 5.1 son del verificador, que mostró solo la fila nueva del registro de tiempos aunque la
+skill pide el registro completo; la guía de prueba humana pide anotar ese caso.
 
 **Ajustes que salieron de la corrida, sin volver a ejecutar:**
 

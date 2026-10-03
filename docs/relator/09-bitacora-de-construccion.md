@@ -251,7 +251,7 @@ virtual de Netec no estuvo disponible. Alcanzó el paso 1 del 5.1, con Java.
 
 ### Lo que cambió
 
-- Las 37 skills de laboratorio se revisaron una por una. Veinte crean o modifican algo y no lo
+- Las 37 skills de laboratorio se revisaron una por una. Diecinueve crean o modifican algo y no lo
   mostraban, o lo mostraban en resumen: ahora terminan mostrándolo completo, o el diff si es
   código. Cinco skills de dominio que escriben archivos hacen lo mismo. Verificado como agente
   en la corrida s17.
