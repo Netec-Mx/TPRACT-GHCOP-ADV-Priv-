@@ -1,60 +1,57 @@
 # Notas del relator, laboratorio 5.4
 
-Laboratorio final, construcción de activos reutilizables para el equipo. 45 minutos.
+Laboratorio final: construcción de activos reutilizables. 45 minutos. Fases de Liberación,
+Operación y soporte y Mantención evolutiva, y el cierre del ciclo.
 
 ## Qué va a pasar en la sala
 
-El paso 1 es deliberadamente abierto. El agente decide qué consolidar. En las dos
-ejecuciones de verificación eligió generalizar los agentes, las instrucciones y los
-checklists del taller, y los dejó en `entregables/activos/` con un README. Ninguna de las
-dos tocó el escenario, aunque la skill lo permite, incluida la migración del dinero a un
-tipo decimal (DEF-01). Si alguien lo intenta, el comparador le va a mostrar cuánto cambió
-la salida, y es una buena conversación sobre el costo de corregir DEF-01 de verdad.
+**El 5.4 no se reinicia.** Continúa sobre lo que dejaron el 5.1 al 5.3 en la rama de cada
+participante. `reiniciar-lab.sh lab-5-4` lo advierte y pide escribir `descartar`.
 
-El paso 2 produce el documento de línea base de medición y presupuesto de créditos. Es un
-entregable del temario. Se apoya en lo que se vio en el subtema 1.3 sobre el consumo de
-cada modo de trabajo.
+**Paso 1, liberación.** La conversación que vale es el número de versión. 1.1.0 es la
+respuesta de referencia; 2.0.0 se puede defender porque cambian montos que ya se cobraban;
+1.0.1 no, porque se agrega una funcionalidad. Lo importante es que las notas expliquen el
+cambio de junio en lenguaje de negocio.
 
-## No se reinicia
+**Paso 2, el incidente.** No tiene que repartir nada. La skill ejecuta
+`scripts/proyecto/entregar.sh incidente`, que crea el reclamo de CM0001 en
+`docs/proyecto/incidentes/`. El texto viaja codificado en el script para que nadie lo lea
+antes. El análisis tiene que llegar a las notas de versión y a la decisión del borde. Si
+alguien propone revertir la versión, pregunte qué decisión respalda el monto nuevo y dónde
+está registrada.
 
-El 5.4 no tiene punto de partida propio. Se continúa sobre el estado que dejó el 5.3,
-porque los activos se construyen a partir del trabajo de los tres laboratorios anteriores.
-Si un participante ejecuta `bash scripts/reiniciar-lab.sh lab-5-4`, el script le advierte
-que descarta la refactorización del 5.2 y las pruebas del 5.3, y le pide escribir
-`descartar`. `--si` no alcanza. Si alguien lo hizo por error, se recupera aplicando las
-soluciones de referencia del 5.2 y el 5.3.
+**Paso 3, la evolutiva.** La solicitud está publicada en el backlog. No la tiene que
+proponer usted. Lo que vale la pena observar es si la estimación usa como dato el registro de
+tiempos real del ciclo.
 
-## Qué mirar en el paso 1
+**Paso 4, el cierre.** El estimado contra el real. En la puesta en común, pida la fase donde
+cada uno más se equivocó. Suele ser Requerimientos o Mantención, que dependen de personas y
+no del agente.
 
-- Qué decidió el agente sin que nadie lo acotara, y si se puede usar al día siguiente.
-- Errores de formato. En una ejecución de verificación el agente creó una skill como un
-  archivo `nombre.skill.md` suelto. Visual Studio Code no la reconoce. Una skill es un
-  directorio con un `SKILL.md` adentro. Es un ejemplo concreto de por qué se revisa.
-- Cantidad de archivos. Diez y catorce en las dos ejecuciones. La pregunta para la sala es
-  cuántos de ellos usarían de verdad.
+## Errores típicos
 
-## Qué mirar en el paso 2
-
-- Que no invente precios, cuotas ni límites. La skill lo prohíbe y la verificación lo
-  cumplió, dejando campos a completar.
-- Que las métricas tengan fuente y responsable.
+- Notas de versión con nombres de clases.
+- Una respuesta al comercio que promete devolver la diferencia.
+- Un presupuesto con precios inventados.
 
 ## Tiempos
 
 | Paso | Estimado | Observado en la verificación |
 |---|---|---|
-| 1 | 32 min | 251 y 384 s de agente, entre 10 y 14 archivos |
-| 2 | 8 min | 86 s de agente |
+| 1 | 8 min | Se completa en la verificación de SPEC-016 |
+| 2 | 12 min | Se completa en la verificación de SPEC-016 |
+| 3 | 8 min | Se completa en la verificación de SPEC-016 |
+| 4 | 10 min | Se completa en la verificación de SPEC-016 |
 
-Si el paso 1 sigue corriendo a los 32 minutos, pida que lo detengan y pasen al paso 2.
+Suma 38. Quedan 7 para la puesta en común y el cierre del taller.
 
 ## Si alguien se atrasa
 
-Que haga el paso 2 primero. Es el entregable obligatorio. No reinicie el laboratorio para
-ganar tiempo, porque se pierde el trabajo del 5.2 y el 5.3.
+Sin el 5.3 terminado, aplíquele la solución del 5.3 con los parches de
+`../soluciones/lab-5-3/`. El paso 2 funciona con cualquier estado de la rama: el incidente
+se analiza con las notas de referencia de `../soluciones/lab-5-4/README.md`.
 
 ## Solución de referencia
 
-`docs/relator/soluciones/lab-5-4/activos-ejemplo/`, el resultado de una ejecución de
-verificación del paso 1. Sirve como ejemplo de lo que produce el agente, no como respuesta
-correcta. No modifica el escenario, así que la compilación y el comparador no cambian.
+En `../soluciones/lab-5-4/README.md`: la versión y las notas, el análisis y la respuesta al
+incidente, y tres evolutivas posibles con su estimación.

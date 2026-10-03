@@ -35,6 +35,7 @@ docs/02-troubleshooting.md
 docs/arquitectura/
 docs/gobierno/
 docs/operacion/
+docs/proyecto/
 
 # Scripts
 scripts/verificar-ambiente.sh
@@ -43,9 +44,15 @@ scripts/reiniciar-lab.sh
 scripts/validar-skills.sh
 scripts/verificar-reporte.sh
 scripts/integracion-local.sh
+scripts/integracion/
+scripts/proyecto/
+
+# Mapa del ciclo de vida, igual en los dos repositorios
+CICLO-DE-VIDA.md
 
 # Versiones para participantes de los archivos de la raiz
 scripts/publicacion/AGENTS-taller.md => AGENTS.md
 scripts/publicacion/README-taller.md => README.md
 scripts/publicacion/GUIA-DE-INICIO.md => GUIA-DE-INICIO.md
 scripts/publicacion/DESPUES-DEL-TALLER.md => DESPUES-DEL-TALLER.md
+scripts/publicacion/CHANGELOG-taller.md => CHANGELOG.md

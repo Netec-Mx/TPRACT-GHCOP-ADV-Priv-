@@ -1,11 +1,12 @@
-# Laboratorio 5.4. Laboratorio final de activos reutilizables
+# Laboratorio 5.4. Laboratorio final: construcción de activos reutilizables
 
 ## Objetivo del laboratorio
 
-Soltar el agente sobre una tarea completa, sin guía paso a paso, para que consolide lo
-aprendido en activos que el equipo pueda usar en sus repositorios reales. Y dejar el
-documento con la línea base de medición de adopción y la propuesta de presupuesto de
-créditos del equipo.
+Terminar el ciclo de vida: liberar la versión, atender el primer incidente en producción,
+estimar el siguiente cambio que pide el negocio y cerrar comparando lo estimado con lo real.
+Son las fases de Liberación, Operación y soporte y Mantención evolutiva de
+[`CICLO-DE-VIDA.md`](../../../CICLO-DE-VIDA.md). Al final quedan los activos que el equipo se
+lleva: las skills y plantillas del ciclo, y la línea base para medir la adopción.
 
 ## Duración
 
@@ -13,40 +14,32 @@ créditos del equipo.
 
 ## Prerrequisitos
 
-- Los laboratorios 5.1, 5.2 y 5.3 hechos en este mismo repositorio. El paso 1 construye
-  los activos a partir de su trabajo.
-- **Este laboratorio no se reinicia.** No tiene punto de partida propio. Se continúa sobre
-  el estado que dejó el 5.3. Si ejecutas `bash scripts/reiniciar-lab.sh lab-5-4`, el script
-  te advierte que se descarta el trabajo del 5.2 y el 5.3 y te pide escribir `descartar`
-  para seguir.
-
-- Los dos pasos se hacen en modo **Agent**.
+- Los laboratorios 5.1 a 5.3 terminados y confirmados en tu rama. Este laboratorio continúa
+  sobre ese trabajo y **no se reinicia**: reiniciarlo descartaría el ciclo completo.
+- Todos los pasos se hacen en modo **Agent**.
 
 ## Pasos
 
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
-| 1 | `/lab-5-4-paso-1-consolidar-activos` | Qué decide el agente cuando nadie lo acota: por dónde empieza, qué deja fuera, cuántos archivos crea | 32 min |
-| 2 | `/lab-5-4-paso-2-medicion-y-presupuesto` | Si el documento deja los valores como campos a completar en lugar de inventarlos | 8 min |
-
-El paso 1 es deliberadamente abierto. Déjalo correr y revisa lo que produjo. A los 32
-minutos, pasa al paso 2 aunque el paso 1 no haya terminado.
-
-En este laboratorio sí puedes modificar el escenario, si decides que es parte de un activo.
-Si lo haces, `bash scripts/comparar-escenarios.sh` te dice si cambió la salida.
+| 1 | `/lab-5-4-paso-1-liberar` | Qué número de versión propone y cómo explica a un comercio por qué cambia su liquidación de junio | 8 min |
+| 2 | `/lab-5-4-paso-2-atender-incidente` | Si llega a la causa por las notas de versión y la decisión registrada, y si la respuesta promete algo que no puede prometer | 12 min |
+| 3 | `/lab-5-4-paso-3-estimar-evolutiva` | Si usa tu registro de tiempos real como dato, y qué preguntas le haría al negocio | 8 min |
+| 4 | `/lab-5-4-paso-4-cierre` | En qué fase tu estimación más se equivocó, y qué activos podrías llevar a tu repositorio | 10 min |
 
 ## Resultado esperado
 
-- `labs/cap5/lab-5-4-laboratorio-final/entregables/activos/`, con un `README.md` que explica
-  cada activo y cómo se instala en otro repositorio.
-- `labs/cap5/lab-5-4-laboratorio-final/entregables/medicion-y-presupuesto.md`.
+- `CHANGELOG.md` con la versión nueva y `docs/proyecto/notas-de-version-<versión>.md`.
+- El análisis y la respuesta del incidente en `docs/proyecto/incidentes/`.
+- `docs/proyecto/estimacion-evolutiva.md`.
+- `docs/proyecto/registro-de-tiempos.md` completo, `docs/proyecto/activos-del-equipo.md` y
+  `docs/proyecto/medicion-y-presupuesto.md`.
 
 ## Criterios de revisión
 
-- [ ] Hay al menos un activo que usarías mañana en tu repositorio real.
-- [ ] El `README.md` de los activos dice cómo instalar cada uno.
-- [ ] El documento de medición tiene métricas de uso, de resultado y de calidad, con su
-      fuente.
-- [ ] El presupuesto de créditos no inventa precios ni límites. Deja campos a completar y
-      dice dónde consultarlos.
-- [ ] Si el escenario cambió, sabes si cambió la salida y por qué.
+- [ ] Las notas de versión explican el cambio de junio en lenguaje de negocio, con montos.
+- [ ] El análisis del incidente cita la decisión que explica el cambio y lista a los otros
+      comercios afectados.
+- [ ] La respuesta al comercio no promete devoluciones ni compensaciones.
+- [ ] La estimación de la evolutiva usa el registro de tiempos real como dato.
+- [ ] El documento de presupuesto deja los valores del plan como campos a completar.
