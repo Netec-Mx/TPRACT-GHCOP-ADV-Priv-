@@ -362,3 +362,23 @@ relator. Sin recortes.
 Lo que más pesa: el diagnóstico y la corrección del 5.3 y la ronda de preguntas al relator
 del 5.1. Es el insumo para decidir qué pasa a opcional después de la prueba en la máquina
 virtual, bloque H del protocolo.
+
+## Corrida s16b-r, la instrucción de .NET después de SPEC-016-B
+
+3 de octubre de 2026. La regla de `dotnet.instructions.md` pasó de prohibir `Math.Round` a
+exigir `MidpointRounding.AwayFromZero` en todo `Math.Round`, con `CompatibilidadJava` para los
+montos `double` de la liquidación. Mismo método y misma limitación que las corridas anteriores.
+
+| Corrida | Paso | Segundos | Resultado | Observación |
+|---|---|---|---|---|
+| s16b-r | Demostración 2.3, pregunta .NET | — | Cumple | Responde xUnit y `dotnet test`; sobre redondeo, `Math.Round` con `AwayFromZero` y `CompatibilidadJava` para los `double` |
+| s16b-r | `lab-5-3-paso-1-probar-criterios` | 105 | Cumple | 32 de 32 pruebas; la decisión del borde ya estaba en la historia |
+| s16b-r | `lab-5-3-paso-2-conciliacion-en-pipeline` | 56 | Cumple | Rojo solo en junio, 22,03 |
+| s16b-r | `lab-5-3-paso-3-diagnosticar-y-corregir` | 117 | Cumple | Dos causas, 22,00 y 0,03; avisó que tocaba tipo y redondeo y esperó la aprobación; corrigió con `decimal` y `Math.Round(..., AwayFromZero)`; solo cambió el hash de junio; verde |
+| s16b-r | `lab-5-3-paso-4-revision-y-pull-request` | 59 | Cumple | Decisión 0005 y descripción del pull request; revisión de Copilot no disponible sin Visual Studio Code |
+
+La instrucción de .NET no chocó con ningún paso. La única tensión vino de la regla general de
+no cambiar tipos sin pedido explícito, y la skill del paso 3 la resolvió con aviso y
+aprobación. El análisis por comercio del diagnóstico corrió con Python en la máquina del
+verificador; en la máquina virtual no está garantizado que haya Python, y el diagnóstico se
+puede hacer igual con los comandos del escenario.
