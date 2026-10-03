@@ -1,7 +1,6 @@
 # Capítulo 5: hoja de respuestas del relator
 
-Todo lo que usted dice o entrega en el capítulo, en orden. Lo demás lo entrega el
-repositorio. `SOL` es `docs/relator/soluciones` de su copia del repositorio de construcción.
+Todo lo que usted dice en el capítulo, en orden. Lo demás lo entrega el repositorio.
 
 ## 5.1, paso 1: usted es el negocio
 
@@ -32,17 +31,16 @@ flotante.
 
 ## Si alguien se atrasa
 
-Desde la raíz del clon del participante, con su stack en lugar de `java`:
+Clave de ponerse al día: `quinua-condor-47`. Dígala en voz alta y que el participante
+ejecute, desde la raíz de su repositorio, con su stack y el laboratorio al que tiene que
+llegar:
 
-| Le falta | Ejecute |
-|---|---|
-| La historia del 5.1 | Entréguele `SOL/lab-5-1/historia-de-referencia.md` |
-| El reporte del 5.2 | `bash SOL/funcionalidad-reporte/aplicar.sh java .` |
-| El pipeline del 5.3 | `git apply SOL/lab-5-3/conciliacion-en-pipeline.patch` |
-| La corrección del 5.3 | `git apply SOL/funcionalidad-reporte/correccion-java.patch SOL/lab-5-3/hash-junio.patch` |
+```bash
+bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47
+```
 
-Si un parche no se aplica limpio, `bash scripts/reiniciar-lab.sh lab-5-2` y vuelva a empezar
-por el reporte.
+Descarta su trabajo del capítulo y pide escribir `descartar`. Para empezar el 5.1 de cero:
+`bash scripts/reiniciar-lab.sh lab-5-1`.
 
 ## 5.4
 

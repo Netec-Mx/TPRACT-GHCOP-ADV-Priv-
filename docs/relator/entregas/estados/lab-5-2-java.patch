@@ -1,0 +1,178 @@
+diff --git a/docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md b/docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md
+new file mode 100644
+index 0000000..35fdcba
+--- /dev/null
++++ b/docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md
+@@ -0,0 +1,37 @@
++# 0004. El reporte por medio de pago vive en clases propias
++
++| Campo | Valor |
++|---|---|
++| Estado | Aceptada |
++| Fecha | 2026-10-03 |
++| Responsable | Equipo |
++
++## Contexto
++
++El reporte desglosa por medio de pago lo que liquida el cierre. En el mapeo BIAN pertenece a
++Merchant Acquiring Facility, y lee comercios, planes y transacciones, de Merchant Relations y
++Card Transaction Capture.
++
++## Alternativas consideradas
++
++- **Un método nuevo en la clase de cálculo de la liquidación.** Reutiliza el cálculo. Agrega
++  más responsabilidad a una clase que ya concentra mucho.
++- **Clases propias que reutilizan el cálculo de comisión de la liquidación.** Una sola regla
++  de comisión. El reporte hereda cualquier diferencia de ese cálculo.
++- **Clases propias que calculan por su cuenta con decimal exacto.** No tocan el cierre. La
++  regla de comisión queda en dos lugares.
++
++## Decisión
++
++Clases propias en el paquete de reporte del stack, que leen los mismos datos y calculan la
++comisión por su cuenta con decimal exacto y las reglas de `escenario/README.md`.
++
++## Consecuencias
++
++- El cierre no cambia.
++- La regla de comisión queda en dos lugares, y la conciliación del pipeline comprueba que
++  coincidan.
++
++## Verificación
++
++`bash scripts/verificar-reporte.sh <stack> <periodo>` y la conciliación del pipeline.
+diff --git a/docs/arquitectura/decisiones/README.md b/docs/arquitectura/decisiones/README.md
+index 30114c9..ad64f40 100644
+--- a/docs/arquitectura/decisiones/README.md
++++ b/docs/arquitectura/decisiones/README.md
+@@ -8,6 +8,7 @@ archivo, numeradas en orden.
+ | [0001](0001-dos-implementaciones-con-salida-identica.md) | Implementar el escenario en Java y en .NET con salida idéntica | Aceptada |
+ | [0002](0002-servidor-mcp-local-de-solo-lectura.md) | Usar un servidor MCP local, de solo lectura y sin red | Aceptada |
+ | [0003](0003-hook-de-proteccion-de-datos.md) | Proteger los datos del escenario con un hook | Aceptada |
++| [0004](0004-ubicacion-del-reporte.md) | El reporte por medio de pago vive en clases propias | Aceptada |
+ 
+ Para registrar una decisión nueva, copie [`plantilla.md`](plantilla.md) con el número
+ siguiente, o pídaselo al agente: la skill `pasarela-registrar-decision` la redacta a partir
+diff --git a/docs/proyecto/estimacion.md b/docs/proyecto/estimacion.md
+new file mode 100644
+index 0000000..4f28622
+--- /dev/null
++++ b/docs/proyecto/estimacion.md
+@@ -0,0 +1,34 @@
++# Estimación: reporte de comisiones por medio de pago
++
++| Campo | Valor |
++|---|---|
++| Tipo | Funcionalidad nueva |
++| Historia | `docs/proyecto/historia-reporte-medios-de-pago.md` |
++| Estimó | Equipo |
++| Fecha | 2026-10-03 |
++
++## Por fase
++
++| Fase | Sin IA, persona (min) | Con IA, persona (min) | Con IA, agente (min) | Créditos de IA | Minutos de integración continua | Supuesto principal |
++|---|---|---|---|---|---|---|
++| Requerimientos | 30 | 15 | 1 | Completar | 0 | Las preguntas al negocio toman lo mismo con o sin IA |
++| Estimación | 20 | 10 | 1 | Completar | 0 | Estimar a mano exige recorrer el código |
++| Análisis y diseño | 30 | 10 | 1 | Completar | 0 | La IA lee el código y el mapeo; la persona decide |
++| Desarrollo | 180 | 25 | 3 | Completar | 0 | Un stack, con pruebas |
++| Pruebas | 60 | 10 | 1 | Completar | 0 | Los criterios ya traen los valores esperados |
++| Revisión de código | 20 | 8 | 1 | Completar | 0 | La revisión humana se lee igual |
++| Seguridad | 10 | 4 | 0 | Completar | 0 | Lista de comprobación de la plantilla |
++| Integración continua | 40 | 10 | 1 | Completar | Completar | Un paso nuevo en un pipeline que existe |
++| Liberación | 20 | 8 | 1 | Completar | 0 | Registro de cambios y notas |
++| Operación y soporte | 45 | 12 | 1 | Completar | 0 | Un incidente con runbook |
++| Mantención | 90 | 15 | 2 | Completar | Completar | El diagnóstico es lo que pesa |
++| **Total** | **545** | **127** | **13** | | | |
++
++## Riesgos que pueden mover la estimación
++
++- Que el negocio tarde en responder las preguntas abiertas.
++- Que el pipeline encuentre diferencias que haya que diagnosticar.
++
++## Cómo se va a comparar con lo real
++
++Con `docs/proyecto/registro-de-tiempos.md`, fase por fase.
+diff --git a/docs/proyecto/historia-reporte-medios-de-pago.md b/docs/proyecto/historia-reporte-medios-de-pago.md
+new file mode 100644
+index 0000000..6ffb515
+--- /dev/null
++++ b/docs/proyecto/historia-reporte-medios-de-pago.md
+@@ -0,0 +1,43 @@
++# Historia de usuario: reporte de comisiones por medio de pago
++
++| Campo | Valor |
++|---|---|
++| Solicitante | Gerencia Comercial |
++| Origen | `docs/proyecto/backlog/solicitud-area-comercial.md` |
++| Estado | Aceptada |
++
++## Historia
++
++Como Gerencia Comercial, quiero un reporte mensual de comisiones por medio de pago, para
++negociar con emisores y billeteras con datos que cuadran con lo que se liquida a los
++comercios.
++
++## Preguntas abiertas
++
++| Pregunta | Respuesta | Quién respondió |
++|---|---|---|
++| ¿Qué transacciones entran? | Las mismas que la liquidación: aprobadas, en soles, con monto mayor que cero, dentro del periodo. Ni anuladas, ni pendientes, ni rechazadas | Negocio |
++| ¿Qué comercios entran? | Los que se liquidan: activos y suspendidos con plan. No los dados de baja | Negocio |
++| ¿Contra qué se comprueba el total? | Contra la suma del total de comisiones de las liquidaciones del periodo, al centavo | Negocio |
++| ¿El tope mensual se reparte entre medios? | No. Es por comercio. Las filas van antes del tope y una fila de ajuste muestra lo descontado | Negocio |
++| ¿Cuándo se redondea? | Al final. Cada fila suma exacto y redondea; el total se calcula por comercio, como la liquidación | Negocio |
++| ¿A qué tramo pertenece un monto en el límite? | Al tramo inferior. El límite superior es inclusivo | Negocio |
++
++## Criterios de aceptación
++
++1. **Alcance.** Dado el periodo 2026-06, cuando se genera el reporte, entonces cuenta las
++   mismas transacciones que liquida el cierre, por medio de pago.
++2. **Conciliación.** Dado cualquier periodo, cuando se genera el reporte, entonces su total
++   es igual a la suma del total de comisiones de las liquidaciones del mismo periodo.
++3. **Borde de tramo.** Dada TX002001, de CM0001 con plan PL01, por 500,00 en una cuota,
++   cuando se calcula su comisión, entonces es 500,00 × 3,5 % + 0,30 = 17,80.
++4. **Tercer decimal.** Dado CM0025 en 2026-06, cuando se suman exactas las comisiones de sus
++   transacciones, entonces el total es 957,185 y redondea a 957,19.
++5. **Tope.** Dado CM0004 en 2026-06, cuando se genera el reporte, entonces su exceso sobre el
++   tope aparece en la fila de ajuste por tope y no en las filas de medios.
++6. **Formato.** El reporte se obtiene con `--reporte-medios` y su salida coincide con la
++   esperada según `bash scripts/verificar-reporte.sh <stack> <periodo>`.
++
++## Fuera de alcance
++
++Contracargos y retenciones. Filtros por comercio o por categoría.
+diff --git a/docs/proyecto/registro-de-tiempos.md b/docs/proyecto/registro-de-tiempos.md
+new file mode 100644
+index 0000000..40c637b
+--- /dev/null
++++ b/docs/proyecto/registro-de-tiempos.md
+@@ -0,0 +1,18 @@
++# Registro de tiempos
++
++Hora real de inicio de cada fase, en el momento en que empieza. La duración se calcula al
++final, con el inicio de la fase siguiente.
++
++| Fase | Inicio (HH:MM) | Fin (HH:MM) | Minutos reales | Estimado con IA (min) | Diferencia | Nota |
++|---|---|---|---|---|---|---|
++| Requerimientos | | | | | | |
++| Estimación | | | | | | |
++| Análisis y diseño | | | | | | |
++| Desarrollo | | | | | | |
++| Pruebas | | | | | | |
++| Revisión de código | | | | | | |
++| Seguridad | | | | | | |
++| Integración continua | | | | | | |
++| Liberación | | | | | | |
++| Operación y soporte | | | | | | |
++| Mantención | | | | | | |
+diff --git a/scripts/integracion/stack.txt b/scripts/integracion/stack.txt
+index 82ef4fb..ecda53a 100644
+--- a/scripts/integracion/stack.txt
++++ b/scripts/integracion/stack.txt
+@@ -6,4 +6,4 @@
+ #
+ # Cambia la ultima linea y confirma el cambio. La lee scripts/integracion-local.sh y la lee
+ # el workflow de .github/workflows/.
+-ambos
++java

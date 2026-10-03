@@ -47,9 +47,19 @@ Suma 38. Quedan 7 para la puesta en común y el cierre del taller.
 
 ## Si alguien se atrasa
 
-Sin el 5.3 terminado, aplíquele la solución del 5.3 con los parches de
-`../soluciones/lab-5-3/`. El paso 2 funciona con cualquier estado de la rama: el incidente
-se analiza con las notas de referencia de `../soluciones/lab-5-4/README.md`.
+Diga la clave de la hoja de respuestas y que ejecute, con su stack:
+
+```bash
+bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java <clave>
+```
+
+Deja el repositorio en el inicio del 5.4 con el trabajo de referencia de los laboratorios anteriores.
+Descarta lo que tenía del capítulo y pide escribir `descartar`. No hay que llevarle ningún
+archivo.
+
+El paso 2 funciona con cualquier estado de la rama: el incidente se analiza con las notas de
+referencia de `../soluciones/lab-5-4/README.md`.
+
 
 ## Solución de referencia
 

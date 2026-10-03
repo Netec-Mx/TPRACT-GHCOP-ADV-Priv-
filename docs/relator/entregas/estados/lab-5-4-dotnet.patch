@@ -1,0 +1,1083 @@
+diff --git a/.github/workflows/integracion-continua.yml b/.github/workflows/integracion-continua.yml
+index af88601..0dcb7f0 100644
+--- a/.github/workflows/integracion-continua.yml
++++ b/.github/workflows/integracion-continua.yml
+@@ -113,3 +113,5 @@ jobs:
+           dotnet-version: ${{ env.VERSION_DOTNET }}
+       - name: Liquidar los tres periodos y comparar
+         run: bash scripts/integracion-local.sh --paso equivalencia
++      - name: Conciliar el reporte con las liquidaciones
++        run: bash scripts/integracion-local.sh --paso conciliacion
+diff --git a/docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md b/docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md
+new file mode 100644
+index 0000000..35fdcba
+--- /dev/null
++++ b/docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md
+@@ -0,0 +1,37 @@
++# 0004. El reporte por medio de pago vive en clases propias
++
++| Campo | Valor |
++|---|---|
++| Estado | Aceptada |
++| Fecha | 2026-10-03 |
++| Responsable | Equipo |
++
++## Contexto
++
++El reporte desglosa por medio de pago lo que liquida el cierre. En el mapeo BIAN pertenece a
++Merchant Acquiring Facility, y lee comercios, planes y transacciones, de Merchant Relations y
++Card Transaction Capture.
++
++## Alternativas consideradas
++
++- **Un método nuevo en la clase de cálculo de la liquidación.** Reutiliza el cálculo. Agrega
++  más responsabilidad a una clase que ya concentra mucho.
++- **Clases propias que reutilizan el cálculo de comisión de la liquidación.** Una sola regla
++  de comisión. El reporte hereda cualquier diferencia de ese cálculo.
++- **Clases propias que calculan por su cuenta con decimal exacto.** No tocan el cierre. La
++  regla de comisión queda en dos lugares.
++
++## Decisión
++
++Clases propias en el paquete de reporte del stack, que leen los mismos datos y calculan la
++comisión por su cuenta con decimal exacto y las reglas de `escenario/README.md`.
++
++## Consecuencias
++
++- El cierre no cambia.
++- La regla de comisión queda en dos lugares, y la conciliación del pipeline comprueba que
++  coincidan.
++
++## Verificación
++
++`bash scripts/verificar-reporte.sh <stack> <periodo>` y la conciliación del pipeline.
+diff --git a/docs/arquitectura/decisiones/0005-limite-superior-inclusivo.md b/docs/arquitectura/decisiones/0005-limite-superior-inclusivo.md
+new file mode 100644
+index 0000000..c745c20
+--- /dev/null
++++ b/docs/arquitectura/decisiones/0005-limite-superior-inclusivo.md
+@@ -0,0 +1,35 @@
++# 0005. El límite superior de cada tramo es inclusivo
++
++| Campo | Valor |
++|---|---|
++| Estado | Aceptada |
++| Fecha | 2026-10-03 |
++| Responsable | Negocio y equipo |
++
++## Contexto
++
++`escenario/README.md` no decide a qué tramo pertenece un monto que cae exactamente en el
++límite. El cierre cobraba el tramo siguiente, y la conciliación del reporte de junio no
++cuadraba por 22,00 en CM0001 y CM0007, más 0,03 de redondeo en punto flotante en CM0011,
++CM0016 y CM0025.
++
++## Alternativas consideradas
++
++- **Límite superior exclusivo,** como hacía el cierre. 500,00 paga el porcentaje del tramo
++  siguiente.
++- **Límite superior inclusivo.** 500,00 paga el porcentaje del tramo de 0 a 500.
++
++## Decisión
++
++El negocio decide que el límite superior es inclusivo: el monto en el límite pertenece al
++tramo inferior. Se corrige el cálculo de la liquidación con el límite inclusivo y con decimal
++exacto, y se actualiza el hash esperado de junio.
++
++## Consecuencias
++
++- CM0001 y CM0007 pagan 11,00 más en junio, y CM0011, CM0016 y CM0025 un centavo más.
++- La liquidación de abril y mayo no cambia.
++
++## Verificación
++
++El pipeline local en verde, con la conciliación en cero en los tres periodos.
+diff --git a/docs/arquitectura/decisiones/README.md b/docs/arquitectura/decisiones/README.md
+index 30114c9..e353539 100644
+--- a/docs/arquitectura/decisiones/README.md
++++ b/docs/arquitectura/decisiones/README.md
+@@ -8,6 +8,8 @@ archivo, numeradas en orden.
+ | [0001](0001-dos-implementaciones-con-salida-identica.md) | Implementar el escenario en Java y en .NET con salida idéntica | Aceptada |
+ | [0002](0002-servidor-mcp-local-de-solo-lectura.md) | Usar un servidor MCP local, de solo lectura y sin red | Aceptada |
+ | [0003](0003-hook-de-proteccion-de-datos.md) | Proteger los datos del escenario con un hook | Aceptada |
++| [0004](0004-ubicacion-del-reporte.md) | El reporte por medio de pago vive en clases propias | Aceptada |
++| [0005](0005-limite-superior-inclusivo.md) | El límite superior de cada tramo es inclusivo | Aceptada |
+ 
+ Para registrar una decisión nueva, copie [`plantilla.md`](plantilla.md) con el número
+ siguiente, o pídaselo al agente: la skill `pasarela-registrar-decision` la redacta a partir
+diff --git a/docs/proyecto/estimacion.md b/docs/proyecto/estimacion.md
+new file mode 100644
+index 0000000..4f28622
+--- /dev/null
++++ b/docs/proyecto/estimacion.md
+@@ -0,0 +1,34 @@
++# Estimación: reporte de comisiones por medio de pago
++
++| Campo | Valor |
++|---|---|
++| Tipo | Funcionalidad nueva |
++| Historia | `docs/proyecto/historia-reporte-medios-de-pago.md` |
++| Estimó | Equipo |
++| Fecha | 2026-10-03 |
++
++## Por fase
++
++| Fase | Sin IA, persona (min) | Con IA, persona (min) | Con IA, agente (min) | Créditos de IA | Minutos de integración continua | Supuesto principal |
++|---|---|---|---|---|---|---|
++| Requerimientos | 30 | 15 | 1 | Completar | 0 | Las preguntas al negocio toman lo mismo con o sin IA |
++| Estimación | 20 | 10 | 1 | Completar | 0 | Estimar a mano exige recorrer el código |
++| Análisis y diseño | 30 | 10 | 1 | Completar | 0 | La IA lee el código y el mapeo; la persona decide |
++| Desarrollo | 180 | 25 | 3 | Completar | 0 | Un stack, con pruebas |
++| Pruebas | 60 | 10 | 1 | Completar | 0 | Los criterios ya traen los valores esperados |
++| Revisión de código | 20 | 8 | 1 | Completar | 0 | La revisión humana se lee igual |
++| Seguridad | 10 | 4 | 0 | Completar | 0 | Lista de comprobación de la plantilla |
++| Integración continua | 40 | 10 | 1 | Completar | Completar | Un paso nuevo en un pipeline que existe |
++| Liberación | 20 | 8 | 1 | Completar | 0 | Registro de cambios y notas |
++| Operación y soporte | 45 | 12 | 1 | Completar | 0 | Un incidente con runbook |
++| Mantención | 90 | 15 | 2 | Completar | Completar | El diagnóstico es lo que pesa |
++| **Total** | **545** | **127** | **13** | | | |
++
++## Riesgos que pueden mover la estimación
++
++- Que el negocio tarde en responder las preguntas abiertas.
++- Que el pipeline encuentre diferencias que haya que diagnosticar.
++
++## Cómo se va a comparar con lo real
++
++Con `docs/proyecto/registro-de-tiempos.md`, fase por fase.
+diff --git a/docs/proyecto/historia-reporte-medios-de-pago.md b/docs/proyecto/historia-reporte-medios-de-pago.md
+new file mode 100644
+index 0000000..6ffb515
+--- /dev/null
++++ b/docs/proyecto/historia-reporte-medios-de-pago.md
+@@ -0,0 +1,43 @@
++# Historia de usuario: reporte de comisiones por medio de pago
++
++| Campo | Valor |
++|---|---|
++| Solicitante | Gerencia Comercial |
++| Origen | `docs/proyecto/backlog/solicitud-area-comercial.md` |
++| Estado | Aceptada |
++
++## Historia
++
++Como Gerencia Comercial, quiero un reporte mensual de comisiones por medio de pago, para
++negociar con emisores y billeteras con datos que cuadran con lo que se liquida a los
++comercios.
++
++## Preguntas abiertas
++
++| Pregunta | Respuesta | Quién respondió |
++|---|---|---|
++| ¿Qué transacciones entran? | Las mismas que la liquidación: aprobadas, en soles, con monto mayor que cero, dentro del periodo. Ni anuladas, ni pendientes, ni rechazadas | Negocio |
++| ¿Qué comercios entran? | Los que se liquidan: activos y suspendidos con plan. No los dados de baja | Negocio |
++| ¿Contra qué se comprueba el total? | Contra la suma del total de comisiones de las liquidaciones del periodo, al centavo | Negocio |
++| ¿El tope mensual se reparte entre medios? | No. Es por comercio. Las filas van antes del tope y una fila de ajuste muestra lo descontado | Negocio |
++| ¿Cuándo se redondea? | Al final. Cada fila suma exacto y redondea; el total se calcula por comercio, como la liquidación | Negocio |
++| ¿A qué tramo pertenece un monto en el límite? | Al tramo inferior. El límite superior es inclusivo | Negocio |
++
++## Criterios de aceptación
++
++1. **Alcance.** Dado el periodo 2026-06, cuando se genera el reporte, entonces cuenta las
++   mismas transacciones que liquida el cierre, por medio de pago.
++2. **Conciliación.** Dado cualquier periodo, cuando se genera el reporte, entonces su total
++   es igual a la suma del total de comisiones de las liquidaciones del mismo periodo.
++3. **Borde de tramo.** Dada TX002001, de CM0001 con plan PL01, por 500,00 en una cuota,
++   cuando se calcula su comisión, entonces es 500,00 × 3,5 % + 0,30 = 17,80.
++4. **Tercer decimal.** Dado CM0025 en 2026-06, cuando se suman exactas las comisiones de sus
++   transacciones, entonces el total es 957,185 y redondea a 957,19.
++5. **Tope.** Dado CM0004 en 2026-06, cuando se genera el reporte, entonces su exceso sobre el
++   tope aparece en la fila de ajuste por tope y no en las filas de medios.
++6. **Formato.** El reporte se obtiene con `--reporte-medios` y su salida coincide con la
++   esperada según `bash scripts/verificar-reporte.sh <stack> <periodo>`.
++
++## Fuera de alcance
++
++Contracargos y retenciones. Filtros por comercio o por categoría.
+diff --git a/docs/proyecto/pull-request.md b/docs/proyecto/pull-request.md
+new file mode 100644
+index 0000000..cdfe2be
+--- /dev/null
++++ b/docs/proyecto/pull-request.md
+@@ -0,0 +1,33 @@
++## Qué cambia y por qué
++
++El reporte de comisiones por medio de pago que pidió Gerencia Comercial, la conciliación del
++reporte con las liquidaciones en el pipeline y la corrección del cálculo de la liquidación que
++la conciliación encontró.
++
++## Qué parte generó el agente
++
++El código del reporte, sus pruebas, el paso de conciliación del pipeline y la corrección,
++cada uno con la skill de su laboratorio. La persona aprobó cada plan y cada corrección.
++
++## Comprobaciones
++
++- [x] Una persona revisó cada línea del cambio, también las que generó el agente. (regla 5 de `docs/gobierno/politica-uso-ia.md`)
++- [x] No entran secretos, credenciales, datos personales ni datos reales de clientes. (regla 2 de `docs/gobierno/politica-uso-ia.md`)
++- [x] No se modificó `escenario/datos/`. (regla 3 de `docs/gobierno/politica-uso-ia.md`)
++- [x] El pipeline termina en verde para el stack declarado en `scripts/integracion/stack.txt`, en GitHub o con `bash scripts/integracion-local.sh`. (regla 5 de `docs/gobierno/politica-uso-ia.md`)
++- [x] Cada hash esperado que cambió está en la sección de abajo, con su causa. (regla 5 de `docs/gobierno/politica-uso-ia.md`)
++- [x] Si el cambio toca `.github/` o `.vscode/`, alguien más revisó esa parte como si fuera un script de despliegue. (regla 6 de `docs/gobierno/politica-uso-ia.md`)
++
++## Hashes esperados que cambiaron
++
++2026-06. CM0001 y CM0007 pagan 11,00 más cada uno por el límite inclusivo del tramo, y CM0011,
++CM0016 y CM0025 un centavo más por el cálculo exacto. Decisión 0005.
++
++## Revisión de Copilot
++
++Estado de referencia para ponerse al día: la revisión se pide sobre los cambios propios.
++
++## Decisión de arquitectura
++
++`docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md` y
++`docs/arquitectura/decisiones/0005-limite-superior-inclusivo.md`.
+diff --git a/docs/proyecto/registro-de-tiempos.md b/docs/proyecto/registro-de-tiempos.md
+new file mode 100644
+index 0000000..40c637b
+--- /dev/null
++++ b/docs/proyecto/registro-de-tiempos.md
+@@ -0,0 +1,18 @@
++# Registro de tiempos
++
++Hora real de inicio de cada fase, en el momento en que empieza. La duración se calcula al
++final, con el inicio de la fase siguiente.
++
++| Fase | Inicio (HH:MM) | Fin (HH:MM) | Minutos reales | Estimado con IA (min) | Diferencia | Nota |
++|---|---|---|---|---|---|---|
++| Requerimientos | | | | | | |
++| Estimación | | | | | | |
++| Análisis y diseño | | | | | | |
++| Desarrollo | | | | | | |
++| Pruebas | | | | | | |
++| Revisión de código | | | | | | |
++| Seguridad | | | | | | |
++| Integración continua | | | | | | |
++| Liberación | | | | | | |
++| Operación y soporte | | | | | | |
++| Mantención | | | | | | |
+diff --git a/escenario/dotnet/LiquidacionComercios.Pruebas/Reporte/CalculadoraReporteMediosPruebas.cs b/escenario/dotnet/LiquidacionComercios.Pruebas/Reporte/CalculadoraReporteMediosPruebas.cs
+new file mode 100644
+index 0000000..48ac180
+--- /dev/null
++++ b/escenario/dotnet/LiquidacionComercios.Pruebas/Reporte/CalculadoraReporteMediosPruebas.cs
+@@ -0,0 +1,203 @@
++using System;
++
++using Pe.PasarelaAndina.Calculo;
++using Pe.PasarelaAndina.Modelo;
++using Pe.PasarelaAndina.Reporte;
++using Pe.PasarelaAndina.Repositorio;
++using Xunit;
++
++namespace Pe.PasarelaAndina.Pruebas.Reporte
++{
++    /// <summary>
++    /// Pruebas del calculo del reporte de comisiones por medio de pago, con datos en memoria.
++    /// </summary>
++    public class CalculadoraReporteMediosPruebas
++    {
++        private const string Periodo = "2026-06";
++
++        private readonly UtilidadesFecha utilidadesFecha = new UtilidadesFecha();
++        private readonly CalculadoraReporteMedios calculadora = new CalculadoraReporteMedios();
++        private readonly RepositorioMemoria repositorio;
++        private int secuencia;
++
++        public CalculadoraReporteMediosPruebas()
++        {
++            repositorio = new RepositorioMemoria();
++            secuencia = 0;
++            PlanComisiones plan = new PlanComisiones("PL01", "Basico", 0.30, 8000.00);
++            plan.AgregarTramo(new TramoComision(0, 500, 3.5));
++            plan.AgregarTramo(new TramoComision(500, 2000, 2.9));
++            plan.AgregarTramo(new TramoComision(2000, 999999, 2.5));
++            repositorio.AgregarPlan(plan);
++
++            PlanComisiones planConTopeBajo = new PlanComisiones("PL02", "Tope bajo", 0.30, 10.00);
++            planConTopeBajo.AgregarTramo(new TramoComision(0, 500, 3.5));
++            planConTopeBajo.AgregarTramo(new TramoComision(500, 999999, 2.9));
++            repositorio.AgregarPlan(planConTopeBajo);
++
++            PlanComisiones planSinFijo = new PlanComisiones("PL03", "Sin fijo", 0.0, 8000.00);
++            planSinFijo.AgregarTramo(new TramoComision(0, 999999, 1.0));
++            repositorio.AgregarPlan(planSinFijo);
++        }
++
++        [Fact]
++        public void UnMontoIgualAlLimiteSuperiorPagaElTramoInferior()
++        {
++            Comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++            Transaccion("CM0001", 500.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++            ReporteMediosPago reporte = calculadora.Calcular(repositorio, Periodo);
++
++            // 500.00 x 3,5 % + 0,30 = 17,80; con el tramo siguiente serian 14,80.
++            Assert.Equal(17.80m, reporte.Filas[0].Comision);
++            Assert.Equal(17.80m, reporte.Total);
++        }
++
++        [Fact]
++        public void UnaTransaccionAnuladaNoCuenta()
++        {
++            Comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++            Transaccion("CM0001", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++            Transaccion("CM0001", 300.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.ANULADA);
++            Transaccion("CM0001", 300.00, MedioPago.BILLETERA_MOVIL, 1, EstadoTransaccion.ANULADA);
++
++            ReporteMediosPago reporte = calculadora.Calcular(repositorio, Periodo);
++
++            Assert.Single(reporte.Filas);
++            FilaMedioPago fila = reporte.Filas[0];
++            Assert.Equal("TARJETA_DEBITO", fila.MedioPago);
++            Assert.Equal(1, fila.CantidadTransacciones);
++            Assert.Equal(100.00m, fila.MontoTransado);
++            Assert.Equal(3.80m, fila.Comision);
++        }
++
++        [Fact]
++        public void QuedanFueraLasPendientesRechazadasYComerciosDeBaja()
++        {
++            Comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++            Comercio("CM0002", EstadoComercio.DE_BAJA, "PL01");
++            Comercio("CM0003", EstadoComercio.SUSPENDIDO, "PL01");
++            Comercio("CM0004", EstadoComercio.ACTIVO, "PL99");
++            Transaccion("CM0001", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.PENDIENTE);
++            Transaccion("CM0001", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.RECHAZADA);
++            Transaccion("CM0002", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++            Transaccion("CM0003", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++            Transaccion("CM0004", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++            ReporteMediosPago reporte = calculadora.Calcular(repositorio, Periodo);
++
++            Assert.Equal(1, reporte.Filas[0].CantidadTransacciones);
++            Assert.Equal(3.80m, reporte.Total);
++        }
++
++        [Fact]
++        public void UnaTransaccionEnCuotasLlevaRecargoSobreLaComisionBase()
++        {
++            Comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++            Transaccion enCuatroCuotas =
++                    Transaccion("CM0001", 100.00, MedioPago.TARJETA_CREDITO, 4, EstadoTransaccion.APROBADA);
++            Transaccion enDoceCuotas =
++                    Transaccion("CM0001", 100.00, MedioPago.TARJETA_CREDITO, 12, EstadoTransaccion.APROBADA);
++            PlanComisiones plan = repositorio.BuscarPlanPorId("PL01");
++
++            // Base 3,80; recargo de 1,5 % por tres cuotas sobre la primera.
++            Assert.Equal(3.857m, calculadora.ComisionDeTransaccion(plan, enCuatroCuotas));
++            // Once cuotas sobre la primera darian 5,5 %, pero el maximo es 3 %.
++            Assert.Equal(3.914m, calculadora.ComisionDeTransaccion(plan, enDoceCuotas));
++
++            ReporteMediosPago reporte = calculadora.Calcular(repositorio, Periodo);
++            Assert.Equal(7.77m, reporte.Filas[0].Comision);
++        }
++
++        [Fact]
++        public void UnComercioQueSuperaElTopeCobraElTopeYSeMuestraElAjuste()
++        {
++            Comercio("CM0001", EstadoComercio.ACTIVO, "PL02");
++            Transaccion("CM0001", 500.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++            ReporteMediosPago reporte = calculadora.Calcular(repositorio, Periodo);
++
++            // La fila muestra la comision antes del tope; el ajuste descuenta el exceso.
++            Assert.Equal(17.80m, reporte.Filas[0].Comision);
++            Assert.Equal(-7.80m, reporte.AjustePorTope);
++            Assert.Equal(0.00m, reporte.AjustePorRedondeo);
++            Assert.Equal(10.00m, reporte.Total);
++        }
++
++        [Fact]
++        public void ElTotalEsLaSumaPorComercioConTopeYElRedondeoQuedaEnSuAjuste()
++        {
++            Comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++            Comercio("CM0002", EstadoComercio.ACTIVO, "PL02");
++            Comercio("CM0003", EstadoComercio.ACTIVO, "PL03");
++            Transaccion("CM0001", 100.00, MedioPago.TARJETA_CREDITO, 1, EstadoTransaccion.APROBADA);
++            Transaccion("CM0002", 500.00, MedioPago.TARJETA_CREDITO, 1, EstadoTransaccion.APROBADA);
++            // 0,50 x 1 % = 0,005 por transaccion: cada fila redondea a 0,01 pero el comercio
++            // suma 0,01 exacto.
++            Transaccion("CM0003", 0.50, MedioPago.BILLETERA_MOVIL, 1, EstadoTransaccion.APROBADA);
++            Transaccion("CM0003", 0.50, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++            ReporteMediosPago reporte = calculadora.Calcular(repositorio, Periodo);
++
++            // CM0001 3,80 + CM0002 con tope 10,00 + CM0003 0,01.
++            Assert.Equal(13.81m, reporte.Total);
++            Assert.Equal(-7.80m, reporte.AjustePorTope);
++            Assert.Equal(-0.01m, reporte.AjustePorRedondeo);
++
++            decimal sumaFilas = 0m;
++            foreach (FilaMedioPago fila in reporte.Filas)
++            {
++                sumaFilas += fila.Comision;
++            }
++            Assert.Equal(reporte.Total, sumaFilas + reporte.AjustePorTope + reporte.AjustePorRedondeo);
++        }
++
++        [Fact]
++        public void LasFilasVanOrdenadasPorCodigoYLlevanSuParticipacion()
++        {
++            Comercio("CM0001", EstadoComercio.ACTIVO, "PL03");
++            Transaccion("CM0001", 100.00, MedioPago.TRANSFERENCIA, 1, EstadoTransaccion.APROBADA);
++            Transaccion("CM0001", 200.00, MedioPago.BILLETERA_MOVIL, 1, EstadoTransaccion.APROBADA);
++
++            ReporteMediosPago reporte = calculadora.Calcular(repositorio, Periodo);
++
++            Assert.Equal("BILLETERA_MOVIL", reporte.Filas[0].MedioPago);
++            Assert.Equal("TRANSFERENCIA", reporte.Filas[1].MedioPago);
++            Assert.Equal(66.67m, reporte.Filas[0].Participacion);
++            Assert.Equal(33.33m, reporte.Filas[1].Participacion);
++        }
++
++        [Fact]
++        public void ElFormatoMuestraMontosConPrefijoYAjustesSiempre()
++        {
++            Comercio("CM0001", EstadoComercio.ACTIVO, "PL02");
++            Transaccion("CM0001", 500.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++            string texto = new FormateadorReporteMedios().Formatear(calculadora.Calcular(repositorio, Periodo));
++
++            // Anchos: 15, 16, 18, 16 y 16 en las filas; 49 y 16 en el pie.
++            Assert.Contains("TARJETA_DEBITO " + new string(' ', 15) + "1" + new string(' ', 9) + "S/ 500.00"
++                    + new string(' ', 8) + "S/ 17.80" + new string(' ', 8) + "100.00 %\n", texto);
++            Assert.Contains("Ajuste por tope" + new string(' ', 34 + 8) + "S/ -7.80\n", texto);
++            Assert.Contains("Ajuste por redondeo" + new string(' ', 30 + 9) + "S/ 0.00\n", texto);
++            Assert.EndsWith("Total" + new string(' ', 44 + 8) + "S/ 10.00\n", texto);
++        }
++
++        private void Comercio(string id, EstadoComercio estado, string idPlan)
++        {
++            repositorio.AgregarComercio(new Comercio(id, "Comercio " + id, "20123456789",
++                    CategoriaNegocio.RETAIL, utilidadesFecha.ParsearFecha("2020-01-01"), estado, idPlan));
++        }
++
++        private Transaccion Transaccion(string idComercio, double monto, MedioPago medio, int cuotas,
++                                        EstadoTransaccion estado)
++        {
++            secuencia++;
++            DateTime fecha = utilidadesFecha.ParsearFechaHora("2026-06-15 10:00:00");
++            Transaccion transaccion = new Transaccion("TX" + secuencia, idComercio, monto, "PEN",
++                    fecha, medio, cuotas, estado, "AUT" + secuencia);
++            repositorio.AgregarTransaccion(transaccion);
++            return transaccion;
++        }
++    }
++}
+diff --git a/escenario/dotnet/LiquidacionComercios/AplicacionLiquidacion.cs b/escenario/dotnet/LiquidacionComercios/AplicacionLiquidacion.cs
+index 3c667df..fcbda9d 100644
+--- a/escenario/dotnet/LiquidacionComercios/AplicacionLiquidacion.cs
++++ b/escenario/dotnet/LiquidacionComercios/AplicacionLiquidacion.cs
+@@ -25,6 +25,7 @@ namespace Pe.PasarelaAndina
+         // Los datos son compartidos con el escenario Java y viven un nivel mas arriba,
+         // en escenario/datos, para que ninguno de los dos proyectos sea su dueño.
+         private const string DirectorioPorDefecto = "../datos";
++        private const string ArgumentoReporteMedios = "--reporte-medios";
+ 
+         public static void Main(string[] args)
+         {
+@@ -38,6 +39,22 @@ namespace Pe.PasarelaAndina
+             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+ 
++            // Con --reporte-medios como primer argumento se emite el reporte de comisiones
++            // por medio de pago; el periodo y la ruta siguen despues, con los mismos valores
++            // por omision. Sin ese argumento la liquidacion no cambia.
++            if (args.Length > 0 && ArgumentoReporteMedios == args[0])
++            {
++                string periodoReporte = args.Length > 1 ? args[1] : PeriodoPorDefecto;
++                string rutaReporte = args.Length > 2 ? args[2] : DirectorioPorDefecto;
++                RepositorioMemoria repositorioReporte = new RepositorioMemoria();
++                new CargadorDatos().CargarTodo(repositorioReporte, rutaReporte);
++                ReporteMediosPago reporte =
++                        new CalculadoraReporteMedios().Calcular(repositorioReporte, periodoReporte);
++                Console.Write(new FormateadorReporteMedios().Formatear(reporte));
++                Console.Out.Flush();
++                return;
++            }
++
+             string periodo = args.Length > 0 ? args[0] : PeriodoPorDefecto;
+             string rutaDatos = args.Length > 1 ? args[1] : DirectorioPorDefecto;
+ 
+diff --git a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+index 3a3c1a7..a0f2a03 100644
+--- a/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
++++ b/escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs
+@@ -118,7 +118,7 @@ namespace Pe.PasarelaAndina.Calculo
+                     liquidacion.FechaGeneracion = DateTime.Now;
+ 
+                     double totalTransado = 0.0;
+-                    double totalComisiones = 0.0;
++                    decimal totalComisiones = 0m;
+                     int cantidadTransacciones = 0;
+ 
+                     List<Transaccion> transacciones = repositorio.BuscarTransaccionesDeComercio(comercio.Id);
+@@ -142,7 +142,7 @@ namespace Pe.PasarelaAndina.Calculo
+                                         if (!tramoEncontrado)
+                                         {
+                                             if (montoTransaccion >= tramo.MontoDesde
+-                                                    && montoTransaccion < tramo.MontoHasta)
++                                                    && montoTransaccion <= tramo.MontoHasta)
+                                             {
+                                                 porcentajeAplicado = tramo.Porcentaje;
+                                                 tramoEncontrado = true;
+@@ -158,10 +158,12 @@ namespace Pe.PasarelaAndina.Calculo
+                                         }
+                                     }
+ 
+-                                    double comisionBase = montoTransaccion * porcentajeAplicado / 100.0;
+-                                    comisionBase = comisionBase + plan.MontoFijoPorTransaccion;
++                                    decimal comisionBase = decimal.Parse(montoTransaccion.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)
++                                            * decimal.Parse(porcentajeAplicado.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)
++                                            / 100m;
++                                    comisionBase = comisionBase + decimal.Parse(plan.MontoFijoPorTransaccion.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+ 
+-                                    double recargo = 0.0;
++                                    decimal recargo = 0m;
+ 
+                                     if (transaccion.Cuotas > 1)
+                                     {
+@@ -172,17 +174,17 @@ namespace Pe.PasarelaAndina.Calculo
+                                             porcentajeRecargo = 3.0;
+                                         }
+ 
+-                                        recargo = comisionBase * porcentajeRecargo / 100.0;
++                                        recargo = comisionBase * decimal.Parse(porcentajeRecargo.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture) / 100m;
+                                     }
+ 
+-                                    double comisionTotal = comisionBase + recargo;
++                                    decimal comisionTotal = comisionBase + recargo;
+ 
+                                     DetalleLiquidacion linea = new DetalleLiquidacion();
+                                     linea.IdTransaccion = transaccion.Id;
+                                     linea.MontoTransaccion = montoTransaccion;
+-                                    linea.ComisionBase = comisionBase;
+-                                    linea.RecargoCuotas = recargo;
+-                                    linea.ComisionTotal = comisionTotal;
++                                    linea.ComisionBase = (double)comisionBase;
++                                    linea.RecargoCuotas = (double)recargo;
++                                    linea.ComisionTotal = (double)comisionTotal;
+                                     linea.Cuotas = transaccion.Cuotas;
+                                     linea.MedioPago = transaccion.MedioPago.ToString();
+                                     liquidacion.AgregarDetalle(linea);
+@@ -191,15 +193,15 @@ namespace Pe.PasarelaAndina.Calculo
+                                     totalComisiones = totalComisiones + comisionTotal;
+                                     cantidadTransacciones++;
+ 
+-                                    acumuladoGeneralComisiones = acumuladoGeneralComisiones + comisionTotal;
++                                    acumuladoGeneralComisiones = acumuladoGeneralComisiones + (double)comisionTotal;
+                                 }
+                             }
+                         }
+                     }
+ 
+-                    if (totalComisiones > plan.TopeMensual)
++                    if (totalComisiones > decimal.Parse(plan.TopeMensual.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture))
+                     {
+-                        totalComisiones = plan.TopeMensual;
++                        totalComisiones = decimal.Parse(plan.TopeMensual.ToString("R", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+                         liquidacion.TopeAplicado = true;
+                     }
+ 
+@@ -234,7 +236,7 @@ namespace Pe.PasarelaAndina.Calculo
+ 
+                         if (meses < 6)
+                         {
+-                            double baseRetencion = totalTransado - totalComisiones - totalContracargos;
++                            double baseRetencion = totalTransado - (double)totalComisiones - totalContracargos;
+ 
+                             if (baseRetencion > 0)
+                             {
+@@ -244,12 +246,12 @@ namespace Pe.PasarelaAndina.Calculo
+                     }
+ 
+                     totalTransado = CompatibilidadJava.RedondearADosDecimales(totalTransado);
+-                    totalComisiones = CompatibilidadJava.RedondearADosDecimales(totalComisiones);
++                    totalComisiones = Math.Round(totalComisiones, 2, MidpointRounding.AwayFromZero);
+                     totalContracargos = CompatibilidadJava.RedondearADosDecimales(totalContracargos);
+                     retenciones = CompatibilidadJava.RedondearADosDecimales(retenciones);
+ 
+                     liquidacion.TotalTransado = totalTransado;
+-                    liquidacion.TotalComisiones = totalComisiones;
++                    liquidacion.TotalComisiones = (double)totalComisiones;
+                     liquidacion.TotalContracargos = totalContracargos;
+                     liquidacion.Retenciones = retenciones;
+                     liquidacion.CantidadTransacciones = cantidadTransacciones;
+@@ -333,7 +335,7 @@ namespace Pe.PasarelaAndina.Calculo
+                         Console.WriteLine("Comercio " + comercio.Id + " - " + comercio.RazonSocial);
+                         Console.WriteLine("  Transacciones liquidadas : " + cantidadTransacciones);
+                         Console.WriteLine("  Total transado           : S/ " + FormatearMonto(totalTransado));
+-                        Console.WriteLine("  Total comisiones         : S/ " + FormatearMonto(totalComisiones)
++                        Console.WriteLine("  Total comisiones         : S/ " + FormatearMonto((double)totalComisiones)
+                                 + (liquidacion.TopeAplicado ? "  (tope aplicado)" : ""));
+                         Console.WriteLine("  Contracargos             : S/ " + FormatearMonto(totalContracargos));
+                         Console.WriteLine("  Retenciones              : S/ " + FormatearMonto(retenciones));
+diff --git a/escenario/dotnet/LiquidacionComercios/Reporte/CalculadoraReporteMedios.cs b/escenario/dotnet/LiquidacionComercios/Reporte/CalculadoraReporteMedios.cs
+new file mode 100644
+index 0000000..74e2f2e
+--- /dev/null
++++ b/escenario/dotnet/LiquidacionComercios/Reporte/CalculadoraReporteMedios.cs
+@@ -0,0 +1,215 @@
++using System;
++using System.Collections.Generic;
++using System.Globalization;
++
++using Pe.PasarelaAndina.Calculo;
++using Pe.PasarelaAndina.Modelo;
++using Pe.PasarelaAndina.Repositorio;
++
++namespace Pe.PasarelaAndina.Reporte
++{
++    /// <summary>
++    /// Calcula el reporte de comisiones por medio de pago.
++    ///
++    /// El alcance es el mismo del cierre: comercios no dados de baja y con plan existente,
++    /// transacciones aprobadas, en soles, con monto mayor que cero, fecha legible y dentro
++    /// del periodo. El calculo es propio y usa decimal exacto: no reutiliza las calculadoras
++    /// del cierre.
++    ///
++    /// Reglas aplicadas:
++    /// - Comision de la transaccion: porcentaje del tramo sobre el monto completo, mas el
++    ///   monto fijo, mas el recargo por cuotas (0,5 % por cuota sobre la primera, maximo
++    ///   3 %) sobre esa comision base. Sin redondeo.
++    /// - El limite superior de cada tramo es inclusivo: un monto igual al limite pertenece
++    ///   al tramo inferior.
++    /// - Filas de medios: suma exacta, redondeada a dos decimales al final.
++    /// - Total: por comercio se suma exacto, se aplica el tope, se redondea y se suman los
++    ///   comercios.
++    /// - Ajuste por tope: en negativo, la suma de comision redondeada menos tope de los
++    ///   comercios que lo superan.
++    /// - Ajuste por redondeo: total menos suma de filas menos ajuste por tope.
++    /// </summary>
++    public class CalculadoraReporteMedios
++    {
++        private const decimal Cien = 100m;
++        private const decimal RecargoPorCuota = 0.5m;
++        private const decimal RecargoMaximo = 3m;
++        private const string MonedaDelReporte = "PEN";
++
++        private readonly UtilidadesFecha utilidadesFecha = new UtilidadesFecha();
++
++        public ReporteMediosPago Calcular(RepositorioMemoria repositorio, string periodo)
++        {
++            DateTime inicio = utilidadesFecha.InicioDePeriodo(periodo);
++            DateTime fin = utilidadesFecha.FinDePeriodo(periodo);
++
++            SortedDictionary<string, AcumuladoMedio> porMedio =
++                    new SortedDictionary<string, AcumuladoMedio>(StringComparer.Ordinal);
++            decimal total = 0m;
++            decimal excesoSobreTope = 0m;
++
++            foreach (Comercio comercio in repositorio.Comercios)
++            {
++                if (comercio.Estado == EstadoComercio.DE_BAJA)
++                {
++                    continue;
++                }
++                PlanComisiones plan = repositorio.BuscarPlanPorId(comercio.IdPlanComisiones);
++                if (plan == null)
++                {
++                    continue;
++                }
++
++                decimal comisionComercio = 0m;
++                foreach (Transaccion transaccion in repositorio.BuscarTransaccionesDeComercio(comercio.Id))
++                {
++                    if (!EntraAlReporte(transaccion, inicio, fin))
++                    {
++                        continue;
++                    }
++                    decimal comision = ComisionDeTransaccion(plan, transaccion);
++                    comisionComercio += comision;
++                    string medio = transaccion.MedioPago.ToString();
++                    AcumuladoMedio acumulado;
++                    if (!porMedio.TryGetValue(medio, out acumulado))
++                    {
++                        acumulado = new AcumuladoMedio();
++                        porMedio[medio] = acumulado;
++                    }
++                    acumulado.Agregar(ADecimal(transaccion.Monto), comision);
++                }
++
++                decimal tope = ADecimal(plan.TopeMensual);
++                if (comisionComercio > tope)
++                {
++                    excesoSobreTope += Redondear(comisionComercio) - tope;
++                    comisionComercio = tope;
++                }
++                total += Redondear(comisionComercio);
++            }
++
++            decimal sumaFilas = 0m;
++            foreach (AcumuladoMedio acumulado in porMedio.Values)
++            {
++                sumaFilas += Redondear(acumulado.Comision);
++            }
++
++            List<FilaMedioPago> filas = new List<FilaMedioPago>();
++            foreach (KeyValuePair<string, AcumuladoMedio> entrada in porMedio)
++            {
++                AcumuladoMedio acumulado = entrada.Value;
++                decimal comisionFila = Redondear(acumulado.Comision);
++                decimal participacion = sumaFilas == 0m
++                        ? Redondear(0m)
++                        : Redondear(comisionFila * Cien / sumaFilas);
++                filas.Add(new FilaMedioPago(entrada.Key, acumulado.Cantidad,
++                        Redondear(acumulado.Monto), comisionFila, participacion));
++            }
++
++            total = Redondear(total);
++            decimal ajusteTope = Redondear(-excesoSobreTope);
++            decimal ajusteRedondeo = Redondear(total - sumaFilas - ajusteTope);
++
++            return new ReporteMediosPago(periodo, inicio, fin, filas, ajusteTope, ajusteRedondeo, total);
++        }
++
++        /// <summary>
++        /// Comision exacta de una transaccion, sin redondear.
++        /// </summary>
++        public decimal ComisionDeTransaccion(PlanComisiones plan, Transaccion transaccion)
++        {
++            decimal monto = ADecimal(transaccion.Monto);
++            decimal porcentaje = PorcentajeDelTramo(plan, monto);
++
++            decimal baseComision = monto * porcentaje / Cien + ADecimal(plan.MontoFijoPorTransaccion);
++
++            decimal recargo = 0m;
++            if (transaccion.Cuotas > 1)
++            {
++                decimal porcentajeRecargo = RecargoPorCuota * (transaccion.Cuotas - 1);
++                if (porcentajeRecargo > RecargoMaximo)
++                {
++                    porcentajeRecargo = RecargoMaximo;
++                }
++                recargo = baseComision * porcentajeRecargo / Cien;
++            }
++            return baseComision + recargo;
++        }
++
++        /// <summary>
++        /// Porcentaje del primer tramo que contiene el monto, con el limite superior inclusivo.
++        /// Si ninguno lo contiene se usa el ultimo tramo, igual que el cierre.
++        /// </summary>
++        private static decimal PorcentajeDelTramo(PlanComisiones plan, decimal monto)
++        {
++            List<TramoComision> tramos = plan.Tramos;
++            foreach (TramoComision tramo in tramos)
++            {
++                if (monto >= ADecimal(tramo.MontoDesde) && monto <= ADecimal(tramo.MontoHasta))
++                {
++                    return ADecimal(tramo.Porcentaje);
++                }
++            }
++            if (tramos.Count == 0)
++            {
++                return 0m;
++            }
++            return ADecimal(tramos[tramos.Count - 1].Porcentaje);
++        }
++
++        private static bool EntraAlReporte(Transaccion transaccion, DateTime inicio, DateTime fin)
++        {
++            if (transaccion == null || transaccion.FechaHora == DateTime.MinValue)
++            {
++                return false;
++            }
++            if (!MonedaDelReporte.Equals(transaccion.Moneda))
++            {
++                return false;
++            }
++            if (transaccion.Monto <= 0)
++            {
++                return false;
++            }
++            if (transaccion.FechaHora < inicio || transaccion.FechaHora > fin)
++            {
++                return false;
++            }
++            return transaccion.Estado == EstadoTransaccion.APROBADA;
++        }
++
++        /// <summary>
++        /// Convierte un double a decimal con su representacion decimal mas corta, igual que
++        /// BigDecimal.valueOf en Java. La conversion directa de C# conserva solo quince
++        /// digitos significativos.
++        /// </summary>
++        private static decimal ADecimal(double valor)
++        {
++            return decimal.Parse(valor.ToString("R", CultureInfo.InvariantCulture),
++                    NumberStyles.Float, CultureInfo.InvariantCulture);
++        }
++
++        /// <summary>
++        /// Dos decimales, medio hacia arriba. AwayFromZero coincide con HALF_UP de Java
++        /// tambien en los negativos.
++        /// </summary>
++        private static decimal Redondear(decimal valor)
++        {
++            return Math.Round(valor, 2, MidpointRounding.AwayFromZero);
++        }
++
++        private sealed class AcumuladoMedio
++        {
++            public int Cantidad;
++            public decimal Monto;
++            public decimal Comision;
++
++            public void Agregar(decimal montoTransaccion, decimal comisionTransaccion)
++            {
++                Cantidad++;
++                Monto += montoTransaccion;
++                Comision += comisionTransaccion;
++            }
++        }
++    }
++}
+diff --git a/escenario/dotnet/LiquidacionComercios/Reporte/FormateadorReporteMedios.cs b/escenario/dotnet/LiquidacionComercios/Reporte/FormateadorReporteMedios.cs
+new file mode 100644
+index 0000000..877e6fe
+--- /dev/null
++++ b/escenario/dotnet/LiquidacionComercios/Reporte/FormateadorReporteMedios.cs
+@@ -0,0 +1,87 @@
++using System;
++using System.Globalization;
++using System.Text;
++
++namespace Pe.PasarelaAndina.Reporte
++{
++    /// <summary>
++    /// Arma el texto del reporte de comisiones por medio de pago.
++    ///
++    /// Formato fijo, con fin de linea \n:
++    ///
++    /// - Encabezado con el marco de 58 signos = y fechas dd/MM/yyyy HH:mm, igual que la
++    ///   liquidacion.
++    /// - Tabla de columnas de ancho fijo, separadas por los propios anchos:
++    ///     Medio de pago   15 caracteres, alineado a la izquierda
++    ///     Transacciones   16 caracteres, alineado a la derecha
++    ///     Monto transado  18 caracteres, alineado a la derecha
++    ///     Comision        16 caracteres, alineado a la derecha
++    ///     Participacion   16 caracteres, alineado a la derecha
++    ///   Ancho total de la tabla: 81 caracteres.
++    /// - Separador de 81 guiones despues de las filas de medios.
++    /// - Filas de ajuste y total: etiqueta de 49 caracteres alineada a la izquierda (el
++    ///   ancho de las tres primeras columnas) y el monto en la columna Comision, 16
++    ///   caracteres alineado a la derecha.
++    /// - Montos como "S/ " seguido del valor con punto decimal, dos decimales y sin
++    ///   separador de miles; el signo negativo va despues del prefijo.
++    /// - Porcentajes con dos decimales y el sufijo " %".
++    /// </summary>
++    public class FormateadorReporteMedios
++    {
++        private const string Marco =
++                "==========================================================";
++        private const string FormatoFila = "{0,-15}{1,16}{2,18}{3,16}{4,16}\n";
++        private const string FormatoPie = "{0,-49}{1,16}\n";
++        private static readonly string Separador = new string('-', 81);
++        private const string FormatoFecha = "dd/MM/yyyy HH:mm";
++
++        public string Formatear(ReporteMediosPago reporte)
++        {
++            CultureInfo cultura = CultureInfo.InvariantCulture;
++
++            StringBuilder texto = new StringBuilder();
++            texto.Append(Marco).Append('\n');
++            texto.Append("  PASARELA ANDINA - COMISIONES POR MEDIO DE PAGO\n");
++            texto.Append("  Periodo: ").Append(reporte.Periodo).Append('\n');
++            texto.Append("  Desde: ").Append(reporte.InicioPeriodo.ToString(FormatoFecha, cultura)).Append('\n');
++            texto.Append("  Hasta: ").Append(reporte.FinPeriodo.ToString(FormatoFecha, cultura)).Append('\n');
++            texto.Append(Marco).Append('\n');
++            texto.Append('\n');
++
++            texto.Append(string.Format(cultura, FormatoFila,
++                    "Medio de pago", "Transacciones", "Monto transado", "Comision", "Participacion"));
++
++            foreach (FilaMedioPago fila in reporte.Filas)
++            {
++                texto.Append(string.Format(cultura, FormatoFila,
++                        fila.MedioPago,
++                        fila.CantidadTransacciones.ToString(cultura),
++                        Monto(fila.MontoTransado),
++                        Monto(fila.Comision),
++                        Porcentaje(fila.Participacion)));
++            }
++
++            texto.Append(Separador).Append('\n');
++            texto.Append(string.Format(cultura, FormatoPie, "Ajuste por tope", Monto(reporte.AjustePorTope)));
++            texto.Append(string.Format(cultura, FormatoPie, "Ajuste por redondeo", Monto(reporte.AjustePorRedondeo)));
++            texto.Append(string.Format(cultura, FormatoPie, "Total", Monto(reporte.Total)));
++            return texto.ToString();
++        }
++
++        internal static string Monto(decimal valor)
++        {
++            return "S/ " + DosDecimales(valor);
++        }
++
++        internal static string Porcentaje(decimal valor)
++        {
++            return DosDecimales(valor) + " %";
++        }
++
++        private static string DosDecimales(decimal valor)
++        {
++            return Math.Round(valor, 2, MidpointRounding.AwayFromZero)
++                    .ToString("0.00", CultureInfo.InvariantCulture);
++        }
++    }
++}
+diff --git a/escenario/dotnet/LiquidacionComercios/Reporte/ReporteMediosPago.cs b/escenario/dotnet/LiquidacionComercios/Reporte/ReporteMediosPago.cs
+new file mode 100644
+index 0000000..9b0a575
+--- /dev/null
++++ b/escenario/dotnet/LiquidacionComercios/Reporte/ReporteMediosPago.cs
+@@ -0,0 +1,57 @@
++using System;
++using System.Collections.Generic;
++
++namespace Pe.PasarelaAndina.Reporte
++{
++    /// <summary>
++    /// Resultado del reporte de comisiones por medio de pago de un periodo.
++    ///
++    /// Las filas vienen ordenadas por el codigo del medio de pago. Los montos de las filas,
++    /// los ajustes y el total ya estan redondeados a dos decimales.
++    /// </summary>
++    public class ReporteMediosPago
++    {
++        public string Periodo { get; }
++        public DateTime InicioPeriodo { get; }
++        public DateTime FinPeriodo { get; }
++        public List<FilaMedioPago> Filas { get; }
++        public decimal AjustePorTope { get; }
++        public decimal AjustePorRedondeo { get; }
++        public decimal Total { get; }
++
++        public ReporteMediosPago(string periodo, DateTime inicioPeriodo, DateTime finPeriodo,
++                                 List<FilaMedioPago> filas, decimal ajustePorTope,
++                                 decimal ajustePorRedondeo, decimal total)
++        {
++            Periodo = periodo;
++            InicioPeriodo = inicioPeriodo;
++            FinPeriodo = finPeriodo;
++            Filas = filas;
++            AjustePorTope = ajustePorTope;
++            AjustePorRedondeo = ajustePorRedondeo;
++            Total = total;
++        }
++    }
++
++    /// <summary>
++    /// Una fila del reporte: lo que aporta un medio de pago a las comisiones.
++    /// </summary>
++    public class FilaMedioPago
++    {
++        public string MedioPago { get; }
++        public int CantidadTransacciones { get; }
++        public decimal MontoTransado { get; }
++        public decimal Comision { get; }
++        public decimal Participacion { get; }
++
++        public FilaMedioPago(string medioPago, int cantidadTransacciones, decimal montoTransado,
++                             decimal comision, decimal participacion)
++        {
++            MedioPago = medioPago;
++            CantidadTransacciones = cantidadTransacciones;
++            MontoTransado = montoTransado;
++            Comision = comision;
++            Participacion = participacion;
++        }
++    }
++}
+diff --git a/scripts/integracion-local.sh b/scripts/integracion-local.sh
+index d4a337d..94ea530 100755
+--- a/scripts/integracion-local.sh
++++ b/scripts/integracion-local.sh
+@@ -25,7 +25,7 @@ set -u
+ readonly VERSION_SCRIPT="1.1.0"
+ 
+ # Orden de los pasos. El workflow tiene que llamarlos en este mismo orden.
+-readonly PASOS=(java dependencias-java dotnet dependencias-dotnet equivalencia)
++readonly PASOS=(java dependencias-java dotnet dependencias-dotnet equivalencia conciliacion)
+ 
+ readonly PERIODOS=(2026-04 2026-05 2026-06)
+ 
+@@ -160,6 +160,48 @@ paso_equivalencia() {
+     [ "$fallas" -eq 0 ]
+ }
+ 
++# Centavos enteros del monto que sigue a «S/», aunque la linea siga con texto.
++centavos() {
++    awk '{ sub(/\r$/, ""); sub(/.*S\/ /, ""); split($0, c, " "); v = c[1]; s = 1
++           if (substr(v, 1, 1) == "-") { s = -1; v = substr(v, 2) }
++           split(v, p, "."); print s * (p[1] * 100 + p[2]) }'
++}
++
++paso_conciliacion() {
++    titulo "Conciliacion: total del reporte contra las liquidaciones (stack: $stack)"
++    local periodo s fallas=0 temporal liquidado reporte diferencia
++    temporal=$(mktemp -d 2>/dev/null || mktemp -d -t conciliacion)
++    for s in java dotnet; do
++        usa "$s" || continue
++        if [ "$s" = "java" ]; then
++            (cd "$raiz/escenario/java" && mvn -q clean package -DskipTests) || { rm -rf "$temporal"; return 1; }
++        else
++            (cd "$raiz/escenario/dotnet" && dotnet build LiquidacionComercios -c Release > "$temporal/build.log") \
++                || { cat "$temporal/build.log"; rm -rf "$temporal"; return 1; }
++        fi
++        for periodo in "${PERIODOS[@]}"; do
++            liquidar "$s" "$periodo" > "$temporal/liq.txt" 2>/dev/null
++            liquidar "$s" --reporte-medios "$periodo" > "$temporal/rep.txt" 2>/dev/null
++            # Solo las lineas de cada comercio: la del resumen general lleva un espacio mas.
++            liquidado=$(grep "^  Total comisiones         : S/ " "$temporal/liq.txt" | centavos | awk '{ t += $1 } END { print t + 0 }')
++            reporte=$(grep "^Total " "$temporal/rep.txt" | centavos)
++            if [ -z "$reporte" ]; then
++                printf '  [FALLA] %s %s: el reporte no tiene fila Total\n' "$s" "$periodo"
++                fallas=$((fallas + 1)); continue
++            fi
++            diferencia=$((reporte - liquidado))
++            if [ "$diferencia" -eq 0 ]; then
++                printf '  [ OK ] %s %s concilia\n' "$s" "$periodo"
++            else
++                printf '  [FALLA] %s %s no concilia: reporte menos liquidaciones = %d centavos\n' "$s" "$periodo" "$diferencia"
++                fallas=$((fallas + 1))
++            fi
++        done
++    done
++    rm -rf "$temporal"
++    [ "$fallas" -eq 0 ]
++}
++
+ correr() {
+     case "$1" in
+         java)                paso_java ;;
+@@ -167,6 +209,7 @@ correr() {
+         dotnet)              paso_dotnet ;;
+         dependencias-dotnet) paso_dependencias_dotnet ;;
+         equivalencia)        paso_equivalencia ;;
++        conciliacion)        paso_conciliacion ;;
+         *) printf 'Paso desconocido: %s\n' "$1" >&2; return 2 ;;
+     esac
+ }
+diff --git a/scripts/integracion/liquidacion-esperada.sha256 b/scripts/integracion/liquidacion-esperada.sha256
+index aa861f1..5f00685 100644
+--- a/scripts/integracion/liquidacion-esperada.sha256
++++ b/scripts/integracion/liquidacion-esperada.sha256
+@@ -3,4 +3,4 @@
+ # proposito, el hash nuevo se actualiza aqui y el cambio se justifica en el pull request.
+ d47a700cb69776d8125649c116728020be4529db1075bafea908764b2aa41a21  2026-04
+ b80d54152371f23f37b9dc7f6cfd46200520c41b6eb2ebaf46ee24025b22e82c  2026-05
+-61f2c13fed35a2ea2f0189dcc30e78227325bee57765baa9b1c31cff94e432eb  2026-06
++cd1466305e636d89e4f5af11421a98f97fc75f9dc677083caee8aed83a8c498a  2026-06
+diff --git a/scripts/integracion/stack.txt b/scripts/integracion/stack.txt
+index 82ef4fb..357ae76 100644
+--- a/scripts/integracion/stack.txt
++++ b/scripts/integracion/stack.txt
+@@ -6,4 +6,4 @@
+ #
+ # Cambia la ultima linea y confirma el cambio. La lee scripts/integracion-local.sh y la lee
+ # el workflow de .github/workflows/.
+-ambos
++dotnet

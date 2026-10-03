@@ -1,0 +1,746 @@
+diff --git a/docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md b/docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md
+new file mode 100644
+index 0000000..35fdcba
+--- /dev/null
++++ b/docs/arquitectura/decisiones/0004-ubicacion-del-reporte.md
+@@ -0,0 +1,37 @@
++# 0004. El reporte por medio de pago vive en clases propias
++
++| Campo | Valor |
++|---|---|
++| Estado | Aceptada |
++| Fecha | 2026-10-03 |
++| Responsable | Equipo |
++
++## Contexto
++
++El reporte desglosa por medio de pago lo que liquida el cierre. En el mapeo BIAN pertenece a
++Merchant Acquiring Facility, y lee comercios, planes y transacciones, de Merchant Relations y
++Card Transaction Capture.
++
++## Alternativas consideradas
++
++- **Un método nuevo en la clase de cálculo de la liquidación.** Reutiliza el cálculo. Agrega
++  más responsabilidad a una clase que ya concentra mucho.
++- **Clases propias que reutilizan el cálculo de comisión de la liquidación.** Una sola regla
++  de comisión. El reporte hereda cualquier diferencia de ese cálculo.
++- **Clases propias que calculan por su cuenta con decimal exacto.** No tocan el cierre. La
++  regla de comisión queda en dos lugares.
++
++## Decisión
++
++Clases propias en el paquete de reporte del stack, que leen los mismos datos y calculan la
++comisión por su cuenta con decimal exacto y las reglas de `escenario/README.md`.
++
++## Consecuencias
++
++- El cierre no cambia.
++- La regla de comisión queda en dos lugares, y la conciliación del pipeline comprueba que
++  coincidan.
++
++## Verificación
++
++`bash scripts/verificar-reporte.sh <stack> <periodo>` y la conciliación del pipeline.
+diff --git a/docs/arquitectura/decisiones/README.md b/docs/arquitectura/decisiones/README.md
+index 30114c9..ad64f40 100644
+--- a/docs/arquitectura/decisiones/README.md
++++ b/docs/arquitectura/decisiones/README.md
+@@ -8,6 +8,7 @@ archivo, numeradas en orden.
+ | [0001](0001-dos-implementaciones-con-salida-identica.md) | Implementar el escenario en Java y en .NET con salida idéntica | Aceptada |
+ | [0002](0002-servidor-mcp-local-de-solo-lectura.md) | Usar un servidor MCP local, de solo lectura y sin red | Aceptada |
+ | [0003](0003-hook-de-proteccion-de-datos.md) | Proteger los datos del escenario con un hook | Aceptada |
++| [0004](0004-ubicacion-del-reporte.md) | El reporte por medio de pago vive en clases propias | Aceptada |
+ 
+ Para registrar una decisión nueva, copie [`plantilla.md`](plantilla.md) con el número
+ siguiente, o pídaselo al agente: la skill `pasarela-registrar-decision` la redacta a partir
+diff --git a/docs/proyecto/estimacion.md b/docs/proyecto/estimacion.md
+new file mode 100644
+index 0000000..4f28622
+--- /dev/null
++++ b/docs/proyecto/estimacion.md
+@@ -0,0 +1,34 @@
++# Estimación: reporte de comisiones por medio de pago
++
++| Campo | Valor |
++|---|---|
++| Tipo | Funcionalidad nueva |
++| Historia | `docs/proyecto/historia-reporte-medios-de-pago.md` |
++| Estimó | Equipo |
++| Fecha | 2026-10-03 |
++
++## Por fase
++
++| Fase | Sin IA, persona (min) | Con IA, persona (min) | Con IA, agente (min) | Créditos de IA | Minutos de integración continua | Supuesto principal |
++|---|---|---|---|---|---|---|
++| Requerimientos | 30 | 15 | 1 | Completar | 0 | Las preguntas al negocio toman lo mismo con o sin IA |
++| Estimación | 20 | 10 | 1 | Completar | 0 | Estimar a mano exige recorrer el código |
++| Análisis y diseño | 30 | 10 | 1 | Completar | 0 | La IA lee el código y el mapeo; la persona decide |
++| Desarrollo | 180 | 25 | 3 | Completar | 0 | Un stack, con pruebas |
++| Pruebas | 60 | 10 | 1 | Completar | 0 | Los criterios ya traen los valores esperados |
++| Revisión de código | 20 | 8 | 1 | Completar | 0 | La revisión humana se lee igual |
++| Seguridad | 10 | 4 | 0 | Completar | 0 | Lista de comprobación de la plantilla |
++| Integración continua | 40 | 10 | 1 | Completar | Completar | Un paso nuevo en un pipeline que existe |
++| Liberación | 20 | 8 | 1 | Completar | 0 | Registro de cambios y notas |
++| Operación y soporte | 45 | 12 | 1 | Completar | 0 | Un incidente con runbook |
++| Mantención | 90 | 15 | 2 | Completar | Completar | El diagnóstico es lo que pesa |
++| **Total** | **545** | **127** | **13** | | | |
++
++## Riesgos que pueden mover la estimación
++
++- Que el negocio tarde en responder las preguntas abiertas.
++- Que el pipeline encuentre diferencias que haya que diagnosticar.
++
++## Cómo se va a comparar con lo real
++
++Con `docs/proyecto/registro-de-tiempos.md`, fase por fase.
+diff --git a/docs/proyecto/historia-reporte-medios-de-pago.md b/docs/proyecto/historia-reporte-medios-de-pago.md
+new file mode 100644
+index 0000000..6ffb515
+--- /dev/null
++++ b/docs/proyecto/historia-reporte-medios-de-pago.md
+@@ -0,0 +1,43 @@
++# Historia de usuario: reporte de comisiones por medio de pago
++
++| Campo | Valor |
++|---|---|
++| Solicitante | Gerencia Comercial |
++| Origen | `docs/proyecto/backlog/solicitud-area-comercial.md` |
++| Estado | Aceptada |
++
++## Historia
++
++Como Gerencia Comercial, quiero un reporte mensual de comisiones por medio de pago, para
++negociar con emisores y billeteras con datos que cuadran con lo que se liquida a los
++comercios.
++
++## Preguntas abiertas
++
++| Pregunta | Respuesta | Quién respondió |
++|---|---|---|
++| ¿Qué transacciones entran? | Las mismas que la liquidación: aprobadas, en soles, con monto mayor que cero, dentro del periodo. Ni anuladas, ni pendientes, ni rechazadas | Negocio |
++| ¿Qué comercios entran? | Los que se liquidan: activos y suspendidos con plan. No los dados de baja | Negocio |
++| ¿Contra qué se comprueba el total? | Contra la suma del total de comisiones de las liquidaciones del periodo, al centavo | Negocio |
++| ¿El tope mensual se reparte entre medios? | No. Es por comercio. Las filas van antes del tope y una fila de ajuste muestra lo descontado | Negocio |
++| ¿Cuándo se redondea? | Al final. Cada fila suma exacto y redondea; el total se calcula por comercio, como la liquidación | Negocio |
++| ¿A qué tramo pertenece un monto en el límite? | Al tramo inferior. El límite superior es inclusivo | Negocio |
++
++## Criterios de aceptación
++
++1. **Alcance.** Dado el periodo 2026-06, cuando se genera el reporte, entonces cuenta las
++   mismas transacciones que liquida el cierre, por medio de pago.
++2. **Conciliación.** Dado cualquier periodo, cuando se genera el reporte, entonces su total
++   es igual a la suma del total de comisiones de las liquidaciones del mismo periodo.
++3. **Borde de tramo.** Dada TX002001, de CM0001 con plan PL01, por 500,00 en una cuota,
++   cuando se calcula su comisión, entonces es 500,00 × 3,5 % + 0,30 = 17,80.
++4. **Tercer decimal.** Dado CM0025 en 2026-06, cuando se suman exactas las comisiones de sus
++   transacciones, entonces el total es 957,185 y redondea a 957,19.
++5. **Tope.** Dado CM0004 en 2026-06, cuando se genera el reporte, entonces su exceso sobre el
++   tope aparece en la fila de ajuste por tope y no en las filas de medios.
++6. **Formato.** El reporte se obtiene con `--reporte-medios` y su salida coincide con la
++   esperada según `bash scripts/verificar-reporte.sh <stack> <periodo>`.
++
++## Fuera de alcance
++
++Contracargos y retenciones. Filtros por comercio o por categoría.
+diff --git a/docs/proyecto/registro-de-tiempos.md b/docs/proyecto/registro-de-tiempos.md
+new file mode 100644
+index 0000000..40c637b
+--- /dev/null
++++ b/docs/proyecto/registro-de-tiempos.md
+@@ -0,0 +1,18 @@
++# Registro de tiempos
++
++Hora real de inicio de cada fase, en el momento en que empieza. La duración se calcula al
++final, con el inicio de la fase siguiente.
++
++| Fase | Inicio (HH:MM) | Fin (HH:MM) | Minutos reales | Estimado con IA (min) | Diferencia | Nota |
++|---|---|---|---|---|---|---|
++| Requerimientos | | | | | | |
++| Estimación | | | | | | |
++| Análisis y diseño | | | | | | |
++| Desarrollo | | | | | | |
++| Pruebas | | | | | | |
++| Revisión de código | | | | | | |
++| Seguridad | | | | | | |
++| Integración continua | | | | | | |
++| Liberación | | | | | | |
++| Operación y soporte | | | | | | |
++| Mantención | | | | | | |
+diff --git a/escenario/java/src/main/java/pe/pasarelaandina/AplicacionLiquidacion.java b/escenario/java/src/main/java/pe/pasarelaandina/AplicacionLiquidacion.java
+index ed3380e..da2355d 100644
+--- a/escenario/java/src/main/java/pe/pasarelaandina/AplicacionLiquidacion.java
++++ b/escenario/java/src/main/java/pe/pasarelaandina/AplicacionLiquidacion.java
+@@ -9,7 +9,11 @@ import java.util.List;
+ import pe.pasarelaandina.calculo.CalculadoraLiquidacion;
+ import pe.pasarelaandina.calculo.SimuladorComision;
+ import pe.pasarelaandina.modelo.Liquidacion;
++import pe.pasarelaandina.reporte.CalculadoraReporteMedios;
+ import pe.pasarelaandina.reporte.FormateadorReporte;
++import pe.pasarelaandina.reporte.FormateadorReporteMedios;
++import pe.pasarelaandina.reporte.ReporteMediosPago;
++import pe.pasarelaandina.repositorio.CargadorDatos;
+ import pe.pasarelaandina.util.ConfiguracionRegional;
+ import pe.pasarelaandina.repositorio.RepositorioMemoria;
+ 
+@@ -27,6 +31,7 @@ public class AplicacionLiquidacion {
+     // Los datos son compartidos con el escenario .NET y viven un nivel mas arriba,
+     // en escenario/datos, para que ninguno de los dos proyectos sea su dueño.
+     private static final String DIRECTORIO_POR_DEFECTO = "../datos";
++    private static final String ARGUMENTO_REPORTE_MEDIOS = "--reporte-medios";
+ 
+     public static void main(String[] args) {
+ 
+@@ -41,6 +46,21 @@ public class AplicacionLiquidacion {
+         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out),
+                 true, StandardCharsets.UTF_8));
+ 
++        // Con --reporte-medios como primer argumento se emite el reporte de comisiones
++        // por medio de pago; el periodo y la ruta siguen despues, con los mismos valores
++        // por omision. Sin ese argumento la liquidacion no cambia.
++        if (args.length > 0 && ARGUMENTO_REPORTE_MEDIOS.equals(args[0])) {
++            String periodoReporte = args.length > 1 ? args[1] : PERIODO_POR_DEFECTO;
++            String rutaReporte = args.length > 2 ? args[2] : DIRECTORIO_POR_DEFECTO;
++            RepositorioMemoria repositorioReporte = new RepositorioMemoria();
++            new CargadorDatos().cargarTodo(repositorioReporte, rutaReporte);
++            ReporteMediosPago reporte =
++                    new CalculadoraReporteMedios().calcular(repositorioReporte, periodoReporte);
++            System.out.print(new FormateadorReporteMedios().formatear(reporte));
++            System.out.flush();
++            return;
++        }
++
+         String periodo = args.length > 0 ? args[0] : PERIODO_POR_DEFECTO;
+         String rutaDatos = args.length > 1 ? args[1] : DIRECTORIO_POR_DEFECTO;
+ 
+diff --git a/escenario/java/src/main/java/pe/pasarelaandina/reporte/CalculadoraReporteMedios.java b/escenario/java/src/main/java/pe/pasarelaandina/reporte/CalculadoraReporteMedios.java
+new file mode 100644
+index 0000000..1420ec9
+--- /dev/null
++++ b/escenario/java/src/main/java/pe/pasarelaandina/reporte/CalculadoraReporteMedios.java
+@@ -0,0 +1,179 @@
++package pe.pasarelaandina.reporte;
++
++import java.math.BigDecimal;
++import java.math.RoundingMode;
++import java.util.ArrayList;
++import java.util.Date;
++import java.util.List;
++import java.util.Map;
++import java.util.TreeMap;
++
++import pe.pasarelaandina.calculo.UtilidadesFecha;
++import pe.pasarelaandina.modelo.Comercio;
++import pe.pasarelaandina.modelo.EstadoComercio;
++import pe.pasarelaandina.modelo.EstadoTransaccion;
++import pe.pasarelaandina.modelo.PlanComisiones;
++import pe.pasarelaandina.modelo.TramoComision;
++import pe.pasarelaandina.modelo.Transaccion;
++import pe.pasarelaandina.repositorio.RepositorioMemoria;
++
++/**
++ * Calcula el reporte de comisiones por medio de pago.
++ *
++ * El alcance es el mismo del cierre: comercios no dados de baja y con plan existente,
++ * transacciones aprobadas, en soles, con monto mayor que cero, fecha legible y dentro
++ * del periodo. El calculo es propio y usa decimal exacto: no reutiliza las calculadoras
++ * del cierre.
++ *
++ * Reglas aplicadas:
++ * - Comision de la transaccion: porcentaje del tramo sobre el monto completo, mas el
++ *   monto fijo, mas el recargo por cuotas (0,5 % por cuota sobre la primera, maximo
++ *   3 %) sobre esa comision base. Sin redondeo.
++ * - El limite superior de cada tramo es inclusivo: un monto igual al limite pertenece
++ *   al tramo inferior.
++ * - Filas de medios: suma exacta, redondeada a dos decimales al final.
++ * - Total: por comercio se suma exacto, se aplica el tope, se redondea y se suman los
++ *   comercios.
++ * - Ajuste por tope: en negativo, la suma de comision redondeada menos tope de los
++ *   comercios que lo superan.
++ * - Ajuste por redondeo: total menos suma de filas menos ajuste por tope.
++ */
++public class CalculadoraReporteMedios {
++
++    private static final BigDecimal CIEN = new BigDecimal("100");
++    private static final BigDecimal RECARGO_POR_CUOTA = new BigDecimal("0.5");
++    private static final BigDecimal RECARGO_MAXIMO = new BigDecimal("3");
++    private static final String MONEDA_DEL_REPORTE = "PEN";
++
++    private final UtilidadesFecha utilidadesFecha = new UtilidadesFecha();
++
++    public ReporteMediosPago calcular(RepositorioMemoria repositorio, String periodo) {
++        Date inicio = utilidadesFecha.inicioDePeriodo(periodo);
++        Date fin = utilidadesFecha.finDePeriodo(periodo);
++
++        Map<String, AcumuladoMedio> porMedio = new TreeMap<>();
++        BigDecimal total = BigDecimal.ZERO;
++        BigDecimal excesoSobreTope = BigDecimal.ZERO;
++
++        for (Comercio comercio : repositorio.getComercios()) {
++            if (comercio.getEstado() == EstadoComercio.DE_BAJA) {
++                continue;
++            }
++            PlanComisiones plan = repositorio.buscarPlanPorId(comercio.getIdPlanComisiones());
++            if (plan == null) {
++                continue;
++            }
++
++            BigDecimal comisionComercio = BigDecimal.ZERO;
++            for (Transaccion transaccion : repositorio.buscarTransaccionesDeComercio(comercio.getId())) {
++                if (!entraAlReporte(transaccion, inicio, fin)) {
++                    continue;
++                }
++                BigDecimal comision = comisionDeTransaccion(plan, transaccion);
++                comisionComercio = comisionComercio.add(comision);
++                porMedio.computeIfAbsent(transaccion.getMedioPago().name(), k -> new AcumuladoMedio())
++                        .agregar(BigDecimal.valueOf(transaccion.getMonto()), comision);
++            }
++
++            BigDecimal tope = BigDecimal.valueOf(plan.getTopeMensual());
++            if (comisionComercio.compareTo(tope) > 0) {
++                excesoSobreTope = excesoSobreTope.add(redondear(comisionComercio).subtract(tope));
++                comisionComercio = tope;
++            }
++            total = total.add(redondear(comisionComercio));
++        }
++
++        BigDecimal sumaFilas = BigDecimal.ZERO;
++        for (AcumuladoMedio acumulado : porMedio.values()) {
++            sumaFilas = sumaFilas.add(redondear(acumulado.comision));
++        }
++
++        List<ReporteMediosPago.FilaMedioPago> filas = new ArrayList<>();
++        for (Map.Entry<String, AcumuladoMedio> entrada : porMedio.entrySet()) {
++            AcumuladoMedio acumulado = entrada.getValue();
++            BigDecimal comisionFila = redondear(acumulado.comision);
++            BigDecimal participacion = sumaFilas.signum() == 0
++                    ? redondear(BigDecimal.ZERO)
++                    : comisionFila.multiply(CIEN).divide(sumaFilas, 2, RoundingMode.HALF_UP);
++            filas.add(new ReporteMediosPago.FilaMedioPago(entrada.getKey(), acumulado.cantidad,
++                    redondear(acumulado.monto), comisionFila, participacion));
++        }
++
++        total = redondear(total);
++        BigDecimal ajusteTope = redondear(excesoSobreTope.negate());
++        BigDecimal ajusteRedondeo = redondear(total.subtract(sumaFilas).subtract(ajusteTope));
++
++        return new ReporteMediosPago(periodo, inicio, fin, filas, ajusteTope, ajusteRedondeo, total);
++    }
++
++    /**
++     * Comision exacta de una transaccion, sin redondear.
++     */
++    public BigDecimal comisionDeTransaccion(PlanComisiones plan, Transaccion transaccion) {
++        BigDecimal monto = BigDecimal.valueOf(transaccion.getMonto());
++        BigDecimal porcentaje = porcentajeDelTramo(plan, monto);
++
++        BigDecimal base = monto.multiply(porcentaje).divide(CIEN)
++                .add(BigDecimal.valueOf(plan.getMontoFijoPorTransaccion()));
++
++        BigDecimal recargo = BigDecimal.ZERO;
++        if (transaccion.getCuotas() > 1) {
++            BigDecimal porcentajeRecargo = RECARGO_POR_CUOTA.multiply(BigDecimal.valueOf(transaccion.getCuotas() - 1L));
++            if (porcentajeRecargo.compareTo(RECARGO_MAXIMO) > 0) {
++                porcentajeRecargo = RECARGO_MAXIMO;
++            }
++            recargo = base.multiply(porcentajeRecargo).divide(CIEN);
++        }
++        return base.add(recargo);
++    }
++
++    /**
++     * Porcentaje del primer tramo que contiene el monto, con el limite superior inclusivo.
++     * Si ninguno lo contiene se usa el ultimo tramo, igual que el cierre.
++     */
++    private BigDecimal porcentajeDelTramo(PlanComisiones plan, BigDecimal monto) {
++        List<TramoComision> tramos = plan.getTramos();
++        for (TramoComision tramo : tramos) {
++            if (monto.compareTo(BigDecimal.valueOf(tramo.getMontoDesde())) >= 0
++                    && monto.compareTo(BigDecimal.valueOf(tramo.getMontoHasta())) <= 0) {
++                return BigDecimal.valueOf(tramo.getPorcentaje());
++            }
++        }
++        if (tramos.isEmpty()) {
++            return BigDecimal.ZERO;
++        }
++        return BigDecimal.valueOf(tramos.get(tramos.size() - 1).getPorcentaje());
++    }
++
++    private boolean entraAlReporte(Transaccion transaccion, Date inicio, Date fin) {
++        if (transaccion == null || transaccion.getFechaHora() == null) {
++            return false;
++        }
++        if (!MONEDA_DEL_REPORTE.equals(transaccion.getMoneda())) {
++            return false;
++        }
++        if (transaccion.getMonto() <= 0) {
++            return false;
++        }
++        if (transaccion.getFechaHora().before(inicio) || transaccion.getFechaHora().after(fin)) {
++            return false;
++        }
++        return transaccion.getEstado() == EstadoTransaccion.APROBADA;
++    }
++
++    private static BigDecimal redondear(BigDecimal valor) {
++        return valor.setScale(2, RoundingMode.HALF_UP);
++    }
++
++    private static final class AcumuladoMedio {
++        private int cantidad;
++        private BigDecimal monto = BigDecimal.ZERO;
++        private BigDecimal comision = BigDecimal.ZERO;
++
++        private void agregar(BigDecimal montoTransaccion, BigDecimal comisionTransaccion) {
++            cantidad++;
++            monto = monto.add(montoTransaccion);
++            comision = comision.add(comisionTransaccion);
++        }
++    }
++}
+diff --git a/escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporteMedios.java b/escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporteMedios.java
+new file mode 100644
+index 0000000..84e45be
+--- /dev/null
++++ b/escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporteMedios.java
+@@ -0,0 +1,81 @@
++package pe.pasarelaandina.reporte;
++
++import java.math.BigDecimal;
++import java.math.RoundingMode;
++import java.text.SimpleDateFormat;
++
++import pe.pasarelaandina.util.ConfiguracionRegional;
++
++/**
++ * Arma el texto del reporte de comisiones por medio de pago.
++ *
++ * Formato fijo, con fin de linea \n:
++ *
++ * - Encabezado con el marco de 58 signos = y fechas dd/MM/yyyy HH:mm, igual que la
++ *   liquidacion.
++ * - Tabla de columnas de ancho fijo, separadas por los propios anchos:
++ *     Medio de pago   15 caracteres, alineado a la izquierda
++ *     Transacciones   16 caracteres, alineado a la derecha
++ *     Monto transado  18 caracteres, alineado a la derecha
++ *     Comision        16 caracteres, alineado a la derecha
++ *     Participacion   16 caracteres, alineado a la derecha
++ *   Ancho total de la tabla: 81 caracteres.
++ * - Separador de 81 guiones despues de las filas de medios.
++ * - Filas de ajuste y total: etiqueta de 49 caracteres alineada a la izquierda (el
++ *   ancho de las tres primeras columnas) y el monto en la columna Comision, 16
++ *   caracteres alineado a la derecha.
++ * - Montos como "S/ " seguido del valor con punto decimal, dos decimales y sin
++ *   separador de miles; el signo negativo va despues del prefijo.
++ * - Porcentajes con dos decimales y el sufijo " %".
++ */
++public class FormateadorReporteMedios {
++
++    private static final String MARCO =
++            "==========================================================";
++    private static final String FORMATO_FILA = "%-15s%16s%18s%16s%16s\n";
++    private static final String FORMATO_PIE = "%-49s%16s\n";
++    private static final String SEPARADOR = "-".repeat(81);
++
++    public String formatear(ReporteMediosPago reporte) {
++        SimpleDateFormat formatoFecha =
++                new SimpleDateFormat("dd/MM/yyyy HH:mm", ConfiguracionRegional.REGION_DE_SALIDA);
++
++        StringBuilder texto = new StringBuilder();
++        texto.append(MARCO).append("\n");
++        texto.append("  PASARELA ANDINA - COMISIONES POR MEDIO DE PAGO\n");
++        texto.append("  Periodo: ").append(reporte.periodo()).append("\n");
++        texto.append("  Desde: ").append(formatoFecha.format(reporte.inicioPeriodo())).append("\n");
++        texto.append("  Hasta: ").append(formatoFecha.format(reporte.finPeriodo())).append("\n");
++        texto.append(MARCO).append("\n");
++        texto.append("\n");
++
++        texto.append(String.format(ConfiguracionRegional.REGION_DE_SALIDA, FORMATO_FILA,
++                "Medio de pago", "Transacciones", "Monto transado", "Comision", "Participacion"));
++
++        for (ReporteMediosPago.FilaMedioPago fila : reporte.filas()) {
++            texto.append(String.format(ConfiguracionRegional.REGION_DE_SALIDA, FORMATO_FILA,
++                    fila.medioPago(),
++                    String.valueOf(fila.cantidadTransacciones()),
++                    monto(fila.montoTransado()),
++                    monto(fila.comision()),
++                    porcentaje(fila.participacion())));
++        }
++
++        texto.append(SEPARADOR).append("\n");
++        texto.append(String.format(ConfiguracionRegional.REGION_DE_SALIDA, FORMATO_PIE,
++                "Ajuste por tope", monto(reporte.ajustePorTope())));
++        texto.append(String.format(ConfiguracionRegional.REGION_DE_SALIDA, FORMATO_PIE,
++                "Ajuste por redondeo", monto(reporte.ajustePorRedondeo())));
++        texto.append(String.format(ConfiguracionRegional.REGION_DE_SALIDA, FORMATO_PIE,
++                "Total", monto(reporte.total())));
++        return texto.toString();
++    }
++
++    static String monto(BigDecimal valor) {
++        return "S/ " + valor.setScale(2, RoundingMode.HALF_UP).toPlainString();
++    }
++
++    static String porcentaje(BigDecimal valor) {
++        return valor.setScale(2, RoundingMode.HALF_UP).toPlainString() + " %";
++    }
++}
+diff --git a/escenario/java/src/main/java/pe/pasarelaandina/reporte/ReporteMediosPago.java b/escenario/java/src/main/java/pe/pasarelaandina/reporte/ReporteMediosPago.java
+new file mode 100644
+index 0000000..89f69d2
+--- /dev/null
++++ b/escenario/java/src/main/java/pe/pasarelaandina/reporte/ReporteMediosPago.java
+@@ -0,0 +1,32 @@
++package pe.pasarelaandina.reporte;
++
++import java.math.BigDecimal;
++import java.util.Date;
++import java.util.List;
++
++/**
++ * Resultado del reporte de comisiones por medio de pago de un periodo.
++ *
++ * Las filas vienen ordenadas por el codigo del medio de pago. Los montos de las filas,
++ * los ajustes y el total ya estan redondeados a dos decimales.
++ */
++public record ReporteMediosPago(
++        String periodo,
++        Date inicioPeriodo,
++        Date finPeriodo,
++        List<FilaMedioPago> filas,
++        BigDecimal ajustePorTope,
++        BigDecimal ajustePorRedondeo,
++        BigDecimal total) {
++
++    /**
++     * Una fila del reporte: lo que aporta un medio de pago a las comisiones.
++     */
++    public record FilaMedioPago(
++            String medioPago,
++            int cantidadTransacciones,
++            BigDecimal montoTransado,
++            BigDecimal comision,
++            BigDecimal participacion) {
++    }
++}
+diff --git a/escenario/java/src/test/java/pe/pasarelaandina/reporte/CalculadoraReporteMediosTest.java b/escenario/java/src/test/java/pe/pasarelaandina/reporte/CalculadoraReporteMediosTest.java
+new file mode 100644
+index 0000000..41683da
+--- /dev/null
++++ b/escenario/java/src/test/java/pe/pasarelaandina/reporte/CalculadoraReporteMediosTest.java
+@@ -0,0 +1,206 @@
++package pe.pasarelaandina.reporte;
++
++import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.junit.jupiter.api.Assertions.assertTrue;
++
++import java.math.BigDecimal;
++import java.util.Date;
++
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++import pe.pasarelaandina.calculo.UtilidadesFecha;
++import pe.pasarelaandina.modelo.CategoriaNegocio;
++import pe.pasarelaandina.modelo.Comercio;
++import pe.pasarelaandina.modelo.EstadoComercio;
++import pe.pasarelaandina.modelo.EstadoTransaccion;
++import pe.pasarelaandina.modelo.MedioPago;
++import pe.pasarelaandina.modelo.PlanComisiones;
++import pe.pasarelaandina.modelo.TramoComision;
++import pe.pasarelaandina.modelo.Transaccion;
++import pe.pasarelaandina.repositorio.RepositorioMemoria;
++
++/**
++ * Pruebas del calculo del reporte de comisiones por medio de pago, con datos en memoria.
++ */
++class CalculadoraReporteMediosTest {
++
++    private static final String PERIODO = "2026-06";
++
++    private final UtilidadesFecha utilidadesFecha = new UtilidadesFecha();
++    private final CalculadoraReporteMedios calculadora = new CalculadoraReporteMedios();
++    private RepositorioMemoria repositorio;
++    private int secuencia;
++
++    @BeforeEach
++    void prepararRepositorio() {
++        repositorio = new RepositorioMemoria();
++        secuencia = 0;
++        PlanComisiones plan = new PlanComisiones("PL01", "Basico", 0.30, 8000.00);
++        plan.agregarTramo(new TramoComision(0, 500, 3.5));
++        plan.agregarTramo(new TramoComision(500, 2000, 2.9));
++        plan.agregarTramo(new TramoComision(2000, 999999, 2.5));
++        repositorio.agregarPlan(plan);
++
++        PlanComisiones planConTopeBajo = new PlanComisiones("PL02", "Tope bajo", 0.30, 10.00);
++        planConTopeBajo.agregarTramo(new TramoComision(0, 500, 3.5));
++        planConTopeBajo.agregarTramo(new TramoComision(500, 999999, 2.9));
++        repositorio.agregarPlan(planConTopeBajo);
++
++        PlanComisiones planSinFijo = new PlanComisiones("PL03", "Sin fijo", 0.0, 8000.00);
++        planSinFijo.agregarTramo(new TramoComision(0, 999999, 1.0));
++        repositorio.agregarPlan(planSinFijo);
++    }
++
++    @Test
++    void unMontoIgualAlLimiteSuperiorPagaElTramoInferior() {
++        comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++        transaccion("CM0001", 500.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++        ReporteMediosPago reporte = calculadora.calcular(repositorio, PERIODO);
++
++        // 500.00 x 3,5 % + 0,30 = 17,80; con el tramo siguiente serian 14,80.
++        assertEquals(new BigDecimal("17.80"), reporte.filas().get(0).comision());
++        assertEquals(new BigDecimal("17.80"), reporte.total());
++    }
++
++    @Test
++    void unaTransaccionAnuladaNoCuenta() {
++        comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++        transaccion("CM0001", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++        transaccion("CM0001", 300.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.ANULADA);
++        transaccion("CM0001", 300.00, MedioPago.BILLETERA_MOVIL, 1, EstadoTransaccion.ANULADA);
++
++        ReporteMediosPago reporte = calculadora.calcular(repositorio, PERIODO);
++
++        assertEquals(1, reporte.filas().size());
++        ReporteMediosPago.FilaMedioPago fila = reporte.filas().get(0);
++        assertEquals("TARJETA_DEBITO", fila.medioPago());
++        assertEquals(1, fila.cantidadTransacciones());
++        assertEquals(new BigDecimal("100.00"), fila.montoTransado());
++        assertEquals(new BigDecimal("3.80"), fila.comision());
++    }
++
++    @Test
++    void quedanFueraLasPendientesRechazadasYComerciosDeBaja() {
++        comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++        comercio("CM0002", EstadoComercio.DE_BAJA, "PL01");
++        comercio("CM0003", EstadoComercio.SUSPENDIDO, "PL01");
++        comercio("CM0004", EstadoComercio.ACTIVO, "PL99");
++        transaccion("CM0001", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.PENDIENTE);
++        transaccion("CM0001", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.RECHAZADA);
++        transaccion("CM0002", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++        transaccion("CM0003", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++        transaccion("CM0004", 100.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++        ReporteMediosPago reporte = calculadora.calcular(repositorio, PERIODO);
++
++        assertEquals(1, reporte.filas().get(0).cantidadTransacciones());
++        assertEquals(new BigDecimal("3.80"), reporte.total());
++    }
++
++    @Test
++    void unaTransaccionEnCuotasLlevaRecargoSobreLaComisionBase() {
++        comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++        Transaccion enCuatroCuotas =
++                transaccion("CM0001", 100.00, MedioPago.TARJETA_CREDITO, 4, EstadoTransaccion.APROBADA);
++        Transaccion enDoceCuotas =
++                transaccion("CM0001", 100.00, MedioPago.TARJETA_CREDITO, 12, EstadoTransaccion.APROBADA);
++        PlanComisiones plan = repositorio.buscarPlanPorId("PL01");
++
++        // Base 3,80; recargo de 1,5 % por tres cuotas sobre la primera.
++        assertEquals(0, new BigDecimal("3.857").compareTo(
++                calculadora.comisionDeTransaccion(plan, enCuatroCuotas)));
++        // Once cuotas sobre la primera darian 5,5 %, pero el maximo es 3 %.
++        assertEquals(0, new BigDecimal("3.914").compareTo(
++                calculadora.comisionDeTransaccion(plan, enDoceCuotas)));
++
++        ReporteMediosPago reporte = calculadora.calcular(repositorio, PERIODO);
++        assertEquals(new BigDecimal("7.77"), reporte.filas().get(0).comision());
++    }
++
++    @Test
++    void unComercioQueSuperaElTopeCobraElTopeYSeMuestraElAjuste() {
++        comercio("CM0001", EstadoComercio.ACTIVO, "PL02");
++        transaccion("CM0001", 500.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++        ReporteMediosPago reporte = calculadora.calcular(repositorio, PERIODO);
++
++        // La fila muestra la comision antes del tope; el ajuste descuenta el exceso.
++        assertEquals(new BigDecimal("17.80"), reporte.filas().get(0).comision());
++        assertEquals(new BigDecimal("-7.80"), reporte.ajustePorTope());
++        assertEquals(new BigDecimal("0.00"), reporte.ajustePorRedondeo());
++        assertEquals(new BigDecimal("10.00"), reporte.total());
++    }
++
++    @Test
++    void elTotalEsLaSumaPorComercioConTopeYElRedondeoQuedaEnSuAjuste() {
++        comercio("CM0001", EstadoComercio.ACTIVO, "PL01");
++        comercio("CM0002", EstadoComercio.ACTIVO, "PL02");
++        comercio("CM0003", EstadoComercio.ACTIVO, "PL03");
++        transaccion("CM0001", 100.00, MedioPago.TARJETA_CREDITO, 1, EstadoTransaccion.APROBADA);
++        transaccion("CM0002", 500.00, MedioPago.TARJETA_CREDITO, 1, EstadoTransaccion.APROBADA);
++        // 0,50 x 1 % = 0,005 por transaccion: cada fila redondea a 0,01 pero el comercio
++        // suma 0,01 exacto.
++        transaccion("CM0003", 0.50, MedioPago.BILLETERA_MOVIL, 1, EstadoTransaccion.APROBADA);
++        transaccion("CM0003", 0.50, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++        ReporteMediosPago reporte = calculadora.calcular(repositorio, PERIODO);
++
++        // CM0001 3,80 + CM0002 con tope 10,00 + CM0003 0,01.
++        assertEquals(new BigDecimal("13.81"), reporte.total());
++        assertEquals(new BigDecimal("-7.80"), reporte.ajustePorTope());
++        assertEquals(new BigDecimal("-0.01"), reporte.ajustePorRedondeo());
++
++        BigDecimal sumaFilas = BigDecimal.ZERO;
++        for (ReporteMediosPago.FilaMedioPago fila : reporte.filas()) {
++            sumaFilas = sumaFilas.add(fila.comision());
++        }
++        assertEquals(reporte.total(),
++                sumaFilas.add(reporte.ajustePorTope()).add(reporte.ajustePorRedondeo()));
++    }
++
++    @Test
++    void lasFilasVanOrdenadasPorCodigoYLlevanSuParticipacion() {
++        comercio("CM0001", EstadoComercio.ACTIVO, "PL03");
++        transaccion("CM0001", 100.00, MedioPago.TRANSFERENCIA, 1, EstadoTransaccion.APROBADA);
++        transaccion("CM0001", 200.00, MedioPago.BILLETERA_MOVIL, 1, EstadoTransaccion.APROBADA);
++
++        ReporteMediosPago reporte = calculadora.calcular(repositorio, PERIODO);
++
++        assertEquals("BILLETERA_MOVIL", reporte.filas().get(0).medioPago());
++        assertEquals("TRANSFERENCIA", reporte.filas().get(1).medioPago());
++        assertEquals(new BigDecimal("66.67"), reporte.filas().get(0).participacion());
++        assertEquals(new BigDecimal("33.33"), reporte.filas().get(1).participacion());
++    }
++
++    @Test
++    void elFormatoMuestraMontosConPrefijoYAjustesSiempre() {
++        comercio("CM0001", EstadoComercio.ACTIVO, "PL02");
++        transaccion("CM0001", 500.00, MedioPago.TARJETA_DEBITO, 1, EstadoTransaccion.APROBADA);
++
++        String texto = new FormateadorReporteMedios().formatear(calculadora.calcular(repositorio, PERIODO));
++
++        // Anchos: 15, 16, 18, 16 y 16 en las filas; 49 y 16 en el pie.
++        assertTrue(texto.contains("TARJETA_DEBITO " + " ".repeat(15) + "1" + " ".repeat(9) + "S/ 500.00"
++                + " ".repeat(8) + "S/ 17.80" + " ".repeat(8) + "100.00 %\n"));
++        assertTrue(texto.contains("Ajuste por tope" + " ".repeat(34 + 8) + "S/ -7.80\n"));
++        assertTrue(texto.contains("Ajuste por redondeo" + " ".repeat(30 + 9) + "S/ 0.00\n"));
++        assertTrue(texto.endsWith("Total" + " ".repeat(44 + 8) + "S/ 10.00\n"));
++    }
++
++    private void comercio(String id, EstadoComercio estado, String idPlan) {
++        repositorio.agregarComercio(new Comercio(id, "Comercio " + id, "20123456789",
++                CategoriaNegocio.values()[0], utilidadesFecha.parsearFecha("2020-01-01"), estado, idPlan));
++    }
++
++    private Transaccion transaccion(String idComercio, double monto, MedioPago medio, int cuotas,
++                                    EstadoTransaccion estado) {
++        secuencia++;
++        Date fecha = utilidadesFecha.parsearFechaHora("2026-06-15 10:00:00");
++        Transaccion transaccion = new Transaccion("TX" + secuencia, idComercio, monto, "PEN",
++                fecha, medio, cuotas, estado, "AUT" + secuencia);
++        repositorio.agregarTransaccion(transaccion);
++        return transaccion;
++    }
++}
+diff --git a/scripts/integracion/stack.txt b/scripts/integracion/stack.txt
+index 82ef4fb..ecda53a 100644
+--- a/scripts/integracion/stack.txt
++++ b/scripts/integracion/stack.txt
+@@ -6,4 +6,4 @@
+ #
+ # Cambia la ultima linea y confirma el cambio. La lee scripts/integracion-local.sh y la lee
+ # el workflow de .github/workflows/.
+-ambos
++java

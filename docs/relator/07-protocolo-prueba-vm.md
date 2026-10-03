@@ -485,7 +485,20 @@ la medición que decide qué pasa a opcional.
       no encuentra `base64` o `gunzip`, anótelo: el 5.2 y el 5.4 lo necesitan.
 - Observado: ______________________________________________
 
-4. `bash scripts/reiniciar-lab.sh lab-5-1` y responda `si`.
+4. `openssl version`.
+
+- [ ] **Esperado:** una versión 3.x. Anótela: ______________
+
+5. `bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java clave-equivocada`.
+
+- [ ] **Esperado:** «La clave no es correcta. No se modifico nada.»
+
+6. `bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java <clave de la hoja de respuestas>` y
+   escriba `descartar`. Después `bash scripts/verificar-reporte.sh java 2026-06`.
+
+- [ ] **Esperado:** «Listo para empezar el lab-5-3 con java» y el reporte coincide.
+
+7. `bash scripts/reiniciar-lab.sh lab-5-1` y responda `si`.
 
 ### H2. Laboratorio 5.1
 

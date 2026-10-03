@@ -48,10 +48,11 @@ Suma 35. Quedan 10 para la puesta en común.
 
 ## Si alguien se atrasa
 
-Entréguele la historia de referencia. Está en
-[`../soluciones/lab-5-1/historia-de-referencia.md`](../soluciones/lab-5-1/historia-de-referencia.md),
-con las respuestas a las preguntas abiertas. Sin la historia no puede seguir, porque sus
-criterios son los que evalúan el 5.2 y el 5.3.
+Que siga con el 5.2 desde el inicio de referencia: diga la clave de la hoja de respuestas y
+que ejecute `bash scripts/proyecto/ponerse-al-dia.sh lab-5-2 java <clave>`, con su stack. Le
+deja una historia, una estimación y una decisión de referencia. La historia de referencia,
+con las respuestas a las preguntas abiertas, también está en
+[`../soluciones/lab-5-1/historia-de-referencia.md`](../soluciones/lab-5-1/historia-de-referencia.md).
 
 ## Solución de referencia
 

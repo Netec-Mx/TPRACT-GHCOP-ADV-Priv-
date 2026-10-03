@@ -49,9 +49,16 @@ Suma 38. Quedan 7 para la puesta en común.
 
 ## Si alguien se atrasa
 
-Aplique el reporte de referencia con `aplicar.sh`, según
-[`../soluciones/lab-5-2/README.md`](../soluciones/lab-5-2/README.md). El comando exacto está
-en la hoja de respuestas.
+Diga la clave de la hoja de respuestas y que ejecute, con su stack:
+
+```bash
+bash scripts/proyecto/ponerse-al-dia.sh lab-5-2 java <clave>
+```
+
+Deja el repositorio en el inicio del 5.2 con el trabajo de referencia de los laboratorios anteriores.
+Descarta lo que tenía del capítulo y pide escribir `descartar`. No hay que llevarle ningún
+archivo.
+
 
 ## Solución de referencia
 
