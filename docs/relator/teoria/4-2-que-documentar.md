@@ -5,7 +5,7 @@
 | Capítulo y sesión | Capítulo 4, sesión 4 |
 | Duración | 20 minutos de exposición |
 | Demostración | No tiene |
-| Artefactos que se proyectan | `escenario/README.md`, `mcp/README.md`, `.github/instructions/dotnet.instructions.md` |
+| Artefactos que se proyectan | `escenario/README.md`, `mcp/README.md`, `.github/instructions/dotnet.instructions.md`, `docs/arquitectura/decisiones/` |
 
 ## La idea en una frase
 
@@ -73,25 +73,24 @@ si alcanza la responde el equipo, y el capítulo 5 la trabaja.
 
 ### Decisiones técnicas
 
-**Qué contiene.** Una decisión por registro, con tres partes. El contexto que la hizo
-necesaria, la decisión tomada y sus consecuencias, las buenas y las malas. Es el formato que
-pide el laboratorio 4.4.
+**Qué contiene.** Una decisión de arquitectura por archivo: contexto, alternativas
+consideradas, decisión, consecuencias buenas y malas, y cómo se verifica. El estándar TOGAF
+describe un registro de decisiones dentro del repositorio de arquitectura, pero no fija un
+formato por decisión. El de `docs/arquitectura/decisiones/` es el registro de decisiones de
+arquitectura de Michael Nygard, con agregados del formato MADR. Conviene decirlo así: es un
+complemento de TOGAF, no parte de TOGAF.
 
-**Ejemplo.** En el escenario .NET, todo redondeo y formateo de montos pasa por una clase que
-reproduce el comportamiento de Java. Como registro de decisión quedaría así.
+**Ejemplo.** El repositorio trae tres, sobre decisiones reales del taller. Implementar el
+escenario en Java y en .NET con salida idéntica. Usar un servidor MCP local, de solo lectura
+y sin red. Proteger los datos con un hook. Proyecte la del hook: sus alternativas incluyen
+confiar solo en las instrucciones, y sus consecuencias admiten que el hook es un filtro por
+patrón. Una decisión que solo lista ventajas no es un registro, es una justificación.
 
-- **Contexto.** Las dos implementaciones tienen que producir exactamente la misma salida, y
-  los dos lenguajes redondean y formatean distinto.
-- **Decisión.** Una clase única en .NET reproduce el redondeo y el formateo de Java, y todo el
-  código pasa por ella.
-- **Consecuencias.** Las salidas coinciden y se pueden comparar con un script. A cambio, un
-  desarrollador .NET no puede usar las funciones estándar de su lenguaje, y si lo hace, la
-  comparación falla.
+La skill `pasarela-registrar-decision` redacta una nueva con la plantilla.
 
-**Lo que el agente hace bien aquí.** Describir la decisión, que está en el código.
-**Lo que no.** El contexto, si nadie lo escribió. El agente va a proponer uno plausible, y
-plausible no es lo mismo que cierto. Un registro de decisión con un contexto inventado es
-peor que no tenerlo.
+**Lo que el agente hace bien aquí.** Describir la decisión, que está en el código, y
+proponer alternativas. **Lo que no.** El contexto, si nadie lo escribió. El agente propone
+uno plausible, y plausible no es lo mismo que cierto.
 
 ### Troubleshooting
 
@@ -109,10 +108,9 @@ equipo, y un buen documento de troubleshooting es, sobre todo, esa memoria escri
 
 ### Cómo se pide cada uno
 
-Un patrón que funciona para los cinco, y que conecta con el capítulo 1. En el pedido va el
-tipo de documento, la audiencia, las fuentes que el agente debe leer y la regla de citar el
-archivo que respalda cada afirmación. Y, cuando hay una parte que el agente no puede saber,
-se le da en el mismo pedido o se le pide que deje el hueco marcado en lugar de llenarlo.
+Un patrón para los cinco, en la línea del capítulo 1. En el pedido va el tipo de documento,
+la audiencia, las fuentes a leer y la regla de citar el archivo que respalda cada
+afirmación. Lo que el agente no puede saber se le da, o se le pide dejar el hueco marcado.
 
 Esa última instrucción es la más útil del subtema. Un documento con un hueco marcado como
 «contexto pendiente» es honesto. Uno con un contexto inventado parece terminado.
@@ -129,16 +127,15 @@ Esa última instrucción es la más útil del subtema. Un documento con un hueco
 ## Preguntas probables
 
 **«¿Dónde guardo los registros de decisión?»**
-En el repositorio, junto al código que afectan, para que se revisen en el mismo pull
-request. Si el equipo usa una wiki, el subtema 4.3 trata el traslado.
-
-**«¿El agente puede documentar una API a partir de su especificación?»**
-Sí, y es de los casos donde mejor funciona, porque la fuente es estructurada. Igual se
-verifica contra una llamada real.
+En el repositorio, como `docs/arquitectura/decisiones/`, para revisarlos en el mismo pull
+request que el código. El 4.3 trata el traslado a una wiki.
 
 ## Fuentes
 
 | Afirmación | Fuente | Consultada |
 |---|---|---|
 | Copilot puede equivocarse y lo que sugiere se valida siempre | https://docs.github.com/en/copilot/get-started/best-practices | 2 de octubre de 2026 |
+| Registro de decisiones en el repositorio de arquitectura de TOGAF | https://pubs.opengroup.org/architecture/togaf9-doc/arch/chap37.html | 3 de octubre de 2026 |
+| Formato de registro de decisiones de Nygard | https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions | 3 de octubre de 2026 |
+| Alternativas consideradas y verificación, MADR 4.0.0 | https://adr.github.io/madr/ | 3 de octubre de 2026 |
 | Dar en el pedido el contexto y los detalles que el modelo no tiene | https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering | 2 de octubre de 2026 |
