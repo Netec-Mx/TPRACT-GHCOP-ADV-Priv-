@@ -103,11 +103,17 @@ Visual Studio Code no pide confirmación para ejecutar herramientas marcadas con
 el participante tenga que aprobar cada llamada. Es deliberado por dos razones.
 
 - El laboratorio incluye aprobar herramientas, y sin la confirmación ese paso no existe.
-- `readOnlyHint` lo declara el propio servidor. Un servidor malicioso puede declararlo en
-  una herramienta que escribe. Sirve como punto de conversación sobre en quién se confía.
+- `readOnlyHint` lo declara el propio servidor. La especificación de MCP dice que todas las
+  anotaciones de herramientas son pistas, que no garantizan describir el comportamiento real,
+  y que el cliente no debe decidir el uso de una herramienta por las anotaciones de un
+  servidor no confiable. Un servidor malicioso puede declararlo en una herramienta que
+  escribe. La protección real del servidor del taller es el permiso de solo lectura del
+  proceso y que no expone herramientas de escritura.
 
-Fuente: https://code.visualstudio.com/api/extension-guides/ai/mcp, consultada el
-27 de septiembre de 2026.
+Fuentes, consultadas el 3 de octubre de 2026:
+https://code.visualstudio.com/api/extension-guides/ai/mcp y la definición de
+`ToolAnnotations` en
+https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/schema/2026-07-28/schema.ts.
 
 ## La configuración del cliente no se publica
 

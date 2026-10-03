@@ -51,9 +51,19 @@ del laboratorio 3.4.
    **Debería pasar.** Un diálogo de aprobación por cada llamada. Lea los parámetros en voz
    alta antes de aprobar con **Allow**.
 
-   Diga: «Estas herramientas no declaran ser de solo lectura, a propósito. Si lo
-   declararan, Visual Studio Code no pediría aprobación. Y esa declaración la hace el propio
-   servidor.»
+   Diga: «Estas herramientas no declaran ser de solo lectura, a propósito. Si llevaran la
+   anotación `readOnlyHint`, Visual Studio Code no pediría confirmación. Pero esa anotación
+   la pone el propio servidor, y la especificación de MCP dice que es una pista, no una
+   garantía, y que el cliente no debe decidir por ella si el servidor no es de confianza. La
+   protección real de este servidor está en otra parte: el proceso corre con permiso solo de
+   lectura, y el servidor no expone ninguna herramienta que escriba.»
+
+   Fuentes, consultadas el 3 de octubre de 2026: la guía de MCP de Visual Studio Code,
+   https://code.visualstudio.com/api/extension-guides/ai/mcp, que dice que no pide
+   confirmación para herramientas de solo lectura, y la definición de `ToolAnnotations` de la
+   especificación 2026-07-28 de MCP,
+   https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/schema/2026-07-28/schema.ts,
+   que las declara pistas no garantizadas.
 
 5. Muestre la respuesta y qué herramienta respaldó cada dato.
 

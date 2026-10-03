@@ -127,9 +127,11 @@ Pendiente. `01-guia-del-relator.md` sigue siendo un índice.
   volvieron a consultar para que todo quede con la misma fecha.
 - `10-mantenimiento.md` registra una ruta de cobro que daba 404 como ejemplo de por qué las
   fuentes se revisan antes de cada dictado.
-- Inconsistencias reportadas y no corregidas: la demostración 3.2 atribuía a
-  `readOnlyHint` un efecto que la documentación no confirma, y la skill del paso 3 del 4.4
-  hablaba de importar Markdown en Confluence, cosa que la importación nativa no hace.
+- Inconsistencias reportadas y no corregidas: la skill del paso 3 del 4.4 hablaba de
+  importar Markdown en Confluence, cosa que la importación nativa no hace. También se
+  reportó que nada confirmaba el efecto de `readOnlyHint` que cita la demostración 3.2. Fue
+  un error del informe: la guía de MCP para extensiones de Visual Studio Code lo confirma.
+  SPEC-015 lo verificó y precisó el pasaje.
 
 ## SPEC-013. Paquete de entrega
 

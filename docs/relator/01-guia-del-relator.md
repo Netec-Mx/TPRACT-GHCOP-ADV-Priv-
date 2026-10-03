@@ -590,7 +590,8 @@ junto con [`10-mantenimiento.md`](10-mantenimiento.md).
 | Herramientas del agente | https://code.visualstudio.com/docs/agents/reference/tools-reference | 27 de septiembre de 2026 |
 | Aprobación de herramientas | https://code.visualstudio.com/docs/agents/run/approvals | 27 de septiembre de 2026 |
 | Configuración MCP | https://code.visualstudio.com/docs/agents/reference/mcp-configuration | 27 de septiembre de 2026 |
-| `readOnlyHint` en MCP | https://code.visualstudio.com/api/extension-guides/ai/mcp | 27 de septiembre de 2026 |
+| `readOnlyHint` en MCP, efecto en Visual Studio Code | https://code.visualstudio.com/api/extension-guides/ai/mcp | 3 de octubre de 2026 |
+| Las anotaciones de herramientas son pistas no garantizadas | https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/schema/2026-07-28/schema.ts | 3 de octubre de 2026 |
 | Hooks | https://code.visualstudio.com/docs/agent-customization/hooks | 30 de septiembre de 2026 |
 | Referencia de hooks | https://code.visualstudio.com/docs/agents/reference/hooks-reference | 30 de septiembre de 2026 |
 | Exclusión de contenido | https://docs.github.com/en/copilot/concepts/context/content-exclusion | 1 de octubre de 2026 |
