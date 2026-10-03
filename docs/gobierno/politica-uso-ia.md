@@ -38,7 +38,9 @@ espacio de trabajo se envían como contexto a los modelos y a las herramientas.
 
 **Mecanismo.** Repositorio: regla en [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md),
 sección «Gobierno». Organización de GitHub: exclusión de contenido, con el límite de que
-hoy no se aplica en los modos Edit y Agent. Equipo: revisión del diff antes de integrar.
+hoy no se aplica en los modos Edit y Agent, y el escaneo de secretos con protección de push,
+que en repositorios privados requiere GitHub Secret Protection. Equipo: revisión del diff
+antes de integrar y la casilla de la plantilla de pull request.
 
 ### 3. Los datos del escenario no se modifican
 
@@ -73,9 +75,11 @@ hace commits ni push.
 **Por qué.** El agente puede equivocarse con la misma seguridad con que acierta, y lo que
 sugiere se valida siempre.
 
-**Mecanismo.** Repositorio: regla en las instrucciones generales. Organización de GitHub:
-reglas de protección de la rama principal que exigen pull request con revisión. Equipo: el
-checklist de revisión.
+**Mecanismo.** Repositorio: regla en las instrucciones generales, el pipeline de integración
+continua de `.github/workflows/` y la plantilla de pull request. Organización de GitHub:
+reglas de protección de la rama principal que exigen pull request con revisión, y la
+revisión de dependencias en pull requests, que en repositorios privados requiere GitHub Code
+Security. Equipo: el checklist de revisión.
 
 ### 6. La personalización se revisa como código
 
@@ -124,4 +128,6 @@ con **Chat: Reset Tool Confirmations**.
 | Validar siempre lo que sugiere Copilot | https://docs.github.com/en/copilot/get-started/best-practices | 2 de octubre de 2026 |
 | Créditos por tokens | https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing | 2 de octubre de 2026 |
 | Presupuestos y detención al límite | https://docs.github.com/en/copilot/concepts/billing-and-usage/organizations-and-enterprises/budgets | 2 de octubre de 2026 |
+| Escaneo de secretos en repositorios privados con GitHub Secret Protection | https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning | 3 de octubre de 2026 |
+| Revisión de dependencias en repositorios privados con GitHub Code Security | https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review | 3 de octubre de 2026 |
 | **Chat: Reset Tool Confirmations** | https://code.visualstudio.com/docs/agents/approvals | 2 de octubre de 2026 |

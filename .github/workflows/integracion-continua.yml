@@ -1,0 +1,87 @@
+# Pipeline de integracion continua del taller.
+#
+# Los pasos viven en scripts/integracion-local.sh. Este archivo prepara el ambiente y llama
+# a cada paso con --paso, en el mismo orden que el script. Asi el pipeline y la ejecucion
+# local no pueden divergir.
+#
+# Las acciones van fijadas por SHA completo. Las versiones de JDK y de .NET son las de
+# herramientas/Dockerfile del repositorio de construccion, que son las de la maquina virtual.
+
+name: Integracion continua
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: integracion-continua-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  VERSION_JDK: '25.0.4.1+1'
+  VERSION_DOTNET: '10.0.401'
+
+jobs:
+  java:
+    name: Java, compilacion, pruebas y dependencias
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Obtener el repositorio
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Preparar el JDK
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: ${{ env.VERSION_JDK }}
+          cache: maven
+      - name: Compilar y ejecutar las pruebas
+        run: bash scripts/integracion-local.sh --paso java
+      - name: Listar y revisar las dependencias
+        run: bash scripts/integracion-local.sh --paso dependencias-java
+
+  dotnet:
+    name: .NET, compilacion, pruebas y dependencias
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Obtener el repositorio
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Preparar el SDK de .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: ${{ env.VERSION_DOTNET }}
+      - name: Compilar y ejecutar las pruebas
+        run: bash scripts/integracion-local.sh --paso dotnet
+      - name: Listar y revisar las dependencias
+        run: bash scripts/integracion-local.sh --paso dependencias-dotnet
+
+  equivalencia:
+    name: Equivalencia entre Java y .NET
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Obtener el repositorio
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Preparar el JDK
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: ${{ env.VERSION_JDK }}
+          cache: maven
+      - name: Preparar el SDK de .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: ${{ env.VERSION_DOTNET }}
+      - name: Liquidar los tres periodos y comparar
+        run: bash scripts/integracion-local.sh --paso equivalencia

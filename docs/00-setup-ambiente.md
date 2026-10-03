@@ -85,6 +85,7 @@ probando una vez los dos escenarios con red, desde la raíz del repositorio:
 
 ```bash
 mvn -B -f escenario/java/pom.xml clean package
+mvn -B -f escenario/java/pom.xml dependency:tree
 dotnet test escenario/dotnet/LiquidacionComercios.Pruebas
 dotnet build escenario/dotnet/LiquidacionComercios -c Release
 ```
