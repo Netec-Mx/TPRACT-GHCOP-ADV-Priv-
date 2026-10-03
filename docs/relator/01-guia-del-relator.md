@@ -23,16 +23,27 @@ bien lo que se quiere y verificar con rigor lo que llega.
 El modelo no tiene memoria del proyecto. Todo lo que sabe en cada pedido es lo que alguien
 puso en su contexto. Si el contexto es pobre, el resultado es genérico.
 
-Cada capítulo trabaja una parte de esa idea.
+El marco del taller es el ciclo de vida completo del desarrollo de software con IA, en once
+fases: requerimientos, estimación, análisis y diseño, desarrollo, pruebas, revisión de
+código, seguridad, integración continua, liberación, operación y soporte, y mantención
+correctiva y evolutiva. En cada fase la IA propone, la persona decide, algo se verifica y
+queda un artefacto. Dentro de cada fase se repite el ciclo corto de analizar, planear,
+implementar y validar. El mapa se presenta en el subtema 1.3, con la tabla de
+[`teoria/1-3-flujos-de-trabajo.md`](teoria/1-3-flujos-de-trabajo.md), y se usa hasta el
+final.
+
+Cada capítulo trabaja una parte de esa idea y profundiza algunas fases.
 
 - **Capítulo 1.** Construir el contexto en el pedido.
 - **Capítulo 2.** Dejar el contexto escrito en el repositorio, con instrucciones, skills y
-  agentes, para que el criterio del equipo no dependa de quién escribe el pedido.
+  agentes, para que el criterio del equipo no dependa de quién escribe el pedido. Incluye
+  la arquitectura de referencia BIAN como ejemplo de criterio corporativo.
 - **Capítulo 3.** Darle al agente acceso a fuentes internas con MCP. En un banco eso es
-  primero una decisión de seguridad.
-- **Capítulo 4.** Usarlo para documentar. La documentación generada se verifica contra la
-  ejecución, no contra el texto.
-- **Capítulo 5.** Juntar todo sobre el mismo código.
+  primero una decisión de seguridad, y la política de uso de IA dice qué se pide al agente y
+  qué se le impide.
+- **Capítulo 4.** Usarlo para documentar, incluidas las decisiones de arquitectura y los
+  runbooks. La documentación generada se verifica contra la ejecución, no contra el texto.
+- **Capítulo 5.** Recorrer las once fases con una sola historia, sobre el mismo código.
 
 El hilo que atraviesa los cinco es uno. Generar código es barato. Verificar que hace lo
 correcto es caro, y sigue siendo trabajo humano. Por eso el escenario tiene diez defectos
@@ -198,19 +209,19 @@ Los títulos y los minutos de cada subtema son los del temario contratado, Propu
 comienzo de la sesión. Los minutos contratados no incluyen pausas. Si el horario del
 cliente tiene pausas dentro de la sesión, se recorta según lo indicado en cada una.
 
-En los bloques de exposición, el contenido de teoría por subtema llega en SPEC-012. Esta
-guía fija dónde va cada cosa y cuánto dura.
+En los bloques de exposición, el contenido de cada subtema está en
+[`teoria/`](teoria/00-indice.md). Esta guía fija dónde va cada cosa y cuánto dura.
 
 ### Sesión 1. Capítulo 1, 180 minutos
 
 | Inicio | Min | Bloque | Material |
 |---|---|---|---|
-| 0:00 | 22 | 1.1 Prompts efectivos para desarrollo: objetivo, contexto, restricciones y salida esperada. Exposición | Teoría del subtema |
+| 0:00 | 22 | 1.1 Prompts efectivos para desarrollo: objetivo, contexto, restricciones y salida esperada. Exposición | Teoría del subtema, que abre con el estado del arte de Copilot |
 | 0:22 | 8 | 1.1 Demostración del pedido pobre y el pedido bueno | [`demos/demo-1-1-pedido-pobre-y-pedido-bueno.md`](demos/demo-1-1-pedido-pobre-y-pedido-bueno.md) |
 | 0:30 | 12 | 1.2 Uso de contexto: archivos abiertos, selección de código, workspace y referencias específicas. Exposición | Teoría del subtema |
 | 0:42 | 8 | 1.2 Demostración de las referencias de contexto | [`demos/demo-1-2-referencias-de-contexto.md`](demos/demo-1-2-referencias-de-contexto.md) |
 | 0:50 | 10 | 1.2 Caso de clase de la configuración regional | Sección 7 de esta guía |
-| 1:00 | 20 | 1.3 Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar. Exposición | Teoría del subtema, incluido el consumo de cada modo de trabajo y la guía [`uso-responsable-de-tokens.md`](../gobierno/uso-responsable-de-tokens.md) |
+| 1:00 | 20 | 1.3 Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar. Exposición | Teoría del subtema: las once fases del ciclo de vida, el ciclo corto dentro de cada una, el consumo de cada modo y la guía [`uso-responsable-de-tokens.md`](../gobierno/uso-responsable-de-tokens.md) |
 | 1:20 | 10 | 1.3 Demostración del flujo analizar, planear, implementar y validar | [`demos/demo-1-3-flujo-de-trabajo.md`](demos/demo-1-3-flujo-de-trabajo.md) |
 | 1:30 | 30 | 1.4 Práctica guiada: mejora incremental de prompts y uso de comandos del chat | Laboratorio 1.4 |
 | 2:00 | 60 | 1.5 Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | Laboratorio 1.5 |
@@ -246,15 +257,15 @@ confianza.
 | 0:35 | 10 | 2.1 Demostración de la jerarquía de personalización y las skills | [`demos/demo-2-1-jerarquia-y-skills.md`](demos/demo-2-1-jerarquia-y-skills.md) |
 | 0:45 | 35 | 2.2 Diseño de agentes por rol: analista, tester, documentador, revisor y refactorizador. Exposición | Teoría del subtema |
 | 1:20 | 10 | 2.2 Demostración de los agentes de referencia | [`demos/demo-2-2-agentes-por-rol.md`](demos/demo-2-2-agentes-por-rol.md) |
-| 1:30 | 37 | 2.3 Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos. Exposición | Teoría del subtema |
-| 2:07 | 8 | 2.3 Demostración de las instrucciones por ruta | [`demos/demo-2-3-instrucciones-por-ruta.md`](demos/demo-2-3-instrucciones-por-ruta.md) |
-| 2:15 | 45 | 2.4 Laboratorio: creación de un agente local o instrucción reutilizable para una tarea del equipo | Laboratorio 2.4 |
+| 1:30 | 37 | 2.3 Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos. Exposición | Teoría del subtema, con la instrucción de arquitectura BIAN y [`bian-mapeo.md`](../arquitectura/bian-mapeo.md) |
+| 2:07 | 8 | 2.3 Demostración de las instrucciones por ruta, incluida la de arquitectura BIAN | [`demos/demo-2-3-instrucciones-por-ruta.md`](demos/demo-2-3-instrucciones-por-ruta.md) |
+| 2:15 | 45 | 2.4 Laboratorio: creación de un agente local o instrucción reutilizable para una tarea del equipo | Laboratorio 2.4, con cinco tareas, la E sobre el mapeo BIAN |
 | 3:00 | | Fin | |
 
 Aritmética. Teoría 35 + 10 + 35 + 10 + 37 + 8 = 135. Laboratorio 45. Total 180.
 
 **Antes de empezar.** Revise que `.github/agents/`, `.github/instructions/` y
-`.github/skills/` estén en el punto de partida. Tenga a mano los dos archivos de
+`.github/skills/` estén en el punto de partida. Tenga a mano los tres archivos de
 `respaldo-lab-2-4/` y la forma de entregarlos, por ejemplo el canal de la clase.
 
 **Qué suele fallar.** Agentes que no aparecen en el selector porque el archivo quedó fuera
@@ -268,8 +279,8 @@ coincide.
 | 0:00 | 45 | 3.1 Qué es MCP y cómo se relaciona con contexto, agentes y herramientas locales. Exposición | Teoría del subtema |
 | 0:45 | 35 | 3.2 Diferencia entre MCP local y MCP externo en ambientes restringidos. Exposición | Teoría del subtema |
 | 1:20 | 10 | 3.2 Demostración del servidor MCP local | [`demos/demo-3-2-servidor-mcp.md`](demos/demo-3-2-servidor-mcp.md) |
-| 1:30 | 40 | 3.3 Riesgos de seguridad: exposición de información, conectores no autorizados y fuga de contexto. Exposición | Teoría del subtema, incluida la exclusión de contenido |
-| 2:10 | 5 | 3.3 Demostración del hook | [`demos/demo-3-3-hook.md`](demos/demo-3-3-hook.md) |
+| 1:30 | 40 | 3.3 Riesgos de seguridad: exposición de información, conectores no autorizados y fuga de contexto. Exposición | Teoría del subtema, incluida la exclusión de contenido y la [política de uso de IA](../gobierno/politica-uso-ia.md) |
+| 2:10 | 5 | 3.3 Demostración del hook, conectada a la regla 3 de la política | [`demos/demo-3-3-hook.md`](demos/demo-3-3-hook.md) |
 | 2:15 | 45 | 3.4 Laboratorio: diseño de un caso de uso de MCP local seguro con documentación técnica local | Laboratorio 3.4 |
 | 3:00 | | Fin | |
 
@@ -290,9 +301,9 @@ está deshabilitado. El verificador detecta los dos casos.
 |---|---|---|---|
 | 0:00 | 12 | 4.1 Uso de Copilot para documentación técnica y generación de Markdown. Exposición | Teoría del subtema |
 | 0:12 | 8 | 4.1 Demostración de la documentación contra la ejecución | [`demos/demo-4-1-documentacion-contra-ejecucion.md`](demos/demo-4-1-documentacion-contra-ejecucion.md) |
-| 0:20 | 20 | 4.2 Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting. Exposición | Teoría del subtema |
+| 0:20 | 20 | 4.2 Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting. Exposición | Teoría del subtema, con las tres decisiones de [`arquitectura/decisiones/`](../arquitectura/decisiones/README.md) |
 | 0:40 | 20 | 4.3 Buenas prácticas para preparar documentación compatible con Confluence. Exposición | Teoría del subtema |
-| 1:00 | 30 | 4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | Laboratorio 4.4 |
+| 1:00 | 30 | 4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | Laboratorio 4.4. El paso 4, runbook, es opcional y queda fuera de los 30 minutos |
 | 1:30 | 45 | 5.1 Preparación del escenario integrador y criterios de evaluación | Laboratorio 5.1 |
 | 2:15 | 45 | 5.2 Planeación de mejora, refactorización y validación incremental | Laboratorio 5.2 |
 | 3:00 | 45 | 5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión | Laboratorio 5.3 y casos de clase 01 y 03 en el paso 3 |
@@ -496,6 +507,26 @@ No de forma confiable. Encuentra algunos si se le pide revisar, y encuentra los 
 alguien le dice dónde buscar y cómo comprobar. Por eso los laboratorios lo dirigen paso a
 paso. Un escáner automático que corrió sobre este código encontró problemas reales y
 también señaló como error lo que era intencional. Es el caso de clase 01.
+
+**«¿El taller certifica cumplimiento con BIAN o con TOGAF?»**
+No. El taller usa BIAN como vocabulario de referencia para ubicar responsabilidades y cita
+TOGAF para decir dónde viven las decisiones de arquitectura. No evalúa ni certifica
+cumplimiento con ninguno de los dos. El formato de las decisiones del repositorio es un
+complemento de TOGAF, no parte de TOGAF.
+
+**«¿La política de uso de IA es la del banco?»**
+No. Es la de Pasarela Andina, la empresa ficticia del escenario, y está hecha como ejemplo
+para adaptar. Su valor está en la forma: cada regla dice por qué existe y qué mecanismo la
+aplica, y separa lo que se pide al agente de lo que se le impide y de lo que depende de la
+organización.
+
+**«¿Cuánto cuesta en tokens una tarea típica?»**
+No hay una cifra que sirva, y no se da en clase. Depende del modo, del modelo, del contexto
+y de cuántas vueltas da la conversación. Se responde con el método: se hace la tarea una vez
+con el contexto acotado, se mira el costo de cada respuesta pasando el puntero sobre ella y
+el total de la sesión en el control de la ventana de contexto, y con eso el equipo arma su
+propia línea base. La guía
+[`uso-responsable-de-tokens.md`](../gobierno/uso-responsable-de-tokens.md) explica cómo.
 
 **«¿Qué pasa si Copilot se actualiza durante el taller?»**
 Puede pasar, porque Visual Studio Code se actualiza solo. El material se revisó contra la

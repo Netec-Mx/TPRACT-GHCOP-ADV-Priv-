@@ -14,16 +14,38 @@ que faltan las completa el modelo como puede.
 
 ## Contenido
 
-### El oficio cambió
+### Apertura: dónde está Copilot hoy
 
-Durante años, Copilot fue autocompletado y chat. El desarrollador escribía cada línea y la
-herramienta le ahorraba tipeo. Ese uso sigue existiendo y sigue siendo útil. Pero la
-herramienta que hoy tienen abierta es otra cosa. En modo agente recibe un objetivo, abre
-archivos, ejecuta comandos y cambia varios lugares del código en una misma tarea.
+El taller abre con un mapa de la herramienta, porque la mayoría de la sala la usa a diario
+pero la aprendió en otra etapa. Conviene contarlo en cuatro etapas y sin fechas exactas, que
+no aportan.
+
+1. **Autocompletado y chat.** El desarrollador escribe cada línea y la herramienta le ahorra
+   tipeo o le responde una pregunta. Es el uso que casi todos conocen, y sigue siendo útil.
+2. **Modo agente.** La herramienta recibe un objetivo, no un paso. Según Visual Studio Code,
+   el agente reúne contexto, encuentra el código relevante, hace cambios, corre pruebas y
+   revisa, en un ciclo de razonamiento, acción y validación. Quien pide revisa y aprueba.
+3. **Personalización.** El criterio del equipo queda escrito en el repositorio:
+   instrucciones, agentes personalizados, skills, servidores MCP y hooks. Es el capítulo 2 y
+   el 3 de este taller.
+4. **Plataforma de agentes.** Hoy el agente también trabaja fuera del editor. El agente en la
+   nube de GitHub investiga un repositorio, arma un plan y hace cambios en una rama, en su
+   propio entorno. Visual Studio Code ejecuta los agentes en un proceso propio, el Agent
+   Host, que puede seguir trabajando sin un editor conectado. Y la aplicación de escritorio
+   de Copilot, disponible en todos los planes, está hecha para dirigir varias sesiones de
+   agentes en paralelo.
+
+Tres cambios recientes tocan directamente al taller, y conviene nombrarlos como muestra de la
+velocidad de la herramienta, no como queja. Los prompt files se están retirando en favor de
+las skills, y por eso los laboratorios son skills. El uso se cobra en créditos según el
+consumo, y por eso el 1.3 trata qué gasta cada modo. Y el agente que trabaja fuera del
+editor obliga a pensar en la revisión antes que en la escritura.
+
+### Por qué aprender esto
 
 Cuando la herramienta hace más, el trabajo de quien la usa se desplaza. Escribir código
-pesa menos. Pesan más dos cosas que el agente no puede hacer por nosotros. Decir con
-precisión qué queremos y comprobar que lo que volvió es lo que queríamos. Este capítulo
+pesa menos. Pesan más dos cosas que el agente no puede hacer por nosotros. Especificar con
+precisión qué queremos y verificar que lo que volvió es lo que queríamos. Este capítulo
 trabaja la primera. La segunda atraviesa todo el taller.
 
 La documentación de Visual Studio Code lo dice sin rodeos. El código generado puede tener
@@ -144,5 +166,11 @@ entrada y su resultado, le dice al modelo más que una descripción.
 |---|---|---|
 | Recomendaciones para escribir pedidos: meta general primero, ejemplos, dividir tareas, evitar ambigüedad, indicar el código relevante, iterar, conversación nueva por tarea | https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering | 2 de octubre de 2026 |
 | El código generado puede tener errores y se trata como punto de partida que se revisa | https://code.visualstudio.com/docs/agents/best-practices | 2 de octubre de 2026 |
+| El agente y su ciclo de razonamiento, acción y validación, tipos de agentes | https://code.visualstudio.com/docs/agents/overview | 3 de octubre de 2026 |
+| Agente en la nube: investiga, planifica y cambia código en una rama, en su propio entorno | https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent | 3 de octubre de 2026 |
+| Agent Host como proceso propio que puede seguir sin editor conectado | https://code.visualstudio.com/docs/agents/concepts/agent-host | 3 de octubre de 2026 |
+| Aplicación de escritorio de Copilot, para desarrollo dirigido por agentes, en todos los planes | https://docs.github.com/en/copilot/concepts/agents/github-copilot-app | 3 de octubre de 2026 |
+| Retiro de los prompt files y migración a skills | https://code.visualstudio.com/docs/agent-customization/prompt-files | 3 de octubre de 2026 |
+| Cobro en créditos según tokens | https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing | 3 de octubre de 2026 |
 | Modos y comandos del chat, incluido el modo agente | https://code.visualstudio.com/docs/agents/reference/ai-features-cheat-sheet | 2 de octubre de 2026 |
 | Referencias explícitas a archivos con `#` y contexto agregado por el editor | https://code.visualstudio.com/docs/chat/copilot-chat-context | 2 de octubre de 2026 |

@@ -67,4 +67,5 @@ editor.
 ## La idea que se cierra
 
 Cada paso tiene su modo y su verificación. Analizar y planear cuestan poco y evitan que el
-agente implemente lo que no se quería. Validar no es opcional.
+agente implemente lo que no se quería. Validar no es opcional. Y este mismo ciclo corto se
+repite dentro de cada una de las once fases del ciclo de vida que acaba de ver en la tabla.
