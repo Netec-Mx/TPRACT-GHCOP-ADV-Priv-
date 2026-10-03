@@ -420,3 +420,37 @@ diferencia de 22,03 en este camino, como describen las notas.
 5.1 el agente preguntó por contracargos y retenciones, periodo, monto transado y cuotas, que
 la hoja no responde. El relator simulado los dejó como pendientes y el recorrido no se vio
 afectado.
+
+## Caso CM0009, el criterio de los decimales elegido por Copilot real
+
+3 de octubre de 2026, SPEC-017. En la primera prueba humana, Copilot eligió CM0009 para el
+criterio del comercio con más de dos decimales: suma exacta de junio 2 857,83388325, que
+redondea a 2 857,83. La liquidación actual imprime para CM0009 `S/ 2857.83`, antes y después
+de la corrección. Un agente sin acceso a `docs/relator/` hizo el 5.3 en Java con ese criterio
+en lugar del de CM0025, por los dos caminos del 5.2.
+
+| Camino | Paso 1 | Paso 2 | Paso 3 | ¿Llega a las dos causas? |
+|---|---|---|---|---|
+| A, cálculo exacto propio | Falla solo la conciliación de junio; CM0009 y el borde pasan | Rojo en junio, 22,03 | 22,00 del borde y 0,03 de CM0011, CM0016 y CM0025 | Sí |
+| B, reutiliza el cálculo de la liquidación | Falla solo el borde; CM0009 pasa | Conciliación en cero en los tres periodos | Solo 22,00 del borde; corrige, actualiza el hash y queda en verde | No |
+
+**Por qué el camino B no llega.** La suma de CM0009 no está cerca de medio centavo, así que
+`double` redondea igual que el cálculo exacto y la prueba pasa. En el camino B la conciliación
+no puede fallar, porque reporte y liquidación comparten el cálculo. Con el criterio de
+referencia, CM0025 con 957,185, la prueba falla porque la liquidación da 957,18. La única señal
+que queda es `verificar-reporte.sh java 2026-06`, pendiente desde el 5.2, que el paso 3 del 5.3
+no vuelve a ejecutar.
+
+**Qué comercios sirven.** Con las reglas y decimal exacto, en junio solo tres comercios tienen
+una suma exacta en medio centavo, con tercer decimal 5 y nada después: CM0011, 137,825;
+CM0016, 493,995, y CM0025, 957,185. Son exactamente los tres de la causa de punto flotante.
+
+**Propuesta, no aplicada hasta que la apruebe el Product Owner.** En el paso 5 de
+`lab-5-1-paso-1-historia-de-usuario`, cambiar «un comercio real cuya suma exacta de comisiones
+de junio tenga más de dos decimales» por «un comercio real cuya suma exacta de comisiones de
+junio quede exactamente en medio centavo, con el tercer decimal en 5 y ningún decimal después,
+para comprobar el redondeo medio hacia arriba de la regla 9». No nombra comercios: el agente
+tiene que calcular las sumas y cualquiera de los que encuentre es uno de los tres. Ajustar en
+el mismo sentido el criterio de revisión del README del 5.1. Una alternativa que no toca el
+5.1 es que el paso 3 del 5.3 vuelva a ejecutar `verificar-reporte.sh` de los tres periodos
+después de corregir, pero esa señal no dice en qué comercios está la diferencia.
