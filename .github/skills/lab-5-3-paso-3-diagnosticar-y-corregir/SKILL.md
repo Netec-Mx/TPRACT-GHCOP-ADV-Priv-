@@ -49,5 +49,8 @@ nada más hasta que responda.
 
 # Salida esperada
 
-Una tabla de causas con transacciones, comercios y monto, la suma de las causas contra la
-diferencia, el diff de la corrección y el pipeline en verde.
+Una tabla de causas con transacciones, comercios y monto, y la suma de las causas contra la
+diferencia. Al terminar, muestra en el chat el diff completo de la corrección, con `git
+diff`, incluido el cambio en `scripts/integracion/liquidacion-esperada.sha256`, no un
+resumen, y `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste. Al
+final, el pipeline en verde.

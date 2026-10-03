@@ -46,5 +46,5 @@ Material de partida:
 
 # Salida esperada
 
-El documento creado y, en tu respuesta, qué afirmaciones quedaron como pendientes de
-confirmar.
+El documento creado, mostrado completo en el chat, no un resumen, y en tu respuesta qué
+afirmaciones quedaron como pendientes de confirmar.

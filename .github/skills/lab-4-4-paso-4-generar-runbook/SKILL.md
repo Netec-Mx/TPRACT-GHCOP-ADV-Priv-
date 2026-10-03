@@ -41,4 +41,7 @@ indicó, pregúntale cuál usa y no hagas nada más hasta que responda.
 
 # Salida esperada
 
-El runbook creado y, en tu respuesta, cuántas acciones quedaron verificadas y cuántas no.
+El runbook creado, mostrado completo en el chat, no un resumen. Si supera las 150 líneas,
+muestra completos los síntomas con sus acciones y su columna «Verificado», y nombra el
+archivo para abrir el resto. Después, en tu respuesta, cuántas acciones quedaron verificadas
+y cuántas no.

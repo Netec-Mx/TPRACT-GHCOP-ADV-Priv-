@@ -39,4 +39,7 @@ Material de partida:
 
 # Salida esperada
 
-La decisión registrada y, en tu respuesta, qué componentes del escenario va a tocar el 5.2.
+Muestra en el chat el contenido completo de la decisión creada, la fila que agregaste al
+índice de `docs/arquitectura/decisiones/README.md` y `docs/proyecto/registro-de-tiempos.md`
+completo, con la hora que anotaste, no un resumen. Al final, qué componentes del escenario
+va a tocar el 5.2.

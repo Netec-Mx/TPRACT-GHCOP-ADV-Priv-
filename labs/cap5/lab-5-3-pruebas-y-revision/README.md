@@ -23,10 +23,10 @@ continua, Mantención correctiva, Revisión de código y Seguridad de
 
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
-| 1 | `/lab-5-3-paso-1-probar-criterios java` | Qué criterios quedan cubiertos por una prueba y cuáles fallan | 8 min |
-| 2 | `/lab-5-3-paso-2-conciliacion-en-pipeline` | Cómo agrega el paso nuevo al script y al workflow, y en qué periodos queda en rojo | 8 min |
-| 3 | `/lab-5-3-paso-3-diagnosticar-y-corregir java` | Si separa todas las causas hasta que sumen la diferencia completa. Cuando te pida una decisión de negocio, llévasela al relator | 15 min |
-| 4 | `/lab-5-3-paso-4-revision-y-pull-request` | Qué comenta la revisión de Copilot y qué casillas de la lista de comprobación quedan sin marcar | 8 min |
+| 1 | `/lab-5-3-paso-1-probar-criterios java` | En las pruebas que muestra el agente, que usen el valor exacto de cada criterio. Qué criterios quedan cubiertos y cuáles fallan | 8 min |
+| 2 | `/lab-5-3-paso-2-conciliacion-en-pipeline` | En el diff que muestra el agente, cómo agrega el paso nuevo al script y al workflow. En qué periodos queda en rojo | 8 min |
+| 3 | `/lab-5-3-paso-3-diagnosticar-y-corregir java` | Si separa todas las causas hasta que sumen la diferencia completa. Cuando te pida una decisión de negocio, llévasela al relator. En el diff que muestra al final, que la corrección sea mínima y que solo cambie el hash de junio | 15 min |
+| 4 | `/lab-5-3-paso-4-revision-y-pull-request` | Qué comenta la revisión de Copilot y, en la descripción del pull request que muestra el agente, qué casillas de la lista de comprobación quedan sin marcar | 8 min |
 | 5, opcional | `/lab-5-3-paso-5-opcional-github` | Solo si tienes una copia del repositorio en GitHub. Nada depende de este paso | Fuera de los 45 min |
 
 Reemplaza `java` por `dotnet` si trabajas con .NET.

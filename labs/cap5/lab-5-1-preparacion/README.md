@@ -30,9 +30,9 @@ los que van a evaluar los laboratorios 5.2 y 5.3.
 
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
-| 1 | `/lab-5-1-paso-1-historia-de-usuario java` | Qué preguntas abiertas lista el agente antes de escribir criterios. Llévaselas al relator, que en esta sala es el negocio, y vuelve con las respuestas | 15 min |
-| 2 | `/lab-5-1-paso-2-estimar` | Qué supuestos escribe en cada fase y en qué fases la IA cambia más la estimación | 10 min |
-| 3 | `/lab-5-1-paso-3-ubicar-en-arquitectura java` | Qué alternativas propone y qué componentes del escenario va a tocar la que elijas | 10 min |
+| 1 | `/lab-5-1-paso-1-historia-de-usuario java` | Qué preguntas abiertas lista el agente antes de escribir criterios. Llévaselas al relator, que en esta sala es el negocio, y vuelve con las respuestas. En la historia que muestra al final, que cada criterio tenga su valor esperado y la cuenta | 15 min |
+| 2 | `/lab-5-1-paso-2-estimar` | En la estimación que muestra el agente, qué supuestos escribe en cada fase y en qué fases la IA cambia más la estimación | 10 min |
+| 3 | `/lab-5-1-paso-3-ubicar-en-arquitectura java` | Qué alternativas propone y, en la decisión que muestra al final, qué componentes del escenario va a tocar la que elijas | 10 min |
 
 Reemplaza `java` por `dotnet` si trabajas con .NET.
 

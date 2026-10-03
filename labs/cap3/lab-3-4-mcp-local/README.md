@@ -29,7 +29,7 @@ presentarlo a un área de seguridad.
 | 1 | Escribe `/lab-3-4-paso-1-configurar-servidor`. Crea la carpeta `.vscode` si falta y el archivo `.vscode/mcp.json`. Después, en la paleta de comandos (menú **View**, **Command Palette**), ejecuta **MCP: List Servers**, elige `pasarela-andina` y arráncalo | Que el servidor aparezca como iniciado y que el chat muestre sus tres herramientas | 8 min |
 | 2 | `/lab-3-4-paso-2-consultar-con-herramienta CM0005` | Cada llamada a una herramienta pide tu aprobación. Lee qué parámetros envía antes de aprobar. Compara la respuesta final del agente con los datos que devolvió cada herramienta | 8 min |
 | 3 | `/lab-3-4-paso-3-inventariar-superficie` | Si lo que el servidor hace coincide con lo que dice su README | 8 min |
-| 4 | `/lab-3-4-paso-4-documentar-caso-de-uso` | Si el documento resistiría las preguntas de un área de seguridad | 12 min |
+| 4 | `/lab-3-4-paso-4-documentar-caso-de-uso` | En el documento que muestra el agente, si cada riesgo tiene su mitigación o dice que no está mitigado, y si resistiría las preguntas de un área de seguridad | 12 min |
 
 En el paso 2, si la respuesta del agente dice algo que no está en los datos que devolvieron
 las herramientas, anótalo. El paso 4 te lo va a preguntar.

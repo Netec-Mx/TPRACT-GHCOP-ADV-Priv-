@@ -22,6 +22,8 @@ Las reglas de negocio vigentes están en [escenario/README.md](../../../escenari
    preguntas, con el valor esperado calculado a mano y la cuenta a la vista.
 4. Lo que siga sin respuesta queda en la tabla de preguntas como «pendiente». No lo
    conviertas en un criterio por tu cuenta.
+5. Al terminar, muestra en el chat el contenido completo de la historia, no un resumen.
+   Quien te invocó tiene que revisar los criterios antes de seguir.
 
 ## Límites
 

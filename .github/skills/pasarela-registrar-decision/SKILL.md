@@ -25,6 +25,8 @@ una por archivo, con la [plantilla](../../../docs/arquitectura/decisiones/planti
    «Propuesta», y agrega su fila al índice del README.
 7. Si la decisión mueve responsabilidades entre componentes, usa los nombres de dominio de
    [bian-mapeo.md](../../../docs/arquitectura/bian-mapeo.md).
+8. Al terminar, muestra en el chat el contenido completo de la decisión y la fila que
+   agregaste al índice, no un resumen.
 
 ## Límites
 

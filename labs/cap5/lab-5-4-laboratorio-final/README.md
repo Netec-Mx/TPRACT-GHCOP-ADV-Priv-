@@ -22,10 +22,10 @@ lleva: las skills y plantillas del ciclo, y la línea base para medir la adopci�
 
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
-| 1 | `/lab-5-4-paso-1-liberar` | Qué número de versión propone y cómo explica a un comercio por qué cambia su liquidación de junio | 8 min |
-| 2 | `/lab-5-4-paso-2-atender-incidente` | Si llega a la causa por las notas de versión y la decisión registrada, y si la respuesta promete algo que no puede prometer | 12 min |
-| 3 | `/lab-5-4-paso-3-estimar-evolutiva` | Si usa tu registro de tiempos real como dato, y qué preguntas le haría al negocio | 8 min |
-| 4 | `/lab-5-4-paso-4-cierre` | En qué fase tu estimación más se equivocó, y qué activos podrías llevar a tu repositorio | 10 min |
+| 1 | `/lab-5-4-paso-1-liberar` | Qué número de versión propone y, en las notas que muestra el agente, cómo explica a un comercio por qué cambia su liquidación de junio | 8 min |
+| 2 | `/lab-5-4-paso-2-atender-incidente` | En el análisis y la respuesta que muestra el agente, si llega a la causa por las notas de versión y la decisión registrada, y si la respuesta promete algo que no puede prometer | 12 min |
+| 3 | `/lab-5-4-paso-3-estimar-evolutiva` | En la estimación que muestra el agente, si usa tu registro de tiempos real como dato, y qué preguntas le haría al negocio | 8 min |
+| 4 | `/lab-5-4-paso-4-cierre` | En los documentos que muestra el agente, en qué fase tu estimación más se equivocó, y qué activos podrías llevar a tu repositorio | 10 min |
 
 ## Resultado esperado
 

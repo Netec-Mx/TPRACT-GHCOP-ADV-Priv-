@@ -21,6 +21,7 @@ fases en [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
    comparar después con lo real.
 5. Si hay datos reales de trabajos parecidos en el repositorio, úsalos y cítalos. Si no
    los hay, dilo.
+6. Al terminar, muestra en el chat el contenido completo de la estimación, no un resumen.
 
 ## Límites
 

@@ -30,4 +30,5 @@ mantención evolutiva de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
 
 # Salida esperada
 
-La estimación creada y las preguntas abiertas.
+Muestra en el chat el contenido completo de `docs/proyecto/estimacion-evolutiva.md` y de
+`docs/proyecto/registro-de-tiempos.md`, no un resumen. Después, las preguntas abiertas.

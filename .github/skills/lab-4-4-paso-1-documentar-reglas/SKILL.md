@@ -34,5 +34,7 @@ indicó, pregúntale cuál usa y no hagas nada más hasta que responda.
 
 # Salida esperada
 
-El documento creado y, en tu respuesta, cuántas reglas coinciden con el código y cuántas
-no.
+El documento creado, mostrado completo en el chat, no un resumen. Si supera las 150 líneas,
+muestra completa la sección «Contraste con las reglas declaradas» y la parte de selección
+del tramo, y nombra el archivo para abrir el resto. Después, en tu respuesta, cuántas reglas
+coinciden con el código y cuántas no.

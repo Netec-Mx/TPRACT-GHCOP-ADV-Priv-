@@ -37,4 +37,7 @@ nada más hasta que responda.
 
 # Salida esperada
 
-El plan, con la validación de cada paso, y la pregunta de aprobación.
+El plan, con la validación de cada paso, y la pregunta de aprobación. Muestra también
+`docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste. La especificación
+técnica que entregó el script no la escribiste tú: nombra su archivo,
+`docs/proyecto/backlog/formato-del-reporte.md`.

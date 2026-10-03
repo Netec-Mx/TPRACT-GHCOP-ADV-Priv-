@@ -41,4 +41,5 @@ pregúntale qué fue e inclúyelo en la sección de riesgos como evidencia.
 
 # Salida esperada
 
-El documento creado, de no más de dos páginas.
+El documento creado, de no más de dos páginas, mostrado completo en el chat, no un resumen.
+El participante lo revisa ahí antes de abrir el archivo.

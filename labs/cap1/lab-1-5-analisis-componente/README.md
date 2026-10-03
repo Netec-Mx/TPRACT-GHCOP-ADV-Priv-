@@ -30,7 +30,7 @@ En cada paso, reemplaza `java` por `dotnet` si trabajas con .NET.
 | 2 | `/lab-1-5-paso-2-rastrear-lineas-invalidas java` | Si el equipo se enteraría de un problema con los datos de entrada | 10 min |
 | 3 | `/lab-1-5-paso-3-contrastar-nombres java` | Si el nombre de cada método describe lo que hace | 10 min |
 | 4 | `/lab-1-5-paso-4-proponer-mejora java` | Si la propuesta cabe en una revisión de diez minutos | 12 min |
-| 5 | `/lab-1-5-paso-5-extraer-retencion java`, en modo **Agent** | Qué archivos toca, si compila y si el comparador sigue en cero | 12 min |
+| 5 | `/lab-1-5-paso-5-extraer-retencion java`, en modo **Agent** | En el diff que muestra el agente, que solo cambió el bloque de la retención. Si compila y si el comparador sigue en cero | 12 min |
 
 **Cómo se cuentan los niveles de anidamiento en el paso 1.** El cuerpo del método es el nivel
 cero. Cada bloque que abre una llave dentro del cuerpo suma un nivel. Así todos cuentan

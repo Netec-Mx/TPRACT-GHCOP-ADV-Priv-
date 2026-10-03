@@ -30,4 +30,6 @@ rompa.
 
 # Salida esperada
 
-La copia creada y la lista de lo que se perdió.
+La copia creada, mostrada completa en el chat, no un resumen. Si supera las 150 líneas,
+muestra completa la sección «Qué se perdió en el traslado» y nombra el archivo para abrir el
+resto.

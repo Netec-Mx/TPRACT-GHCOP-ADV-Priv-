@@ -24,10 +24,10 @@ contra el código y trasladable a Confluence.
 
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
-| 1 | `/lab-4-4-paso-1-documentar-reglas java` | Si cada afirmación del documento está respaldada por una línea de código. Revisa la sección de contraste con las reglas declaradas | 10 min |
-| 2 | `/lab-4-4-paso-2-documentar-decisiones` | Qué afirma por el código y qué deja como pendiente de confirmar | 10 min |
-| 3 | `/lab-4-4-paso-3-preparar-para-confluence` | Qué se pierde al trasladar el Markdown | 8 min |
-| 4, opcional | `/lab-4-4-paso-4-generar-runbook java` | Qué acciones del runbook quedaron verificadas con una ejecución real y cuáles no | Fuera de los 30 min |
+| 1 | `/lab-4-4-paso-1-documentar-reglas java` | En el documento que muestra el agente, si cada afirmación está respaldada por una línea de código. Revisa la sección de contraste con las reglas declaradas | 10 min |
+| 2 | `/lab-4-4-paso-2-documentar-decisiones` | En el documento que muestra el agente, qué afirma por el código y qué deja como pendiente de confirmar | 10 min |
+| 3 | `/lab-4-4-paso-3-preparar-para-confluence` | En la copia que muestra el agente, qué se pierde al trasladar el Markdown, en la sección «Qué se perdió en el traslado» | 8 min |
+| 4, opcional | `/lab-4-4-paso-4-generar-runbook java` | En el runbook que muestra el agente, qué acciones quedaron verificadas con una ejecución real y cuáles no | Fuera de los 30 min |
 
 Reemplaza `java` por `dotnet` si trabajas con .NET.
 

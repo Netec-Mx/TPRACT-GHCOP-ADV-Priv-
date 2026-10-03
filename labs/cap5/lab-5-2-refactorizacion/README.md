@@ -22,7 +22,7 @@ liquidación y verificar el resultado. Es la fase de Desarrollo de
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
 | 1 | `/lab-5-2-paso-1-planificar java` | Si el plan reutiliza código existente, si refactoriza antes y cómo valida cada paso. Aprueba el plan o pídele cambios | 10 min |
-| 2 | `/lab-5-2-paso-2-implementar-reporte java` | Qué archivos toca y qué pasa con la liquidación después de cada paso | 20 min |
+| 2 | `/lab-5-2-paso-2-implementar-reporte java` | En el diff que muestra el agente, qué archivos toca y que no toque el otro stack. Qué pasa con la liquidación después de cada paso | 20 min |
 | 3 | `/lab-5-2-paso-3-verificar-reporte java` | Qué periodos coinciden con la salida esperada y si el pipeline local está en verde | 8 min |
 
 Reemplaza `java` por `dotnet` si trabajas con .NET.

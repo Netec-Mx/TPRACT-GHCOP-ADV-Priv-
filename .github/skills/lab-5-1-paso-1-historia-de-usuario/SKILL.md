@@ -48,5 +48,8 @@ Material de partida:
 
 # Salida esperada
 
-Primero, la lista de preguntas abiertas. Después de las respuestas, la historia creada, y en
-tu respuesta qué preguntas siguen pendientes.
+Primero, la lista de preguntas abiertas. Después de las respuestas, muestra en el chat el
+contenido completo de `docs/proyecto/historia-reporte-medios-de-pago.md`, no un resumen: el
+participante revisa ahí los criterios, que son los que evalúan el 5.2 y el 5.3. Muestra
+también `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste, y la
+última línea de `scripts/integracion/stack.txt`. Al final, qué preguntas siguen pendientes.

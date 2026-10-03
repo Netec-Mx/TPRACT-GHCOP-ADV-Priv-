@@ -28,4 +28,6 @@ notas para el negocio. Es la fase de Liberación de [CICLO-DE-VIDA.md](../../../
 
 # Salida esperada
 
-El número de versión con su justificación, la entrada del registro de cambios y las notas.
+El número de versión con su justificación. Al terminar, muestra en el chat la entrada
+completa que agregaste a `CHANGELOG.md`, el contenido completo de las notas de versión y
+`docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste, no un resumen.

@@ -53,3 +53,5 @@ nuevo.
    desde `escenario/dotnet/`: `dotnet build LiquidacionComercios -c Release`.
 4. Desde la raíz del repositorio, `bash scripts/comparar-escenarios.sh` termina en cero.
 5. En tu respuesta, los otros problemas que hayas visto y no hayas tocado.
+6. Al terminar, muestra en el chat el diff completo de lo que cambió, con `git diff`, no un
+   resumen. El participante revisa ahí que solo cambió el bloque indicado.

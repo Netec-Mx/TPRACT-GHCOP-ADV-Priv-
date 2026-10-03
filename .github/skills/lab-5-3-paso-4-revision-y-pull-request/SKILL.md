@@ -42,5 +42,7 @@ decisión de negocio registrada. Son las fases de Revisión de código y Segurid
 
 # Salida esperada
 
-`docs/proyecto/pull-request.md`, la decisión registrada y las casillas que no se cumplen,
-si hay alguna.
+Muestra en el chat el contenido completo de `docs/proyecto/pull-request.md` y de la decisión
+registrada, la fila que agregaste al índice de decisiones y
+`docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste, no un resumen.
+Después, las casillas que no se cumplen, si hay alguna.

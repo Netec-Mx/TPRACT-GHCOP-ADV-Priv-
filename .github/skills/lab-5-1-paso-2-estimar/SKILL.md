@@ -35,4 +35,6 @@ Material de partida:
 
 # Salida esperada
 
-La estimación creada y, en tu respuesta, las dos fases con más incertidumbre y por qué.
+Muestra en el chat el contenido completo de `docs/proyecto/estimacion.md` y de
+`docs/proyecto/registro-de-tiempos.md`, no un resumen. Al final, las dos fases con más
+incertidumbre y por qué.

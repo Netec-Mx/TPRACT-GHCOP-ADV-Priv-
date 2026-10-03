@@ -41,4 +41,6 @@ Material de partida:
 
 # Salida esperada
 
-El diff resumido por archivo y el resultado de la última validación.
+Al terminar, muestra en el chat el diff completo de lo que cambió, con `git diff` y el
+contenido completo de cada archivo nuevo, no un resumen por archivo. Después, el resultado
+de la última validación.

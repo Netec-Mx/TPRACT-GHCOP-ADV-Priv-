@@ -28,4 +28,7 @@ de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
 
 # Salida esperada
 
-La causa, el alcance con los comercios afectados y la respuesta al comercio.
+La causa, el alcance con los comercios afectados y la respuesta al comercio. Muestra en el
+chat el contenido completo del análisis, de la respuesta y de
+`docs/proyecto/registro-de-tiempos.md`, no un resumen. Si el análisis supera las 150 líneas,
+muestra completos el diagnóstico y el alcance, y nombra el archivo para abrir el resto.

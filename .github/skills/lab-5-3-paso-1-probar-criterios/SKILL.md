@@ -38,4 +38,6 @@ nada más hasta que responda.
 
 # Salida esperada
 
-Una tabla criterio por criterio con la prueba que lo cubre y su resultado.
+Muestra en el chat el contenido completo de cada archivo de prueba nuevo y
+`docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste, no un resumen.
+Después, una tabla criterio por criterio con la prueba que lo cubre y su resultado.

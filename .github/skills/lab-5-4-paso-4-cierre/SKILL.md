@@ -37,4 +37,7 @@ real, los activos que puede reutilizar y la línea base para medir la adopción.
 
 # Salida esperada
 
-Los tres documentos y, en tu respuesta, la fase donde la estimación más se equivocó.
+Muestra en el chat el contenido completo de los tres documentos, no un resumen. Si alguno
+supera las 150 líneas, muestra completas la comparación de estimado contra real, la línea
+base de medición y el presupuesto, y nombra el archivo para abrir el resto. Al final, la
+fase donde la estimación más se equivocó.
