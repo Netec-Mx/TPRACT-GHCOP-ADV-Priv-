@@ -5,7 +5,7 @@
 | Capítulo y sesión | Capítulo 2, sesión 2 |
 | Duración | 45 minutos. 37 de exposición y 8 de demostración |
 | Demostración | [Las instrucciones por ruta](../demos/demo-2-3-instrucciones-por-ruta.md) |
-| Artefactos que se proyectan | `.github/copilot-instructions.md`, `.github/instructions/java.instructions.md`, `.github/instructions/dotnet.instructions.md`, `AGENTS.md` |
+| Artefactos que se proyectan | `.github/copilot-instructions.md`, `.github/instructions/java.instructions.md`, `.github/instructions/dotnet.instructions.md`, `.github/instructions/arquitectura-bian.instructions.md`, `docs/arquitectura/bian-mapeo.md`, `AGENTS.md` |
 
 ## La idea en una frase
 
@@ -145,9 +145,39 @@ El reparto anterior escala bien a ese escenario.
   personas.
 - **`AGENTS.md` para lo transversal,** lo que también deben saber otras herramientas que el
   equipo use, por ejemplo la línea de comandos.
+- **Una instrucción por estándar de arquitectura,** que remita al documento del estándar en
+  lugar de copiarlo. Es el caso de la próxima sección.
 - **Dueños.** Cada archivo de instrucciones tiene alguien que lo mantiene. La guía de
   ingeniería de contexto pide revisar y actualizar el contexto a medida que el código
   cambia, porque el contexto desactualizado produce sugerencias desactualizadas.
+
+### El ejemplo corporativo: la arquitectura de referencia
+
+Conviene proyectar `.github/instructions/arquitectura-bian.instructions.md` junto a
+`docs/arquitectura/bian-mapeo.md`. Es el ejemplo del taller de una instrucción que no es de
+un lenguaje sino de la organización.
+
+BIAN es un marco de arquitectura para la banca, publicado por una asociación sin fines de
+lucro, que divide lo que hace un banco en dominios de servicio. El mapeo asigna cada
+componente de Pasarela Andina a su dominio: los comercios a Merchant Relations, las
+transacciones a Card Transaction Capture, los contracargos a Card Case, y el cálculo, las
+retenciones y la liquidación a Merchant Acquiring Facility.
+
+La instrucción tiene tres decisiones que vale la pena señalar.
+
+- **Su patrón apunta a los documentos, no al código.** `applyTo: 'docs/arquitectura/**'`.
+  Se aplica cuando el agente escribe un documento de arquitectura. Sobre el código del
+  escenario no cambia nada, y eso es deliberado: el vocabulario de arquitectura se pide
+  donde se diseña, no en cada edición.
+- **Remite, no copia.** No reproduce el estándar. Pide usar los nombres de los dominios tal
+  como están en el mapeo y enlazar al mapeo. El documento lo mantiene el equipo de
+  arquitectura; la instrucción solo lo vuelve visible para el agente.
+- **Dice qué hacer cuando falta algo.** Si una responsabilidad no está en el mapeo, el agente
+  lo dice y no inventa un dominio. Es la regla que más evita errores, porque un nombre de
+  dominio inventado suena tan plausible como uno real.
+
+En el banco de cada participante, el estándar puede ser otro. El patrón es el mismo: el
+estándar vive en un documento, y una instrucción corta lo conecta con el agente.
 
 ### Cómo se escribe una regla que sirve
 
@@ -192,10 +222,11 @@ agente hace algo de cierta manera, la respuesta está en un archivo, con su auto
 
 - **Demostración.** La [demostración 2.3](../demos/demo-2-3-instrucciones-por-ruta.md) hace la
   misma pregunta sobre un archivo Java y sobre uno .NET, muestra qué instrucción entra en cada
-  caso y abre `AGENTS.md`.
+  caso, muestra la instrucción BIAN y abre `AGENTS.md`.
 - **Laboratorio.** En el [2.4](../../../labs/cap2/lab-2-4-agente-o-instruccion/README.md),
   quien elige construir una instrucción escribe su patrón `applyTo` y la prueba pidiendo al
-  agente que cree un archivo que coincida.
+  agente que cree un archivo que coincida. La tarea E usa el mapeo BIAN para construir un
+  agente que revisa si un cambio cruza límites de responsabilidad.
 - **Hilo del taller.** El criterio del equipo deja de depender de quién escribe el pedido.
   Queda en el repositorio, versionado y revisable, y se verifica como cualquier otro cambio.
 
@@ -221,4 +252,6 @@ sean cortas.
 |---|---|---|
 | Campos `name`, `description` y `applyTo`, patrón relativo a la raíz, adjunto al crear o modificar un archivo que coincide, carga por descripción, instrucciones aditivas sin precedencia garantizada, instrucciones cortas y no obvias, no repetir lo que imponen los linters | https://code.visualstudio.com/docs/agent-customization/custom-instructions | 2 de octubre de 2026 |
 | Instrucciones de repositorio incluidas en todas las interacciones, más instrucciones aumentan tokens y créditos, sobrecarga de contexto, contexto desactualizado | https://code.visualstudio.com/docs/agents/guides/context-engineering-guide | 2 de octubre de 2026 |
+| BIAN como marco común para la interoperabilidad bancaria | https://bian.org/about-bian/ | 3 de octubre de 2026 |
+| Nombres de los dominios de servicio, versión 14.0.0 | https://github.com/bian-official/public | 3 de octubre de 2026 |
 | Consumo de créditos según tokens | https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing | 2 de octubre de 2026 |

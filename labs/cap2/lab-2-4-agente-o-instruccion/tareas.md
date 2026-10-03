@@ -1,9 +1,9 @@
 # Tareas del laboratorio 2.4
 
-Elige una sola. Las tareas A y B se resuelven con un agente local. Las tareas C y D, con una
-instrucción reutilizable.
+Elige una sola. Las tareas A, B y E se resuelven con un agente local. Las tareas C y D, con
+una instrucción reutilizable.
 
-Ninguna de las cuatro está resuelta por los artefactos que ya trae el repositorio en
+Ninguna de las cinco está resuelta por los artefactos que ya trae el repositorio en
 `.github/`. Si al construir la tuya notas que se parece demasiado a uno de ellos, conversa
 con el relator antes de seguir.
 
@@ -34,3 +34,12 @@ Los scripts del equipo corren en Git Bash sobre Windows y fallan de formas difí
 diagnosticar. Hace falta una instrucción que se aplique sola a `scripts/**/*.sh` y fije las
 convenciones: códigos de salida, compatibilidad con Git Bash, macOS y Linux, mensajes de
 error y qué no usar.
+
+## E. Agente revisor de límites de responsabilidad
+
+El equipo de arquitectura mantiene en `docs/arquitectura/bian-mapeo.md` qué dominio de
+servicio BIAN corresponde a cada componente del escenario. Cuando alguien propone un cambio,
+nadie revisa si respeta esos límites. Hace falta un agente que, a partir de los archivos
+modificados del repositorio, diga a qué dominio pertenece cada archivo según el mapeo, si el
+cambio lleva una responsabilidad de un dominio a un componente de otro, y qué archivos
+cambiados no figuran en el mapeo. No modifica archivos ni opina sobre el estilo del código.

@@ -1,16 +1,16 @@
 ---
 name: lab-2-4-paso-2b-construir-agente
 description: 'Lab 2.4 paso 2, variante agente. Construye un agente local a partir de la plantilla del laboratorio.'
-argument-hint: 'tarea A o B'
+argument-hint: 'tarea A, B o E'
 disable-model-invocation: true
 ---
 
 # Objetivo
 
-Construir un agente local para la tarea A o B de [tareas.md](../../../labs/cap2/lab-2-4-agente-o-instruccion/tareas.md), completando la plantilla
+Construir un agente local para la tarea A, B o E de [tareas.md](../../../labs/cap2/lab-2-4-agente-o-instruccion/tareas.md), completando la plantilla
 [plantilla.agent.md](../../../labs/cap2/lab-2-4-agente-o-instruccion/plantillas/plantilla.agent.md).
 
-El participante indica la tarea al invocar el paso, con `A` o `B`. Si no la indicó,
+El participante indica la tarea al invocar el paso, con `A`, `B` o `E`. Si no la indicó,
 pregúntale cuál y no hagas nada más hasta que responda. Si indica una tarea de
 instrucción, dile que el paso que corresponde es `/lab-2-4-paso-2a-construir-instruccion`.
 

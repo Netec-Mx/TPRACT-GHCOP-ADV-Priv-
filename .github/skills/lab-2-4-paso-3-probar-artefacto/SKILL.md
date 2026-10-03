@@ -32,7 +32,8 @@ pruebas que el participante ejecuta para ver que Copilot lo aplica.
 
 Artefactos que ya existían y no son del participante: `analista.agent.md`,
 `tester.agent.md`, `documentador.agent.md`, `revisor.agent.md`,
-`refactorizador.agent.md`, `java.instructions.md` y `dotnet.instructions.md`.
+`refactorizador.agent.md`, `java.instructions.md`, `dotnet.instructions.md` y
+`arquitectura-bian.instructions.md`.
 
 # Restricciones
 

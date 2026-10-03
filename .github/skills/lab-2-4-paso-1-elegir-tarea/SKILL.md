@@ -1,6 +1,6 @@
 ---
 name: lab-2-4-paso-1-elegir-tarea
-description: 'Lab 2.4 paso 1. Ayuda a elegir una de las cuatro tareas del laboratorio y a decidir si conviene resolverla con un agente o con una instrucción.'
+description: 'Lab 2.4 paso 1. Ayuda a elegir una de las cinco tareas del laboratorio y a decidir si conviene resolverla con un agente o con una instrucción.'
 disable-model-invocation: true
 ---
 
@@ -9,11 +9,11 @@ disable-model-invocation: true
 Elegir la tarea del equipo que el participante va a automatizar y decidir si conviene un
 agente local o una instrucción reutilizable.
 
-Las cuatro tareas posibles están en [tareas.md](../../../labs/cap2/lab-2-4-agente-o-instruccion/tareas.md). El participante elige una sola.
+Las cinco tareas posibles están en [tareas.md](../../../labs/cap2/lab-2-4-agente-o-instruccion/tareas.md). El participante elige una sola.
 
 # Qué hacer
 
-1. Presenta las cuatro tareas en una línea cada una.
+1. Presenta las cinco tareas en una línea cada una.
 2. Explica el criterio de decisión:
    - **Instrucción reutilizable** cuando la tarea es una regla que debe aplicarse sola
      cada vez que se trabaja sobre cierto tipo de archivo, sin que nadie la pida.

@@ -29,7 +29,17 @@ línea de comandos.
 
    Diga: «Mismo pedido, reglas distintas según dónde cae el archivo.»
 
-4. Abra `AGENTS.md` en la raíz.
+4. Abra `.github/instructions/arquitectura-bian.instructions.md` y, al lado,
+   `docs/arquitectura/bian-mapeo.md`. Muestre que su `applyTo` apunta a
+   `docs/arquitectura/**` y no al código.
+
+   Diga: «Esta es una instrucción de repositorio corporativo. No es de un lenguaje, es de
+   la arquitectura de referencia del banco. Pide usar el vocabulario de los dominios de
+   servicio BIAN y remite al mapeo, en lugar de copiar el estándar. Se aplica cuando el
+   agente escribe un documento de arquitectura, así que no cambia lo que hace sobre el
+   código.»
+
+5. Abra `AGENTS.md` en la raíz.
 
    Diga: «Este archivo no es de Visual Studio Code. Es un formato que leen varios agentes,
    incluida la línea de comandos de Copilot. Es el lugar para lo que el equipo quiere que
@@ -45,6 +55,6 @@ línea de comandos.
 
 ## La idea que se cierra
 
-Instrucciones generales para todo el repositorio, instrucciones por ruta para cada stack y
-`AGENTS.md` para cualquier herramienta. En un repositorio corporativo, ese reparto es lo que
+Instrucciones generales para todo el repositorio, instrucciones por ruta para cada stack o
+para cada zona, como la arquitectura, y `AGENTS.md` para cualquier herramienta. En un repositorio corporativo, ese reparto es lo que
 evita una sola instrucción enorme que nadie mantiene.

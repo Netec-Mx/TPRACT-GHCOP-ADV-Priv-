@@ -21,7 +21,7 @@ comprobar que Copilot lo aplica y dejarlo listo para que lo use otro integrante.
   ```
 
 - Material del laboratorio en este directorio:
-  - [`tareas.md`](tareas.md), las cuatro tareas entre las que eliges.
+  - [`tareas.md`](tareas.md), las cinco tareas entre las que eliges.
   - [`plantillas/plantilla.agent.md`](plantillas/plantilla.agent.md) y
     [`plantillas/plantilla.instructions.md`](plantillas/plantilla.instructions.md), con los
     huecos marcados `COMPLETAR`.
@@ -51,7 +51,7 @@ entregar uno de respaldo para que hagas los pasos 3 y 4.
 
 ## Criterios de revisión
 
-- [ ] El artefacto resuelve una de las cuatro tareas de `tareas.md` y no duplica ninguno de
+- [ ] El artefacto resuelve una de las cinco tareas de `tareas.md` y no duplica ninguno de
       los que ya trae el repositorio.
 - [ ] Una instrucción tiene un patrón `applyTo` que apunta a los archivos de la tarea, y la
       viste aplicarse al pedirle al agente que cree o modifique uno de ellos.
