@@ -14,6 +14,7 @@
 #   4. Pruebas del escenario Java y del escenario .NET
 #   5. Gate de fugas de publicar-taller.sh
 #   6. Funcionalidad del reporte y pipeline, en herramientas/gate-funcionalidad-reporte.sh
+#   7. Capitulo 5, en herramientas/gate-capitulo-5.sh
 #
 # Codigo de salida: 0 si todos los gates pasan, 1 si alguno falla, 2 si no se pudo
 # construir o ejecutar la imagen.
@@ -94,6 +95,10 @@ resultado $rc "Sin material del relator en el contenido publicable"
 paso "Funcionalidad del reporte y pipeline"
 bash herramientas/gate-funcionalidad-reporte.sh /tmp/r /tmp/publicacion; rc=$?
 resultado $rc "Workflows, parches, oraculo, conciliacion y correccion"
+
+paso "Capitulo 5"
+bash herramientas/gate-capitulo-5.sh /tmp/r /tmp/publicacion; rc=$?
+resultado $rc "Entregas, solicitud, hashes, pipeline por stack y recorrido de referencia"
 
 printf "\n== Resumen ==\n"
 if [ "$fallas" -eq 0 ]; then echo "  Todos los gates pasan."; exit 0; fi
