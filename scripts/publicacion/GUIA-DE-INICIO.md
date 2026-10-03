@@ -15,7 +15,7 @@ local. Lo que construyas en los laboratorios queda aquí.
 | `escenario/` | El sistema de ejemplo, en `java/` y `dotnet/`, con datos compartidos en `datos/` |
 | `.github/` | Instrucciones, agentes, skills y hooks de Copilot |
 | `mcp/` | Servidor MCP local de consulta |
-| `scripts/` | Verificación de ambiente, comparación de escenarios, reinicio de laboratorios y validación de skills |
+| `scripts/` | Verificación de ambiente, comparación de escenarios, reinicio de laboratorios, validación de skills, pipeline local (`integracion-local.sh`) y verificación del reporte (`verificar-reporte.sh`) |
 | `docs/` | Preparación del ambiente, solución de problemas, arquitectura de referencia y decisiones (`arquitectura/`), política de uso de IA y uso de tokens (`gobierno/`) y plantilla de runbook (`operacion/`) |
 
 ## El escenario
@@ -48,6 +48,34 @@ bash scripts/comparar-escenarios.sh
 ```
 
 Termina en cero si los dos escenarios siguen produciendo la misma salida.
+
+## El capítulo 5: un stack, en tu máquina
+
+En el capítulo 5 recorres el ciclo de vida completo de una funcionalidad nueva. Al empezar
+eliges un stack, Java o .NET, y trabajas solo en ese. Lo declaras en la última línea de
+`scripts/integracion/stack.txt`, que por omisión dice `ambos`.
+
+Todo el capítulo se hace en tu máquina. Trabajas en una rama local, haces commits y corres
+el pipeline de integración continua con:
+
+```bash
+bash scripts/integracion-local.sh
+```
+
+Es el mismo pipeline que corre en GitHub, paso por paso. Con un solo stack, compara la
+liquidación con los hashes esperados de `scripts/integracion/liquidacion-esperada.sha256`.
+Para comprobar el reporte que vas a construir:
+
+```bash
+bash scripts/verificar-reporte.sh java 2026-06
+```
+
+La descripción del pull request se escribe igual, en `docs/proyecto/pull-request.md`, con la
+plantilla de `.github/pull_request_template.md`. No necesitas GitHub para nada de esto.
+
+**Si la sala tiene copias en GitHub.** Puedes además empujar tu rama a tu copia, abrir el
+pull request y ver el mismo pipeline en Actions. Es un paso opcional al final del 5.3.
+Ningún paso posterior depende de él, y lo que aprendes es lo mismo por los dos caminos.
 
 ## Cómo volver al punto de partida
 

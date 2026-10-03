@@ -6,6 +6,9 @@
 #
 # Las acciones van fijadas por SHA completo. Las versiones de JDK y de .NET son las de
 # herramientas/Dockerfile del repositorio de construccion, que son las de la maquina virtual.
+#
+# El stack se declara en scripts/integracion/stack.txt: ambos, java o dotnet. El primer
+# trabajo lo lee y los demas corren solo lo que corresponde.
 
 name: Integracion continua
 
@@ -26,8 +29,28 @@ env:
   VERSION_DOTNET: '10.0.401'
 
 jobs:
+  configuracion:
+    name: Stack declarado
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      stack: ${{ steps.leer.outputs.stack }}
+    steps:
+      - name: Obtener el repositorio
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Leer scripts/integracion/stack.txt
+        id: leer
+        run: |
+          stack=$(grep -v '^[[:space:]]*#' scripts/integracion/stack.txt | tr -d '\r[:space:]' | grep -v '^$' | tail -1)
+          case "$stack" in ambos|java|dotnet) ;; *) echo "Stack no valido: $stack"; exit 1 ;; esac
+          echo "stack=$stack" >> "$GITHUB_OUTPUT"
+
   java:
     name: Java, compilacion, pruebas y dependencias
+    needs: configuracion
+    if: needs.configuracion.outputs.stack != 'dotnet'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -48,6 +71,8 @@ jobs:
 
   dotnet:
     name: .NET, compilacion, pruebas y dependencias
+    needs: configuracion
+    if: needs.configuracion.outputs.stack != 'java'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -65,7 +90,8 @@ jobs:
         run: bash scripts/integracion-local.sh --paso dependencias-dotnet
 
   equivalencia:
-    name: Equivalencia entre Java y .NET
+    name: Liquidacion contra los hashes esperados y equivalencia
+    needs: configuracion
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -74,12 +100,14 @@ jobs:
         with:
           persist-credentials: false
       - name: Preparar el JDK
+        if: needs.configuracion.outputs.stack != 'dotnet'
         uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: temurin
           java-version: ${{ env.VERSION_JDK }}
           cache: maven
       - name: Preparar el SDK de .NET
+        if: needs.configuracion.outputs.stack != 'java'
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: ${{ env.VERSION_DOTNET }}

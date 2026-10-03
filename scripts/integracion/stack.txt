@@ -1,0 +1,9 @@
+# Stack del pipeline de integracion continua: ambos, java o dotnet.
+#
+# Con ambos, el pipeline compila y prueba los dos escenarios y comprueba que produzcan la
+# misma salida. Con un solo stack, compila y prueba ese y compara su liquidacion con los
+# hashes esperados de liquidacion-esperada.sha256.
+#
+# Cambia la ultima linea y confirma el cambio. La lee scripts/integracion-local.sh y la lee
+# el workflow de .github/workflows/.
+ambos
