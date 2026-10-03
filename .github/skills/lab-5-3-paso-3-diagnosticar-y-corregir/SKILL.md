@@ -50,7 +50,9 @@ nada más hasta que responda.
 # Salida esperada
 
 Una tabla de causas con transacciones, comercios y monto, y la suma de las causas contra la
-diferencia. Al terminar, muestra en el chat el diff completo de la corrección, con `git
-diff`, incluido el cambio en `scripts/integracion/liquidacion-esperada.sha256`, no un
-resumen, y `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste. Al
-final, el pipeline en verde.
+diferencia. Al terminar, muestra en el chat el diff completo de la corrección, con `git diff
+--` y los archivos que cambiaste en este paso, incluido
+`scripts/integracion/liquidacion-esperada.sha256`, no un resumen. Los cambios de los pasos 1
+y 2 todavía no están confirmados: no los repitas. Muestra también
+`docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste. Al final, el
+pipeline en verde.

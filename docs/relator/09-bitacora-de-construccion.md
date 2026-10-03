@@ -227,3 +227,34 @@ en .NET, con diferencia 22,03.
   194 minutos de participante contra 180, con el 5.3 como el más cargado.
 - `gates.sh` tarda 153 segundos, por encima de los dos minutos de SPEC-015, por las cinco
   corridas del pipeline del gate del capítulo 5.
+
+## SPEC-017. Ajustes de la primera prueba con Copilot real
+
+### Primera prueba humana, 3 de octubre de 2026
+
+Es el primer dato real con GitHub Copilot, no con un agente de verificación. La hizo el
+Product Owner en su Mac, con Visual Studio Code 1.138, la cuenta `RodrigoMSB` con Copilot Pro,
+modo Agent y modelo Auto, sobre un clon limpio del repositorio de participantes. La máquina
+virtual de Netec no estuvo disponible. Alcanzó el paso 1 del 5.1, con Java.
+
+- Funcionó: Copilot listó las preguntas abiertas antes de escribir, incluida la del límite de
+  tramo, se detuvo a esperar al negocio y con las respuestas de la hoja escribió la historia.
+- El paso tomó unos 19 minutos contra 15, con interrupciones de la guía.
+- El participante no vio la historia: Copilot la escribió en el archivo y en el chat dejó solo
+  un resumen. La skill nunca pedía mostrarla. Desde SPEC-017 toda skill de laboratorio que crea
+  o modifica algo lo muestra completo en el chat, y el diff si es código.
+- `verificar-ambiente.sh` reprobó las funciones de IA con el editor abierto. Ver HALLAZGO-10.
+- Copilot adelantó por su cuenta DEF-08 y DEF-03. Ver HALLAZGO-11.
+- Copilot eligió CM0009 para el criterio de los decimales. Con ese criterio, el camino B del
+  5.2 no llega a la causa de punto flotante en el 5.3. Ver «Caso CM0009» en
+  `08-verificacion-de-skills.md`.
+
+### Lo que cambió
+
+- Las 37 skills de laboratorio se revisaron una por una. Veinte crean o modifican algo y no lo
+  mostraban, o lo mostraban en resumen: ahora terminan mostrándolo completo, o el diff si es
+  código. Cinco skills de dominio que escriben archivos hacen lo mismo. Verificado como agente
+  en la corrida s17.
+- `docs/relator/guia-prueba-humana.md` reemplaza al protocolo de la máquina virtual como
+  documento de prueba de los laboratorios. El protocolo queda con ambiente, red, cuentas y
+  hook.

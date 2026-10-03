@@ -38,6 +38,7 @@ del reporte coincide con lo que se liquida. Es la fase de Integración continua 
 
 # Salida esperada
 
-El diff completo de los dos archivos, mostrado en el chat con `git diff`, no un resumen, y
+El diff completo de los dos archivos, mostrado en el chat con `git diff --
+scripts/integracion-local.sh .github/workflows/integracion-continua.yml`, no un resumen, y
 `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste. Después, el
 resultado del pipeline local, paso por paso.

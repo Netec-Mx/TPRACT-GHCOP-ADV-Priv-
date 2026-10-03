@@ -454,3 +454,63 @@ tiene que calcular las sumas y cualquiera de los que encuentre es uno de los tre
 el mismo sentido el criterio de revisión del README del 5.1. Una alternativa que no toca el
 5.1 es que el paso 3 del 5.3 vuelva a ejecutar `verificar-reporte.sh` de los tres periodos
 después de corregir, pero esa señal no dice en qué comercios está la diferencia.
+
+## Corrida s17, las skills muestran lo que producen
+
+3 de octubre de 2026, SPEC-017. Tres agentes sin acceso a `docs/relator/`, cada uno sobre un
+repositorio publicado y reiniciado, ejecutaron en Java todos los pasos cuyas skills cambiaron
+para mostrar en el chat lo que producen. El del 5.1 siguió además la sección 5.1 de
+`guia-prueba-humana.md` como persona que prueba. Mismo método y misma limitación que las
+corridas anteriores: un agente que ejecuta la skill, no Copilot.
+
+| Corrida | Paso | Segundos | ¿Mostró lo que pide la skill? | Observación |
+|---|---|---|---|---|
+| s17 | `lab-1-5-paso-5-extraer-retencion` | 57 | Sí, `git diff` completo | El comparador no corrió en esa máquina por falta del SDK de .NET 10; la salida Java quedó idéntica |
+| s17 | `lab-3-4-paso-4-documentar-caso-de-uso` | 48 | Sí, 115 líneas | Documentó la nota con inyección de CM0005 como evidencia |
+| s17 | `lab-4-4-paso-1-documentar-reglas` | 72 | Sí, 147 líneas | Tramos no acumulativos; siete reglas coinciden y dos no |
+| s17 | `lab-4-4-paso-2-documentar-decisiones` | 33 | Sí, 91 líneas | Seis afirmaciones pendientes de confirmar |
+| s17 | `lab-4-4-paso-3-preparar-para-confluence` | 32 | Sí, por la regla de 150 líneas: la sección de pérdidas | 167 líneas; el documento del paso 1 casi no tenía nada que perder |
+| s17 | `lab-4-4-paso-4-generar-runbook` | 50 | Sí, por la regla de 150 líneas | 161 líneas; tres acciones verificadas y cuatro no |
+| s17 | `lab-5-1-paso-1-historia-de-usuario` | 86 | Parcial: historia completa y `stack.txt`, registro de tiempos solo en parte | Doce preguntas; eligió CM0025 por su suma en medio centavo |
+| s17 | `lab-5-1-paso-2-estimar` | 22 | Sí | Sin precios |
+| s17 | `lab-5-1-paso-3-ubicar-en-arquitectura` | 54 | Parcial: decisión e índice completos, registro de tiempos solo en parte | Tres alternativas |
+| s17 | `lab-5-2-paso-1-planificar` | 26 | Sí | Camino A |
+| s17 | `lab-5-2-paso-2-implementar-reporte` | 68 | Sí, unas 300 líneas | Un archivo nuevo de 169 líneas |
+| s17 | `lab-5-2-paso-3-verificar-reporte` | 27 | Sí | Coincide en los tres periodos |
+| s17 | `lab-5-3-paso-1-probar-criterios` | 54 | Sí, unas 200 líneas | Falla la conciliación de junio |
+| s17 | `lab-5-3-paso-2-conciliacion-en-pipeline` | 47 | Sí | Rojo en junio, 2203 centavos |
+| s17 | `lab-5-3-paso-3-diagnosticar-y-corregir` | 82 | Sí, pero el diff mezclaba los pasos anteriores | Dos causas, 22,00 y 0,03; solo el hash de junio |
+| s17 | `lab-5-3-paso-4-revision-y-pull-request` | 40 | Sí | Decisión 0005 y descripción del pull request |
+| s17 | `lab-5-4-paso-1-liberar` | 38 | Sí | 1.1.0 |
+| s17 | `lab-5-4-paso-2-atender-incidente` | 49 | Sí, análisis de 117 líneas | Llega a la decisión del borde |
+| s17 | `lab-5-4-paso-3-estimar-evolutiva` | 35 | Sí | Usa el registro de tiempos |
+| s17 | `lab-5-4-paso-4-cierre` | 55 | Sí | Desarrollo como la fase con más error |
+
+En los veinte pasos, lo que la skill pide mostrar fue practicable; la salida más larga fue la
+del 5.2.2. Las dos parciales del 5.1 son del verificador, que mostró solo la fila nueva del
+registro de tiempos aunque la skill pide el registro completo; la guía de prueba humana pide
+anotar ese caso.
+
+**Ajustes que salieron de la corrida, sin volver a ejecutar:**
+
+- El 5.3.2 y el 5.3.3 muestran el diff solo de los archivos de su paso. Como del 5.3.1 al
+  5.3.3 no se hace commit, `git diff` sin rutas repetía los cambios de los pasos anteriores.
+- El 4.4.4 habla del párrafo «Verificado» de cada acción. La plantilla del runbook no tiene
+  columnas.
+- La sección 5.1 de la guía de prueba humana trae ahora las respuestas de periodo, monto
+  transado, cuotas y contracargos, qué responder sobre la experiencia, la alternativa del
+  paso 3 descrita por su efecto, que leer `escenario/datos/` se aprueba y los tres comercios
+  que sirven para el criterio de decimales.
+
+**Inconsistencias vistas y no corregidas:**
+
+- `liquidacion-comercios.jar 2026-13` termina en cero y liquida enero de 2027 sin validar el
+  mes. No está en el catálogo de defectos.
+- `pom.xml` dice versión 1.4.0 y `CHANGELOG.md` 1.0.0.
+- El commit que propone el 5.2.3, `git add escenario`, deja fuera el registro de tiempos y la
+  especificación entregada; entran en un commit posterior.
+- El registro de tiempos solo tiene horas de inicio, y su orden de fases no es el orden en que
+  se recorren. Después de `ponerse-al-dia.sh lab-5-2` viene sin las horas del 5.1, y el 5.4.4
+  no puede comparar esas fases.
+- `reiniciar-lab.sh` no acepta la confirmación por tubería; hace falta `--si` o una terminal
+  interactiva.
