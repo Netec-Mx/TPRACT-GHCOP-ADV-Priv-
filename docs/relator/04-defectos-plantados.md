@@ -217,11 +217,21 @@ API de fecha y hora moderna. El modelo completo (`Comercio`, `Transaccion`, `Con
 `Liquidacion`) expone `Date`.
 
 `Calendar.getInstance()` y `new SimpleDateFormat(...)` toman **la zona horaria del sistema
-donde corre el proceso**, que no necesariamente es América Lima. Los límites de periodo que
-calculan `inicioDePeriodo` y `finDePeriodo` se desplazan con la máquina.
+donde corre el proceso**, que no necesariamente es América Lima. La regla 8 pide el periodo
+en hora de Lima y el código no la fija en ninguna parte.
 
-La transacción `TX002005`, del 30 de junio a las 23:59:00, entra o queda fuera del periodo
-según dónde se ejecute el programa. En una máquina configurada al este de Lima, cae fuera.
+**Con estos datos no cambia la salida.** El parseo de las fechas de las transacciones y el
+cálculo de los límites del periodo usan los dos la zona del sistema, así que se desplazan
+juntos y se compensan. La liquidación de 2026-04, 2026-05 y 2026-06 es idéntica byte a byte,
+en Java y en .NET, en America/Lima, UTC, Asia/Tokyo, America/Los_Angeles, Asia/Kolkata y
+Pacific/Kiritimati, probado el 3 de octubre de 2026. `TX002005`, del 30 de junio a las
+23:59:00, queda dentro del periodo en todas esas zonas.
+
+El defecto es real: depende de una simetría que nadie garantiza, y se manifestaría en cuanto
+una fecha se leyera o se comparara en otra zona, por ejemplo desde una base de datos o un
+servicio que la entregue en UTC. En clase se trabaja como defecto de diseño que se lee en el
+código, no como un efecto que se pueda mostrar en la salida. No se cambian los datos para
+forzarlo, porque cambiarían los checksums.
 
 `SimpleDateFormat` además no es seguro entre hilos, aunque el escenario es de un solo hilo
 y eso todavía no se manifiesta.

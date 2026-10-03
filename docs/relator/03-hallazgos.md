@@ -802,3 +802,33 @@ salida tiene el SHA-256 `b80d54152371f23f37b9dc7f6cfd46200520c41b6eb2ebaf46ee240
 el mismo de la liquidación de 2026-05. El ejemplo de .NET con `../datos` da el mismo hash.
 Ningún otro ejemplo del README tiene el problema. El código, las pruebas y los datos del
 escenario no cambiaron.
+
+## HALLAZGO-09. El catálogo prometía un efecto visible de DEF-04 que no ocurre
+
+| Campo | Valor |
+|---|---|
+| Detectado en | SPEC-016, al publicar hashes esperados de la liquidación |
+| Componente | `04-defectos-plantados.md`, DEF-04 |
+| Severidad | Media. Un relator que contara el efecto en clase no podría mostrarlo |
+| Estado | Corregido en SPEC-016-B. El código y los datos no cambiaron |
+
+### Qué pasó
+
+El catálogo decía que `TX002005`, del 30 de junio a las 23:59:00, quedaba fuera del periodo en
+una máquina al este de Lima. La nota de SPEC-003-A de este mismo documento ya había mostrado
+que la zona horaria no cambia la salida, pero el catálogo no se actualizó.
+
+### Verificación
+
+La liquidación de los tres periodos es idéntica byte a byte en Java y en .NET en seis zonas:
+America/Lima, UTC, Asia/Tokyo, America/Los_Angeles, Asia/Kolkata, de media hora, y
+Pacific/Kiritimati, a +14. El parseo y los límites del periodo se desplazan juntos.
+
+### Corrección
+
+El catálogo dice ahora que el defecto es de diseño y se lee en el código, que con estos datos
+no cambia la salida en ninguna zona probada, y por qué. Se revisaron la teoría, las
+demostraciones, las notas, los casos de clase, los respaldos y la hoja de respuestas: ningún
+otro pasaje prometía el efecto. Las clasificaciones de la regla 8 como «no coincide» o
+«depende de la máquina» en el 4.4 se refieren al código, que no fija la zona, y siguen siendo
+correctas.
