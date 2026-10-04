@@ -41,16 +41,20 @@ nada más hasta que responda.
    lo necesario para cada causa, sin refactorizar. La corrección va en el cálculo de
    comisión de la liquidación, no en el reporte. Si el reporte reutiliza ese cálculo, queda
    corregido con la misma corrección: no propongas reescribirlo. Si el reporte calcula por
-   su cuenta, la conciliación queda en cero al corregir la liquidación. Si la corrección exige algo que las
-   instrucciones del repositorio prohíben salvo pedido explícito, como cambiar un tipo de
-   dato o una forma de redondear, dilo y muestra qué regla toca. Espera la aprobación del
-   participante y recién entonces aplícala.
+   su cuenta, la conciliación queda en cero al corregir la liquidación. Si la corrección
+   exige algo que las instrucciones del repositorio prohíben salvo pedido explícito, como
+   cambiar un tipo de dato o una forma de redondear, dilo y muestra qué regla toca. Espera
+   la aprobación del participante y recién entonces aplícala.
 7. La corrección cambia la liquidación de algún periodo a propósito. Muestra qué periodos y
    qué comercios cambian, y actualiza en `scripts/integracion/liquidacion-esperada.sha256`
    solo los hashes de esos periodos. Explica al participante que ese cambio se justifica en
    la descripción del pull request.
-8. Ejecuta `bash scripts/integracion-local.sh` hasta que todo esté en verde.
-9. Al terminar, anota en el registro de tiempos la hora de término de Mantención. Si su
+8. Comprueba la corrección antes de darla por buena: `bash scripts/verificar-reporte.sh
+   <stack> P` tiene que coincidir en 2026-04, 2026-05 y 2026-06, y la conciliación tiene
+   que dar cero en los tres periodos. Si propones cambiar solo la forma de redondear, pruébalo primero en junio: no lo
+   des por bueno hasta que junio coincida.
+9. Ejecuta `bash scripts/integracion-local.sh` hasta que todo esté en verde.
+10. Al terminar, anota en el registro de tiempos la hora de término de Mantención. Si su
    sección «Hallazgos abiertos» tiene alguno que esta corrección resuelve, márcalo como
    resuelto en el 5.3, con el comando que ahora pasa.
 

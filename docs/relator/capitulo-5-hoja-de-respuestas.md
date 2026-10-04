@@ -26,9 +26,6 @@ borde o el recargo de 3,5 %: bien visto; se confirma en el 5.3.
 reutiliza el cálculo de la liquidación registra eso y su consecuencia: el reporte hereda
 las diferencias del cálculo.
 
-Puesta en común: una historia que solo excluye las anuladas difiere de las
-liquidaciones en 3 415,01, 4 065,43 y 2 521,97 soles en abril, mayo y junio.
-
 ## 5.2, paso 3
 
 Si el reporte reutiliza el cálculo, junio no coincide: es esperado, queda como hallazgo
@@ -39,7 +36,8 @@ abierto y se resuelve en el 5.3.
 Si no la pidieron en el 5.1: límite superior inclusivo.
 
 La corrección va en la liquidación; un reporte que reutiliza el cálculo queda corregido con
-ella.
+ella. La mínima: cada comisión exacta, suma exacta por comercio y un solo redondeo al final,
+medio hacia arriba. Si cambia solo el redondeo: que pruebe junio; le quedan centavos.
 
 **Si encuentra solo el borde** o **solo explica lo que fallan las pruebas**: pregunte cuánto
 suma cada causa y a quién afecta; sugiera recalcular con decimal exacto. Total 22,03: 22,00

@@ -265,6 +265,9 @@ tramo es inclusivo».
       explicó lo que fallan las pruebas, como 3,00 y 0,01: pregunte cuánto suma cada causa y
       a quién afecta, y anote si llega solo a 22,03.
 - [ ] Avisó antes de cambiar `double` o la forma de redondear y esperó «apruebo».
+- [ ] La corrección es la mínima suficiente: cada comisión exacta, suma exacta por comercio
+      y un solo redondeo al final, medio hacia arriba. Si cambió solo el redondeo, pídale
+      que pruebe junio con `verificar-reporte.sh`: le quedan centavos.
 - [ ] En el diff solo cambió el hash de junio, al valor que empieza con `cd1466305e63`.
 
 **Paso 4, antes de escribir:** vista **Source Control**, en **Changes** el botón **Copilot
