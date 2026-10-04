@@ -70,7 +70,7 @@ Pasos 1 a 4 en modo **Ask**, paso 5 en modo **Agent**. 60 minutos.
 
 | Paso | Escriba | Apruebe | Debe mostrar al terminar | Compare con | Tiempo |
 |---|---|---|---|---|---|
-| 1 | `/lab-1-5-paso-1-inventario java` | Nada | Tabla de responsabilidades con líneas, su cantidad y los niveles de anidamiento | Entre ocho y dieciséis responsabilidades, según cuánto agrupe. En las referencias de la respuesta aparece `CalculadoraLiquidacion.java` | 10 min |
+| 1 | `/lab-1-5-paso-1-inventario java` | Nada | Tabla de responsabilidades con líneas, su cantidad y los niveles de anidamiento | No pueden faltar: filtrar comercios y transacciones, validar, elegir el tramo y calcular la comisión, el recargo por cuotas, el tope, los contracargos, la retención, el redondeo, el desglose por medio de pago, la impresión y las estadísticas. El número total varía según cuánto agrupe; en la prueba con Copilot fueron 23. | 10 min |
 | 2 | `/lab-1-5-paso-2-rastrear-lineas-invalidas java` | Nada | Tabla de puntos de falla y una línea final | Los `catch` vacíos del cargador: una línea mal formada desaparece sin rastro | 10 min |
 | 3 | `/lab-1-5-paso-3-contrastar-nombres java` | Nada | Tabla de tres métodos | `obtenerMontoNeto` recalcula y asigna; `buscarComerciosActivos` devuelve suspendidos; `validarTransaccion` acumula. CM0031 está suspendido y se liquida | 10 min |
 | 4 | `/lab-1-5-paso-4-proponer-mejora java` | Nada | Una sola propuesta en cuatro puntos | Que quepa en una revisión de diez minutos | 12 min |

@@ -6,7 +6,7 @@ Análisis y mejora de un componente Java/.NET. 60 minutos.
 
 | Paso | Qué suele aparecer |
 |---|---|
-| 1 | Entre ocho y doce responsabilidades en el método de cálculo, con lectura de archivos, cálculo, impresión y estadísticas mezcladas (DEF-02, DEF-06) |
+| 1 | Las responsabilidades del método de cálculo mezcladas: filtrado, validación, tramo y comisión, recargo, tope, contracargos, retención, redondeo, desglose por medio de pago, impresión y estadísticas (DEF-02, DEF-06). El total varía según cuánto se agrupe: los agentes de verificación contaron entre 11 y 16, y Copilot, 23. Lo que importa es que no falte ninguna |
 | 2 | Los `catch` vacíos del cargador de datos. Una línea mal formada desaparece sin rastro y la liquidación cuadra igual (DEF-07) |
 | 3 | `obtenerMontoNeto` recalcula y asigna, `buscarComerciosActivos` devuelve también los suspendidos y `validarTransaccion` acumula. `CM0031` está suspendido y aparece liquidado (DEF-09) |
 | 4 | Propuestas variadas. La más frecuente es extraer el cálculo de comisión |

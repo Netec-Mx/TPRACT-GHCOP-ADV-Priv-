@@ -21,6 +21,11 @@ El objeto de observación es el método de 282 líneas de la clase de cálculo (
 participantes también suelen notar los nombres que no describen lo que hacen (DEF-09) y
 los comentarios que contradicen el código (DEF-10). No se corrige nada.
 
+**Para la puesta en común: el agente también se equivoca con seguridad.** En la prueba con
+Copilot real, al pedir `/plan`, Copilot afirmó que el escenario .NET no tiene proyecto de
+pruebas. Es falso: está `escenario/dotnet/LiquidacionComercios.Pruebas`. Sirve para mostrar
+por qué se verifica lo que dice el agente antes de usarlo: basta abrir la carpeta.
+
 ## Errores típicos
 
 - Ejecutar los pasos en conversaciones distintas. El paso 4 compara lo que hay en la misma

@@ -30,6 +30,11 @@ No diga cuál es el bueno. Los dos llegan al mismo rojo en el 5.3 y a la misma c
 Si alguien en el camino B pregunta por qué junio no coincide, diga que lo anote: se
 diagnostica en el 5.3.
 
+**Si Copilot adelanta la causa en el camino B.** En la prueba con Copilot real, al ver que
+junio no coincidía, Copilot recalculó y explicó en el paso 2 que el borde exclusivo de la
+liquidación da 15,10 donde se esperaba 17,80. Está bien visto. Diga que no se corrige ahora y
+que el 5.3 lo va a confirmar con evidencia, junto con lo que todavía no se ve.
+
 ## Errores típicos
 
 - Implementar sin plan aprobado.

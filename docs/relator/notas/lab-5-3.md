@@ -67,6 +67,11 @@ termina sin error y liquida enero de 2027: no valida el mes. Es un hallazgo libr
 el catálogo de defectos. Está bien visto, no es parte del ejercicio y no se corrige en el
 taller. Ver HALLAZGO-12 en `03-hallazgos.md`.
 
+**Para la puesta en común: una afirmación falsa del agente.** En la prueba con Copilot real,
+en el paso 1, Copilot dijo que la especificación técnica del 5.2 «aún no existe en este
+repositorio». Existe: `docs/proyecto/backlog/formato-del-reporte.md`, que el propio 5.2
+entregó. Junto con la del 1.4, sirve para mostrar por qué se verifica lo que dice el agente.
+
 ## La demostración del 5.3
 
 [`../demos/demo-5-3-pipeline-en-github.md`](../demos/demo-5-3-pipeline-en-github.md) muestra en
