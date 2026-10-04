@@ -263,11 +263,12 @@ index 0000000..eeba2b1
 +| Mantención evolutiva | 5.4, paso 3 | | | | | | |
 diff --git a/escenario/dotnet/LiquidacionComercios.Pruebas/Reporte/CalculadoraReporteMediosPruebas.cs b/escenario/dotnet/LiquidacionComercios.Pruebas/Reporte/CalculadoraReporteMediosPruebas.cs
 new file mode 100644
-index 0000000..48ac180
+index 0000000..91ea5bf
 --- /dev/null
 +++ b/escenario/dotnet/LiquidacionComercios.Pruebas/Reporte/CalculadoraReporteMediosPruebas.cs
-@@ -0,0 +1,203 @@
+@@ -0,0 +1,224 @@
 +using System;
++using System.Collections.Generic;
 +
 +using Pe.PasarelaAndina.Calculo;
 +using Pe.PasarelaAndina.Modelo;
@@ -450,6 +451,26 @@ index 0000000..48ac180
 +            Assert.Contains("Ajuste por tope" + new string(' ', 34 + 8) + "S/ -7.80\n", texto);
 +            Assert.Contains("Ajuste por redondeo" + new string(' ', 30 + 9) + "S/ 0.00\n", texto);
 +            Assert.EndsWith("Total" + new string(' ', 44 + 8) + "S/ 10.00\n", texto);
++        }
++
++        [Fact]
++        public void ElFormatoRedondeaElMedioCentavoHaciaArribaYNoSeparaLosMiles()
++        {
++            DateTime inicio = utilidadesFecha.ParsearFechaHora("2026-06-01 00:00:00");
++            DateTime fin = utilidadesFecha.ParsearFechaHora("2026-06-30 23:59:59");
++            ReporteMediosPago reporte = new ReporteMediosPago(Periodo, inicio, fin,
++                    new List<FilaMedioPago>
++                    {
++                        new FilaMedioPago("TARJETA_CREDITO", 3, 12345.6m, 957.185m, 100m)
++                    },
++                    0m, 0m, 957.185m);
++
++            string texto = new FormateadorReporteMedios().Formatear(reporte);
++
++            Assert.Contains("S/ 957.19", texto);
++            Assert.Contains("S/ 12345.60", texto);
++            Assert.DoesNotContain("12,345", texto);
++            Assert.DoesNotContain("12.345,", texto);
 +        }
 +
 +        private void Comercio(string id, EstadoComercio estado, string idPlan)

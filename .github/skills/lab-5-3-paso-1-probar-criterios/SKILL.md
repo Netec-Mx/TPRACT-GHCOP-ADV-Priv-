@@ -21,7 +21,10 @@ nada más hasta que responda.
    comprobar con una prueba unitaria, escribe al menos una prueba en archivos nuevos del
    proyecto de pruebas del stack, con el estilo de las pruebas existentes. Los criterios con
    un valor esperado concreto, como el del límite de un tramo o el de un comercio cuya suma
-   termina en medio centavo, se prueban con ese valor exacto.
+   termina en medio centavo, se prueban con ese valor exacto. Cada criterio tiene su prueba,
+   también el de formato: se prueba sobre la función que da formato a la salida, con un
+   caso de medio centavo y uno con miles. La comparación por hash de
+   `scripts/verificar-reporte.sh` no reemplaza esa prueba.
 3. Si un criterio tiene un valor «pendiente», pregúntale al participante si ya tiene la
    respuesta del negocio. Si no la tiene, deja esa prueba fuera y dilo.
 4. Ejecuta las pruebas del stack.

@@ -528,17 +528,19 @@ index 0000000..89f69d2
 +}
 diff --git a/escenario/java/src/test/java/pe/pasarelaandina/reporte/CalculadoraReporteMediosTest.java b/escenario/java/src/test/java/pe/pasarelaandina/reporte/CalculadoraReporteMediosTest.java
 new file mode 100644
-index 0000000..41683da
+index 0000000..3eaa58f
 --- /dev/null
 +++ b/escenario/java/src/test/java/pe/pasarelaandina/reporte/CalculadoraReporteMediosTest.java
-@@ -0,0 +1,206 @@
+@@ -0,0 +1,224 @@
 +package pe.pasarelaandina.reporte;
 +
 +import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.junit.jupiter.api.Assertions.assertFalse;
 +import static org.junit.jupiter.api.Assertions.assertTrue;
 +
 +import java.math.BigDecimal;
 +import java.util.Date;
++import java.util.List;
 +
 +import org.junit.jupiter.api.BeforeEach;
 +import org.junit.jupiter.api.Test;
@@ -721,6 +723,22 @@ index 0000000..41683da
 +        assertTrue(texto.contains("Ajuste por tope" + " ".repeat(34 + 8) + "S/ -7.80\n"));
 +        assertTrue(texto.contains("Ajuste por redondeo" + " ".repeat(30 + 9) + "S/ 0.00\n"));
 +        assertTrue(texto.endsWith("Total" + " ".repeat(44 + 8) + "S/ 10.00\n"));
++    }
++
++    @Test
++    void elFormatoRedondeaElMedioCentavoHaciaArribaYNoSeparaLosMiles() {
++        Date inicio = utilidadesFecha.parsearFechaHora("2026-06-01 00:00:00");
++        Date fin = utilidadesFecha.parsearFechaHora("2026-06-30 23:59:59");
++        ReporteMediosPago reporte = new ReporteMediosPago(PERIODO, inicio, fin,
++                List.of(new ReporteMediosPago.FilaMedioPago("TARJETA_CREDITO", 3,
++                        new BigDecimal("12345.6"), new BigDecimal("957.185"), new BigDecimal("100"))),
++                BigDecimal.ZERO, BigDecimal.ZERO, new BigDecimal("957.185"));
++
++        String texto = new FormateadorReporteMedios().formatear(reporte);
++
++        assertTrue(texto.contains("S/ 957.19"), "medio centavo, medio hacia arriba");
++        assertTrue(texto.contains("S/ 12345.60"), "miles sin separador");
++        assertFalse(texto.contains("12,345") || texto.contains("12.345,"), "sin separador de miles");
 +    }
 +
 +    private void comercio(String id, EstadoComercio estado, String idPlan) {

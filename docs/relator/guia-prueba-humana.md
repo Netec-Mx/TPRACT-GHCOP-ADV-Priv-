@@ -246,7 +246,7 @@ Modo **Agent**. 45 minutos. No haga commit hasta el paso 4. Si el 5.2 no termin�
 
 | Paso | Escriba | Apruebe | Debe mostrar al terminar | Compare con | Tiempo |
 |---|---|---|---|---|---|
-| 1 | `/lab-5-3-paso-1-probar-criterios java` | `date +%H:%M` y `mvn test` | Los archivos de prueba nuevos completos, el registro de tiempos y una tabla criterio por criterio | Camino A: falla la conciliación de junio. Camino B: fallan borde y tercer decimal | 8 min |
+| 1 | `/lab-5-3-paso-1-probar-criterios java` | `date +%H:%M` y `mvn test` | Los archivos de prueba nuevos completos, el registro de tiempos y una tabla criterio por criterio | Una prueba por criterio, también la de formato, con un caso de medio centavo y uno con miles. Camino A: falla la conciliación de junio. Camino B: fallan borde y medio centavo | 8 min |
 | 2 | `/lab-5-3-paso-2-conciliacion-en-pipeline` | `bash scripts/integracion-local.sh` | El diff de `integracion-local.sh` y del workflow, y el pipeline paso por paso | Camino A: conciliación en rojo solo en junio, 2203 centavos, 22,03; el paso `java` también, por la prueba del paso 1. Camino B: conciliación en cero, rojo por las pruebas | 8 min |
 | 3 | `/lab-5-3-paso-3-diagnosticar-y-corregir java` | Comandos de diagnóstico, compilación y `integracion-local.sh` | Tabla de causas que suma la diferencia, aviso antes de cambiar tipo o redondeo, el diff de la corrección y el pipeline en verde | Ver abajo | 15 min |
 | 4 | `/lab-5-3-paso-4-revision-y-pull-request` | `date +%H:%M` | Pregunta por la revisión de Copilot. Después, `pull-request.md` y la decisión 0005 completas, y las casillas sin marcar | Ver abajo | 8 min |

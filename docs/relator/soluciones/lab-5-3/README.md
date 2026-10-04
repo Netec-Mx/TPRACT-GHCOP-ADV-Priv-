@@ -5,7 +5,7 @@ de `../funcionalidad-reporte/`:
 
 | Orden | Parche | Qué hace |
 |---|---|---|
-| 1 | `../funcionalidad-reporte/reporte-<stack>.patch` | El reporte, con sus pruebas |
+| 1 | `../funcionalidad-reporte/reporte-<stack>.patch` | El reporte, con sus pruebas, incluida la del formato con un medio centavo y un monto con miles |
 | 2 | `conciliacion-en-pipeline.patch` | El paso `conciliacion` en `integracion-local.sh` y en el workflow |
 | 3 | `../funcionalidad-reporte/correccion-<stack>.patch` | La mantención correctiva: decimal exacto y borde inclusivo |
 | 4 | `hash-junio.patch` | El hash esperado nuevo de la liquidación de 2026-06 |
