@@ -598,3 +598,20 @@ Mantención evolutiva, con «no aplica», y nombró aparte las nueve de referenc
 compararlas. Solo quedaron dos fases propias comparables; la skill dice ahora qué hacer si son
 menos de tres. Con un agente las fases duran un minuto: la comparación solo tiene sentido con
 trabajo humano.
+
+## Corrida s19-a, el diff del artefacto en el 2.4.4
+
+4 de octubre de 2026, SPEC-019. La skill muestra el diff con `git diff --no-index /dev/null
+<archivo>` si el artefacto no está versionado y con `git diff -- <archivo>` si lo está, y lo
+decide con `git ls-files --error-unmatch`. Un agente sin acceso a `docs/relator/` hizo el 2.4
+con la tarea C.
+
+| Caso | Comando | Resultado |
+|---|---|---|
+| Artefacto nuevo, sin versionar | `git diff --no-index /dev/null <archivo>` | Mostró el artefacto completo, 35 líneas, más la línea de qué cambió |
+| Artefacto versionado y modificado | `git diff -- <archivo>` | Mostró solo el cambio, con tres líneas de contexto |
+
+Salieron dos precisiones que se agregaron a la skill: `git diff --no-index` termina con código
+1 cuando hay diferencias, y no es un error; y si la corrección deja el archivo igual a lo
+confirmado, el diff sale vacío y la skill lo dice. En el caso nuevo, el diff muestra el
+artefacto entero y no solo la corrección del paso; la línea de qué cambió es la que la señala.

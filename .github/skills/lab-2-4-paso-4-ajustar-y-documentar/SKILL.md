@@ -32,4 +32,10 @@ equipo lo use sin preguntar.
 
 # Salida esperada
 
-El diff del artefacto y una línea que diga qué cambió y por qué.
+El diff completo del artefacto, mostrado en el chat, no un resumen, y una línea que diga qué
+cambió y por qué. Si el artefacto no está versionado, que es lo habitual porque se creó en
+este laboratorio, `git diff` sale vacío: muéstralo con `git diff --no-index /dev/null
+<archivo>`. Si está versionado, con `git diff -- <archivo>`. Para saber cuál es el caso, usa
+`git ls-files --error-unmatch <archivo>`. `git diff --no-index` termina con código 1
+cuando hay diferencias: es lo normal, no un error. Si el diff sale vacío, di que el artefacto
+no tiene cambios respecto de lo confirmado.

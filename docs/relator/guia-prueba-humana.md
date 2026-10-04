@@ -260,8 +260,10 @@ tramo es inclusivo».
 | Borde de tramo | CM0001 y CM0007, TX002001 a TX002004 | 22,00 |
 | Punto flotante | CM0011, CM0016 y CM0025 | 0,03 |
 
-- [ ] Encontró las dos causas sin ayuda. Si solo encontró 22,00: pregunte cuánto suma lo que
-      encontró contra la diferencia y anote si llega solo a 0,03.
+- [ ] Explicó por separado las dos causas, cada una con su monto y sus comercios, sin ayuda.
+      En el camino B también, aunque la conciliación dé cero. Si solo encontró 22,00 o solo
+      explicó lo que fallan las pruebas, como 3,00 y 0,01: pregunte cuánto suma cada causa y
+      a quién afecta, y anote si llega solo a 22,03.
 - [ ] Avisó antes de cambiar `double` o la forma de redondear y esperó «apruebo».
 - [ ] En el diff solo cambió el hash de junio, al valor que empieza con `cd1466305e63`.
 

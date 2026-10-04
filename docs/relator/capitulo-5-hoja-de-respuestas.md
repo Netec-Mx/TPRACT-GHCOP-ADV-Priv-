@@ -32,12 +32,12 @@ liquidaciones en 3 415,01, 4 065,43 y 2 521,97 soles en abril, mayo y junio.
 Si no la pidieron en el 5.1, la piden aquí. Misma respuesta: límite superior inclusivo;
 500 va al primer tramo, 2000 al segundo, 10000 al tercero.
 
-**Si alguien encuentra solo la causa grande** (22,00 del borde) y le quedan 0,03: pregunte
-cuánto suma lo encontrado contra la diferencia. Sugiera recalcular con decimal exacto. Si se acaba el tiempo: CM0011, CM0016 y CM0025, punto
-flotante.
+**Si encuentra solo el borde** o **solo explica lo que fallan las pruebas**: pregunte cuánto
+suma cada causa y a quién afecta; sugiera recalcular con decimal exacto. Total 22,03: 22,00
+de borde, CM0001 y CM0007; 0,03 de punto flotante, CM0011, CM0016 y CM0025.
 
 **Si alguien nota que el periodo 2026-13 liquida enero de 2027:** bien visto; no es del
-catálogo y no se corrige en el taller.
+catálogo, no se corrige.
 
 ## Si alguien se atrasa
 

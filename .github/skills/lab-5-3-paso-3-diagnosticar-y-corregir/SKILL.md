@@ -15,8 +15,8 @@ nada más hasta que responda.
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Mantención, con `date +%H:%M`, y
-   `participante` en Origen.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Mantención, con
+   `date +%H:%M`, y `participante` en Origen.
 2. Reproduce el rojo con `bash scripts/integracion-local.sh`. Según el caso, falla la
    conciliación, las pruebas del reporte, o las dos.
 3. Diagnostica hasta el nivel de comercio y de transacción. Encuentra qué comercios explican
@@ -24,21 +24,29 @@ nada más hasta que responda.
    sepáralas: para cada una, qué transacciones la producen, cuánto suma y qué regla de
    `escenario/README.md` está en juego. No te detengas en la causa más grande: la suma de
    las causas tiene que dar la diferencia completa, al centavo.
-4. Si una causa depende de una regla que el README no decide, busca primero la respuesta del
+4. Explica por separado cada causa con su monto y los comercios afectados, aunque las
+   pruebas ya hayan dejado alguna en evidencia. Una prueba que falla muestra un caso, no
+   cuánto suma la causa ni a quién más afecta. Si la conciliación da cero porque el reporte
+   comparte el cálculo de la liquidación, la diferencia completa no aparece sola:
+   obténla comparando, comercio por comercio, el total de comisiones de la liquidación con
+   un cálculo exacto e independiente de las reglas de `escenario/README.md`, con decimal y
+   sin punto flotante, y explica esa diferencia completa, no solo lo que fallan las
+   pruebas.
+5. Si una causa depende de una regla que el README no decide, busca primero la respuesta del
    negocio en la tabla de preguntas de `docs/proyecto/historia-reporte-medios-de-pago.md`. Si
    está, úsala y cítala. Si no está, detente y dile al participante que le lleve la pregunta
    al negocio, que en esta sala es el relator. No elijas tú.
-5. Con la decisión del negocio, propón la corrección mínima en el escenario del stack: solo
+6. Con la decisión del negocio, propón la corrección mínima en el escenario del stack: solo
    lo necesario para cada causa, sin refactorizar. Si la corrección exige algo que las
    instrucciones del repositorio prohíben salvo pedido explícito, como cambiar un tipo de
    dato o una forma de redondear, dilo y muestra qué regla toca. Espera la aprobación del
    participante y recién entonces aplícala.
-6. La corrección cambia la liquidación de algún periodo a propósito. Muestra qué periodos y
+7. La corrección cambia la liquidación de algún periodo a propósito. Muestra qué periodos y
    qué comercios cambian, y actualiza en `scripts/integracion/liquidacion-esperada.sha256`
    solo los hashes de esos periodos. Explica al participante que ese cambio se justifica en
    la descripción del pull request.
-7. Ejecuta `bash scripts/integracion-local.sh` hasta que todo esté en verde.
-8. Al terminar, anota en el registro de tiempos la hora de término de Mantención.
+8. Ejecuta `bash scripts/integracion-local.sh` hasta que todo esté en verde.
+9. Al terminar, anota en el registro de tiempos la hora de término de Mantención.
 
 # Restricciones
 
