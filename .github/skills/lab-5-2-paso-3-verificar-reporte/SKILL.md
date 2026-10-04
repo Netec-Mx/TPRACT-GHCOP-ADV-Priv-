@@ -28,9 +28,9 @@ nada más hasta que responda.
    «5.2: `verificar-reporte.sh java 2026-06` no coincide». Sin causa. Son los únicos
    cambios de archivo de este paso.
 5. Si el pipeline local está en verde, propone al participante el commit con los archivos
-   del reporte, el registro de tiempos y la especificación entregada, por ejemplo
-   `git add escenario docs/proyecto && git commit -m "Reporte de comisiones por medio de
-   pago"`. Si algún periodo no coincidió, el mensaje lo dice, por ejemplo con un segundo
+   del reporte, el registro de tiempos, la especificación entregada y la decisión si el
+   paso 1 la actualizó, por ejemplo `git add escenario docs && git commit -m "Reporte de
+   comisiones por medio de pago"`. Si algún periodo no coincidió, el mensaje lo dice, por ejemplo con un segundo
    `-m "Hallazgo abierto: verificar-reporte no coincide en 2026-06"`. Espera a que lo
    confirme. Tú no haces el commit.
 

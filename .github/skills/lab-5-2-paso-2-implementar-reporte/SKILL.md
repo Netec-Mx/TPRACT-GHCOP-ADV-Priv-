@@ -30,6 +30,8 @@ Material de partida:
 2. Implementa el argumento `--reporte-medios` en la clase ejecutable del stack, con el
    formato exacto de la especificación técnica.
 3. No escribas todavía las pruebas del reporte. Son el paso 1 del 5.3.
+4. Si el reporte no coincide con la salida esperada en algún periodo, muestra la diferencia y
+   déjala para el paso 3. No diagnostiques la causa: se busca en el 5.3.
 
 # Restricciones
 

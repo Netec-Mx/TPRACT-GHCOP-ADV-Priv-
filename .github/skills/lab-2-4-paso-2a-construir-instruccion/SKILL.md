@@ -35,6 +35,8 @@ dile que el paso que corresponde es `/lab-2-4-paso-2b-construir-agente`.
 - En los metadatos usa solo `name`, `description` y `applyTo`.
 - Reglas concretas y verificables. Nada de «escribe código limpio» ni frases que no se
   puedan comprobar.
+- Si incluyes ejemplos que citan archivos, cita archivos reales del repositorio, con líneas
+  que existan. No inventes rutas.
 
 # Salida esperada
 

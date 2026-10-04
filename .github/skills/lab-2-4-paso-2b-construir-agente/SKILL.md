@@ -33,6 +33,8 @@ instrucción, dile que el paso que corresponde es `/lab-2-4-paso-2a-construir-in
 - Crea un solo archivo. No modifiques la plantilla ni otros artefactos de `.github/`.
 - En los metadatos usa solo `name`, `description`, `argument-hint` y `tools`.
 - Límites concretos: qué no hace el agente, dicho en frases verificables.
+- Si incluyes ejemplos que citan archivos, cita archivos reales del repositorio, con líneas
+  que existan. No inventes rutas.
 
 # Salida esperada
 

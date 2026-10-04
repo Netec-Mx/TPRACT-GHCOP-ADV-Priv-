@@ -152,6 +152,9 @@ Modo **Agent**. 30 minutos; el paso 4 es opcional.
 | 3 | `/lab-4-4-paso-3-preparar-para-confluence` | Nada | La copia `-confluence.md` completa y lo que se perdió | El original sin cambios | 8 min |
 | 4, opcional | `/lab-4-4-paso-4-generar-runbook java` | Los comandos de compilación, ejecución y `comparar-escenarios.sh`, entre 15 y 18 | El runbook completo y cuántas acciones quedaron verificadas | Ninguna acción marcada verificada sin ejecución; ninguna toca `escenario/datos/` | 8 a 12 min |
 
+- [ ] El documento del paso 1 existe con el nombre exacto,
+      `labs/cap4/lab-4-4-documentacion/entregables/calculo-de-comisiones.md`: ábralo desde el
+      explorador. En la prueba con Copilot CLI se creó con un salto de línea al final del nombre.
 - [ ] Abra dos líneas citadas en el documento del paso 1 y compruebe que dicen lo que el
       documento afirma.
 - [ ] `git status`: solo archivos nuevos en `labs/cap4/lab-4-4-documentacion/entregables/`.
@@ -239,8 +242,8 @@ y confirme con `git add -A && git commit -m "Inicio del 5.2"`. El registro de ti
 cambió la liquidación. Responda «deshaz ese cambio y sigue sin refactorizar».
 
 **Cerrar:** el commit que propone el paso 3, por ejemplo
-`git add escenario docs/proyecto && git commit -m "Reporte de comisiones por medio de pago"`.
-Después `git status`: no queda nada de `docs/proyecto/` sin confirmar.
+`git add escenario docs && git commit -m "Reporte de comisiones por medio de pago"`.
+Después `git status`: no queda nada de `docs/` sin confirmar.
 
 - Camino: ______________
 - Observado: ______________________________________________
