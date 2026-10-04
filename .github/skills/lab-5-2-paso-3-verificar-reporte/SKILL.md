@@ -22,8 +22,9 @@ nada más hasta que responda.
    salida del reporte de ese periodo y revísala contra la especificación técnica, sin
    corregir nada. Anótalo en una sección «Pendiente para el 5.3» de tu respuesta.
 4. Si el pipeline local está en verde, propone al participante el commit con los archivos
-   del reporte, por ejemplo `git add escenario && git commit -m "Reporte de comisiones por
-   medio de pago"`, y espera a que lo confirme. Tú no haces el commit.
+   del reporte, el registro de tiempos y la especificación entregada, por ejemplo
+   `git add escenario docs/proyecto && git commit -m "Reporte de comisiones por medio de
+   pago"`, y espera a que lo confirme. Tú no haces el commit.
 
 # Restricciones
 

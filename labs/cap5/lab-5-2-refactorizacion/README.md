@@ -37,7 +37,7 @@ Un refactor que cambia un solo byte de la liquidación está mal, aunque parezca
 
 - El reporte en tu stack, invocable con `--reporte-medios`.
 - La liquidación sin cambios: `bash scripts/integracion-local.sh` en verde.
-- Un commit en tu rama con el reporte.
+- Un commit en tu rama con el reporte, el registro de tiempos y la especificación técnica.
 
 ## Criterios de revisión
 

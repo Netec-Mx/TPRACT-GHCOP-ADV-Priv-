@@ -228,7 +228,8 @@ Modo **Agent**. 45 minutos. Sigue en la rama del 5.1. Si el 5.1 no terminó:
 cambió la liquidación. Responda «deshaz ese cambio y sigue sin refactorizar».
 
 **Cerrar:** el commit que propone el paso 3, por ejemplo
-`git add escenario && git commit -m "Reporte de comisiones por medio de pago"`.
+`git add escenario docs/proyecto && git commit -m "Reporte de comisiones por medio de pago"`.
+Después `git status`: no queda nada de `docs/proyecto/` sin confirmar.
 
 - Camino: ______________
 - Observado: ______________________________________________
