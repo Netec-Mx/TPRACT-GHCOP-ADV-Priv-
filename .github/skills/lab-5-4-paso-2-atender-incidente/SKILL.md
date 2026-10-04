@@ -11,13 +11,14 @@ de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Operación y soporte, con `date +%H:%M`, y
-   `participante` en Origen.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Operación y soporte,
+   con `date +%H:%M`, y `participante` en Origen.
 2. Recibe el incidente ejecutando `bash scripts/proyecto/entregar.sh incidente`, y léelo.
 3. Sigue la skill `pasarela-analizar-incidente`. Escribe el análisis en
    `docs/proyecto/incidentes/<identificador>-analisis.md`, con la estructura de
    [la plantilla de runbook](../../../docs/operacion/runbook-plantilla.md), y la respuesta al
-   comercio en `docs/proyecto/incidentes/<identificador>-respuesta.md`.
+   comercio en `docs/proyecto/incidentes/<identificador>-respuesta.md`. El análisis trae la
+   tabla por transacción y la pregunta abierta al negocio que pide esa skill.
 4. Pregunta al participante si la respuesta se puede enviar así o qué cambia.
 5. Al terminar, anota en el registro de tiempos la hora de término de Operación y soporte.
 6. Propón el commit con el incidente, su análisis, la respuesta y el registro de tiempos, por

@@ -31,7 +31,10 @@ no del agente.
 ## Errores típicos
 
 - Notas de versión con nombres de clases.
-- Una respuesta al comercio que promete devolver la diferencia.
+- Una respuesta al comercio que promete devolver la diferencia, o que decide que no corresponde.
+  Las dos son decisiones del negocio: van como pregunta abierta en el análisis.
+- Un análisis que explica el monto con una sola transacción. Son dos por comercio; la tabla por
+  transacción lo muestra.
 - Un presupuesto con precios inventados.
 
 ## Tiempos
