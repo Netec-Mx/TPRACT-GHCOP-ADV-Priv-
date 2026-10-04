@@ -24,6 +24,9 @@ mantención evolutiva de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
    en su «Estimado con IA» escribe «no aplica»: la fila mide el paso de estimar la
    evolutiva, no su implementación, que se estimó en
    `docs/proyecto/estimacion-evolutiva.md`.
+6. Propón el commit con la estimación evolutiva y el registro de tiempos, por ejemplo
+   `git add docs/proyecto && git commit -m "Estimacion de la evolutiva"`, y espera la
+   confirmación del participante. Tú no haces el commit.
 
 # Restricciones
 

@@ -20,6 +20,9 @@ de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
    comercio en `docs/proyecto/incidentes/<identificador>-respuesta.md`.
 4. Pregunta al participante si la respuesta se puede enviar así o qué cambia.
 5. Al terminar, anota en el registro de tiempos la hora de término de Operación y soporte.
+6. Propón el commit con el incidente, su análisis, la respuesta y el registro de tiempos, por
+   ejemplo `git add docs/proyecto && git commit -m "Incidente: analisis y respuesta"`, y
+   espera la confirmación del participante. Tú no haces el commit.
 
 # Restricciones
 
@@ -27,6 +30,7 @@ de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
   características elegidas a propósito para el taller. Si ves algo que te parece un
   problema, menciónalo al final de tu respuesta y no lo toques.
 - No modifiques código ni datos.
+- Tú no haces el commit.
 
 # Salida esperada
 
