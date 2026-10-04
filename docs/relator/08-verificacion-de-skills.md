@@ -700,3 +700,30 @@ Segundos por laboratorio: Java A, 95, 115, 245 y 140; Java B, 113, 84, 251 y 141
 - La plantilla de estimación no tiene la fila «Mantención evolutiva» del registro de tiempos.
 - Con un agente, las diferencias de estimado contra real salen muy negativas; se evalúan con
   trabajo humano, como dice SPEC-019.
+
+## Corrida s22, el capítulo 5 después de SPEC-022
+
+4 de octubre de 2026. Dos agentes sin acceso a `docs/relator/`, en Java, desde un repositorio
+reiniciado: el camino A del 5.1 al 5.4 y el camino B del 5.1 al 5.3.
+
+| Confirmación | Camino A | Camino B |
+|---|---|---|
+| La estimación del 5.1 tiene las mismas filas que el registro, con «Mantención evolutiva» | Sí; doce filas, y el registro recibió el estimado de la evolutiva en el 5.1 | Sí; doce filas copiadas al registro |
+| Qué detectó la conciliación y qué las pruebas | Conciliación: junio, 2203 centavos, porque solo junio tiene casos de borde y de medio centavo. Pruebas: la de conciliación, en junio, y la de formato | Conciliación: nada en ningún periodo, porque el reporte compara el cálculo de la liquidación consigo mismo. Pruebas: el borde, 14,80 contra 17,80, y el medio centavo de CM0011 |
+| Dónde va cada corrección | Borde y redondeo, en la liquidación. Un error propio del reporte, un formato que no redondeaba, en el reporte | Borde y redondeo, en la liquidación; no hubo errores propios del reporte |
+| Fin del 5.3 | Pipeline en verde; `verificar-reporte.sh` coincide en los tres periodos | **No verificado.** Ver abajo |
+| Fila «Mantención evolutiva» en el cierre del 5.4 | Estimado 15, comparada como las demás | No aplica: el camino B llegó hasta el 5.3 |
+
+**El camino B no terminó.** En el 5.3.3, el clasificador de permisos del entorno del
+verificador bloqueó la edición de `scripts/integracion/liquidacion-esperada.sha256` en la copia
+de trabajo. El verificador no buscó otra vía. La corrección ya estaba aplicada y
+`verificar-reporte.sh` coincidía en los tres periodos, pero el hash de junio no se actualizó,
+así que el pipeline quedó en rojo en la equivalencia de junio, y el hallazgo del 5.2 no se
+marcó como resuelto. Es un límite del entorno de verificación, no del material; la corrida s21
+ya había verificado ese cierre en el camino B.
+
+En el camino A, el primer intento de corregir el redondeo dejó dos comercios mal, y la prueba
+en junio que pide el 5.3.3 lo detectó antes de darlo por bueno.
+
+Segundos por laboratorio: camino A, 115, 134, 291 y 121; camino B, 138, 77 y 222 hasta el
+bloqueo.
