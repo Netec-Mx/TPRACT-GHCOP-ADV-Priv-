@@ -197,6 +197,8 @@ parte de un archivo, anótelo.
 | Monto transado | Suma exacta de los montos del medio |
 | Cuotas | La comisión incluye su recargo: 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
 | Contracargos y retenciones | No forman parte del reporte |
+| Un reporte por mes o los tres juntos | Uno por periodo, un mes por vez |
+| De dónde sale el medio de pago | Del campo `medioPago` de cada transacción |
 | Orden, formato, decimales o participación | Los fija la especificación que se entrega en el 5.2 |
 | Cualquier otra cosa | «Pendiente» |
 

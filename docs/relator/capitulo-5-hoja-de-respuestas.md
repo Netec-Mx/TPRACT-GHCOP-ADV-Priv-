@@ -8,15 +8,16 @@ Responda solo lo que pregunten.
 |---|---|
 | Qué transacciones entran | Aprobadas, en soles, monto mayor que cero, en el periodo |
 | Qué comercios entran | Activos y suspendidos con plan; no los dados de baja |
-| El periodo | Del primer día, 00:00:00, al último, 23:59:59, con la hora del cierre |
+| El periodo | Del primer día, 00:00:00, al último, 23:59:59 |
 | El monto transado | Suma exacta de los montos del medio |
-| Las cuotas | La comisión incluye su recargo: 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
+| Las cuotas | Recargo de 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
 | Contracargos y retenciones | No forman parte del reporte |
 | Contra qué se comprueba | Suma del total de comisiones de las liquidaciones, al centavo |
 | El tope | Por comercio; filas antes del tope y una fila de ajuste |
 | El redondeo | Al final: cada fila suma exacto y redondea; el total, por comercio, como la liquidación |
 | Un monto en el límite de un tramo | Al tramo inferior: límite superior inclusivo |
-| Un reporte por mes o los tres juntos | Uno por periodo, un mes por vez |
+| Un reporte por mes o los tres juntos | Uno por mes |
+| De dónde sale el medio de pago | Del campo `medioPago` de cada transacción |
 | Orden, formato o decimales | Los fija la especificación que se entrega en el 5.2 |
 
 Criterio de decimales: un comercio cuya suma exacta termina en 5 en el tercer decimal; si
