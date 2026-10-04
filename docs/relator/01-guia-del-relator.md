@@ -121,6 +121,7 @@ mecanismos son los mismos y que el taller usa un solo editor para que todos vean
 | `guia-prueba-humana.md` | Prueba y ensayo de los nueve laboratorios con Copilot real |
 | `08-verificacion-de-skills.md` | Registro de la verificación de skills y demostraciones |
 | `09-bitacora-de-construccion.md` | Por qué el repositorio es como es |
+| `09-prueba-copilot-cli.md` | Prueba de los laboratorios con GitHub Copilot CLI, SPEC-023 |
 | `10-mantenimiento.md` | Qué revisar antes de cada dictado |
 | `notas/` | Notas por laboratorio y del hook |
 | `capitulo-5-hoja-de-respuestas.md` | Todo lo que el relator dice o entrega en el capítulo 5, en una página |
