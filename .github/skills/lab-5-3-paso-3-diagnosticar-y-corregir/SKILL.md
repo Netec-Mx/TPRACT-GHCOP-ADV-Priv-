@@ -38,7 +38,10 @@ nada más hasta que responda.
    está, úsala y cítala. Si no está, detente y dile al participante que le lleve la pregunta
    al negocio, que en esta sala es el relator. No elijas tú.
 6. Con la decisión del negocio, propón la corrección mínima en el escenario del stack: solo
-   lo necesario para cada causa, sin refactorizar. Si la corrección exige algo que las
+   lo necesario para cada causa, sin refactorizar. La corrección va en el cálculo de
+   comisión de la liquidación, no en el reporte. Si el reporte reutiliza ese cálculo, queda
+   corregido con la misma corrección: no propongas reescribirlo. Si el reporte calcula por
+   su cuenta, la conciliación queda en cero al corregir la liquidación. Si la corrección exige algo que las
    instrucciones del repositorio prohíben salvo pedido explícito, como cambiar un tipo de
    dato o una forma de redondear, dilo y muestra qué regla toca. Espera la aprobación del
    participante y recién entonces aplícala.
