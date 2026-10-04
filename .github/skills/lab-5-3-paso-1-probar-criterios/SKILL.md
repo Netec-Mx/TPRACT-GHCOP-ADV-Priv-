@@ -24,7 +24,11 @@ nada más hasta que responda.
    termina en medio centavo, se prueban con ese valor exacto. Cada criterio tiene su prueba,
    también el de formato: se prueba sobre la función que da formato a la salida, con un
    caso de medio centavo y uno con miles. La comparación por hash de
-   `scripts/verificar-reporte.sh` no reemplaza esa prueba.
+   `scripts/verificar-reporte.sh` no reemplaza esa prueba. La prueba del criterio de
+   conciliación ejecuta la liquidación y el reporte para el mismo periodo, con los datos del
+   escenario, y compara el total del reporte con la suma del total de comisiones de la
+   liquidación. No compara el reporte consigo mismo ni con un cálculo hecho dentro de la
+   prueba.
 3. Si un criterio tiene un valor «pendiente», pregúntale al participante si ya tiene la
    respuesta del negocio. Si no la tiene, deja esa prueba fuera y dilo.
 4. Ejecuta las pruebas del stack.
