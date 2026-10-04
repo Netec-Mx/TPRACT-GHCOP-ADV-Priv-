@@ -355,6 +355,31 @@ laboratorio y cada demostración tiene uno. Diga a la sala que es una ejecución
 
 ---
 
+### Consumo de Copilot en el taller
+
+Un recorrido completo de los nueve laboratorios con Copilot y el modelo por defecto consumió
+unos 1.900 créditos de IA, en 74 solicitudes premium. Es la medición de la prueba con Copilot
+CLI del 4 de octubre de 2026, en [`09-prueba-copilot-cli.md`](09-prueba-copilot-cli.md); en
+esa prueba la cuota mensual de la cuenta se agotó a mitad del capítulo 5, sin aviso previo.
+
+| Laboratorio | Créditos de IA |
+|---|---|
+| 1.4, 1.5, 2.4 y 3.4 | 35 a 65 cada uno |
+| 4.4 | 200 |
+| 5.1 | 170 |
+| 5.2 | 170 a 210 |
+| 5.3 | 640 |
+| 5.4 | 225 |
+
+Los pasos más caros son los que escriben y corrigen código en el capítulo 5: el 5.2.2, el
+5.3.1 y el 5.3.3, con entre 1 y 2,7 millones de tokens cada uno, y el 4.4.4, que ejecuta y
+verifica cada acción del runbook.
+
+La organización que entrega las licencias tiene que habilitar un presupuesto de consumo
+adicional para los participantes durante el taller. Con la cuota mensual de una licencia
+individual, un participante puede quedarse sin Copilot en el capítulo 5. Confírmelo con el
+administrador de las licencias antes de la primera sesión.
+
 ## 5. Cómo conducir los laboratorios
 
 ### Lo que es común a los nueve
