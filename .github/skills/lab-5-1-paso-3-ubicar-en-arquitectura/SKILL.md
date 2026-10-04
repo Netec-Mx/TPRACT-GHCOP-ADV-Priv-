@@ -25,9 +25,11 @@ Material de partida:
    `participante` en Origen.
 2. Ubica la responsabilidad del reporte en el mapeo: a qué dominio de servicio pertenece y
    qué componentes del escenario necesita leer. Cita archivo y línea.
-3. Propón al menos dos alternativas de dónde vive el código del reporte, por ejemplo una
-   clase propia o un método dentro de una clase existente, y para cada una qué tendría que
-   reutilizar o duplicar.
+3. Evalúa al menos estas tres alternativas de dónde vive el código del reporte, y para cada
+   una qué tendría que reutilizar o duplicar y qué consecuencias tiene: un método nuevo en
+   la clase de cálculo de la liquidación; clases propias que reutilizan el cálculo de
+   comisión de la liquidación; y clases propias que calculan la comisión por su cuenta, con
+   decimal exacto. Puedes agregar otras. No digas cuál conviene: decide el participante.
 4. Pregunta al participante qué alternativa elige. Con su respuesta, registra la decisión
    con la skill `pasarela-registrar-decision` en `docs/arquitectura/decisiones/`. Registra
    la alternativa que el participante eligió de verdad, con sus consecuencias, aunque no
