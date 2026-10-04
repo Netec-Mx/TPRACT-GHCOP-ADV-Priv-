@@ -28,7 +28,9 @@ cambio y unificar después, en el 5.3, si corresponde.
 
 No diga cuál es el bueno. Los dos llegan al mismo rojo en el 5.3 y a la misma corrección.
 Si alguien en el camino B pregunta por qué junio no coincide, diga que lo anote: se
-diagnostica en el 5.3.
+diagnostica en el 5.3. En el camino B, junio no coincide en el paso 3: es esperado, queda
+como hallazgo abierto en el registro de tiempos y en el mensaje del commit, sin causa, y se
+resuelve en el 5.3.
 
 **Si Copilot adelanta la causa en el camino B.** En la prueba con Copilot real, al ver que
 junio no coincidía, Copilot recalculó y explicó en el paso 2 que el borde exclusivo de la

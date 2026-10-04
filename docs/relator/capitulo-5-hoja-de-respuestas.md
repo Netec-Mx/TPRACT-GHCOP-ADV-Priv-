@@ -16,16 +16,12 @@ Responda solo lo que pregunten.
 | El tope | Por comercio; filas antes del tope y una fila de ajuste |
 | El redondeo | Al final: cada fila suma exacto y redondea; el total, por comercio, como la liquidación |
 | Un monto en el límite de un tramo | Al tramo inferior: límite superior inclusivo |
+| Un reporte por mes o los tres juntos | Uno por periodo, un mes por vez |
 | Orden, formato o decimales | Los fija la especificación que se entrega en el 5.2 |
 
 Criterio de decimales: un comercio cuya suma exacta termina en 5 en el tercer decimal; si
 no, que lo rehaga. Criterio de formato: montos con dos decimales, medio hacia arriba, regla
 9; se prueba en el 5.3. La decisión 0004 de referencia es del camino A.
-
-## 5.2, paso 3
-
-Si el reporte reutiliza el cálculo, junio no coincide: es esperado, queda como hallazgo
-abierto y se resuelve en el 5.3.
 
 ## 5.3, paso 2: qué detectó cada cosa
 
