@@ -20,8 +20,7 @@ Responda solo lo que pregunten.
 
 Criterio de decimales: un comercio cuya suma exacta termina en 5 en el tercer decimal; si
 no, que lo rehaga. Criterio de formato: montos con dos decimales, medio hacia arriba, regla
-9; se prueba en el 5.3. Si el agente avisa un defecto del código, como el
-borde o el recargo de 3,5 %: bien visto; se confirma en el 5.3.
+9; se prueba en el 5.3.
 
 **Paso 3.** La 0004 de referencia es del camino A: el reporte calcula por su cuenta. Quien
 reutiliza el cálculo de la liquidación registra eso y su consecuencia: el reporte hereda
@@ -36,10 +35,11 @@ abierto y se resuelve en el 5.3.
 
 Si no la pidieron en el 5.1: límite superior inclusivo.
 
-La corrección va en la liquidación; un reporte que reutiliza el cálculo queda corregido con
-ella. La mínima: cada comisión exacta, suma exacta por comercio y un solo redondeo al final,
-medio hacia arriba. Si cambia solo el redondeo: que pruebe junio; le quedan centavos. Solo
-en su stack: el otro conserva la diferencia y queda fuera del alcance.
+Las causas del cálculo se corrigen en la liquidación, y un reporte que lo reutiliza queda
+corregido con ella; un error propio del reporte, como un formato que redondea antes, en el
+reporte. La mínima: cada comisión exacta, suma exacta por comercio y un solo redondeo al
+final, medio hacia arriba. Si cambia solo el redondeo: que pruebe junio; le quedan centavos.
+Solo en su stack: el otro conserva la diferencia y queda fuera del alcance.
 
 **Si encuentra solo el borde** o **solo explica lo que fallan las pruebas**: pregunte cuánto
 suma cada causa y a quién afecta; sugiera recalcular con decimal exacto. Total 22,03: 22,00

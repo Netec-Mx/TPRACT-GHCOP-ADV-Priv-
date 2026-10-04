@@ -910,7 +910,8 @@ transacciones, y la segunda causa, el punto flotante, que no se ve leyendo el c�
 ### Qué responde el relator
 
 Que está bien visto, que no se corrige ahora y que el 5.3 lo va a confirmar con evidencia.
-Está en las notas del 5.1 y en la hoja de respuestas del capítulo 5.
+Está en las notas del 5.1. Estuvo también en la hoja de respuestas hasta SPEC-022, que lo
+pasó a las notas por espacio.
 
 ## HALLAZGO-12. La liquidación acepta el mes 13 y liquida enero del año siguiente
 

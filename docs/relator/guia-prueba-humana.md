@@ -267,6 +267,8 @@ tramo es inclusivo».
       explicó lo que fallan las pruebas, como 3,00 y 0,01: pregunte cuánto suma cada causa y
       a quién afecta, y anote si llega solo a 22,03.
 - [ ] Avisó antes de cambiar `double` o la forma de redondear y esperó «apruebo».
+- [ ] Dijo dónde va cada corrección: las causas del cálculo, en la liquidación; un error
+      propio del reporte, como un formato que redondea antes de tiempo, en el reporte.
 - [ ] La corrección es la mínima suficiente: cada comisión exacta, suma exacta por comercio
       y un solo redondeo al final, medio hacia arriba. Si cambió solo el redondeo, pídale
       que pruebe junio con `verificar-reporte.sh`: le quedan centavos.
