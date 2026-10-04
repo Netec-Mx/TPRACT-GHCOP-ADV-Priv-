@@ -11,16 +11,28 @@ notas para el negocio. Es la fase de Liberación de [CICLO-DE-VIDA.md](../../../
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Liberación, con `date +%H:%M`, y
+Este paso tiene dos turnos. En el primero no escribes ningún archivo.
+
+**Primer turno.**
+
+1. Toma la hora de inicio de Liberación con `date +%H:%M` y recuérdala; la anotas en el
+   segundo turno.
+2. Lee el registro de cambios y lo que hay en la rama desde la versión vigente, 1.4.0: el
+   reporte, la conciliación en el pipeline y la corrección de la liquidación. Usa el criterio
+   de versionado de la skill `pasarela-notas-de-version`.
+3. Propón el número de versión, justifícalo y **termina tu turno**. No escribas el registro de
+   cambios, las notas ni el registro de tiempos hasta que el participante confirme el número.
+
+**Segundo turno, con el número confirmado.**
+
+4. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio que tomaste, con
    `participante` en Origen.
-2. Sigue la skill `pasarela-notas-de-version` con lo que hay en la rama desde la versión
-   vigente del registro de cambios, 1.4.0: el reporte, la conciliación en el pipeline y la
-   corrección de la liquidación.
-3. Las notas de versión van en `docs/proyecto/notas-de-version-<versión>.md`. La sección de
-   montos tiene que explicar, en lenguaje de negocio, por qué cambia la liquidación de junio
-   y para qué comercios, con los montos antes y después obtenidos de una ejecución.
-4. Anota en el registro de tiempos la hora de término de Liberación.
-5. Propón el commit y espera la confirmación del participante.
+5. Sigue la skill `pasarela-notas-de-version` con el número confirmado. Las notas de versión
+   van en `docs/proyecto/notas-de-version-<versión>.md`. La sección de montos tiene que
+   explicar, en lenguaje de negocio, por qué cambia la liquidación de junio y para qué
+   comercios, con los montos antes y después obtenidos de una ejecución.
+6. Anota en el registro de tiempos la hora de término de Liberación.
+7. Propón el commit y espera la confirmación del participante.
 
 # Restricciones
 
@@ -31,7 +43,8 @@ notas para el negocio. Es la fase de Liberación de [CICLO-DE-VIDA.md](../../../
 
 # Salida esperada
 
-El número de versión con su justificación. Al terminar, muestra en el chat la entrada
+En el primer turno, solo el número de versión con su justificación, sin archivos escritos.
+En el segundo, al terminar, muestra en el chat la entrada
 completa que agregaste a `CHANGELOG.md`, el contenido completo de las notas de versión y
 `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste, no un resumen.
 
