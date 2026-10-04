@@ -35,7 +35,9 @@ causa de algo ni cuánto suma.
 estimación y dónde no. El registro de tiempos empieza aquí y se compara en el 5.4.
 
 **Paso 3.** Las tres alternativas de dónde vive el reporte llevan a los dos caminos del 5.2.
-No sugiera ninguna. Cualquiera sirve.
+No sugiera ninguna. Cualquiera sirve. La decisión 0004 de referencia es la del camino A: el reporte calcula por
+su cuenta. Quien reutiliza el cálculo de la liquidación registra esa alternativa y su
+consecuencia: el reporte hereda las diferencias de ese cálculo.
 
 ## Errores típicos
 

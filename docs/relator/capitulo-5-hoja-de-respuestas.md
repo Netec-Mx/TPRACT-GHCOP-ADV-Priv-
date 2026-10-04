@@ -20,16 +20,18 @@ Responda solo lo que pregunten.
 
 Criterio de decimales: un comercio cuya suma exacta termina en 5 en el tercer decimal; si
 no, que lo rehaga. Criterio de formato: montos con dos decimales, medio hacia arriba, regla
-9; se prueba en el 5.3.
-
-**Paso 3.** La 0004 de referencia es del camino A: el reporte calcula por su cuenta. Quien
-reutiliza el cálculo de la liquidación registra eso y su consecuencia: el reporte hereda
-las diferencias del cálculo.
+9; se prueba en el 5.3. La decisión 0004 de referencia es del camino A.
 
 ## 5.2, paso 3
 
 Si el reporte reutiliza el cálculo, junio no coincide: es esperado, queda como hallazgo
 abierto y se resuelve en el 5.3.
+
+## 5.3, paso 2: qué detectó cada cosa
+
+Camino A: la conciliación y su prueba, junio, 22,03. Camino B: la conciliación, nada; las
+pruebas, el borde y el medio centavo. Conciliar dos cosas que comparten un cálculo no detecta
+sus errores.
 
 ## 5.3, paso 3: la decisión del borde
 

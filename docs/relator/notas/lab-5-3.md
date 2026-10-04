@@ -51,6 +51,13 @@ hash que cambió esté justificado.
 `docs/relator/casos-de-clase/caso-03-verificacion-obsoleta.md`: a veces lo que quedó viejo es
 la verificación, no el código. Un hash esperado es una verificación.
 
+Proponga también la pregunta del paso 2 a toda la sala: qué detectó la conciliación y qué
+detectaron las pruebas, en qué periodos y por qué. En el camino A, la conciliación encontró
+los 22,03 de junio. En el camino B no encontró nada, porque el reporte y la liquidación usan
+el mismo cálculo: conciliar dos cosas que comparten un cálculo no detecta los errores de ese
+cálculo. Las pruebas con valores calculados aparte, en cambio, sí. No es un defecto del
+camino B, es la enseñanza.
+
 **Monto negativo.** Si alguien encuentra que un monto negativo recibe el último tramo, es un
 comportamiento real que nadie plantó. Está en `docs/relator/04-defectos-plantados.md`,
 sección «Comportamientos no planificados». No se corrige.
