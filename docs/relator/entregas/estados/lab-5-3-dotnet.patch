@@ -55,10 +55,10 @@ index 30114c9..ad64f40 100644
  siguiente, o pídaselo al agente: la skill `pasarela-registrar-decision` la redacta a partir
 diff --git a/docs/proyecto/estimacion.md b/docs/proyecto/estimacion.md
 new file mode 100644
-index 0000000..4f28622
+index 0000000..5793954
 --- /dev/null
 +++ b/docs/proyecto/estimacion.md
-@@ -0,0 +1,34 @@
+@@ -0,0 +1,35 @@
 +# Estimación: reporte de comisiones por medio de pago
 +
 +| Campo | Valor |
@@ -77,13 +77,14 @@ index 0000000..4f28622
 +| Análisis y diseño | 30 | 10 | 1 | Completar | 0 | La IA lee el código y el mapeo; la persona decide |
 +| Desarrollo | 180 | 25 | 3 | Completar | 0 | Un stack, con pruebas |
 +| Pruebas | 60 | 10 | 1 | Completar | 0 | Los criterios ya traen los valores esperados |
++| Integración continua | 40 | 10 | 1 | Completar | Completar | Un paso nuevo en un pipeline que existe |
++| Mantención | 90 | 15 | 2 | Completar | Completar | El diagnóstico es lo que pesa |
 +| Revisión de código | 20 | 8 | 1 | Completar | 0 | La revisión humana se lee igual |
 +| Seguridad | 10 | 4 | 0 | Completar | 0 | Lista de comprobación de la plantilla |
-+| Integración continua | 40 | 10 | 1 | Completar | Completar | Un paso nuevo en un pipeline que existe |
 +| Liberación | 20 | 8 | 1 | Completar | 0 | Registro de cambios y notas |
 +| Operación y soporte | 45 | 12 | 1 | Completar | 0 | Un incidente con runbook |
-+| Mantención | 90 | 15 | 2 | Completar | Completar | El diagnóstico es lo que pesa |
-+| **Total** | **545** | **127** | **13** | | | |
++| Mantención evolutiva | 30 | 8 | 1 | Completar | 0 | Estimar el cambio siguiente con el registro real del ciclo |
++| **Total** | **575** | **135** | **14** | | | |
 +
 +## Riesgos que pueden mover la estimación
 +
@@ -147,7 +148,7 @@ index 0000000..8548b77
 +Contracargos y retenciones. Filtros por comercio o por categoría.
 diff --git a/docs/proyecto/registro-de-tiempos.md b/docs/proyecto/registro-de-tiempos.md
 new file mode 100644
-index 0000000..c0f54b1
+index 0000000..d9849b1
 --- /dev/null
 +++ b/docs/proyecto/registro-de-tiempos.md
 @@ -0,0 +1,27 @@
@@ -172,7 +173,7 @@ index 0000000..c0f54b1
 +| Seguridad | 5.3, paso 4 | | | | 4 | | |
 +| Liberación | 5.4, paso 1 | | | | 8 | | |
 +| Operación y soporte | 5.4, paso 2 | | | | 12 | | |
-+| Mantención evolutiva | 5.4, paso 3 | | | | | | |
++| Mantención evolutiva | 5.4, paso 3 | | | | 8 | | |
 +
 +## Hallazgos abiertos
 +

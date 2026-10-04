@@ -20,10 +20,12 @@ mantención evolutiva de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
    `docs/proyecto/estimacion-evolutiva.md`. Usa como dato real el registro de tiempos del
    ciclo que acaba de terminar, y cítalo.
 4. Lista las preguntas abiertas que habría que hacerle al negocio antes de implementarla.
-5. Al terminar, anota en el registro de tiempos la hora de término de Mantención evolutiva, y
-   en su «Estimado con IA» escribe «no aplica»: la fila mide el paso de estimar la
-   evolutiva, no su implementación, que se estimó en
-   `docs/proyecto/estimacion-evolutiva.md`.
+5. Al terminar, anota en el registro de tiempos la hora de término de Mantención evolutiva.
+   Su «Estimado con IA» es el de la fila «Mantención evolutiva» de
+   `docs/proyecto/estimacion.md`, la estimación del 5.1, que mide este paso de estimar; si
+   el registro no lo trae, cópialo de ahí. La estimación que acabas de hacer en
+   `docs/proyecto/estimacion-evolutiva.md` es la de implementar la evolutiva y no va en el
+   registro.
 6. Propón el commit con la estimación evolutiva y el registro de tiempos, por ejemplo
    `git add docs/proyecto && git commit -m "Estimacion de la evolutiva"`, y espera la
    confirmación del participante. Tú no haces el commit.

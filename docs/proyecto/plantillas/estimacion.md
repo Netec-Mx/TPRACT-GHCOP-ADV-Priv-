@@ -19,12 +19,13 @@ Créditos y minutos de integración continua como cantidades estimadas, sin prec
 | Análisis y diseño | | | | | | |
 | Desarrollo | | | | | | |
 | Pruebas | | | | | | |
+| Integración continua | | | | | | |
+| Mantención | | | | | | |
 | Revisión de código | | | | | | |
 | Seguridad | | | | | | |
-| Integración continua | | | | | | |
 | Liberación | | | | | | |
 | Operación y soporte | | | | | | |
-| Mantención | | | | | | |
+| Mantención evolutiva | | | | | | |
 | **Total** | | | | | | |
 
 ## Riesgos que pueden mover la estimación

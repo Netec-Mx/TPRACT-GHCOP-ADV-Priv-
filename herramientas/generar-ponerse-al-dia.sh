@@ -50,7 +50,8 @@ Mantención|15
 Revisión de código|8
 Seguridad|4
 Liberación|8
-Operación y soporte|12"
+Operación y soporte|12
+Mantención evolutiva|8"
 
 # Completa en el registro de tiempos del directorio actual las primeras $1 fases con los
 # tiempos de referencia, marcados como tales en Origen.
@@ -85,7 +86,10 @@ construir_estados() {
     base="$trabajo/base"
     rm -rf "$base"
     NO_COLOR=1 bash "$raiz/scripts/publicar-taller.sh" --destino "$base" > /dev/null 2>&1
-    (cd "$base" && git init -q && git add -A && git -c user.name=g -c user.email=g@g commit -qm base)
+    # Sin mantenimiento automatico: git puede reorganizar los objetos en segundo plano mientras
+    # se copia el directorio, y la copia falla con objetos que desaparecen.
+    (cd "$base" && git init -q && git config gc.auto 0 && git config maintenance.auto false \
+        && git add -A && git -c user.name=g -c user.email=g@g commit -qm base)
     mkdir -p "$salida"
     for stack in $STACKS; do
         arbol="$trabajo/arbol-$stack"

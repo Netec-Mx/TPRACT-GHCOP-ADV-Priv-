@@ -16,13 +16,14 @@
 | Análisis y diseño | 30 | 10 | 1 | Completar | 0 | La IA lee el código y el mapeo; la persona decide |
 | Desarrollo | 180 | 25 | 3 | Completar | 0 | Un stack, con pruebas |
 | Pruebas | 60 | 10 | 1 | Completar | 0 | Los criterios ya traen los valores esperados |
+| Integración continua | 40 | 10 | 1 | Completar | Completar | Un paso nuevo en un pipeline que existe |
+| Mantención | 90 | 15 | 2 | Completar | Completar | El diagnóstico es lo que pesa |
 | Revisión de código | 20 | 8 | 1 | Completar | 0 | La revisión humana se lee igual |
 | Seguridad | 10 | 4 | 0 | Completar | 0 | Lista de comprobación de la plantilla |
-| Integración continua | 40 | 10 | 1 | Completar | Completar | Un paso nuevo en un pipeline que existe |
 | Liberación | 20 | 8 | 1 | Completar | 0 | Registro de cambios y notas |
 | Operación y soporte | 45 | 12 | 1 | Completar | 0 | Un incidente con runbook |
-| Mantención | 90 | 15 | 2 | Completar | Completar | El diagnóstico es lo que pesa |
-| **Total** | **545** | **127** | **13** | | | |
+| Mantención evolutiva | 30 | 8 | 1 | Completar | 0 | Estimar el cambio siguiente con el registro real del ciclo |
+| **Total** | **575** | **135** | **14** | | | |
 
 ## Riesgos que pueden mover la estimación
 
