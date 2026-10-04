@@ -9,9 +9,12 @@ Code lo ejecuta antes de cada herramienta que el agente quiere usar. El script
 `proteger-datos-escenario.js` revisa la herramienta y sus argumentos.
 
 - Si la herramienta crea, modifica o borra un archivo dentro de `escenario/datos/`, la
-  bloquea. Lo mismo con un comando de terminal que borra, mueve o escribe en esa carpeta.
-- Todo lo demás pasa. Leer los datos, editar `escenario/java/` y `escenario/dotnet/`, crear
-  `.vscode/mcp.json` y escribir entregables en `labs/`.
+  bloquea. Decide por la ruta de destino, no por el contenido. Lo mismo con un comando de
+  terminal que escribe en esa carpeta por redirección, `sed -i`, `tee`, `cp` hacia ella, o que
+  mueve o borra uno de sus archivos.
+- Todo lo demás pasa. Leer los datos, ejecutar la liquidación con `../datos`, editar
+  `escenario/java/` y `escenario/dotnet/`, crear `.vscode/mcp.json` y escribir entregables en
+  `labs/` o documentos en `docs/` aunque citen la ruta `escenario/datos/`.
 
 Al bloquear, el agente recibe el mensaje «Los datos del escenario están protegidos y no se
 pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.».
@@ -29,9 +32,17 @@ hooks para bloquear acciones del agente antes de que ocurran. Este es uno de ver
 
 ## Límites que conviene conocer
 
-- Es preventivo y heurístico. Reconoce las herramientas de edición por su nombre y los
-  comandos de terminal por patrones como `rm`, `mv`, `sed -i` o una redirección hacia la
-  carpeta. Un comando que escribe por un camino que el patrón no reconoce puede pasar.
+- Es preventivo y heurístico. Reconoce las herramientas de edición por su nombre y su ruta
+  por los argumentos que nombran archivos, y los comandos de terminal por patrones como `rm`,
+  `mv`, `sed -i` o una redirección hacia la carpeta, tramo por tramo. Un comando que escribe
+  por un camino que el patrón no reconoce puede pasar.
+- Hasta SPEC-024 revisaba también el contenido: en la prueba con Copilot CLI bloqueó el caso
+  de uso del 3.4 y la descripción del pull request del 5.3 porque citaban la ruta, y Copilot
+  tuvo que reformular las citas. Ahora esos casos pasan.
+- Funciona igual en Visual Studio Code y en Copilot CLI: lee las dos formas de entrada,
+  `tool_name` y `tool_input`, o `toolName` y `toolArgs`.
+- Sus casos están en `herramientas/probar-hook.sh`, que corre en los gates: doce que deben
+  bloquearse y diez que deben pasar.
 - No protege de lo que haga una persona a mano. `bash scripts/reiniciar-lab.sh` restaura los
   datos si alguien los tocó.
 - Si la entrada del hook no se puede leer, deja pasar la acción, para no bloquear el trabajo

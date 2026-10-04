@@ -9,7 +9,7 @@
 #
 # Secuencia, sobre una copia del repositorio dentro del contenedor:
 #   1. verificar-ambiente.sh
-#   2. validar-skills.sh
+#   2. validar-skills.sh y las pruebas del hook, herramientas/probar-hook.sh
 #   3. comparar-escenarios.sh en los tres periodos de los datos
 #   4. Pruebas del escenario Java y del escenario .NET
 #   5. Gate de fugas de publicar-taller.sh
@@ -76,6 +76,11 @@ paso "validar-skills.sh"
 NO_COLOR=1 bash scripts/validar-skills.sh > /tmp/skills.log 2>&1; rc=$?
 tail -1 /tmp/skills.log | sed "s/^/  /"; grep "\[FALLA\]" -A3 /tmp/skills.log | sed "s/^/  /"
 resultado $rc "validar-skills.sh"
+
+paso "Pruebas del hook de proteccion de datos"
+bash herramientas/probar-hook.sh . > /tmp/hook.log 2>&1; rc=$?
+tail -1 /tmp/hook.log | sed "s/^/  /"; grep "\[FALLA\]" /tmp/hook.log | sed "s/^/  /"
+resultado $rc "probar-hook.sh"
 
 paso "comparar-escenarios.sh"
 for periodo in 2026-04 2026-05 2026-06; do

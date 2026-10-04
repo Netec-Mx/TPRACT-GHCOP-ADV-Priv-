@@ -201,7 +201,8 @@ laboratorio.
 ### Los datos están protegidos
 
 Tres transacciones de los datos sostienen el defecto principal. Un hook del repositorio
-impide que el agente modifique `escenario/datos/`. Las notas están en
+impide que el agente modifique `escenario/datos/`. Decide por el destino: deja leer los datos
+y deja escribir documentos que citan su ruta. Las notas están en
 [`notas/hook-proteccion-datos.md`](notas/hook-proteccion-datos.md) y la demostración en el
 subtema 3.3.
 
