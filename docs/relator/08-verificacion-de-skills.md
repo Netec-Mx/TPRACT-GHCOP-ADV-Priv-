@@ -669,3 +669,34 @@ comando que pasa. No se volvió a correr.
 - Corregir un solo stack deja al otro distinto en junio sin aviso de ninguna skill; con el
   stack `ambos` la equivalencia fallaría. Ya está en las notas del 5.3.
 - El 5.4.2 y el 5.4.3 no proponen commit; su trabajo entra en el del cierre.
+
+## Corrida s21, el capítulo 5 después de SPEC-021
+
+4 de octubre de 2026. Tres agentes sin acceso a `docs/relator/`, desde un repositorio
+reiniciado: el capítulo 5 completo en Java por los dos caminos, y el 5.3 y el 5.4 en .NET por
+el camino A desde `ponerse-al-dia.sh lab-5-3 dotnet`. La máquina de verificación no tiene el
+SDK de .NET 10: todo lo que usa `dotnet` corrió dentro de la imagen de los gates, sin red.
+
+| Confirmación | Java, camino A | Java, camino B | .NET, camino A |
+|---|---|---|---|
+| La historia trae el criterio de formato y el 5.3.1 lo prueba | Sí; cuatro pruebas, con 137,825 → `S/ 137.83` y miles sin separador; pasan | Sí; dos pruebas, medio centavo y miles; pasan después del 5.3.3 | Sí; una prueba con cuatro casos, entre ellos 957,185 y 1 234 567,895; pasa |
+| Corrección mínima del 5.3.3 | Cada comisión exacta, suma exacta por comercio y un redondeo al final; comprobada con `verificar-reporte.sh` y la conciliación en los tres periodos | Igual | Igual; las variantes que solo tocaban el redondeo dejaron uno o dos comercios mal y se descartaron |
+| Hallazgo abierto del 5.2 | No hubo: el reporte coincidía desde el 5.2 | Marcado como resuelto en el 5.3, con el comando que ahora pasa | No aplica: partió del 5.3 |
+| El pipeline evalúa solo el stack elegido y queda en verde | Sí; .NET se omite | Sí; .NET se omite | Sí; Java se omite. Java sigue compilando y pasa sus 20 pruebas, y conserva la diferencia de junio |
+| «Alcance por stack» en el pull request | Dice que el otro stack conserva la diferencia | Igual | Igual |
+| Commit en cada paso del 5.4 que produce algo | Los cuatro | Los cuatro | Los cuatro |
+
+Segundos por laboratorio: Java A, 95, 115, 245 y 140; Java B, 113, 84, 251 y 141; .NET A,
+5.3 en 367 y 5.4 en 181.
+
+**Reportado, sin cambiar:**
+
+- En el camino B, un agente escribió en el 5.2 una función de formato que redondeaba antes de
+  formatear. La prueba de formato del 5.3.1 la detectó, y el agente la corrigió en el reporte,
+  aunque el 5.3.3 dice que la corrección va en la liquidación. Esa regla se refiere a las dos
+  causas del cálculo; un error propio del reporte no está previsto en la skill.
+- En el camino B la conciliación del 5.3.2 nunca queda en rojo; el README del 5.3 pregunta en
+  qué periodos queda en rojo.
+- La plantilla de estimación no tiene la fila «Mantención evolutiva» del registro de tiempos.
+- Con un agente, las diferencias de estimado contra real salen muy negativas; se evalúan con
+  trabajo humano, como dice SPEC-019.
