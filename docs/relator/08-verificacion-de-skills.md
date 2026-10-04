@@ -576,3 +576,14 @@ Mantención evolutiva comparaba el paso de estimar con la estimación de impleme
 
 En esta máquina falta el SDK de .NET 10, así que `comparar-escenarios.sh` termina en 2. No es
 de la guía ni del material; la máquina virtual lo trae.
+
+## Pasos 4.4.4, 5.3.2 y 5.3.3, después de los ajustes de SPEC-017
+
+3 de octubre de 2026, SPEC-018. Se volvieron a correr como agente dentro de las corridas s18-g
+y s18-c.
+
+| Paso | Corrida | ¿Muestra lo que produce? | Observación |
+|---|---|---|---|
+| `lab-4-4-paso-4-generar-runbook` | s18-g | Sí | 207 líneas: mostró cada síntoma y, de cada acción, el comando y su párrafo «Verificado». Seis acciones ejecutadas y una no verificada |
+| `lab-5-3-paso-2-conciliacion-en-pipeline` | s18-g y s18-c | Sí | El diff solo de `integracion-local.sh` y del workflow, con `git diff --` y las dos rutas |
+| `lab-5-3-paso-3-diagnosticar-y-corregir` | s18-g y s18-c | Sí | El diff solo de `CalculadoraLiquidacion` y del hash de junio, sin repetir los pasos 1 y 2. 66, 107 y 82 segundos |
