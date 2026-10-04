@@ -144,10 +144,10 @@ index 0000000..6ffb515
 +Contracargos y retenciones. Filtros por comercio o por categoría.
 diff --git a/docs/proyecto/registro-de-tiempos.md b/docs/proyecto/registro-de-tiempos.md
 new file mode 100644
-index 0000000..b72ad21
+index 0000000..9a00621
 --- /dev/null
 +++ b/docs/proyecto/registro-de-tiempos.md
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,27 @@
 +# Registro de tiempos
 +
 +Hora real de inicio y de término de cada fase, anotadas en el momento con `date +%H:%M`. Los
@@ -170,6 +170,11 @@ index 0000000..b72ad21
 +| Liberación | 5.4, paso 1 | | | | 8 | | |
 +| Operación y soporte | 5.4, paso 2 | | | | 12 | | |
 +| Mantención evolutiva | 5.4, paso 3 | | | | | | |
++
++## Hallazgos abiertos
++
++Lo que un paso encontró y queda para un laboratorio posterior, una línea por hallazgo, con
++el laboratorio y el comando que lo muestra. Sin causa: se diagnostica cuando corresponde.
 diff --git a/scripts/integracion/stack.txt b/scripts/integracion/stack.txt
 index 82ef4fb..ecda53a 100644
 --- a/scripts/integracion/stack.txt

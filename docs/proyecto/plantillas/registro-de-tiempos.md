@@ -20,3 +20,8 @@ referencia no es del participante y no se compara como propio.
 | Liberación | 5.4, paso 1 | | | | | | |
 | Operación y soporte | 5.4, paso 2 | | | | | | |
 | Mantención evolutiva | 5.4, paso 3 | | | | | | |
+
+## Hallazgos abiertos
+
+Lo que un paso encontró y queda para un laboratorio posterior, una línea por hallazgo, con
+el laboratorio y el comando que lo muestra. Sin causa: se diagnostica cuando corresponde.

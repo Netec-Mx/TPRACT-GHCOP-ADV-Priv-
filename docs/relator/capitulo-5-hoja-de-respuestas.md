@@ -8,7 +8,7 @@ Responda solo lo que pregunten.
 |---|---|
 | Qué transacciones entran | Aprobadas, en soles, monto mayor que cero, en el periodo |
 | Qué comercios entran | Activos y suspendidos con plan; no los dados de baja |
-| El periodo | Del primer día a las 00:00:00 al último a las 23:59:59, con la hora del cierre |
+| El periodo | Del primer día, 00:00:00, al último, 23:59:59, con la hora del cierre |
 | El monto transado | Suma exacta de los montos del medio |
 | Las cuotas | La comisión incluye su recargo: 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
 | Contracargos y retenciones | No forman parte del reporte |
@@ -29,13 +29,17 @@ las diferencias del cálculo.
 Puesta en común: una historia que solo excluye las anuladas difiere de las
 liquidaciones en 3 415,01, 4 065,43 y 2 521,97 soles en abril, mayo y junio.
 
+## 5.2, paso 3
+
+Si el reporte reutiliza el cálculo, junio no coincide: es esperado, queda como hallazgo
+abierto y se resuelve en el 5.3.
+
 ## 5.3, paso 3: la decisión del borde
 
-Si no la pidieron en el 5.1: límite superior inclusivo; 500 va al primer tramo, 2000 al
-segundo, 10000 al tercero.
+Si no la pidieron en el 5.1: límite superior inclusivo.
 
-La corrección va en la liquidación. El reporte no se reescribe: si reutiliza el cálculo,
-queda corregido con ella.
+La corrección va en la liquidación; un reporte que reutiliza el cálculo queda corregido con
+ella.
 
 **Si encuentra solo el borde** o **solo explica lo que fallan las pruebas**: pregunte cuánto
 suma cada causa y a quién afecta; sugiera recalcular con decimal exacto. Total 22,03: 22,00
@@ -46,14 +50,13 @@ catálogo, no se corrige.
 
 ## Si alguien se atrasa
 
-Clave de ponerse al día: `quinua-condor-47`. Dígala; el participante ejecuta, con su stack
-y laboratorio:
+Clave de ponerse al día: `quinua-condor-47`. Con su stack y laboratorio:
 
 ```bash
 bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47
 ```
 
-Pide escribir `descartar` y deja el camino A. El 5.1 de cero:
+Pide `descartar` y deja el camino A. El 5.1 de cero:
 `bash scripts/reiniciar-lab.sh lab-5-1`.
 
 ## 5.4
