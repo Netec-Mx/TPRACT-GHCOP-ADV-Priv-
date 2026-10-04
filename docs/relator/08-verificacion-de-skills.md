@@ -587,3 +587,14 @@ y s18-c.
 | `lab-4-4-paso-4-generar-runbook` | s18-g | Sí | 207 líneas: mostró cada síntoma y, de cada acción, el comando y su párrafo «Verificado». Seis acciones ejecutadas y una no verificada |
 | `lab-5-3-paso-2-conciliacion-en-pipeline` | s18-g y s18-c | Sí | El diff solo de `integracion-local.sh` y del workflow, con `git diff --` y las dos rutas |
 | `lab-5-3-paso-3-diagnosticar-y-corregir` | s18-g y s18-c | Sí | El diff solo de `CalculadoraLiquidacion` y del hash de junio, sin repetir los pasos 1 y 2. 66, 107 y 82 segundos |
+
+## Corrida s18-r, el registro de tiempos del 5.4 desde ponerse-al-dia
+
+3 de octubre de 2026, SPEC-018, después de corregir los estimados del registro. Desde
+`ponerse-al-dia.sh lab-5-4`, el registro trajo nueve fases como `referencia` y los estimados de
+Liberación y de Operación y soporte. El 5.4 propuso 1.5.0 sobre la vigente 1.4.0. El cierre
+calculó minutos y diferencia de las fases del participante, dejó sin diferencia la de
+Mantención evolutiva, con «no aplica», y nombró aparte las nueve de referencia sin
+compararlas. Solo quedaron dos fases propias comparables; la skill dice ahora qué hacer si son
+menos de tres. Con un agente las fases duran un minuto: la comparación solo tiene sentido con
+trabajo humano.

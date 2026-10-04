@@ -16,8 +16,8 @@ real, los activos que puede reutilizar y la línea base para medir la adopción.
    Si a una fase le falta el inicio o el término, déjala sin minutos y dilo. Una fase con
    «no aplica» en el estimado no tiene diferencia. Las filas con
    `referencia` en Origen las dejó `ponerse-al-dia.sh`: no son del participante. Agrega al
-   final las tres fases del participante con más diferencia y una causa probable de cada
-   una, y una línea aparte que diga qué fases son de referencia y que no se comparan.
+   final las tres fases del participante con más diferencia, o las que haya si son menos, y
+   una causa probable de cada una, y una línea aparte que diga qué fases son de referencia y que no se comparan.
 2. **Activos reutilizables.** Crea `docs/proyecto/activos-del-equipo.md` con las skills, las
    plantillas, la instrucción y el pipeline que se usaron en el ciclo: para cada uno, para
    qué sirve, dónde está y qué habría que cambiar para usarlo en otro repositorio. Las
