@@ -8,10 +8,10 @@ Operación y soporte y Mantención evolutiva, y el cierre del ciclo.
 **El 5.4 no se reinicia.** Continúa sobre lo que dejaron el 5.1 al 5.3 en la rama de cada
 participante. `reiniciar-lab.sh lab-5-4` lo advierte y pide escribir `descartar`.
 
-**Paso 1, liberación.** La conversación que vale es el número de versión. 1.1.0 es la
-respuesta de referencia; 2.0.0 se puede defender porque cambian montos que ya se cobraban;
-1.0.1 no, porque se agrega una funcionalidad. Lo importante es que las notas expliquen el
-cambio de junio en lenguaje de negocio.
+**Paso 1, liberación.** La conversación que vale es el número de versión. La vigente es
+1.4.0. 1.5.0 es la respuesta de referencia; 2.0.0 se puede defender porque cambian montos
+que ya se cobraban; 1.4.1 no, porque se agrega una funcionalidad. Lo importante es que las
+notas expliquen el cambio de junio en lenguaje de negocio.
 
 **Paso 2, el incidente.** No tiene que repartir nada. La skill ejecuta
 `scripts/proyecto/entregar.sh incidente`, que crea el reclamo de CM0001 en

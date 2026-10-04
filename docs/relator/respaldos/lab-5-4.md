@@ -1,5 +1,8 @@
 > Salida real grabada en la verificación de SPEC-016, el 3 de octubre de 2026, corrida s16, stack Java, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
 
+> Grabado antes de SPEC-018, cuando el registro de cambios partía en 1.0.0. Desde SPEC-018 la
+> versión vigente es 1.4.0, la de `pom.xml`, y la respuesta de referencia es 1.5.0.
+
 # Lab 5-4 salida grabada de respaldo
 
 Los cuatro pasos del 5.4, sobre la rama que dejaron el 5.1 al 5.3.

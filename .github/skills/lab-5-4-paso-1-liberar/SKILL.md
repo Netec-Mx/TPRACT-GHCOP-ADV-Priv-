@@ -13,7 +13,7 @@ notas para el negocio. Es la fase de Liberación de [CICLO-DE-VIDA.md](../../../
 
 1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora actual en Liberación.
 2. Sigue la skill `pasarela-notas-de-version` con lo que hay en la rama desde la versión
-   1.0.0: el reporte, la conciliación en el pipeline y la corrección de la liquidación.
+   vigente del registro de cambios, 1.4.0: el reporte, la conciliación en el pipeline y la corrección de la liquidación.
 3. Las notas de versión van en `docs/proyecto/notas-de-version-<versión>.md`. La sección de
    montos tiene que explicar, en lenguaje de negocio, por qué cambia la liquidación de junio
    y para qué comercios, con los montos antes y después obtenidos de una ejecución.

@@ -4,10 +4,10 @@ Solo para el relator.
 
 ## Versión y notas
 
-**Versión 1.1.0.** Se agrega una funcionalidad compatible, el reporte, y se corrige el cálculo
-de la liquidación. Un participante puede defender 2.0.0 porque cambian montos que ya se
-cobraban; vale la conversación. Lo que no es defendible es un parche, 1.0.1, porque agrega
-una funcionalidad.
+**Versión 1.5.0.** La vigente es 1.4.0, la de `pom.xml` y del registro de cambios. Se agrega
+una funcionalidad compatible, el reporte, y se corrige el cálculo de la liquidación. Un
+participante puede defender 2.0.0 porque cambian montos que ya se cobraban; vale la
+conversación. Lo que no es defendible es un parche, 1.4.1, porque agrega una funcionalidad.
 
 La sección de montos de las notas tiene que decir, sin tecnicismos:
 
