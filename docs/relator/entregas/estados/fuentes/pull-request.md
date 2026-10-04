@@ -23,6 +23,11 @@ cada uno con la skill de su laboratorio. La persona aprobó cada plan y cada cor
 2026-06. CM0001 y CM0007 pagan 11,00 más cada uno por el límite inclusivo del tramo, y CM0011,
 CM0016 y CM0025 un centavo más por el cálculo exacto. Decisión 0005.
 
+## Alcance por stack
+
+La corrección es del stack declarado en `scripts/integracion/stack.txt`. El otro stack conserva
+la diferencia de junio y queda fuera del alcance de este cambio.
+
 ## Revisión de Copilot
 
 Estado de referencia para ponerse al día: la revisión se pide sobre los cambios propios.

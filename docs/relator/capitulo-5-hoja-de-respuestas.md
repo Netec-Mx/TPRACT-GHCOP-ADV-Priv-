@@ -38,7 +38,8 @@ Si no la pidieron en el 5.1: límite superior inclusivo.
 
 La corrección va en la liquidación; un reporte que reutiliza el cálculo queda corregido con
 ella. La mínima: cada comisión exacta, suma exacta por comercio y un solo redondeo al final,
-medio hacia arriba. Si cambia solo el redondeo: que pruebe junio; le quedan centavos.
+medio hacia arriba. Si cambia solo el redondeo: que pruebe junio; le quedan centavos. Solo
+en su stack: el otro conserva la diferencia y queda fuera del alcance.
 
 **Si encuentra solo el borde** o **solo explica lo que fallan las pruebas**: pregunte cuánto
 suma cada causa y a quién afecta; sugiera recalcular con decimal exacto. Total 22,03: 22,00
@@ -54,8 +55,3 @@ bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47
 
 Pide `descartar` y deja el camino A. El 5.1 de cero:
 `bash scripts/reiniciar-lab.sh lab-5-1`.
-
-## 5.4
-
-Si alguien propone revertir la versión: pregunte qué decisión respalda el monto nuevo y
-dónde está.

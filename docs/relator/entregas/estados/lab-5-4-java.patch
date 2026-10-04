@@ -199,10 +199,10 @@ index 0000000..8548b77
 +Contracargos y retenciones. Filtros por comercio o por categoría.
 diff --git a/docs/proyecto/pull-request.md b/docs/proyecto/pull-request.md
 new file mode 100644
-index 0000000..cdfe2be
+index 0000000..45f254c
 --- /dev/null
 +++ b/docs/proyecto/pull-request.md
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,38 @@
 +## Qué cambia y por qué
 +
 +El reporte de comisiones por medio de pago que pidió Gerencia Comercial, la conciliación del
@@ -227,6 +227,11 @@ index 0000000..cdfe2be
 +
 +2026-06. CM0001 y CM0007 pagan 11,00 más cada uno por el límite inclusivo del tramo, y CM0011,
 +CM0016 y CM0025 un centavo más por el cálculo exacto. Decisión 0005.
++
++## Alcance por stack
++
++La corrección es del stack declarado en `scripts/integracion/stack.txt`. El otro stack conserva
++la diferencia de junio y queda fuera del alcance de este cambio.
 +
 +## Revisión de Copilot
 +

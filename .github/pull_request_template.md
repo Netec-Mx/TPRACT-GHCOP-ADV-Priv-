@@ -19,6 +19,10 @@
 
 <!-- Si cambió scripts/integracion/liquidacion-esperada.sha256: qué periodo, qué comercios cambian de cuánto a cuánto, y la causa con su decisión. Si no cambió, escribe «Ninguno». Regla 5. -->
 
+## Alcance por stack
+
+<!-- El stack que cambió, el de scripts/integracion/stack.txt. Si el cambio corrige un cálculo que el otro stack también tiene, di que el otro conserva la diferencia y queda fuera del alcance de este cambio. Si no aplica, escribe «No aplica». Regla 5. -->
+
 ## Revisión de Copilot
 
 <!-- Los comentarios de la revisión de Copilot y qué se decidió con cada uno: aplicar, descartar o decidir con el equipo. Si no se pudo pedir, dilo. Regla 5. -->

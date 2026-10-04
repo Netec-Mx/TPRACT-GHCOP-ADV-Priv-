@@ -277,6 +277,8 @@ Code Review - Uncommitted Changes**. Cuente al chat qué comentó y qué decidi�
 comentario. Si el botón no aparece o pide otro plan, anótelo.
 
 - [ ] `pull-request.md` justifica el cambio del hash de junio y enlaza la decisión 0005.
+- [ ] La corrección es solo del stack elegido. El otro conserva la diferencia de junio, queda
+      fuera del alcance y `pull-request.md` lo dice en «Alcance por stack».
 
 **Cerrar:** el commit que propone el paso 4.
 

@@ -48,7 +48,9 @@ nada más hasta que responda.
 7. La corrección cambia la liquidación de algún periodo a propósito. Muestra qué periodos y
    qué comercios cambian, y actualiza en `scripts/integracion/liquidacion-esperada.sha256`
    solo los hashes de esos periodos. Explica al participante que ese cambio se justifica en
-   la descripción del pull request.
+   la descripción del pull request. Explícale también que la corrección es solo del stack de
+   `scripts/integracion/stack.txt`: el otro stack conserva la diferencia, queda fuera del
+   alcance y la descripción del pull request lo deja escrito. No lo corrijas.
 8. Comprueba la corrección antes de darla por buena: `bash scripts/verificar-reporte.sh
    <stack> P` tiene que coincidir en 2026-04, 2026-05 y 2026-06, y la conciliación tiene
    que dar cero en los tres periodos. Si propones cambiar solo la forma de redondear, pruébalo primero en junio: no lo
