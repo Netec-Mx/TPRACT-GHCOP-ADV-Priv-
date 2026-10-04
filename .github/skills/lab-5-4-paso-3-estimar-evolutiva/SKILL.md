@@ -11,8 +11,8 @@ mantención evolutiva de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora actual en Mantención, como
-   segunda entrada, marcada como evolutiva.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Mantención
+   evolutiva, con `date +%H:%M`, y `participante` en Origen.
 2. Lee la solicitud [solicitud-evolutiva.md](../../../docs/proyecto/backlog/solicitud-evolutiva.md),
    la historia del reporte y el código del reporte en el stack de
    `scripts/integracion/stack.txt`.
@@ -20,6 +20,9 @@ mantención evolutiva de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
    `docs/proyecto/estimacion-evolutiva.md`. Usa como dato real el registro de tiempos del
    ciclo que acaba de terminar, y cítalo.
 4. Lista las preguntas abiertas que habría que hacerle al negocio antes de implementarla.
+5. Al terminar, anota en el registro de tiempos la hora de término de Mantención evolutiva,
+   y en su «Estimado con IA» el total de la persona de
+   `docs/proyecto/estimacion-evolutiva.md`.
 
 # Restricciones
 

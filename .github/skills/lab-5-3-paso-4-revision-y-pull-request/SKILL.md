@@ -13,8 +13,8 @@ decisión de negocio registrada. Son las fases de Revisión de código y Segurid
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora actual en Revisión de código y en
-   Seguridad.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Revisión de código y
+   de Seguridad, con `date +%H:%M`, y `participante` en Origen.
 2. Pregúntale al participante si ya pidió la revisión de Copilot sobre sus cambios sin
    confirmar, con el botón **Copilot Code Review - Uncommitted Changes** de la vista
    **Source Control**. Si no, pídele que lo haga ahora y que te diga qué comentarios dejó y
@@ -29,7 +29,8 @@ decisión de negocio registrada. Son las fases de Revisión de código y Segurid
    secretos ni datos reales, que no se haya modificado `escenario/datos/`, que el pipeline
    esté en verde y que cada hash esperado que cambió tenga su causa. Marca solo las casillas
    que se cumplen y di por qué en las que no.
-6. Propón el commit y espera la confirmación del participante, por ejemplo
+6. Anota en el registro de tiempos la hora de término de Revisión de código y de Seguridad.
+7. Propón el commit y espera la confirmación del participante, por ejemplo
    `git add -A && git commit -m "Pruebas, conciliacion y correccion del borde de tramo"`.
 
 # Restricciones

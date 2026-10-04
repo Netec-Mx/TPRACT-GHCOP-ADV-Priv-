@@ -15,7 +15,8 @@ nada más hasta que responda.
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora actual en Pruebas.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Pruebas, con `date +%H:%M`, y
+   `participante` en Origen.
 2. Lee `docs/proyecto/historia-reporte-medios-de-pago.md`. Para cada criterio que se pueda
    comprobar con una prueba unitaria, escribe al menos una prueba en archivos nuevos del
    proyecto de pruebas del stack, con el estilo de las pruebas existentes. Los criterios con
@@ -27,6 +28,7 @@ nada más hasta que responda.
 5. **Si alguna prueba falla, no la cambies para que pase y no cambies el código.** Muestra
    qué criterio no se cumple, con el valor esperado y el obtenido. Se diagnostica en el
    paso 3.
+6. Al terminar, anota en el registro de tiempos la hora de término de Pruebas.
 
 # Restricciones
 

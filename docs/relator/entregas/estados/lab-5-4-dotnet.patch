@@ -235,28 +235,32 @@ index 0000000..cdfe2be
 +`docs/arquitectura/decisiones/0005-limite-superior-inclusivo.md`.
 diff --git a/docs/proyecto/registro-de-tiempos.md b/docs/proyecto/registro-de-tiempos.md
 new file mode 100644
-index 0000000..40c637b
+index 0000000..fbebd49
 --- /dev/null
 +++ b/docs/proyecto/registro-de-tiempos.md
-@@ -0,0 +1,18 @@
+@@ -0,0 +1,22 @@
 +# Registro de tiempos
 +
-+Hora real de inicio de cada fase, en el momento en que empieza. La duración se calcula al
-+final, con el inicio de la fase siguiente.
++Hora real de inicio y de término de cada fase, anotadas en el momento con `date +%H:%M`. Los
++minutos reales son el término menos el inicio. «Origen» dice `participante` cuando las horas
++las anotó quien hizo el laboratorio, y `referencia` cuando las dejó
++`scripts/proyecto/ponerse-al-dia.sh` porque ese laboratorio no se hizo. Un tiempo de
++referencia no es del participante y no se compara como propio.
 +
-+| Fase | Inicio (HH:MM) | Fin (HH:MM) | Minutos reales | Estimado con IA (min) | Diferencia | Nota |
-+|---|---|---|---|---|---|---|
-+| Requerimientos | | | | | | |
-+| Estimación | | | | | | |
-+| Análisis y diseño | | | | | | |
-+| Desarrollo | | | | | | |
-+| Pruebas | | | | | | |
-+| Revisión de código | | | | | | |
-+| Seguridad | | | | | | |
-+| Integración continua | | | | | | |
-+| Liberación | | | | | | |
-+| Operación y soporte | | | | | | |
-+| Mantención | | | | | | |
++| Fase | Laboratorio | Inicio (HH:MM) | Término (HH:MM) | Minutos reales | Estimado con IA (min) | Diferencia | Origen |
++|---|---|---|---|---|---|---|---|
++| Requerimientos | 5.1, paso 1 | 09:00 | 09:15 | 15 | 15 | 0 | referencia |
++| Estimación | 5.1, paso 2 | 09:15 | 09:25 | 10 | 10 | 0 | referencia |
++| Análisis y diseño | 5.1, paso 3 | 09:25 | 09:35 | 10 | 10 | 0 | referencia |
++| Desarrollo | 5.2, pasos 1 a 3 | 10:00 | 10:38 | 38 | 25 | +13 | referencia |
++| Pruebas | 5.3, paso 1 | 11:00 | 11:08 | 8 | 10 | -2 | referencia |
++| Integración continua | 5.3, paso 2 | 11:08 | 11:16 | 8 | 10 | -2 | referencia |
++| Mantención | 5.3, paso 3 | 11:16 | 11:31 | 15 | 15 | 0 | referencia |
++| Revisión de código | 5.3, paso 4 | 11:31 | 11:35 | 4 | 8 | -4 | referencia |
++| Seguridad | 5.3, paso 4 | 11:35 | 11:39 | 4 | 4 | 0 | referencia |
++| Liberación | 5.4, paso 1 | | | | | | |
++| Operación y soporte | 5.4, paso 2 | | | | | | |
++| Mantención evolutiva | 5.4, paso 3 | | | | | | |
 diff --git a/escenario/dotnet/LiquidacionComercios.Pruebas/Reporte/CalculadoraReporteMediosPruebas.cs b/escenario/dotnet/LiquidacionComercios.Pruebas/Reporte/CalculadoraReporteMediosPruebas.cs
 new file mode 100644
 index 0000000..48ac180

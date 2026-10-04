@@ -17,13 +17,14 @@ Material de partida:
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora actual en Estimación, con
-   `date +%H:%M`.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Estimación, con `date +%H:%M`, y
+   `participante` en Origen.
 2. Sigue la skill `pasarela-estimar` para una funcionalidad nueva y crea
    `docs/proyecto/estimacion.md`. Pregunta al participante, en una sola pregunta, cuánta
    experiencia tiene con el stack y con el agente, porque cambia el «sin IA» y el «con IA».
 3. Copia en la columna «Estimado con IA» del registro de tiempos el total de la persona de
    cada fase.
+4. Al terminar, anota en el registro de tiempos la hora de término de Estimación.
 
 # Restricciones
 

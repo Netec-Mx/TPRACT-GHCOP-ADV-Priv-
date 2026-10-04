@@ -47,7 +47,7 @@ git add docs scripts/integracion/stack.txt && git commit -m "Historia, estimacio
 - `docs/proyecto/historia-reporte-medios-de-pago.md`, con preguntas abiertas respondidas y
   criterios de aceptación comprobables.
 - `docs/proyecto/estimacion.md` y `docs/proyecto/registro-de-tiempos.md`, con la hora de
-  inicio de las tres primeras fases.
+  inicio y de término de las tres primeras fases.
 - Una decisión nueva en `docs/arquitectura/decisiones/`.
 - `scripts/integracion/stack.txt` con tu stack.
 - Ningún archivo de `escenario/` modificado.

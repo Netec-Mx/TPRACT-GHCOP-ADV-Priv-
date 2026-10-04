@@ -15,7 +15,8 @@ nada más hasta que responda.
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora actual en Mantención.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Mantención, con `date +%H:%M`, y
+   `participante` en Origen.
 2. Reproduce el rojo con `bash scripts/integracion-local.sh`. Según el caso, falla la
    conciliación, las pruebas del reporte, o las dos.
 3. Diagnostica hasta el nivel de comercio y de transacción. Encuentra qué comercios explican
@@ -37,6 +38,7 @@ nada más hasta que responda.
    solo los hashes de esos periodos. Explica al participante que ese cambio se justifica en
    la descripción del pull request.
 7. Ejecuta `bash scripts/integracion-local.sh` hasta que todo esté en verde.
+8. Al terminar, anota en el registro de tiempos la hora de término de Mantención.
 
 # Restricciones
 

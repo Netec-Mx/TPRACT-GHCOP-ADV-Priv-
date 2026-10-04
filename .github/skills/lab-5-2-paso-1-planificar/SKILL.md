@@ -15,7 +15,8 @@ nada más hasta que responda.
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora actual en Desarrollo.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Desarrollo, con `date +%H:%M`, y
+   `participante` en Origen. El término lo anota el paso 3.
 2. Entrega la especificación técnica del reporte ejecutando
    `bash scripts/proyecto/entregar.sh formato-del-reporte`, y léela.
 3. Lee la historia `docs/proyecto/historia-reporte-medios-de-pago.md`, la decisión de

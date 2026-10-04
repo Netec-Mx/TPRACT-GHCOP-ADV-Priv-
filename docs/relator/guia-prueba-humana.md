@@ -174,8 +174,9 @@ git switch -c reporte-medios-de-pago
 | 2 | `/lab-5-1-paso-2-estimar` | `date +%H:%M` | Pregunta su experiencia: «senior en Java, poca práctica con el agente». Después, la estimación y el registro completos | Sin precios; cada fase con minutos sin IA, con IA y del agente, y un supuesto | 10 min |
 | 3 | `/lab-5-1-paso-3-ubicar-en-arquitectura java` | `date +%H:%M` y lecturas de código | Alternativas y una pregunta. Elija la de clases nuevas que no llaman a `CalculadoraLiquidacion` ni a `CalculadoraComision`. Después: la decisión 0004, su fila del índice y el registro, completos | Alternativas con ventaja y costo, y consecuencias | 10 min |
 
-El registro de tiempos solo tiene horas de inicio; el fin y los minutos reales se completan
-en el 5.4. Si en algún paso muestra un resumen o solo parte de un archivo, anótelo.
+En el registro de tiempos, cada paso deja inicio y término de su fase, con `participante` en
+Origen; los minutos reales se calculan en el 5.4. Si en algún paso muestra un resumen o solo
+parte de un archivo, anótelo.
 
 **Paso 1, las preguntas.** Responda solo lo que pregunte:
 

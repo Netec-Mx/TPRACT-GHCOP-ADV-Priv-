@@ -28,6 +28,36 @@ readonly STACKS="java dotnet"
 clave="$(grep -o 'Clave de ponerse al día: `[^`]*`' "$raiz/docs/relator/capitulo-5-hoja-de-respuestas.md" | sed 's/.*`\(.*\)`/\1/')"
 [ -n "$clave" ] || { echo "No encuentro la clave en la hoja de respuestas" >&2; exit 2; }
 
+# Tiempos de referencia del registro de tiempos para las fases que el participante no hizo:
+# fase, inicio, termino, minutos, estimado con IA de la estimacion de referencia y diferencia.
+# Los minutos salen de la duracion de cada paso en los README de los laboratorios.
+readonly REGISTRO_REFERENCIA="Requerimientos|09:00|09:15|15|15|0
+Estimación|09:15|09:25|10|10|0
+Análisis y diseño|09:25|09:35|10|10|0
+Desarrollo|10:00|10:38|38|25|+13
+Pruebas|11:00|11:08|8|10|-2
+Integración continua|11:08|11:16|8|10|-2
+Mantención|11:16|11:31|15|15|0
+Revisión de código|11:31|11:35|4|8|-4
+Seguridad|11:35|11:39|4|4|0"
+
+# Completa en el registro de tiempos del directorio actual las primeras $1 fases con los
+# tiempos de referencia, marcados como tales en Origen.
+registro_referencia() {
+    printf '%s\n' "$REGISTRO_REFERENCIA" | head -n "$1" > referencia.tmp
+    awk -F'|' 'NR == FNR { ini[$1] = $2; fin[$1] = $3; min[$1] = $4; est[$1] = $5; dif[$1] = $6; next }
+        /^\| / {
+            fase = $2; gsub(/^ +| +$/, "", fase)
+            if (fase in ini) {
+                lab = $3; gsub(/^ +| +$/, "", lab)
+                printf "| %s | %s | %s | %s | %s | %s | %s | referencia |\n", fase, lab, ini[fase], fin[fase], min[fase], est[fase], dif[fase]
+                next
+            }
+        }
+        { print }' referencia.tmp docs/proyecto/registro-de-tiempos.md > registro.tmp
+    mv registro.tmp docs/proyecto/registro-de-tiempos.md && rm referencia.tmp
+}
+
 trabajo="$(mktemp -d)"
 trap 'rm -rf "$trabajo"' EXIT
 
@@ -47,6 +77,7 @@ construir_estados() {
             # Inicio del 5.2: lo que deja un 5.1 terminado.
             cp "$fuentes/historia-reporte-medios-de-pago.md" "$fuentes/estimacion.md" docs/proyecto/
             cp docs/proyecto/plantillas/registro-de-tiempos.md docs/proyecto/registro-de-tiempos.md
+            registro_referencia 3
             cp "$fuentes/0004-ubicacion-del-reporte.md" docs/arquitectura/decisiones/
             sed -i.bak "\$s/.*/$stack/" scripts/integracion/stack.txt && rm scripts/integracion/stack.txt.bak
             awk '/^\| \[0003\]/ { print; print "| [0004](0004-ubicacion-del-reporte.md) | El reporte por medio de pago vive en clases propias | Aceptada |"; next } { print }' \
@@ -54,12 +85,14 @@ construir_estados() {
             git add -A && git diff --cached --binary > "$salida/lab-5-2-$stack.patch"
             # Inicio del 5.3: el reporte del 5.2.
             git apply "$sol/funcionalidad-reporte/reporte-$stack.patch"
+            registro_referencia 4
             git add -A && git diff --cached --binary > "$salida/lab-5-3-$stack.patch"
             # Inicio del 5.4: pipeline con conciliacion, correccion, hash y descripcion.
             git apply "$sol/lab-5-3/conciliacion-en-pipeline.patch"
             git apply "$sol/funcionalidad-reporte/correccion-$stack.patch" "$sol/lab-5-3/hash-junio.patch"
             cp "$fuentes/0005-limite-superior-inclusivo.md" docs/arquitectura/decisiones/
             cp "$fuentes/pull-request.md" docs/proyecto/pull-request.md
+            registro_referencia 9
             awk '/^\| \[0004\]/ { print; print "| [0005](0005-limite-superior-inclusivo.md) | El límite superior de cada tramo es inclusivo | Aceptada |"; next } { print }' \
                 docs/arquitectura/decisiones/README.md > README.tmp && mv README.tmp docs/arquitectura/decisiones/README.md
             git add -A && git diff --cached --binary > "$salida/lab-5-4-$stack.patch"

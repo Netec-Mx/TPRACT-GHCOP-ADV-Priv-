@@ -21,7 +21,8 @@ Material de partida:
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora actual en Análisis y diseño.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Análisis y diseño, con `date +%H:%M`, y
+   `participante` en Origen.
 2. Ubica la responsabilidad del reporte en el mapeo: a qué dominio de servicio pertenece y
    qué componentes del escenario necesita leer. Cita archivo y línea.
 3. Propón al menos dos alternativas de dónde vive el código del reporte, por ejemplo una
@@ -29,6 +30,7 @@ Material de partida:
    reutilizar o duplicar.
 4. Pregunta al participante qué alternativa elige. Con su respuesta, registra la decisión
    con la skill `pasarela-registrar-decision` en `docs/arquitectura/decisiones/`.
+5. Al terminar, anota en el registro de tiempos la hora de término de Análisis y diseño.
 
 # Restricciones
 

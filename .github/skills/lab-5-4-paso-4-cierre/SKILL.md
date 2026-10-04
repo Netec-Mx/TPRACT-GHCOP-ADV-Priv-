@@ -11,9 +11,12 @@ real, los activos que puede reutilizar y la línea base para medir la adopción.
 
 # Qué hacer
 
-1. **Estimado contra real.** Completa en `docs/proyecto/registro-de-tiempos.md` el fin, los
-   minutos reales y la diferencia de cada fase contra la estimación del 5.1. Agrega al final
-   las tres fases con más diferencia y una causa probable de cada una.
+1. **Estimado contra real.** Completa en `docs/proyecto/registro-de-tiempos.md` los minutos
+   reales, término menos inicio, y la diferencia de cada fase contra su «Estimado con IA».
+   Si a una fase le falta el inicio o el término, déjala sin minutos y dilo. Las filas con
+   `referencia` en Origen las dejó `ponerse-al-dia.sh`: no son del participante. Agrega al
+   final las tres fases del participante con más diferencia y una causa probable de cada
+   una, y una línea aparte que diga qué fases son de referencia y que no se comparan.
 2. **Activos reutilizables.** Crea `docs/proyecto/activos-del-equipo.md` con las skills, las
    plantillas, la instrucción y el pipeline que se usaron en el ciclo: para cada uno, para
    qué sirve, dónde está y qué habría que cambiar para usarlo en otro repositorio. Las

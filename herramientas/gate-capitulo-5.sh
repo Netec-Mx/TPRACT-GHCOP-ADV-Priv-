@@ -14,7 +14,8 @@
 #   5. El recorrido de referencia aplicado en orden queda en rojo solo por la conciliacion de
 #      junio, y con la correccion y el hash nuevo termina en verde con la conciliacion en cero.
 #   6. ponerse-al-dia.sh corresponde a sus fuentes, no revela nada sin la clave y cada estado,
-#      en los dos stacks, compila y pasa lo que debe pasar al inicio de su laboratorio.
+#      en los dos stacks, compila, pasa lo que debe pasar al inicio de su laboratorio y trae
+#      en el registro de tiempos las fases anteriores como referencia.
 #
 # Codigo de salida: 0 si todo pasa, 1 si algo falla.
 
@@ -94,6 +95,9 @@ for stack in java dotnet; do
             cd "$pad" || exit 1
             bash scripts/proyecto/ponerse-al-dia.sh "$lab" "$stack" "$clave" --confirmo-descartar > /tmp/pad.log 2>&1 || exit 1
             [ "$(grep -v '^[[:space:]]*#' scripts/integracion/stack.txt | tail -1)" = "$stack" ] || exit 1
+            # El registro trae como referencia las fases de los laboratorios anteriores.
+            case "$lab" in lab-5-2) filas=3 ;; lab-5-3) filas=4 ;; lab-5-4) filas=9 ;; esac
+            [ "$(grep -c '| referencia |$' docs/proyecto/registro-de-tiempos.md)" -eq "$filas" ] || exit 1
             case "$lab" in
                 lab-5-2) [ -f docs/proyecto/historia-reporte-medios-de-pago.md ] \
                          && bash scripts/integracion-local.sh --paso equivalencia > /tmp/pad-p.log 2>&1 ;;

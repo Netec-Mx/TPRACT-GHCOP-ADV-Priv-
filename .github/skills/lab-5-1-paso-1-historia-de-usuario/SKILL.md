@@ -23,7 +23,8 @@ Material de partida:
 # Qué hacer
 
 1. Si no existe `docs/proyecto/registro-de-tiempos.md`, créalo a partir de la plantilla y
-   anota en Requerimientos la hora actual, que obtienes con `date +%H:%M`.
+   anota la hora de inicio de Requerimientos, que obtienes con `date +%H:%M`, y
+   `participante` en Origen.
 2. Escribe en la última línea de `scripts/integracion/stack.txt` el stack del participante.
 3. Sigue la skill `pasarela-historia-de-usuario` con la solicitud. Al listar las preguntas
    abiertas, incluye siempre qué transacciones y qué comercios entran al reporte, a qué
@@ -42,6 +43,7 @@ Material de partida:
    vista. Si no termina en 5 en el tercer decimal, o tiene más decimales, ese comercio no
    sirve: descártalo, dilo y busca otro que cumpla. No dejes en la historia un comercio que
    no cumple.
+7. Al terminar, anota en el registro de tiempos la hora de término de Requerimientos.
 
 # Restricciones
 

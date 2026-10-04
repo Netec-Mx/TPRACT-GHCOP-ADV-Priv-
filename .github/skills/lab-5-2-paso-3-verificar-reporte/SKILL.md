@@ -21,7 +21,9 @@ nada más hasta que responda.
    compara hashes: no dice en qué líneas difiere. Si algún periodo no coincide, muestra la
    salida del reporte de ese periodo y revísala contra la especificación técnica, sin
    corregir nada. Anótalo en una sección «Pendiente para el 5.3» de tu respuesta.
-4. Si el pipeline local está en verde, propone al participante el commit con los archivos
+4. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de término de Desarrollo, con
+   `date +%H:%M`. Es el único cambio de archivo de este paso.
+5. Si el pipeline local está en verde, propone al participante el commit con los archivos
    del reporte, el registro de tiempos y la especificación entregada, por ejemplo
    `git add escenario docs/proyecto && git commit -m "Reporte de comisiones por medio de
    pago"`, y espera a que lo confirme. Tú no haces el commit.
@@ -31,8 +33,9 @@ nada más hasta que responda.
 - **No corrijas nada que no forme parte de este paso.** El código del escenario tiene
   características elegidas a propósito para el taller. Si ves algo que te parece un
   problema, menciónalo al final de tu respuesta y no lo toques.
-- No modifiques archivos en este paso.
+- No modifiques archivos en este paso, salvo la hora de término del registro de tiempos.
 
 # Salida esperada
 
-La tabla de comprobaciones y, si corresponde, lo pendiente para el 5.3.
+La tabla de comprobaciones, `docs/proyecto/registro-de-tiempos.md` completo con la hora de
+término que anotaste, no un resumen, y, si corresponde, lo pendiente para el 5.3.

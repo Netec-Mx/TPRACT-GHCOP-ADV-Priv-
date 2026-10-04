@@ -12,7 +12,8 @@ del reporte coincide con lo que se liquida. Es la fase de Integración continua 
 
 # Qué hacer
 
-1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora actual en Integración continua.
+1. Anota en `docs/proyecto/registro-de-tiempos.md` la hora de inicio de Integración continua, con `date +%H:%M`, y
+   `participante` en Origen.
 2. Lee `scripts/integracion-local.sh` y `.github/workflows/integracion-continua.yml`. Los
    pasos viven en el script y el workflow los llama con `--paso`, en el mismo orden.
 3. Agrega al script un paso nuevo, `conciliacion`, al final de la lista de pasos. Para cada
@@ -27,6 +28,7 @@ del reporte coincide con lo que se liquida. Es la fase de Integración continua 
 5. Ejecuta `bash scripts/integracion-local.sh` completo.
 6. **Si el pipeline queda en rojo, no corrijas nada.** Muestra qué paso falló y con qué
    diferencia. Se diagnostica en el paso 3.
+7. Al terminar, anota en el registro de tiempos la hora de término de Integración continua.
 
 # Restricciones
 
