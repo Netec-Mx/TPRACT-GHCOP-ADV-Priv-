@@ -65,7 +65,7 @@ Pasos 1 a 4 en modo **Ask**, paso 5 en modo **Agent**. 60 minutos.
 
 | Paso | Escriba | Apruebe | Debe mostrar al terminar | Compare con | Tiempo |
 |---|---|---|---|---|---|
-| 1 | `/lab-1-5-paso-1-inventario java` | Nada | Tabla de responsabilidades con líneas, su cantidad y los niveles de anidamiento | Entre ocho y doce responsabilidades. En las referencias de la respuesta aparece `CalculadoraLiquidacion.java` | 10 min |
+| 1 | `/lab-1-5-paso-1-inventario java` | Nada | Tabla de responsabilidades con líneas, su cantidad y los niveles de anidamiento | Entre ocho y dieciséis responsabilidades, según cuánto agrupe. En las referencias de la respuesta aparece `CalculadoraLiquidacion.java` | 10 min |
 | 2 | `/lab-1-5-paso-2-rastrear-lineas-invalidas java` | Nada | Tabla de puntos de falla y una línea final | Los `catch` vacíos del cargador: una línea mal formada desaparece sin rastro | 10 min |
 | 3 | `/lab-1-5-paso-3-contrastar-nombres java` | Nada | Tabla de tres métodos | `obtenerMontoNeto` recalcula y asigna; `buscarComerciosActivos` devuelve suspendidos; `validarTransaccion` acumula. CM0031 está suspendido y se liquida | 10 min |
 | 4 | `/lab-1-5-paso-4-proponer-mejora java` | Nada | Una sola propuesta en cuatro puntos | Que quepa en una revisión de diez minutos | 12 min |
@@ -145,7 +145,7 @@ Modo **Agent**. 30 minutos; el paso 4 es opcional.
 | 1 | `/lab-4-4-paso-1-documentar-reglas java` | Nada | El documento completo, o la sección de contraste y la selección de tramo si es largo, y cuántas reglas coinciden | Dice que los tramos **no** son acumulativos. Si dice «acumulativos», anótelo: tomó el comentario como verdad | 10 min |
 | 2 | `/lab-4-4-paso-2-documentar-decisiones` | Nada | El documento completo y las afirmaciones pendientes | Una sola decisión: sin dependencias de ejecución; el porqué marcado «pendiente de confirmar con el equipo» | 10 min |
 | 3 | `/lab-4-4-paso-3-preparar-para-confluence` | Nada | La copia `-confluence.md` completa y lo que se perdió | El original sin cambios | 8 min |
-| 4, opcional | `/lab-4-4-paso-4-generar-runbook java` | Los comandos de compilación, ejecución y `comparar-escenarios.sh`, unos 18 | El runbook completo y cuántas acciones quedaron verificadas | Ninguna acción marcada verificada sin ejecución; ninguna toca `escenario/datos/` | 8 a 12 min |
+| 4, opcional | `/lab-4-4-paso-4-generar-runbook java` | Los comandos de compilación, ejecución y `comparar-escenarios.sh`, entre 15 y 18 | El runbook completo y cuántas acciones quedaron verificadas | Ninguna acción marcada verificada sin ejecución; ninguna toca `escenario/datos/` | 8 a 12 min |
 
 - [ ] Abra dos líneas citadas en el documento del paso 1 y compruebe que dicen lo que el
       documento afirma.
@@ -190,7 +190,7 @@ parte de un archivo, anótelo.
 | El redondeo | Al final: cada fila suma exacto y redondea; el total por comercio, como la liquidación |
 | Un monto en el límite de un tramo | Tramo inferior. El límite superior es inclusivo |
 | Monto transado | Suma exacta de los montos del medio |
-| Cuotas | La comisión incluye su recargo: 0,5 % por cuota sobre la primera, máximo 3 % |
+| Cuotas | La comisión incluye su recargo: 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
 | Contracargos y retenciones | No forman parte del reporte |
 | Orden, formato, decimales o participación | Los fija la especificación que se entrega en el 5.2 |
 | Cualquier otra cosa | «Pendiente» |
@@ -216,8 +216,9 @@ y después `git status`, limpio.
 ## Laboratorio 5.2. Implementar el reporte
 
 Modo **Agent**. 45 minutos. Sigue en la rama del 5.1. Si el 5.1 no terminó:
-`bash scripts/proyecto/ponerse-al-dia.sh lab-5-2 java quinua-condor-47` y escriba
-`descartar`.
+`bash scripts/proyecto/ponerse-al-dia.sh lab-5-2 java quinua-condor-47`, escriba `descartar`
+y confirme con `git add -A && git commit -m "Inicio del 5.2"`. El registro de tiempos trae el
+5.1 como `referencia`.
 
 | Paso | Escriba | Apruebe | Debe mostrar al terminar | Compare con | Tiempo |
 |---|---|---|---|---|---|
@@ -240,12 +241,13 @@ Después `git status`: no queda nada de `docs/proyecto/` sin confirmar.
 ## Laboratorio 5.3. Pruebas, pipeline, corrección y revisión
 
 Modo **Agent**. 45 minutos. No haga commit hasta el paso 4. Si el 5.2 no terminó:
-`bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47` y `descartar`.
+`bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47`, `descartar` y
+`git add -A && git commit -m "Inicio del 5.3"`.
 
 | Paso | Escriba | Apruebe | Debe mostrar al terminar | Compare con | Tiempo |
 |---|---|---|---|---|---|
 | 1 | `/lab-5-3-paso-1-probar-criterios java` | `date +%H:%M` y `mvn test` | Los archivos de prueba nuevos completos, el registro de tiempos y una tabla criterio por criterio | Camino A: falla la conciliación de junio. Camino B: fallan borde y tercer decimal | 8 min |
-| 2 | `/lab-5-3-paso-2-conciliacion-en-pipeline` | `bash scripts/integracion-local.sh` | El diff de `integracion-local.sh` y del workflow, y el pipeline paso por paso | Camino A: rojo solo en junio, 2203 centavos, 22,03. Camino B: conciliación en cero, rojo por las pruebas | 8 min |
+| 2 | `/lab-5-3-paso-2-conciliacion-en-pipeline` | `bash scripts/integracion-local.sh` | El diff de `integracion-local.sh` y del workflow, y el pipeline paso por paso | Camino A: conciliación en rojo solo en junio, 2203 centavos, 22,03; el paso `java` también, por la prueba del paso 1. Camino B: conciliación en cero, rojo por las pruebas | 8 min |
 | 3 | `/lab-5-3-paso-3-diagnosticar-y-corregir java` | Comandos de diagnóstico, compilación y `integracion-local.sh` | Tabla de causas que suma la diferencia, aviso antes de cambiar tipo o redondeo, el diff de la corrección y el pipeline en verde | Ver abajo | 15 min |
 | 4 | `/lab-5-3-paso-4-revision-y-pull-request` | `date +%H:%M` | Pregunta por la revisión de Copilot. Después, `pull-request.md` y la decisión 0005 completas, y las casillas sin marcar | Ver abajo | 8 min |
 | 5, opcional | `/lab-5-3-paso-5-opcional-github` | Nada | Que no aplica, si no tiene copia propia en GitHub | No empuje nada | — |
@@ -278,7 +280,8 @@ comentario. Si el botón no aparece o pide otro plan, anótelo.
 ## Laboratorio 5.4. Liberación, incidente, evolutiva y cierre
 
 Modo **Agent**. 45 minutos. **No se reinicia.** Si el 5.3 no terminó:
-`bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47` y `descartar`.
+`bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47`, `descartar` y
+`git add -A && git commit -m "Inicio del 5.4"`.
 
 | Paso | Escriba | Apruebe | Debe mostrar al terminar | Compare con | Tiempo |
 |---|---|---|---|---|---|
@@ -290,7 +293,7 @@ Modo **Agent**. 45 minutos. **No se reinicia.** Si el 5.3 no terminó:
 Si en el paso 2 alguien propone revertir la versión: pregunte qué decisión respalda el monto
 nuevo y dónde está registrada.
 
-**Cerrar:** el commit que propone el paso 4. Para volver al inicio:
+**Cerrar:** los pasos 1 y 4 proponen un commit cada uno; acéptelos. Para volver al inicio:
 `bash scripts/reiniciar-lab.sh lab-5-4`, escriba `descartar`, y después
 `git switch main && git branch -D reporte-medios-de-pago`.
 

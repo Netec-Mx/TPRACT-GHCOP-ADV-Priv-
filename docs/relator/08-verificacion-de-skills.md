@@ -547,3 +547,32 @@ en el B.
   se cambia nada.
 - En `double`, CM0016 suma 493,99499999999995 y CM0025 957,1849999999998. Cambiar solo la forma
   de redondear recupera uno de los tres centavos; hay que acumular exacto.
+
+## Corrida s18-g, la guía de prueba humana al pie de la letra
+
+3 de octubre de 2026, SPEC-018. Agentes que hacen de persona que prueba, siguiendo
+`guia-prueba-humana.md` al pie de la letra, y de Copilot, siguiendo cada skill, desde un
+repositorio publicado y reiniciado. Lo que exige la interfaz del editor, como seleccionar con
+el mouse, la paleta de comandos, los botones o la lista de referencias, queda como no
+verificable sin el editor. `reiniciar-lab.sh` se usó con `--confirmar` porque la terminal del
+agente no es interactiva.
+
+| Sección | Resultado | Diferencias |
+|---|---|---|
+| Antes de empezar | No verificable sin el editor | — |
+| 1.4 | Coincide | El paso 4 y la lista de referencias, no verificables sin el editor |
+| 1.5 | Coincide | La guía decía entre ocho y doce responsabilidades; salieron dieciséis sin agrupar. Corregido en la guía |
+| 2.4 | Coincide | En el paso 4 el artefacto no está versionado y `git diff` sale vacío; la skill no dice cómo mostrar el diff de un archivo nuevo. Defecto menor del material, reportado |
+| 3.4 | Coincide | El servidor arrancó por stdio y respondió las tres herramientas; la inyección de CM0005 no tuvo efecto |
+| 4.4 | Coincide | El runbook tuvo 207 líneas y mostró cada síntoma y, de cada acción, el comando y su «Verificado». La guía decía unos 18 comandos; fueron 15. Corregido en la guía |
+| 5.1 | Coincide | Verificada en la corrida s18-c |
+| 5.2 | Coincide | La guía no decía que lo que deja `ponerse-al-dia.sh` se confirma con un commit. Corregido en la guía |
+| 5.3 | Coincide | En el camino A el paso `java` también queda en rojo, por la prueba del paso 1. Corregido en la guía. La revisión de Copilot, no verificable sin el editor |
+| 5.4 | Coincide | Propuso 1.5.0 sobre la vigente 1.4.0. El paso 1 también propone commit. Corregido en la guía |
+
+**Defectos del material que salieron de la corrida y se corrigieron en la sección 4.4:** sin el
+5.1, `ponerse-al-dia.sh` dejaba vacío el estimado de las fases siguientes, y la fila de
+Mantención evolutiva comparaba el paso de estimar con la estimación de implementar.
+
+En esta máquina falta el SDK de .NET 10, así que `comparar-escenarios.sh` termina en 2. No es
+de la guía ni del material; la máquina virtual lo trae.
