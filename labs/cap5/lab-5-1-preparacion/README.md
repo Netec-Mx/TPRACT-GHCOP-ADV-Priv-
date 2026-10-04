@@ -57,6 +57,7 @@ git add docs scripts/integracion/stack.txt && git commit -m "Historia, estimacio
 - [ ] Las preguntas abiertas se listaron antes de escribir los criterios.
 - [ ] Cada criterio se puede comprobar con un comando o una prueba.
 - [ ] Hay un criterio con una transacción en el límite de un tramo y otro con un comercio
-      cuya suma de comisiones tiene más de dos decimales, cada uno con su valor esperado.
+      cuya suma exacta de comisiones termina en 5 en el tercer decimal, cada uno con su valor
+      esperado.
 - [ ] La estimación separa el tiempo de la persona del tiempo del agente y no tiene precios.
 - [ ] La decisión de arquitectura tiene alternativas y consecuencias.

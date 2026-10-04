@@ -34,9 +34,14 @@ Material de partida:
 5. Con las respuestas que el participante te dé, crea
    `docs/proyecto/historia-reporte-medios-de-pago.md` con la plantilla. Entre los criterios,
    incluye uno con una transacción real cuyo monto esté exactamente en el límite de un tramo
-   y uno con un comercio real cuya suma exacta de comisiones de junio tenga más de dos
-   decimales, cada uno con el valor esperado y la cuenta. Si una respuesta del negocio
-   falta para calcularlo, deja el criterio con el valor «pendiente».
+   y uno con un comercio real cuya suma exacta de comisiones de junio termine en 5 en el
+   tercer decimal, sin más decimales después, cada uno con el valor esperado y la cuenta.
+   Si una respuesta del negocio falta para calcularlo, deja el criterio con el valor
+   «pendiente».
+6. Antes de mostrar la historia, comprueba el criterio del comercio con la suma exacta a la
+   vista. Si no termina en 5 en el tercer decimal, o tiene más decimales, ese comercio no
+   sirve: descártalo, dilo y busca otro que cumpla. No dejes en la historia un comercio que
+   no cumple.
 
 # Restricciones
 

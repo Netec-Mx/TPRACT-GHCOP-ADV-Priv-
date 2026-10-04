@@ -197,8 +197,9 @@ en el 5.4. Si en algún paso muestra un resumen o solo parte de un archivo, anó
 **Paso 1, la historia** trae:
 
 - [ ] Un criterio de borde con su cuenta. Ejemplo: TX002001, 500,00 × 3,5 % + 0,30 = 17,80.
-- [ ] Un criterio de decimales. Anote el comercio. CM0025, 957,185 → 957,19; CM0011 o
-      CM0016 sirven igual. Con otro, siga y anote en el 5.3 si llega solo a los 0,03.
+- [ ] Un criterio con un comercio cuya suma exacta termina en 5 en el tercer decimal.
+      Anote cuál: CM0025, 957,185 → 957,19; CM0011, 137,825 → 137,83, o CM0016,
+      493,995 → 494,00. Si quedó otro, la skill falló: anótelo y pida «rehaz ese criterio».
 - [ ] `git status`: nada en `escenario/`.
 
 Si avisa que el código trata el límite como exclusivo o permite un recargo de 3,5 %: está

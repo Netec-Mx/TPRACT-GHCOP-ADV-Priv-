@@ -19,8 +19,8 @@ nada más hasta que responda.
 2. Lee `docs/proyecto/historia-reporte-medios-de-pago.md`. Para cada criterio que se pueda
    comprobar con una prueba unitaria, escribe al menos una prueba en archivos nuevos del
    proyecto de pruebas del stack, con el estilo de las pruebas existentes. Los criterios con
-   un valor esperado concreto, como el del límite de un tramo o el de un comercio con más de
-   dos decimales, se prueban con ese valor exacto.
+   un valor esperado concreto, como el del límite de un tramo o el de un comercio cuya suma
+   termina en medio centavo, se prueban con ese valor exacto.
 3. Si un criterio tiene un valor «pendiente», pregúntale al participante si ya tiene la
    respuesta del negocio. Si no la tiene, deja esa prueba fuera y dilo.
 4. Ejecuta las pruebas del stack.
