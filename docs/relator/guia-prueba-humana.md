@@ -172,7 +172,7 @@ git switch -c reporte-medios-de-pago
 |---|---|---|---|---|---|
 | 1 | `/lab-5-1-paso-1-historia-de-usuario java` | `date +%H:%M` y lecturas de `escenario/datos/`: leer se aprueba | Preguntas, y se detiene; si ya aparece **Keep**, elíjalo. Después: la historia y el registro de tiempos completos, y `java` en `stack.txt` | Las casillas de abajo | 15 min |
 | 2 | `/lab-5-1-paso-2-estimar` | `date +%H:%M` | Pregunta su experiencia: «senior en Java, poca práctica con el agente». Después, la estimación y el registro completos | Sin precios; cada fase con minutos sin IA, con IA y del agente, y un supuesto | 10 min |
-| 3 | `/lab-5-1-paso-3-ubicar-en-arquitectura java` | `date +%H:%M` y lecturas de código | Alternativas y una pregunta. Elija la de clases nuevas que no llaman a `CalculadoraLiquidacion` ni a `CalculadoraComision`. Después: la decisión 0004, su fila del índice y el registro, completos | Alternativas con ventaja y costo, y consecuencias | 10 min |
+| 3 | `/lab-5-1-paso-3-ubicar-en-arquitectura java` | `date +%H:%M` y lecturas de código | Alternativas y una pregunta. Elija la de clases nuevas que no llaman a `CalculadoraLiquidacion` ni a `CalculadoraComision`. Después: la decisión 0004, su fila del índice y el registro, completos | La alternativa que eligió, con ventaja, costo y consecuencias. La 0004 de referencia es del camino A. Si se prueba el camino B, eligiendo reutilizar el cálculo de la liquidación, la decisión dice eso y que el reporte hereda las diferencias de ese cálculo | 10 min |
 
 En el registro de tiempos, cada paso deja inicio y término de su fase, con `participante` en
 Origen; los minutos reales se calculan en el 5.4. Si en algún paso muestra un resumen o solo
@@ -222,7 +222,7 @@ y confirme con `git add -A && git commit -m "Inicio del 5.2"`. El registro de ti
 
 | Paso | Escriba | Apruebe | Debe mostrar al terminar | Compare con | Tiempo |
 |---|---|---|---|---|---|
-| 1 | `/lab-5-2-paso-1-planificar java` | `date +%H:%M` y `bash scripts/proyecto/entregar.sh formato-del-reporte` | Un plan numerado con la validación de cada paso, el registro de tiempos y la pregunta de aprobación. Ningún archivo de código cambiado | Anote si reutiliza el cálculo de la liquidación (camino B) o calcula por su cuenta (camino A). Responda «apruebo» | 10 min |
+| 1 | `/lab-5-2-paso-1-planificar java` | `date +%H:%M` y `bash scripts/proyecto/entregar.sh formato-del-reporte` | Un plan numerado con la validación de cada paso, el registro de tiempos y la pregunta de aprobación. Ningún archivo de código cambiado | Anote si reutiliza el cálculo de la liquidación (camino B) o calcula por su cuenta (camino A). Responda «apruebo». Si el plan no sigue la decisión del 5.1, la actualiza y la muestra | 10 min |
 | 2 | `/lab-5-2-paso-2-implementar-reporte java` | Compilación, `bash scripts/integracion-local.sh --paso equivalencia` | El diff completo, con los archivos nuevos completos, y la última validación en verde | Solo archivos del stack Java; `liquidacion-esperada.sha256` sin cambios | 20 min |
 | 3 | `/lab-5-2-paso-3-verificar-reporte java` | `bash scripts/verificar-reporte.sh java 2026-04`, `-05`, `-06` y `bash scripts/integracion-local.sh` | Tabla de comprobaciones y, si corresponde, «Pendiente para el 5.3». Propone el commit | Camino A: coincide en los tres periodos. Camino B: junio no coincide; es lo esperado | 8 min |
 

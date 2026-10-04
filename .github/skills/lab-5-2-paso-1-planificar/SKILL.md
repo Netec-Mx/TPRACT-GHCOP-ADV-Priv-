@@ -28,17 +28,23 @@ nada más hasta que responda.
    `bash scripts/integracion-local.sh --paso equivalencia`, que compara la liquidación con
    los hashes esperados. Un refactor que cambia un solo byte de la liquidación está mal.
 5. Muestra el plan y pregunta al participante si lo aprueba o qué cambia. No implementes.
+6. Si el plan aprobado no sigue la alternativa que registra la decisión del 5.1, dilo y
+   actualiza esa decisión para que diga lo que de verdad se va a construir, con sus
+   consecuencias. Es la decisión del participante, en estado «Propuesta»: corrígela, no
+   crees otra.
 
 # Restricciones
 
 - **No corrijas nada que no forme parte de este paso.** El código del escenario tiene
   características elegidas a propósito para el taller. Si ves algo que te parece un
   problema, menciónalo al final de tu respuesta y no lo toques.
-- No modifiques ningún archivo salvo el registro de tiempos y el documento entregado.
+- No modifiques ningún archivo salvo el registro de tiempos, el documento entregado y, si
+  corresponde, la decisión del 5.1.
 
 # Salida esperada
 
 El plan, con la validación de cada paso, y la pregunta de aprobación. Muestra también
 `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste. La especificación
 técnica que entregó el script no la escribiste tú: nombra su archivo,
-`docs/proyecto/backlog/formato-del-reporte.md`.
+`docs/proyecto/backlog/formato-del-reporte.md`. Si actualizaste la decisión, muéstrala
+completa.

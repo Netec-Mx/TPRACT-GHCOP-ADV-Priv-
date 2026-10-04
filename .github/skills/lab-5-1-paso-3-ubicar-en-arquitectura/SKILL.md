@@ -29,7 +29,10 @@ Material de partida:
    clase propia o un método dentro de una clase existente, y para cada una qué tendría que
    reutilizar o duplicar.
 4. Pregunta al participante qué alternativa elige. Con su respuesta, registra la decisión
-   con la skill `pasarela-registrar-decision` en `docs/arquitectura/decisiones/`.
+   con la skill `pasarela-registrar-decision` en `docs/arquitectura/decisiones/`. Registra
+   la alternativa que el participante eligió de verdad, con sus consecuencias, aunque no
+   sea la que recomendarías. Si elige reutilizar el cálculo de comisión de la liquidación,
+   una de sus consecuencias es que el reporte hereda cualquier diferencia de ese cálculo.
 5. Al terminar, anota en el registro de tiempos la hora de término de Análisis y diseño.
 
 # Restricciones

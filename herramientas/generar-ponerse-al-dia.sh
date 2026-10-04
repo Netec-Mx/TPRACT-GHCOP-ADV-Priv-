@@ -234,6 +234,9 @@ if ! git apply --whitespace=nowarn "$temporal/estado.patch"; then
 fi
 
 echo "  [ OK ] Listo para empezar el $laboratorio con $stack."
+if [ "$laboratorio" != "lab-5-2" ]; then
+    echo "  El reporte de referencia calcula por su cuenta, como la decision 0004. Si el tuyo reutilizaba el calculo de la liquidacion, desde aqui sigues con este."
+fi
 echo "  Revisa los cambios con git status y confirmalos en tu rama antes de seguir."
 exit 0
 PIE

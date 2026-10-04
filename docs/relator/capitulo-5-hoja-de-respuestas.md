@@ -6,23 +6,27 @@ Responda solo lo que pregunten.
 
 | Si preguntan | Responda |
 |---|---|
-| Qué transacciones entran | Las de la liquidación: aprobadas, en soles, monto mayor que cero, en el periodo |
+| Qué transacciones entran | Aprobadas, en soles, monto mayor que cero, en el periodo |
 | Qué comercios entran | Activos y suspendidos con plan; no los dados de baja |
 | El periodo | Del primer día a las 00:00:00 al último a las 23:59:59, con la hora del cierre |
 | El monto transado | Suma exacta de los montos del medio |
 | Las cuotas | La comisión incluye su recargo: 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
 | Contracargos y retenciones | No forman parte del reporte |
 | Contra qué se comprueba | Suma del total de comisiones de las liquidaciones, al centavo |
-| El tope | Por comercio, no se reparte. Filas antes del tope; una fila de ajuste muestra lo descontado |
-| El redondeo | Al final: cada fila suma exacto y redondea; el total se calcula por comercio, como la liquidación |
-| Un monto en el límite de un tramo | Pertenece al tramo inferior. El límite superior es inclusivo |
+| El tope | Por comercio; filas antes del tope y una fila de ajuste |
+| El redondeo | Al final: cada fila suma exacto y redondea; el total, por comercio, como la liquidación |
+| Un monto en el límite de un tramo | Al tramo inferior: límite superior inclusivo |
 | Orden, formato o decimales | Los fija la especificación que se entrega en el 5.2 |
 
-El criterio de decimales usa un comercio cuya suma exacta termina en 5 en el tercer
-decimal. Si queda otro, que lo rehaga. Si el agente avisa un defecto del código, como el
-borde o el recargo de 3,5 %: bien visto, no se corrige ahora, el 5.3 lo confirma.
+Criterio de decimales: un comercio cuya suma exacta termina en 5 en el tercer decimal; si
+no, que lo rehaga. Si el agente avisa un defecto del código, como el
+borde o el recargo de 3,5 %: bien visto; se confirma en el 5.3.
 
-En la puesta en común: una historia que solo excluye las anuladas difiere de las
+**Paso 3.** La 0004 de referencia es del camino A: el reporte calcula por su cuenta. Quien
+reutiliza el cálculo de la liquidación registra eso y su consecuencia: el reporte hereda
+las diferencias del cálculo.
+
+Puesta en común: una historia que solo excluye las anuladas difiere de las
 liquidaciones en 3 415,01, 4 065,43 y 2 521,97 soles en abril, mayo y junio.
 
 ## 5.3, paso 3: la decisión del borde
@@ -42,17 +46,17 @@ catálogo, no se corrige.
 
 ## Si alguien se atrasa
 
-Clave de ponerse al día: `quinua-condor-47`. Dígala y que el participante ejecute, desde la
-raíz de su repositorio, con su stack y laboratorio:
+Clave de ponerse al día: `quinua-condor-47`. Dígala; el participante ejecuta, con su stack
+y laboratorio:
 
 ```bash
 bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47
 ```
 
-Descarta su trabajo del capítulo y pide escribir `descartar`. El 5.1 de cero:
+Pide escribir `descartar` y deja el camino A. El 5.1 de cero:
 `bash scripts/reiniciar-lab.sh lab-5-1`.
 
 ## 5.4
 
-Nada. Si alguien propone revertir la versión: pregunte qué decisión respalda el monto nuevo
-y dónde está registrada.
+Si alguien propone revertir la versión: pregunte qué decisión respalda el monto nuevo y
+dónde está.
