@@ -514,3 +514,36 @@ skill pide el registro completo; la guía de prueba humana pide anotar ese caso.
   no puede comparar esas fases.
 - `reiniciar-lab.sh` no acepta la confirmación por tubería; hace falta `--si` o una terminal
   interactiva.
+
+## Corrida s18-c, el criterio del medio centavo por los dos caminos
+
+3 de octubre de 2026, SPEC-018. La skill del paso 1 del 5.1 pide ahora un comercio cuya suma
+exacta de junio termine en 5 en el tercer decimal, sin nombrar ninguno, y comprobarlo antes de
+mostrar la historia. Un agente sin acceso a `docs/relator/`, salvo la guía de prueba humana en
+el papel de quien prueba, hizo el 5.1 y del 5.2 al 5.3 paso 3 en Java por los dos caminos.
+
+| Parte | Resultado |
+|---|---|
+| Comercio elegido en el 5.1 | CM0011, 137,825 → 137,83. Lo validó sumando con decimal exacto todos los comercios y filtrando; cumplen CM0011, CM0016 y CM0025 |
+| Detección, eligiendo primero CM0009 | La skill lo descarta: 2 857,83388325 no termina en 5 en el tercer decimal. Busca otro y queda CM0025 |
+| Camino A, 5.3 paso 1 | Falla solo la conciliación de junio; borde y medio centavo pasan |
+| Camino A, 5.3 paso 2 | Rojo en junio, 2203 centavos |
+| Camino A, 5.3 paso 3 | 22,00 del borde y 0,03 de CM0011, CM0016 y CM0025; suman 22,03 |
+| Camino B, 5.3 paso 1 | Fallan el borde, 14,80 contra 17,80, y el medio centavo, 137,82 contra 137,83 |
+| Camino B, 5.3 paso 2 | Conciliación en cero; rojo por las pruebas |
+| Camino B, 5.3 paso 3 | Las mismas dos causas, 22,00 y 0,03; mismo hash de junio que el camino A |
+
+**Los dos caminos llegan a las dos causas.** Segundos del 5.3 paso 3: 107 en el camino A y 82
+en el B.
+
+**Lo que salió de la corrida:**
+
+- La respuesta sobre las cuotas no decía sobre qué se aplica el recargo, y el agente lo aplicó
+  primero sobre el monto. La hoja y la guía dicen ahora «sobre la comisión base», como
+  `funcionalidad-reporte.md`.
+- En el camino B la conciliación da cero, así que el número 22,03 no aparece solo: el agente
+  lo reconstruyó recalculando lo esperado. Un agente menos minucioso podría explicar solo lo
+  que fallan las pruebas, 3,00 y 0,01, aunque la corrección quede igual. Queda reportado; no
+  se cambia nada.
+- En `double`, CM0016 suma 493,99499999999995 y CM0025 957,1849999999998. Cambiar solo la forma
+  de redondear recupera uno de los tres centavos; hay que acumular exacto.

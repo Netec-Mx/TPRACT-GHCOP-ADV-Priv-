@@ -12,7 +12,7 @@ Responda solo lo que pregunten.
 | Qué comercios entran | Los que se liquidan: activos y suspendidos con plan. No los dados de baja |
 | El periodo | Del primer día a las 00:00:00 al último a las 23:59:59, con la hora del cierre |
 | El monto transado | Suma exacta de los montos del medio |
-| Las cuotas | La comisión incluye su recargo: 0,5 % por cuota sobre la primera, máximo 3 % |
+| Las cuotas | La comisión incluye su recargo: 0,5 % por cuota sobre la primera, máximo 3 %, sobre la comisión base |
 | Contracargos y retenciones | No forman parte del reporte |
 | Contra qué se comprueba | Total del reporte igual a la suma del total de comisiones de las liquidaciones, al centavo |
 | El tope | Por comercio, no se reparte. Filas antes del tope; una fila de ajuste muestra lo descontado |
