@@ -19,7 +19,8 @@ Responda solo lo que pregunten.
 | Orden, formato o decimales | Los fija la especificación que se entrega en el 5.2 |
 
 Criterio de decimales: un comercio cuya suma exacta termina en 5 en el tercer decimal; si
-no, que lo rehaga. Si el agente avisa un defecto del código, como el
+no, que lo rehaga. Criterio de formato: montos con dos decimales, medio hacia arriba, regla
+9; se prueba en el 5.3. Si el agente avisa un defecto del código, como el
 borde o el recargo de 3,5 %: bien visto; se confirma en el 5.3.
 
 **Paso 3.** La 0004 de referencia es del camino A: el reporte calcula por su cuenta. Quien
@@ -42,9 +43,6 @@ medio hacia arriba. Si cambia solo el redondeo: que pruebe junio; le quedan cent
 **Si encuentra solo el borde** o **solo explica lo que fallan las pruebas**: pregunte cuánto
 suma cada causa y a quién afecta; sugiera recalcular con decimal exacto. Total 22,03: 22,00
 de borde, CM0001 y CM0007; 0,03 de punto flotante, CM0011, CM0016 y CM0025.
-
-**Si alguien nota que el periodo 2026-13 liquida enero de 2027:** bien visto; no es del
-catálogo, no se corrige.
 
 ## Si alguien se atrasa
 

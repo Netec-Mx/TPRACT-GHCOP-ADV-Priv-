@@ -35,8 +35,11 @@ comercios.
    transacciones, entonces el total es 957,185 y redondea a 957,19.
 5. **Tope.** Dado CM0004 en 2026-06, cuando se genera el reporte, entonces su exceso sobre el
    tope aparece en la fila de ajuste por tope y no en las filas de medios.
-6. **Formato.** El reporte se obtiene con `--reporte-medios` y su salida coincide con la
-   esperada según `bash scripts/verificar-reporte.sh <stack> <periodo>`.
+6. **Formato.** Dado un monto en soles, cuando el reporte lo muestra, entonces lleva dos
+   decimales, redondeado medio hacia arriba, según la regla 9 de `escenario/README.md`:
+   957,185 se muestra con 957,19. Se comprueba con una prueba de la función que da formato
+   a la salida. El reporte se obtiene con `--reporte-medios` y su salida completa coincide con
+   la esperada según `bash scripts/verificar-reporte.sh <stack> <periodo>`.
 
 ## Fuera de alcance
 

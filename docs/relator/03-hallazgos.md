@@ -930,5 +930,6 @@ el 01/01/2027. El periodo no se valida y el calendario desborda el mes al año s
 
 No es uno de los diez defectos del catálogo ni un comportamiento no planificado registrado
 allí, y el escenario no se toca. Si un participante lo encuentra, el relator dice que está
-bien visto, que no es parte del ejercicio y que no se corrige en el taller. Está en la hoja de
-respuestas del capítulo 5 y en las notas del 5.3.
+bien visto, que no es parte del ejercicio y que no se corrige en el taller. Está en las notas
+del 5.3. Estuvo también en la hoja de respuestas hasta SPEC-021, que lo pasó a las notas para
+dejar lugar al criterio de formato.
