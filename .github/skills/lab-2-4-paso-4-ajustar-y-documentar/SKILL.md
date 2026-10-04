@@ -39,3 +39,7 @@ este laboratorio, `git diff` sale vacío: muéstralo con `git diff --no-index /d
 `git ls-files --error-unmatch <archivo>`. `git diff --no-index` termina con código 1
 cuando hay diferencias: es lo normal, no un error. Si el diff sale vacío, di que el artefacto
 no tiene cambios respecto de lo confirmado.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

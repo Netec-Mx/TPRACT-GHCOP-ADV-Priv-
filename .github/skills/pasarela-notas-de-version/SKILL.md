@@ -21,7 +21,8 @@ y el registro de cambios en `CHANGELOG.md`, en la raíz del repositorio.
 4. Escribe las notas de versión con la plantilla. La sección de montos dice qué cambia, de
    cuánto a cuánto, para quién y por qué, sin nombres de clases ni términos técnicos.
 5. Al terminar, muestra en el chat la entrada completa del registro de cambios y el
-   contenido completo de las notas, no un resumen.
+   contenido completo de las notas, no un resumen. Escríbelo en el texto de tu respuesta; no
+   basta con ejecutar `cat` ni con remitir a la vista de una herramienta.
 
 ## Límites
 

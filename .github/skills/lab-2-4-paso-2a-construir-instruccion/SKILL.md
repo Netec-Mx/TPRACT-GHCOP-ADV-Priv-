@@ -40,3 +40,7 @@ dile que el paso que corresponde es `/lab-2-4-paso-2b-construir-agente`.
 
 La ruta del archivo creado, su contenido, y la lista de archivos que coinciden con el
 patrón.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

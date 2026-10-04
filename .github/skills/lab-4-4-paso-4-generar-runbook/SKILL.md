@@ -45,3 +45,7 @@ El runbook creado, mostrado completo en el chat, no un resumen. Si supera las 15
 muestra completo cada síntoma y, de cada acción, el comando y su párrafo «Verificado», y
 nombra el archivo para abrir el resto. Después, en tu respuesta, cuántas acciones quedaron verificadas
 y cuántas no.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

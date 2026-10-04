@@ -45,3 +45,7 @@ Muestra en el chat el contenido completo de los tres documentos, no un resumen. 
 supera las 150 líneas, muestra completas la comparación de estimado contra real, la línea
 base de medición y el presupuesto, y nombra el archivo para abrir el resto. Al final, la
 fase donde la estimación más se equivocó.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

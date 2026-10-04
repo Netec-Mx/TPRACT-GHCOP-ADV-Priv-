@@ -43,3 +43,7 @@ pregúntale qué fue e inclúyelo en la sección de riesgos como evidencia.
 
 El documento creado, de no más de dos páginas, mostrado completo en el chat, no un resumen.
 El participante lo revisa ahí antes de abrir el archivo.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

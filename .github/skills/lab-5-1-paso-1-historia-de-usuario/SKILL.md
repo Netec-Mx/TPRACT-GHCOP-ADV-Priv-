@@ -62,3 +62,7 @@ contenido completo de `docs/proyecto/historia-reporte-medios-de-pago.md`, no un 
 participante revisa ahí los criterios, que son los que evalúan el 5.2 y el 5.3. Muestra
 también `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste, y la
 última línea de `scripts/integracion/stack.txt`. Al final, qué preguntas siguen pendientes.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

@@ -45,3 +45,7 @@ nada más hasta que responda.
 
 La tabla de comprobaciones, `docs/proyecto/registro-de-tiempos.md` completo con la hora de
 término que anotaste, no un resumen, y, si corresponde, lo pendiente para el 5.3.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

@@ -22,9 +22,10 @@ La plantilla de runbook está en [runbook-plantilla.md](../../../docs/operacion/
 6. Redacta la respuesta al afectado en lenguaje de negocio, con la causa, el monto, qué
    decisión lo explica y qué puede hacer si no está de acuerdo. Si hay algo que solo puede
    decidir el negocio, como una compensación, dilo y no lo prometas.
-7. Al terminar, muestra en el chat el contenido completo del análisis y de la respuesta,
-   no un resumen. Si el análisis supera las 150 líneas, muestra completos el diagnóstico y
-   el alcance, y nombra el archivo para abrir el resto.
+7. Al terminar, muestra en el chat el contenido completo del análisis y de la respuesta, no
+   un resumen. Si el análisis supera las 150 líneas, muestra completos el diagnóstico y el
+   alcance, y nombra el archivo para abrir el resto. Escríbelo en el texto de tu respuesta;
+   no basta con ejecutar `cat` ni con remitir a la vista de una herramienta.
 
 ## Límites
 

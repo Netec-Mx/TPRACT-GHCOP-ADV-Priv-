@@ -47,3 +47,7 @@ Muestra en el chat el contenido completo de `docs/proyecto/pull-request.md` y de
 registrada, la fila que agregaste al índice de decisiones y
 `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste, no un resumen.
 Después, las casillas que no se cumplen, si hay alguna.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

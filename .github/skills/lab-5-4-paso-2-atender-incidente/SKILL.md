@@ -38,3 +38,7 @@ La causa, el alcance con los comercios afectados y la respuesta al comercio. Mue
 chat el contenido completo del análisis, de la respuesta y de
 `docs/proyecto/registro-de-tiempos.md`, no un resumen. Si el análisis supera las 150 líneas,
 muestra completos el diagnóstico y el alcance, y nombra el archivo para abrir el resto.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

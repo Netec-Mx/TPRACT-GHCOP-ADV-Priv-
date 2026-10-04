@@ -34,3 +34,7 @@ notas para el negocio. Es la fase de Liberación de [CICLO-DE-VIDA.md](../../../
 El número de versión con su justificación. Al terminar, muestra en el chat la entrada
 completa que agregaste a `CHANGELOG.md`, el contenido completo de las notas de versión y
 `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste, no un resumen.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

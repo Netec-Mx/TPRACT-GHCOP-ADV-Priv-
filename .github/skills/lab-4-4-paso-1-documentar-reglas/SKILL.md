@@ -38,3 +38,7 @@ El documento creado, mostrado completo en el chat, no un resumen. Si supera las 
 muestra completa la sección «Contraste con las reglas declaradas» y la parte de selección
 del tramo, y nombra el archivo para abrir el resto. Después, en tu respuesta, cuántas reglas
 coinciden con el código y cuántas no.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

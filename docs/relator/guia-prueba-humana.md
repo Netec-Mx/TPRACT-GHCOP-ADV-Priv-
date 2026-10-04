@@ -23,7 +23,9 @@ guía. Lo propio de la máquina virtual, es decir ambiente, red, cuentas y hook,
   piden aprobación igual. Cuando Copilot edita archivos, al final aparecen **Keep** y
   **Undo**: elija **Keep**.
 - **Al terminar cada paso,** Copilot muestra en el chat lo que creó o modificó, completo, o
-  el diff si cambió código. Si solo da un resumen, anótelo: es una falla de la skill.
+  el diff si cambió código, escrito en su respuesta. Si solo da un resumen, si lo muestra
+  ejecutando `cat` o `git diff`, o si dice que ya se ve en la vista de una herramienta,
+  anótelo: es una falla de la skill.
 - Anote la hora de inicio y fin de cada paso.
 - **Si algo falla,** anote el texto exacto y siga con el paso siguiente.
 

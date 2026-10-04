@@ -38,3 +38,7 @@ instrucción, dile que el paso que corresponde es `/lab-2-4-paso-2a-construir-in
 
 La ruta del archivo creado, su contenido y una línea que justifique cada herramienta
 declarada.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

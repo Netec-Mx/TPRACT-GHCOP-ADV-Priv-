@@ -26,7 +26,8 @@ una por archivo, con la [plantilla](../../../docs/arquitectura/decisiones/planti
 7. Si la decisión mueve responsabilidades entre componentes, usa los nombres de dominio de
    [bian-mapeo.md](../../../docs/arquitectura/bian-mapeo.md).
 8. Al terminar, muestra en el chat el contenido completo de la decisión y la fila que
-   agregaste al índice, no un resumen.
+   agregaste al índice, no un resumen. Escríbelo en el texto de tu respuesta; no basta con
+   ejecutar `cat` ni con remitir a la vista de una herramienta.
 
 ## Límites
 

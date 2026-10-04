@@ -44,3 +44,7 @@ El diff completo de los dos archivos, mostrado en el chat con `git diff --
 scripts/integracion-local.sh .github/workflows/integracion-continua.yml`, no un resumen, y
 `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotaste. Después, el
 resultado del pipeline local, paso por paso.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

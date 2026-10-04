@@ -36,3 +36,7 @@ La descripción del servidor, su comando de arranque y sus permisos están en
 
 El contenido de `.vscode/mcp.json` y los pasos para arrancarlo y ver sus tres
 herramientas.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.

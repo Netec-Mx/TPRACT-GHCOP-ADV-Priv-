@@ -48,3 +48,7 @@ El plan, con la validación de cada paso, y la pregunta de aprobación. Muestra 
 técnica que entregó el script no la escribiste tú: nombra su archivo,
 `docs/proyecto/backlog/formato-del-reporte.md`. Si actualizaste la decisión, muéstrala
 completa.
+
+Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
+No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
+vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.
