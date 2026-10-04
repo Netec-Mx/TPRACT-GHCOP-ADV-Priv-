@@ -747,3 +747,46 @@ pruebas de Java. Un agente sin acceso a `docs/relator/` siguió la skill. 223 se
 | Registro de tiempos | Mantención con inicio y término; el hallazgo del 5.2 marcado «Resuelto en el 5.3, paso 3», con el comando que ahora pasa |
 
 Con esto, el camino B de la corrida s22 queda verificado hasta el final del 5.3.
+
+## Corrida s24, después de los hallazgos de la prueba con Copilot
+
+4 de octubre de 2026, SPEC-024. Sin Copilot CLI: la cuota de la cuenta estaba agotada.
+
+**El hook.** `herramientas/probar-hook.sh`, que corre en los gates, tiene 22 casos en los dos
+formatos de entrada, el de Visual Studio Code y el de Copilot CLI: doce que deben bloquearse,
+como crear, editar o parchear un archivo de datos, o redirigir, `sed -i`, `cp`, `mv`, `rm` y
+`tee` hacia la carpeta, y diez que deben pasar, como un documento que cita la ruta, una prueba
+que lee la carpeta, leer datos, redirigir fuera o ejecutar la liquidación. El hook nuevo da 22
+de 22; el anterior fallaba 5, los de citas y lecturas. Con las dos entradas reales que lo
+bloquearon en la prueba con Copilot, reconstruidas desde las sesiones guardadas de la CLI, el
+caso de uso del 3.4 y `pull-request.md` del 5.3, el hook anterior devuelve 2 y el nuevo 0.
+
+**Las skills.** Dos agentes sin acceso a `docs/relator/`, en Java, desde un repositorio
+reiniciado, consultando el hook antes de cada escritura.
+
+| Confirmación | Camino A, 5.1 a 5.4 | Camino B, 5.2 y 5.3 |
+|---|---|---|
+| Contenido escrito en el texto de la respuesta | 14 de 14 pasos | 7 de 7 pasos |
+| 5.1.3 | Tres alternativas pedidas y una cuarta propia, sin recomendar ninguna | — |
+| 5.2.1 | Plan según la decisión | Actualizó la decisión 0004 al camino B |
+| 5.2.2 y 5.2.3 | Coincide en los tres periodos | No explicó la causa; hallazgo abierto en el registro y en el commit |
+| 5.3.1, prueba de conciliación | Ejecuta liquidación y reporte y compara totales; falla solo en junio, 36615,31 contra 36637,34 | Ejecuta las dos; pasa, porque comparten el cálculo; fallan borde y medio centavo |
+| 5.3.3 | 22,00 y 0,03; corrección mínima después de probar que cambiar solo el redondeo no basta | Igual; hallazgo del 5.2 marcado como resuelto |
+| Fin del 5.3 | Pipeline en verde | Pipeline en verde |
+| 5.4.1 | Propuso 1.5.0 y terminó el turno sin escribir; escribió después de la confirmación | — |
+| 5.4.2 | Tabla por transacción, TX002001 +3,00 y TX002002 +8,00, suma 11,00; la respuesta no decide devolución; la medida comercial va como pregunta abierta | — |
+| `git stash`, `reset`, `checkout`, `restore` | No se usaron | No se usaron |
+| Bloqueos del hook | Ninguno indebido en 43 consultas | Ninguno en 33 consultas |
+
+Segundos: camino A, 1420 en total, con el 5.3.3 en 184 y el 5.4.2 en 140; camino B, 576, con el
+5.3.3 en 224.
+
+**Reportado, sin cambiar:**
+
+- En el camino B, la decisión 0004 que trae `ponerse-al-dia.sh` está en estado «Aceptada», y
+  el 5.2.1 supone «Propuesta». El agente la corrigió sin cambiar el estado.
+- El commit que propone el 5.2.3, `git add escenario docs/proyecto`, deja fuera
+  `docs/arquitectura` cuando el 5.2.1 actualizó la decisión.
+- `copilot-instructions.md` dice «No hagas commits» y «no cambies tipos de datos»; las skills
+  proponen commits y el 5.3.3 exige cambiar el tipo con aprobación. Las skills lo resuelven
+  pidiendo aprobación, pero el agente lo nota como tensión.
