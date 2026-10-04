@@ -29,9 +29,9 @@ nada más hasta que responda.
    los hashes esperados. Un refactor que cambia un solo byte de la liquidación está mal.
 5. Muestra el plan y pregunta al participante si lo aprueba o qué cambia. No implementes.
 6. Si el plan aprobado no sigue la alternativa que registra la decisión del 5.1, dilo y
-   actualiza esa decisión para que diga lo que de verdad se va a construir, con sus
-   consecuencias. Es la decisión del participante, en estado «Propuesta»: corrígela, no
-   crees otra.
+   reescribe esa decisión para que diga lo que de verdad se va a construir, con sus
+   consecuencias. No supongas su estado: mantén el que tenga el archivo. Agrega una línea
+   que diga qué cambió y por qué, y dilo en tu respuesta. No crees otra decisión.
 
 # Restricciones
 
