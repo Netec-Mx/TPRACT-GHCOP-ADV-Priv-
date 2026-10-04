@@ -50,7 +50,9 @@ nada más hasta que responda.
    solo los hashes de esos periodos. Explica al participante que ese cambio se justifica en
    la descripción del pull request.
 8. Ejecuta `bash scripts/integracion-local.sh` hasta que todo esté en verde.
-9. Al terminar, anota en el registro de tiempos la hora de término de Mantención.
+9. Al terminar, anota en el registro de tiempos la hora de término de Mantención. Si su
+   sección «Hallazgos abiertos» tiene alguno que esta corrección resuelve, márcalo como
+   resuelto en el 5.3, con el comando que ahora pasa.
 
 # Restricciones
 

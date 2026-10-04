@@ -638,3 +638,34 @@ busca en la historia; la skill lo dice ahora en el mismo punto.
 La skill de este paso, la hoja de respuestas y la guía entraron por error en el commit de la
 sección 1, porque estaban en el índice al confirmar; este commit agrega la precisión del orden
 y el registro.
+
+## Corrida s20, el capítulo 5 completo por los dos caminos
+
+4 de octubre de 2026, SPEC-020. Dos agentes sin acceso a `docs/relator/` hicieron el
+capítulo 5 completo en Java desde un repositorio reiniciado, uno por cada camino, siguiendo
+cada skill y los commits que proponen.
+
+| Confirmación | Camino A | Camino B |
+|---|---|---|
+| La decisión registrada corresponde al camino | Sí: clases propias con decimal exacto | Sí: reutiliza el cálculo de la liquidación, y entre sus consecuencias dice que el reporte hereda cualquier diferencia de ese cálculo |
+| El 5.2.3 y junio | Coincide en los tres periodos; commit sin hallazgo | Junio no coincide; queda en «Hallazgos abiertos» del registro y el commit lo dice en un segundo párrafo, sin causa |
+| Prueba unitaria del formato | Existe sobre la función de formato, con 137,825 → 137,83 y montos con miles sin separador; pasa | Igual, con 137,825 y 1 234 567,5; pasa |
+| Fin del 5.3 | Pipeline en verde, conciliación en cero en los tres periodos | Pipeline en verde, conciliación en cero en los tres periodos |
+| Causas del 5.3.3 | 22,00 del borde y 0,03 de punto flotante; corrección solo en la liquidación, el reporte intacto | Las mismas, obtenidas con un cálculo exacto independiente; corrección en la liquidación, sin proponer reescribir el reporte |
+
+Segundos por laboratorio: camino A, 116, 120, 330 y 160; camino B, 136, 95, 270 y 152.
+
+**Ajuste que salió de la corrida:** en el camino B, el hallazgo abierto del 5.2 quedaba abierto
+en el registro final aunque junio ya coincidía. El 5.3.3 lo marca ahora como resuelto, con el
+comando que pasa. No se volvió a correr.
+
+**Reportado, sin cambiar:**
+
+- Corregir solo la forma de redondear no basta en `double`: hay que acumular cada comisión
+  exacta. La skill pide aviso y aprobación porque toca una regla del repositorio, pero no dice
+  cuál es la corrección mínima suficiente.
+- El 5.1 no pide un criterio de formato en la historia, y el 5.3.1 habla de «el de formato».
+  Los dos agentes lo probaron igual, a partir de la especificación del 5.2.
+- Corregir un solo stack deja al otro distinto en junio sin aviso de ninguna skill; con el
+  stack `ambos` la equivalencia fallaría. Ya está en las notas del 5.3.
+- El 5.4.2 y el 5.4.3 no proponen commit; su trabajo entra en el del cierre.
