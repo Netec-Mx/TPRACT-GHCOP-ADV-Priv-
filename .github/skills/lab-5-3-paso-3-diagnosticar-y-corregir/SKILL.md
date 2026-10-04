@@ -31,7 +31,8 @@ nada más hasta que responda.
    obténla comparando, comercio por comercio, el total de comisiones de la liquidación con
    un cálculo exacto e independiente de las reglas de `escenario/README.md`, con decimal y
    sin punto flotante, y explica esa diferencia completa, no solo lo que fallan las
-   pruebas.
+   pruebas. Donde el README no decide un caso, el cálculo usa la respuesta del negocio de
+   la tabla de preguntas de la historia, como dice el punto 5.
 5. Si una causa depende de una regla que el README no decide, busca primero la respuesta del
    negocio en la tabla de preguntas de `docs/proyecto/historia-reporte-medios-de-pago.md`. Si
    está, úsala y cítala. Si no está, detente y dile al participante que le lleve la pregunta

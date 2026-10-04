@@ -615,3 +615,26 @@ Salieron dos precisiones que se agregaron a la skill: `git diff --no-index` term
 1 cuando hay diferencias, y no es un error; y si la corrección deja el archivo igual a lo
 confirmado, el diff sale vacío y la skill lo dice. En el caso nuevo, el diff muestra el
 artefacto entero y no solo la corrección del paso; la línea de qué cambió es la que la señala.
+
+## Corrida s19-b, las dos causas en el camino B
+
+4 de octubre de 2026, SPEC-019. El paso 3 del 5.3 pide ahora explicar por separado cada causa
+con su monto y sus comercios, aunque las pruebas ya hayan mostrado alguna, y, si la
+conciliación da cero porque el reporte comparte el cálculo, obtener la diferencia completa
+contra un cálculo exacto e independiente. La skill no nombra montos ni comercios. Un agente
+sin acceso a `docs/relator/` hizo el camino B en Java desde `ponerse-al-dia.sh lab-5-2`.
+
+| Paso | Resultado | Segundos |
+|---|---|---|
+| 5.2, pasos 1 a 3 | Reutiliza el cálculo en `double`; junio no coincide en `verificar-reporte.sh` | 25, 46 y 41 |
+| 5.3, paso 1 | Fallan el borde, 14,80 contra 17,80, el medio centavo de CM0025, 957,18 contra 957,19, y el formato de junio | 72 |
+| 5.3, paso 2 | Conciliación en cero en los tres periodos | 42 |
+| 5.3, paso 3 | Cálculo exacto independiente: junio difiere en 22,03. Borde, 22,00, CM0001 y CM0007; punto flotante, 0,03, CM0011, CM0016 y CM0025. Suman la diferencia completa | 133 |
+
+**Llega a las dos causas con su monto y sus comercios, no solo a lo que fallan las pruebas.**
+El agente notó que el cálculo exacto necesita la decisión del borde antes del punto que la
+busca en la historia; la skill lo dice ahora en el mismo punto.
+
+La skill de este paso, la hoja de respuestas y la guía entraron por error en el commit de la
+sección 1, porque estaban en el índice al confirmar; este commit agrega la precisión del orden
+y el registro.
