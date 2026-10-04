@@ -43,6 +43,10 @@ bash scripts/comparar-escenarios.sh
 Termina en cero si las salidas son idénticas. Si modificas un solo escenario, este script
 te dice si te alejaste del otro.
 
+Para comparar el antes y el después de un cambio, guarda la salida de antes en un archivo
+temporal fuera del repositorio, antes de cambiar nada, o compila una copia en una carpeta
+temporal. Nunca uses `git stash`, `git reset`, `git checkout` ni `git restore` para eso.
+
 ## Gobierno
 
 Estas reglas vienen de la política de uso de IA de Pasarela Andina,

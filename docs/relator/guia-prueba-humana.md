@@ -19,7 +19,10 @@ guía. Lo propio de la máquina virtual, es decir ambiente, red, cuentas y hook,
 - **Permisos.** Cuando Copilot quiere ejecutar un comando, el chat lo muestra con un botón
   **Allow**. Apruebe los que la tabla lista. Si pide otro, apruébelo si solo lee, compila,
   prueba o ejecuta un script de `scripts/`; rechácelo con **Skip** si hace `git commit`,
-  `git push`, borra archivos o toca `escenario/datos/`. Las llamadas a herramientas MCP
+  `git push`, borra archivos o toca `escenario/datos/`. Rechace también `git stash`,
+  `git reset`, `git checkout` y `git restore`: para comparar antes y después, Copilot tiene
+  que usar un archivo o una copia temporal. Después de rechazar, escriba «Sigue sin ese
+  comando». Las llamadas a herramientas MCP
   piden aprobación igual. Cuando Copilot edita archivos, al final aparecen **Keep** y
   **Undo**: elija **Keep**.
 - **Al terminar cada paso,** Copilot muestra en el chat lo que creó o modificó, completo, o

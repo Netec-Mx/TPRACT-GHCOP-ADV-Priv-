@@ -39,6 +39,10 @@ respuesta y no lo toques.
 El repositorio tiene un hook en `.github/hooks/` que puede bloquear algunas acciones. Si
 bloquea una, informa el motivo y no intentes rodearlo.
 
+Para comparar el antes y el después de un cambio, guarda la salida de antes en un archivo
+temporal fuera del repositorio, antes de cambiar nada, o compila una copia en una carpeta
+temporal. Nunca uses `git stash`, `git reset`, `git checkout` ni `git restore` para eso.
+
 ## Convenciones del repositorio
 
 Todo el contenido va en español neutro. Los identificadores del código siguen la
