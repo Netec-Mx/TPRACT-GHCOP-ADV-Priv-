@@ -39,7 +39,7 @@ aviso()  { printf '  %s[AVISO]%s %s\n' "$C_AVISO" "$C_FIN" "$1"; }
 
 uso() {
     cat <<EOF
-Uso: bash scripts/reiniciar-lab.sh <laboratorio> [--si]
+Uso: bash scripts/reiniciar-lab.sh <laboratorio> [--confirmar]
 
 Deja el repositorio en el punto de partida del laboratorio indicado.
 
@@ -47,8 +47,10 @@ Laboratorios: lab-1-4 lab-1-5 lab-2-4 lab-3-4 lab-4-4 lab-5-1 lab-5-2 lab-5-3 la
 Tambien se aceptan las formas 5.2 y 5-2.
 
 Opciones:
-  --si        Confirma de antemano. Sin esta opcion, el script pregunta antes de
-              descartar cambios. No vale para lab-5-4.
+  --confirmar Confirma de antemano, sin preguntar, para uso no interactivo, por ejemplo
+              desde un agente o un script. Vale para todos los laboratorios, incluido
+              lab-5-4. Sin esta opcion, el script pregunta antes de descartar cambios.
+  --si        Igual que --confirmar, salvo que no vale para lab-5-4.
   --confirmo-descartar-5-2-y-5-3
               Solo para lab-5-4. Confirma de antemano que se descarta el trabajo
               de todo el capitulo 5.
@@ -99,6 +101,7 @@ confirmado_5_4=0
 while [ $# -gt 0 ]; do
     case "$1" in
         --si)        confirmado=1 ;;
+        --confirmar) confirmado=1; confirmado_5_4=1 ;;
         --confirmo-descartar-5-2-y-5-3) confirmado_5_4=1 ;;
         --ayuda|-h)  uso; exit 0 ;;
         --version)   echo "reiniciar-lab.sh $VERSION_SCRIPT"; exit 0 ;;
@@ -191,7 +194,7 @@ fi
 
 if [ "$laboratorio" = "lab-5-4" ] && [ "$confirmado_5_4" -eq 0 ]; then
     if [ ! -t 0 ]; then
-        falla "Hace falta confirmar y no hay una terminal interactiva. Repetir con --confirmo-descartar-5-2-y-5-3."
+        falla "Hace falta confirmar y no hay una terminal interactiva. Repetir con --confirmar."
         exit 1
     fi
     printf '\n  Escribe descartar para perder el trabajo de todo el capitulo 5, cualquier otra cosa para cancelar: '
@@ -203,7 +206,7 @@ if [ "$laboratorio" = "lab-5-4" ] && [ "$confirmado_5_4" -eq 0 ]; then
     fi
 elif [ "$laboratorio" != "lab-5-4" ] && [ "$confirmado" -eq 0 ]; then
     if [ ! -t 0 ]; then
-        falla "Hace falta confirmar y no hay una terminal interactiva. Repetir con --si para descartar."
+        falla "Hace falta confirmar y no hay una terminal interactiva. Repetir con --confirmar para descartar."
         exit 1
     fi
     printf '\n  Escribe si para descartar estos cambios, cualquier otra cosa para cancelar: '
