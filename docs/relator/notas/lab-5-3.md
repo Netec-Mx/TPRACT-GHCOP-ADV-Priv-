@@ -55,6 +55,11 @@ la verificación, no el código. Un hash esperado es una verificación.
 comportamiento real que nadie plantó. Está en `docs/relator/04-defectos-plantados.md`,
 sección «Comportamientos no planificados». No se corrige.
 
+**Mes 2026-13.** Si alguien ejecuta la liquidación con el periodo `2026-13`, el programa
+termina sin error y liquida enero de 2027: no valida el mes. Es un hallazgo libre, no está en
+el catálogo de defectos. Está bien visto, no es parte del ejercicio y no se corrige en el
+taller. Ver HALLAZGO-12 en `03-hallazgos.md`.
+
 ## La demostración del 5.3
 
 [`../demos/demo-5-3-pipeline-en-github.md`](../demos/demo-5-3-pipeline-en-github.md) muestra en

@@ -911,3 +911,24 @@ transacciones, y la segunda causa, el punto flotante, que no se ve leyendo el c�
 
 Que está bien visto, que no se corrige ahora y que el 5.3 lo va a confirmar con evidencia.
 Está en las notas del 5.1 y en la hoja de respuestas del capítulo 5.
+
+## HALLAZGO-12. La liquidación acepta el mes 13 y liquida enero del año siguiente
+
+| Campo | Valor |
+|---|---|
+| Detectado en | Corrida s17 de SPEC-017, por un agente de verificación |
+| Componente | Escenario, lectura del periodo en la clase ejecutable |
+| Severidad | Baja. Ningún laboratorio usa un periodo inválido |
+| Estado | Aceptado como hallazgo libre. No se corrige, porque el escenario no se toca |
+
+### Qué pasó
+
+`java -jar target/liquidacion-comercios.jar 2026-13` termina con código cero y liquida desde
+el 01/01/2027. El periodo no se valida y el calendario desborda el mes al año siguiente.
+
+### Por qué no se corrige
+
+No es uno de los diez defectos del catálogo ni un comportamiento no planificado registrado
+allí, y el escenario no se toca. Si un participante lo encuentra, el relator dice que está
+bien visto, que no es parte del ejercicio y que no se corrige en el taller. Está en la hoja de
+respuestas del capítulo 5 y en las notas del 5.3.
