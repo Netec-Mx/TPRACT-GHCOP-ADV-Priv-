@@ -144,7 +144,7 @@ index 0000000..6ffb515
 +Contracargos y retenciones. Filtros por comercio o por categoría.
 diff --git a/docs/proyecto/registro-de-tiempos.md b/docs/proyecto/registro-de-tiempos.md
 new file mode 100644
-index 0000000..1f6849d
+index 0000000..b72ad21
 --- /dev/null
 +++ b/docs/proyecto/registro-de-tiempos.md
 @@ -0,0 +1,22 @@
@@ -161,14 +161,14 @@ index 0000000..1f6849d
 +| Requerimientos | 5.1, paso 1 | 09:00 | 09:15 | 15 | 15 | 0 | referencia |
 +| Estimación | 5.1, paso 2 | 09:15 | 09:25 | 10 | 10 | 0 | referencia |
 +| Análisis y diseño | 5.1, paso 3 | 09:25 | 09:35 | 10 | 10 | 0 | referencia |
-+| Desarrollo | 5.2, pasos 1 a 3 | | | | | | |
-+| Pruebas | 5.3, paso 1 | | | | | | |
-+| Integración continua | 5.3, paso 2 | | | | | | |
-+| Mantención | 5.3, paso 3 | | | | | | |
-+| Revisión de código | 5.3, paso 4 | | | | | | |
-+| Seguridad | 5.3, paso 4 | | | | | | |
-+| Liberación | 5.4, paso 1 | | | | | | |
-+| Operación y soporte | 5.4, paso 2 | | | | | | |
++| Desarrollo | 5.2, pasos 1 a 3 | | | | 25 | | |
++| Pruebas | 5.3, paso 1 | | | | 10 | | |
++| Integración continua | 5.3, paso 2 | | | | 10 | | |
++| Mantención | 5.3, paso 3 | | | | 15 | | |
++| Revisión de código | 5.3, paso 4 | | | | 8 | | |
++| Seguridad | 5.3, paso 4 | | | | 4 | | |
++| Liberación | 5.4, paso 1 | | | | 8 | | |
++| Operación y soporte | 5.4, paso 2 | | | | 12 | | |
 +| Mantención evolutiva | 5.4, paso 3 | | | | | | |
 diff --git a/scripts/integracion/stack.txt b/scripts/integracion/stack.txt
 index 82ef4fb..357ae76 100644

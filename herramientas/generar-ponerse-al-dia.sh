@@ -41,21 +41,39 @@ Mantención|11:16|11:31|15|15|0
 Revisión de código|11:31|11:35|4|8|-4
 Seguridad|11:35|11:39|4|4|0"
 
+# Estimado con IA de la estimacion de referencia para las fases que el participante va a
+# hacer, para que el cierre del 5.4 pueda comparar aunque no haya hecho el 5.1.
+readonly ESTIMADO_REFERENCIA="Desarrollo|25
+Pruebas|10
+Integración continua|10
+Mantención|15
+Revisión de código|8
+Seguridad|4
+Liberación|8
+Operación y soporte|12"
+
 # Completa en el registro de tiempos del directorio actual las primeras $1 fases con los
 # tiempos de referencia, marcados como tales en Origen.
 registro_referencia() {
     printf '%s\n' "$REGISTRO_REFERENCIA" | head -n "$1" > referencia.tmp
-    awk -F'|' 'NR == FNR { ini[$1] = $2; fin[$1] = $3; min[$1] = $4; est[$1] = $5; dif[$1] = $6; next }
+    printf '%s\n' "$ESTIMADO_REFERENCIA" > estimado.tmp
+    awk -F'|' 'FILENAME == "estimado.tmp" { estimado[$1] = $2; next }
+        FILENAME == "referencia.tmp" { ini[$1] = $2; fin[$1] = $3; min[$1] = $4; est[$1] = $5; dif[$1] = $6; next }
         /^\| / {
             fase = $2; gsub(/^ +| +$/, "", fase)
+            lab = $3; gsub(/^ +| +$/, "", lab)
             if (fase in ini) {
-                lab = $3; gsub(/^ +| +$/, "", lab)
                 printf "| %s | %s | %s | %s | %s | %s | %s | referencia |\n", fase, lab, ini[fase], fin[fase], min[fase], est[fase], dif[fase]
                 next
             }
+            actual = $7; gsub(/^ +| +$/, "", actual)
+            if ((fase in estimado) && actual == "") {
+                printf "|%s|%s|%s|%s|%s| %s |%s|%s|\n", $2, $3, $4, $5, $6, estimado[fase], $8, $9
+                next
+            }
         }
-        { print }' referencia.tmp docs/proyecto/registro-de-tiempos.md > registro.tmp
-    mv registro.tmp docs/proyecto/registro-de-tiempos.md && rm referencia.tmp
+        { print }' estimado.tmp referencia.tmp docs/proyecto/registro-de-tiempos.md > registro.tmp
+    mv registro.tmp docs/proyecto/registro-de-tiempos.md && rm referencia.tmp estimado.tmp
 }
 
 trabajo="$(mktemp -d)"

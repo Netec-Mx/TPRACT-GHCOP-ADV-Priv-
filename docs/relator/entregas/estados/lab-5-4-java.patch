@@ -235,7 +235,7 @@ index 0000000..cdfe2be
 +`docs/arquitectura/decisiones/0005-limite-superior-inclusivo.md`.
 diff --git a/docs/proyecto/registro-de-tiempos.md b/docs/proyecto/registro-de-tiempos.md
 new file mode 100644
-index 0000000..fbebd49
+index 0000000..eeba2b1
 --- /dev/null
 +++ b/docs/proyecto/registro-de-tiempos.md
 @@ -0,0 +1,22 @@
@@ -258,8 +258,8 @@ index 0000000..fbebd49
 +| Mantención | 5.3, paso 3 | 11:16 | 11:31 | 15 | 15 | 0 | referencia |
 +| Revisión de código | 5.3, paso 4 | 11:31 | 11:35 | 4 | 8 | -4 | referencia |
 +| Seguridad | 5.3, paso 4 | 11:35 | 11:39 | 4 | 4 | 0 | referencia |
-+| Liberación | 5.4, paso 1 | | | | | | |
-+| Operación y soporte | 5.4, paso 2 | | | | | | |
++| Liberación | 5.4, paso 1 | | | | 8 | | |
++| Operación y soporte | 5.4, paso 2 | | | | 12 | | |
 +| Mantención evolutiva | 5.4, paso 3 | | | | | | |
 diff --git a/escenario/java/src/main/java/pe/pasarelaandina/AplicacionLiquidacion.java b/escenario/java/src/main/java/pe/pasarelaandina/AplicacionLiquidacion.java
 index ed3380e..da2355d 100644

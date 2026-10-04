@@ -20,8 +20,9 @@ mantención evolutiva de [CICLO-DE-VIDA.md](../../../CICLO-DE-VIDA.md).
    `docs/proyecto/estimacion-evolutiva.md`. Usa como dato real el registro de tiempos del
    ciclo que acaba de terminar, y cítalo.
 4. Lista las preguntas abiertas que habría que hacerle al negocio antes de implementarla.
-5. Al terminar, anota en el registro de tiempos la hora de término de Mantención evolutiva,
-   y en su «Estimado con IA» el total de la persona de
+5. Al terminar, anota en el registro de tiempos la hora de término de Mantención evolutiva, y
+   en su «Estimado con IA» escribe «no aplica»: la fila mide el paso de estimar la
+   evolutiva, no su implementación, que se estimó en
    `docs/proyecto/estimacion-evolutiva.md`.
 
 # Restricciones

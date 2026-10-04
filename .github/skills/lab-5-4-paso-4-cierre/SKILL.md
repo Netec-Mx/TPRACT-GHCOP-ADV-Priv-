@@ -13,7 +13,8 @@ real, los activos que puede reutilizar y la línea base para medir la adopción.
 
 1. **Estimado contra real.** Completa en `docs/proyecto/registro-de-tiempos.md` los minutos
    reales, término menos inicio, y la diferencia de cada fase contra su «Estimado con IA».
-   Si a una fase le falta el inicio o el término, déjala sin minutos y dilo. Las filas con
+   Si a una fase le falta el inicio o el término, déjala sin minutos y dilo. Una fase con
+   «no aplica» en el estimado no tiene diferencia. Las filas con
    `referencia` en Origen las dejó `ponerse-al-dia.sh`: no son del participante. Agrega al
    final las tres fases del participante con más diferencia y una causa probable de cada
    una, y una línea aparte que diga qué fases son de referencia y que no se comparan.
