@@ -727,3 +727,23 @@ en junio que pide el 5.3.3 lo detectó antes de darlo por bueno.
 
 Segundos por laboratorio: camino A, 115, 134, 291 y 121; camino B, 138, 77 y 222 hasta el
 bloqueo.
+
+### Complemento de la corrida s22: cierre del 5.3 en el camino B
+
+4 de octubre de 2026. Con autorización del Product Owner para editar
+`scripts/integracion/liquidacion-esperada.sha256` en la copia de trabajo del verificador, se
+repitió el 5.3.3 del camino B en Java desde el estado del final del 5.3.2: la misma copia de
+la corrida s22, con la corrección a medio hacer deshecha y el pipeline en rojo por las
+pruebas de Java. Un agente sin acceso a `docs/relator/` siguió la skill. 223 segundos.
+
+| Comprobación | Resultado |
+|---|---|
+| Diferencia completa | Con un cálculo exacto independiente, porque la conciliación daba cero: junio, 22,03 |
+| Causas y dónde va cada corrección | Borde, 22,00, CM0001 y CM0007; punto flotante, 0,03, CM0011, CM0016 y CM0025. Las dos en la liquidación; no hubo error propio del reporte |
+| Corrección mínima | Cambiar solo el redondeo arregló CM0011 y dejó CM0016 y CM0025; la prueba en junio lo detectó. La final acumula cada comisión exacta y redondea una vez |
+| Hash esperado | Solo cambió el de 2026-06, a `cd1466305e63…` |
+| `verificar-reporte.sh java` | Coincide en 2026-04, 2026-05 y 2026-06 |
+| `integracion-local.sh` | Código cero, «Todos los pasos pasan»: 27 pruebas sin fallas, equivalencia y conciliación en cero en los tres periodos |
+| Registro de tiempos | Mantención con inicio y término; el hallazgo del 5.2 marcado «Resuelto en el 5.3, paso 3», con el comando que ahora pasa |
+
+Con esto, el camino B de la corrida s22 queda verificado hasta el final del 5.3.
