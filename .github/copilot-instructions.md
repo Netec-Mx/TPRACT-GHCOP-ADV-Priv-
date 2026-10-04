@@ -12,7 +12,8 @@ agente. Las reglas propias de cada lenguaje están en `.github/instructions/`.
 ## Alcance de los cambios
 
 - Haz exactamente lo que se pide. El alcance de la tarea es el alcance del cambio.
-- Antes de modificar un archivo que la tarea no nombra, pregunta.
+- Antes de modificar un archivo que la tarea o el plan que el participante aprobó no
+  incluyen, pregunta.
 - Si ves un problema que no forma parte de la tarea, menciónalo al final de tu respuesta
   y no lo toques.
 
@@ -22,8 +23,10 @@ El código de `escenario/` es material de laboratorio. Tiene características el
 propósito que pueden parecer errores o malas prácticas.
 
 - No las corrijas salvo que la tarea lo pida de forma explícita.
-- No cambies tipos de datos, no extraigas literales a constantes, no unifiques código
-  entre clases, no renombres y no agregues manejo de errores por iniciativa propia.
+- No extraigas literales a constantes, no unifiques código entre clases, no renombres y no
+  agregues manejo de errores por iniciativa propia.
+- No cambies tipos de datos ni la forma de redondear sin la aprobación explícita del
+  participante. Si una corrección lo exige, dilo, muestra qué regla toca y espera.
 - No agregues ni modifiques pruebas salvo que la tarea lo pida.
 - No silencies advertencias con anotaciones ni supresiones.
 
@@ -55,8 +58,10 @@ Estas reglas vienen de la política de uso de IA de Pasarela Andina,
 - No escribas secretos, credenciales, datos personales ni datos reales de clientes en
   código, documentos ni respuestas. Si encuentras alguno en el contexto, no lo repitas y
   avisa. Los datos de `escenario/datos/` y `mcp/datos/` son ficticios y se pueden mostrar.
-- No agregues ni propongas servidores MCP ni extensiones nuevos. Los aprueba el equipo.
-- No hagas commits ni push. Los cambios los revisa e integra una persona.
+- No agregues ni propongas servidores MCP ni extensiones nuevos. Los aprueba el equipo. El
+  servidor local de `mcp/` ya está aprobado y se configura en el laboratorio 3.4.
+- No hagas commits por tu cuenta ni push. Propón el commit; el participante lo ejecuta o lo
+  aprueba. Los cambios los revisa e integra una persona.
 
 ## Ambiente
 

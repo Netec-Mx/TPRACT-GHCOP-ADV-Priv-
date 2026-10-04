@@ -26,9 +26,11 @@ Esto significa:
 - Haz exactamente lo que la tarea pide y deja todo lo demás como está.
 - No corrijas algo porque te parezca obvio o trivial.
 - No corrijas nada de paso mientras haces otra tarea en el mismo archivo.
-- No cambies tipos de datos, no extraigas literales a constantes, no unifiques código
-  entre clases, no renombres, no agregues manejo de errores y no cambies APIs, salvo que la
-  tarea lo pida.
+- No extraigas literales a constantes, no unifiques código entre clases, no renombres, no
+  agregues manejo de errores y no cambies APIs, salvo que la tarea lo pida.
+- No cambies tipos de datos ni la forma de redondear sin la aprobación explícita del
+  participante. Si una corrección lo exige, dilo, muestra qué regla toca y espera.
+- No hagas commits por tu cuenta. Propón el commit; el participante lo ejecuta o lo aprueba.
 - No agregues pruebas salvo que la tarea lo pida.
 - No silencies advertencias de análisis estático con anotaciones, supresiones ni archivos
   de configuración.
