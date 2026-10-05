@@ -22,6 +22,9 @@ contexto, y aplicar una única mejora acotada que no cambie el comportamiento.
 
 ## Pasos
 
+**El paso 4 es opcional.** Hazlo si terminaste el paso 5 con tiempo o después de la sesión.
+El paso 5 no depende de él.
+
 En cada paso, reemplaza `java` por `dotnet` si trabajas con .NET.
 
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
@@ -29,7 +32,7 @@ En cada paso, reemplaza `java` por `dotnet` si trabajas con .NET.
 | 1 | `/lab-1-5-paso-1-inventario java` | Cuántas responsabilidades encuentra y si coinciden con las que tú ves | 10 min |
 | 2 | `/lab-1-5-paso-2-rastrear-lineas-invalidas java` | Si el equipo se enteraría de un problema con los datos de entrada | 10 min |
 | 3 | `/lab-1-5-paso-3-contrastar-nombres java` | Si el nombre de cada método describe lo que hace | 10 min |
-| 4 | `/lab-1-5-paso-4-proponer-mejora java` | Si la propuesta cabe en una revisión de diez minutos | 12 min |
+| 4, opcional | `/lab-1-5-paso-4-proponer-mejora java` | Si la propuesta cabe en una revisión de diez minutos | Fuera de los 60 min |
 | 5 | `/lab-1-5-paso-5-extraer-retencion java`, en modo **Agent** | En el diff que muestra el agente, que solo cambió el bloque de la retención. Si compila y si el comparador sigue en cero | 12 min |
 
 **Cómo se cuentan los niveles de anidamiento en el paso 1.** El cuerpo del método es el nivel
@@ -44,7 +47,7 @@ cada comando antes de aprobarlo.
 
 ## Resultado esperado
 
-- Cuatro análisis en el chat.
+- Tres análisis en el chat, cuatro si hiciste el paso 4.
 - Un solo archivo modificado, la clase de cálculo de tu escenario, con un método privado
   nuevo que calcula la retención de garantía.
 - `bash scripts/comparar-escenarios.sh` termina en cero.

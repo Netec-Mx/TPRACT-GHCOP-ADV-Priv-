@@ -22,30 +22,32 @@ contra el código y trasladable a Confluence.
 
 ## Pasos
 
+**Los pasos 3 y 4 son opcionales.** Hazlos si terminaste los dos primeros con tiempo o después
+de la sesión. Ningún paso posterior depende de ellos.
+
 | Paso | Qué escribir en el chat | Qué observar | Tiempo |
 |---|---|---|---|
 | 1 | `/lab-4-4-paso-1-documentar-reglas java` | En el documento que muestra el agente, si cada afirmación está respaldada por una línea de código. Revisa la sección de contraste con las reglas declaradas | 10 min |
 | 2 | `/lab-4-4-paso-2-documentar-decisiones` | En el documento que muestra el agente, qué afirma por el código y qué deja como pendiente de confirmar | 10 min |
-| 3 | `/lab-4-4-paso-3-preparar-para-confluence` | En la copia que muestra el agente, qué se pierde al trasladar el Markdown, en la sección «Qué se perdió en el traslado» | 8 min |
+| 3, opcional | `/lab-4-4-paso-3-preparar-para-confluence` | En la copia que muestra el agente, qué se pierde al trasladar el Markdown, en la sección «Qué se perdió en el traslado» | Fuera de los 30 min |
 | 4, opcional | `/lab-4-4-paso-4-generar-runbook java` | En el runbook que muestra el agente, qué acciones quedaron verificadas con una ejecución real y cuáles no | Fuera de los 30 min |
 
 Reemplaza `java` por `dotnet` si trabajas con .NET.
 
-El paso 4 es opcional. Hazlo si terminaste los tres primeros antes de tiempo o después de
-la sesión. Usa la plantilla de [`docs/operacion/runbook-plantilla.md`](../../../docs/operacion/runbook-plantilla.md).
+El paso 4 usa la plantilla de [`docs/operacion/runbook-plantilla.md`](../../../docs/operacion/runbook-plantilla.md).
 
 Antes de dar por bueno el documento del paso 1, abre dos o tres de las líneas que cita y
 compáralas con lo que dice.
 
 ## Resultado esperado
 
-Tres archivos en `labs/cap4/lab-4-4-documentacion/entregables/`:
+Dos archivos en `labs/cap4/lab-4-4-documentacion/entregables/`:
 
 - `calculo-de-comisiones.md`
 - `decisiones.md`
-- La copia con sufijo `-confluence.md` de uno de los dos.
 
-Si hiciste el paso 4, además `runbook-calculo-de-comisiones.md`.
+Si hiciste el paso 3, además la copia con sufijo `-confluence.md` de uno de los dos. Si
+hiciste el paso 4, además `runbook-calculo-de-comisiones.md`.
 
 ## Criterios de revisión
 
@@ -53,7 +55,7 @@ Si hiciste el paso 4, además `runbook-calculo-de-comisiones.md`.
 - [ ] La sección de contraste dice qué reglas coinciden con el código y cuáles no.
 - [ ] La decisión del paso 2 tiene contexto, alternativas, decisión, consecuencias y
       verificación, y marca como pendiente lo que el código no respalda.
-- [ ] La copia para Confluence lista lo que se perdió.
+- [ ] Si hiciste el paso 3, la copia para Confluence lista lo que se perdió.
 - [ ] Si hiciste el paso 4, ninguna acción del runbook figura como verificada sin una
       ejecución real.
 - [ ] Ningún archivo de código ni comentario del código cambió.

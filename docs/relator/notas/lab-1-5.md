@@ -45,7 +45,8 @@ corregirlo queda fuera del alcance del laboratorio.
 
 | Paso | Estimado | Observado en la verificación | Comentario |
 |---|---|---|---|
-| 1 a 4 | 10, 10, 10 y 12 min | Respuestas en segundos | El tiempo se va en leer y comparar |
+| 1 a 3 | 10, 10 y 10 min | Respuestas en segundos | El tiempo se va en leer y comparar |
+| 4, opcional | Fuera de los 60 min | Respuestas en segundos | Opcional desde SPEC-026: 10 + 10 + 10 + 12 = 42 de 60, el 70 % |
 | 5 | 12 min | Entre 26 y 42 segundos de agente, más compilación | El comparador compila los dos escenarios y tarda cerca de un minuto |
 
 ## Si alguien se atrasa

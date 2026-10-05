@@ -57,12 +57,12 @@ clasificaciones, el criterio tiene que estar escrito en el pedido. Ver HALLAZGO-
 |---|---|---|
 | 1 | 10 min | 53 s de agente |
 | 2 | 10 min | 41 s de agente |
-| 3 | 8 min | 55 s de agente |
+| 3, opcional | Fuera del tiempo | 55 s de agente |
 | 4, opcional | Fuera del tiempo | 156 s de agente y unas 18 aprobaciones. Se estiman 8 a 12 minutos de participante |
 
-En la verificación el agente documentó los tramos como no acumulativos, desde el código, y señaló el comentario. Con Copilot puede salir distinto. Es el laboratorio con menos holgura del taller, dos minutos: 10 + 10 + 8 = 28 de 30. Por
-eso el paso 4 del runbook es opcional y no se suma. Si la sesión 4 viene
-atrasada, el paso 3 se muestra en pantalla en lugar de hacerlo.
+En la verificación el agente documentó los tramos como no acumulativos, desde el código, y señaló el comentario. Con Copilot puede salir distinto. Desde SPEC-026 los pasos obligatorios son el 1 y el 2: 10 + 10 = 20 de 30, el 67 %. El paso
+3, Confluence, y el 4, el runbook, son opcionales. Si la sesión viene con tiempo, haga el 3
+o muéstrelo en pantalla: conecta con el subtema 4.3.
 
 ## Si alguien se atrasa
 

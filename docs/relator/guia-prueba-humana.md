@@ -64,7 +64,7 @@ Modo **Ask**. 30 minutos. Todo en **una misma conversación**. No modifica archi
 
 ## Laboratorio 1.5. Análisis de un componente
 
-Pasos 1 a 4 en modo **Ask**, paso 5 en modo **Agent**. 60 minutos.
+Pasos 1 a 4 en modo **Ask**, paso 5 en modo **Agent**. 60 minutos; el paso 4 es opcional.
 
 **Preparar:** `bash scripts/reiniciar-lab.sh lab-1-5`
 
@@ -73,7 +73,7 @@ Pasos 1 a 4 en modo **Ask**, paso 5 en modo **Agent**. 60 minutos.
 | 1 | `/lab-1-5-paso-1-inventario java` | Nada | Tabla de responsabilidades con líneas, su cantidad y los niveles de anidamiento | No pueden faltar: filtrar comercios y transacciones, validar, elegir el tramo y calcular la comisión, el recargo por cuotas, el tope, los contracargos, la retención, el redondeo, el desglose por medio de pago, la impresión y las estadísticas. El número total varía según cuánto agrupe; en la prueba con Copilot fueron 23. | 10 min |
 | 2 | `/lab-1-5-paso-2-rastrear-lineas-invalidas java` | Nada | Tabla de puntos de falla y una línea final | Los `catch` vacíos del cargador: una línea mal formada desaparece sin rastro | 10 min |
 | 3 | `/lab-1-5-paso-3-contrastar-nombres java` | Nada | Tabla de tres métodos | `obtenerMontoNeto` recalcula y asigna; `buscarComerciosActivos` devuelve suspendidos; `validarTransaccion` acumula. CM0031 está suspendido y se liquida | 10 min |
-| 4 | `/lab-1-5-paso-4-proponer-mejora java` | Nada | Una sola propuesta en cuatro puntos | Que quepa en una revisión de diez minutos | 12 min |
+| 4, opcional | `/lab-1-5-paso-4-proponer-mejora java` | Nada | Una sola propuesta en cuatro puntos | Que quepa en una revisión de diez minutos | 12 min |
 | 5 | Cambie a **Agent**. `/lab-1-5-paso-5-extraer-retencion java` | `mvn -q clean package` y `bash scripts/comparar-escenarios.sh` | El diff completo de `CalculadoraLiquidacion.java` y el comparador en cero | Solo cambió el bloque de la retención | 12 min |
 
 Si en el paso 3 pregunta si un comercio suspendido se liquida, responda: «Un comercio
@@ -141,7 +141,7 @@ cuadro de texto debe listar `buscar_comercios`, `detalle_comercio` y
 
 ## Laboratorio 4.4. Documentación
 
-Modo **Agent**. 30 minutos; el paso 4 es opcional.
+Modo **Agent**. 30 minutos; los pasos 3 y 4 son opcionales.
 
 **Preparar:** `bash scripts/reiniciar-lab.sh lab-4-4`
 
@@ -149,7 +149,7 @@ Modo **Agent**. 30 minutos; el paso 4 es opcional.
 |---|---|---|---|---|---|
 | 1 | `/lab-4-4-paso-1-documentar-reglas java` | Nada | El documento completo, o la sección de contraste y la selección de tramo si es largo, y cuántas reglas coinciden | Dice que los tramos **no** son acumulativos. Si dice «acumulativos», anótelo: tomó el comentario como verdad | 10 min |
 | 2 | `/lab-4-4-paso-2-documentar-decisiones` | Nada | El documento completo y las afirmaciones pendientes | Una sola decisión: sin dependencias de ejecución; el porqué marcado «pendiente de confirmar con el equipo» | 10 min |
-| 3 | `/lab-4-4-paso-3-preparar-para-confluence` | Nada | La copia `-confluence.md` completa y lo que se perdió | El original sin cambios | 8 min |
+| 3, opcional | `/lab-4-4-paso-3-preparar-para-confluence` | Nada | La copia `-confluence.md` completa y lo que se perdió | El original sin cambios | 8 min |
 | 4, opcional | `/lab-4-4-paso-4-generar-runbook java` | Los comandos de compilación, ejecución y `comparar-escenarios.sh`, entre 15 y 18 | El runbook completo y cuántas acciones quedaron verificadas | Ninguna acción marcada verificada sin ejecución; ninguna toca `escenario/datos/` | 8 a 12 min |
 
 - [ ] El documento del paso 1 existe con el nombre exacto,

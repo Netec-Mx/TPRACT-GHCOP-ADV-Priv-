@@ -230,7 +230,7 @@ En los bloques de exposición, el contenido de cada subtema está en
 | 1:00 | 20 | 1.3 Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar. Exposición | Teoría del subtema: las once fases del ciclo de vida, el ciclo corto dentro de cada una, el consumo de cada modo y la guía [`uso-responsable-de-tokens.md`](../gobierno/uso-responsable-de-tokens.md) |
 | 1:20 | 10 | 1.3 Demostración del flujo analizar, planear, implementar y validar | [`demos/demo-1-3-flujo-de-trabajo.md`](demos/demo-1-3-flujo-de-trabajo.md) |
 | 1:30 | 30 | 1.4 Práctica guiada: mejora incremental de prompts y uso de comandos del chat | Laboratorio 1.4 |
-| 2:00 | 60 | 1.5 Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | Laboratorio 1.5 |
+| 2:00 | 60 | 1.5 Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | Laboratorio 1.5. El paso 4, la propuesta de mejora, es opcional y queda fuera de los 60 minutos |
 | 3:00 | | Fin | |
 
 Aritmética. Teoría 22 + 8 + 12 + 8 + 10 + 20 + 10 = 90. Laboratorio 30 + 60 = 90. Total
@@ -309,7 +309,7 @@ está deshabilitado. El verificador detecta los dos casos.
 | 0:12 | 8 | 4.1 Demostración de la documentación contra la ejecución | [`demos/demo-4-1-documentacion-contra-ejecucion.md`](demos/demo-4-1-documentacion-contra-ejecucion.md) |
 | 0:20 | 20 | 4.2 Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting. Exposición | Teoría del subtema, con las tres decisiones de [`arquitectura/decisiones/`](../arquitectura/decisiones/README.md) |
 | 0:40 | 20 | 4.3 Buenas prácticas para preparar documentación compatible con Confluence. Exposición | Teoría del subtema |
-| 1:00 | 30 | 4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | Laboratorio 4.4. El paso 4, runbook, es opcional y queda fuera de los 30 minutos |
+| 1:00 | 30 | 4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | Laboratorio 4.4. Los pasos 3, Confluence, y 4, runbook, son opcionales y quedan fuera de los 30 minutos |
 | 1:30 | 45 | 5.1 Preparación del escenario integrador y criterios de evaluación | Laboratorio 5.1: Requerimientos, Estimación y Análisis y diseño. Abra proyectando [`CICLO-DE-VIDA.md`](../../CICLO-DE-VIDA.md) |
 | 2:15 | 45 | 5.2 Planeación de mejora, refactorización y validación incremental | Laboratorio 5.2: Desarrollo del reporte |
 | 3:00 | 45 | 5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión | Laboratorio 5.3: Pruebas, Integración continua, Mantención correctiva, Revisión y Seguridad. En la puesta en común, [`demos/demo-5-3-pipeline-en-github.md`](demos/demo-5-3-pipeline-en-github.md) desde su respaldo y el caso de clase 03 |
@@ -319,11 +319,11 @@ está deshabilitado. El verificador detecta los dos casos.
 Aritmética. Teoría del capítulo 4, 12 + 8 + 20 + 20 = 60. Laboratorio 4.4, 30. Capítulo 5,
 45 + 45 + 45 + 45 = 180. Total 270.
 
-**Recorte.** La sesión no tiene pausas en sus 270 minutos. Si el horario las incluye o la
-sesión se atrasa, el único recorte definido es el del capítulo 4: el paso 3 del 4.4,
-Confluence, se muestra en pantalla y se recuperan 8 minutos. Qué pasos del capítulo 5 pasan
-a opcionales se decide después de la prueba en la máquina virtual, con la medición de tiempos
-de SPEC-016. Hasta entonces el capítulo 5 no tiene recortes definidos.
+**Recorte.** La sesión no tiene pausas en sus 270 minutos. El paso 3 del 4.4, Confluence, es
+opcional desde SPEC-026: si no hay tiempo, se muestra en pantalla. En el capítulo 5 los
+pasos se encadenan y ninguno pasa a opcional, salvo el 5.3.5, que ya lo era. El 5.3 queda en
+39 de 45 minutos, el 87 %, por encima del margen de 85 % que usa el resto del taller; si la
+sala viene atrasada, use `ponerse-al-dia.sh` en lugar de recortar pasos.
 
 **El capítulo 5 es una sola historia.** Cada participante elige un stack y trabaja en una
 rama local, sin GitHub. Los cuatro laboratorios trabajan sobre el mismo repositorio, cada uno
