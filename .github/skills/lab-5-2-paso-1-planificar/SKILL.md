@@ -31,7 +31,9 @@ nada más hasta que responda.
 6. Si el plan aprobado no sigue la alternativa que registra la decisión del 5.1, dilo y
    reescribe esa decisión para que diga lo que de verdad se va a construir, con sus
    consecuencias. No supongas su estado: mantén el que tenga el archivo. Agrega una línea
-   que diga qué cambió y por qué, y dilo en tu respuesta. No crees otra decisión.
+   que diga qué cambió y por qué, y dilo en tu respuesta. Actualiza también su fila en el
+   índice, `docs/arquitectura/decisiones/README.md`, para que el título coincida. No crees
+   otra decisión.
 
 # Restricciones
 
@@ -39,7 +41,7 @@ nada más hasta que responda.
   características elegidas a propósito para el taller. Si ves algo que te parece un
   problema, menciónalo al final de tu respuesta y no lo toques.
 - No modifiques ningún archivo salvo el registro de tiempos, el documento entregado y, si
-  corresponde, la decisión del 5.1.
+  corresponde, la decisión del 5.1 y su fila en el índice de decisiones.
 
 # Salida esperada
 
