@@ -790,3 +790,35 @@ Segundos: camino A, 1420 en total, con el 5.3.3 en 184 y el 5.4.2 en 140; camino
 - `copilot-instructions.md` dice «No hagas commits» y «no cambies tipos de datos»; las skills
   proponen commits y el 5.3.3 exige cambiar el tipo con aprobación. Las skills lo resuelven
   pidiendo aprobación, pero el agente lo nota como tensión.
+
+## Corrida s25, después de cerrar los pendientes de SPEC-024
+
+4 de octubre de 2026, SPEC-025. Tres agentes sin acceso a `docs/relator/`, en Java, desde un
+repositorio reiniciado, respetando `.github/copilot-instructions.md` y `AGENTS.md` de la copia.
+
+| Confirmación | 2.4 y 4.4 | 5.1 a 5.3, camino A | 5.1 a 5.3, camino B |
+|---|---|---|---|
+| Contenido escrito en el texto de la respuesta | 8 de 8 pasos | 8 de 8 pasos hechos | 10 de 10 pasos |
+| Cambios de este SPEC | 2.4.2: el ejemplo de la instrucción cita `escenario/README.md:41-42` y `PlanComisiones.java:9`, que existen. 4.4.1: el archivo se llama exactamente `calculo-de-comisiones.md` | Hoja con el medio de pago: ninguna pregunta del negocio quedó sin respuesta. 5.1.3: tres alternativas sin recomendar. 5.2.3: `git add escenario docs` | 5.2.1: la 0004 reescrita en su estado, «Propuesta», con la línea del cambio y su motivo, y dicho en la respuesta. 5.2.2: mostró la diferencia de junio sin causa. 5.2.3: `git add escenario docs`, hallazgo abierto y mensaje del commit |
+| 5.3 | — | 5.3.1: la prueba de conciliación ejecuta liquidación y reporte y falla solo en junio. 5.3.2: rojo en junio, 2203 centavos. 5.3.3: dos causas que suman 22,03 | Conciliación en cero, rojo por las pruebas. 5.3.3: 22,00 y 0,03; corrección en la liquidación y, como error propio, la acumulación del reporte; solo el hash de junio; hallazgo del 5.2 resuelto; pipeline en verde |
+| Instrucciones del repositorio | Sin choque | Sin choque: commits propuestos y cambio de tipo con aprobación | Sin choque que bloquee |
+
+**El camino A no terminó.** En el 5.3.3, con la corrección ya aprobada, el clasificador de
+permisos del entorno del verificador bloqueó la edición de `CalculadoraLiquidacion.java` en
+la copia de trabajo, y el 5.3.4 no se ejecutó. Es un límite del entorno de verificación, no
+del material. Lo que este SPEC cambió en ese camino, del 5.1.1 al 5.3.2, quedó verificado; el
+5.3.3 y el 5.3.4 no cambiaron en este SPEC y se habían verificado en las corridas s21 y s24.
+
+**Reportado, sin cambiar:**
+
+- La instrucción que el participante crea en el 2.4, con `applyTo` en
+  `labs/**/entregables/**/*.md`, sigue activa en el 4.4: `reiniciar-lab.sh lab-4-4` no
+  restaura `.github/instructions/`. En la corrida pedía tres secciones fijas que chocan con
+  las estructuras de las cuatro skills del 4.4. Propuesta: que el 2.4 sugiera acotar el
+  `applyTo` a `labs/cap2/**`, o que el reinicio del 4.4 restaure también
+  `.github/instructions/`.
+- Al reescribir la 0004 en el camino B, la fila del índice de decisiones y el nombre del
+  archivo conservan el título viejo, porque el 5.2.1 solo permite tocar la decisión.
+  Propuesta: permitir también su fila del índice.
+- El 2.4.4 dice «corrige solo lo que falló» y su punto 4 revisa `description` aunque nada
+  haya fallado.
