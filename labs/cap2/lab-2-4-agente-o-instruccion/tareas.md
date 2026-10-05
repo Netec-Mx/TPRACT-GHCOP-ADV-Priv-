@@ -24,8 +24,8 @@ riesgo tiene. No modifica código.
 ## C. Instrucción para la documentación del equipo
 
 Los documentos Markdown que produce el equipo salen cada uno con un estilo distinto. Hace
-falta una instrucción que se aplique sola a los entregables de los laboratorios
-(`labs/**/entregables/**/*.md`) y fije la estructura, el tono, cómo se citan archivos y
+falta una instrucción que se aplique sola a los entregables de los laboratorios de este
+capítulo (`labs/cap2/**/entregables/**/*.md`) y fije la estructura, el tono, cómo se citan archivos y
 líneas, y qué no se escribe nunca.
 
 ## D. Instrucción para los scripts de Git Bash

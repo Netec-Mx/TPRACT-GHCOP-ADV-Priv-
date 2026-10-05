@@ -21,7 +21,9 @@ dile que el paso que corresponde es `/lab-2-4-paso-2b-construir-agente`.
    plantilla deja abiertas y que no puedes deducir del repositorio.
 3. Crea el archivo en `.github/instructions/`, con un nombre en español terminado en
    `.instructions.md`. Completa cada hueco marcado con `COMPLETAR` y borra los
-   comentarios de la plantilla.
+   comentarios de la plantilla. Para la tarea C, sugiere un `applyTo` acotado a este
+   capítulo, `labs/cap2/**/entregables/**/*.md`, para que la instrucción no se aplique a los
+   entregables de los laboratorios siguientes.
 4. Lista los archivos del repositorio que hoy coinciden con el patrón de `applyTo`. Si
    no coincide ninguno, dilo y aclara que la instrucción igual se aplica cuando el agente
    crea un archivo nuevo que coincide con el patrón. El paso 3 lo prueba así.

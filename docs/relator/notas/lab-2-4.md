@@ -33,7 +33,10 @@ que pide la tarea.
   **Ask**, la instrucción no aparece y cree que falló.
 - **Patrón `applyTo` mal escrito.** Un patrón como `entregables/*.md` no coincide con nada,
   porque el patrón se evalúa desde la raíz del repositorio. La forma correcta es
-  `labs/**/entregables/**/*.md`.
+  `labs/cap2/**/entregables/**/*.md`, acotada al capítulo para que no alcance a los
+  entregables del 3.4 y el 4.4. Además, `reiniciar-lab.sh` restaura `.github/instructions/`
+  desde el 3.4, así que la instrucción del participante no sigue activa en los laboratorios
+  siguientes.
 - **Agente con todas las herramientas.** Un agente de soporte comercial no necesita `edit`
   ni `execute`. El de la tarea E tampoco: la lista de cambios la da la herramienta
   `#search/changes`, que está en el conjunto `search`. Es la conversación de seguridad del

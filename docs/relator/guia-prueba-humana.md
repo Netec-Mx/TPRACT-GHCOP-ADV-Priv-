@@ -101,7 +101,7 @@ Modo **Agent**. 45 minutos.
 | Paso | Escriba | Apruebe | Debe mostrar al terminar | Compare con | Tiempo |
 |---|---|---|---|---|---|
 | 1 | `/lab-2-4-paso-1-elegir-tarea` | Nada | Las cinco tareas y una pregunta. Responda `C` | Instrucción, y el paso siguiente `/lab-2-4-paso-2a-construir-instruccion` | 7 min |
-| 2 | `/lab-2-4-paso-2a-construir-instruccion C` | Nada | Una pregunta con dos o tres decisiones; responda corto. Después, la ruta y el contenido completo del archivo nuevo en `.github/instructions/` | Sin `COMPLETAR`; metadatos `name`, `description` y `applyTo`; patrón `labs/**/entregables/**/*.md` o equivalente | 12 min |
+| 2 | `/lab-2-4-paso-2a-construir-instruccion C` | Nada | Una pregunta con dos o tres decisiones; responda corto. Después, la ruta y el contenido completo del archivo nuevo en `.github/instructions/` | Sin `COMPLETAR`; metadatos `name`, `description` y `applyTo`; patrón `labs/cap2/**/entregables/**/*.md` o equivalente, acotado al capítulo | 12 min |
 | 3 | `/lab-2-4-paso-3-probar-artefacto` y después las dos pruebas que propone, en orden | Nada | Errores de formato o «ninguno», y dos pruebas de una línea | En la respuesta de la prueba 1, la instrucción nueva aparece en la lista de referencias y se crea un archivo en `labs/cap2/lab-2-4-agente-o-instruccion/entregables/` | 10 min |
 | 4 | `/lab-2-4-paso-4-ajustar-y-documentar` | Nada | Pregunta qué falló en el paso 3. Después, el diff del artefacto y una línea | Una `description` que alguien ajeno entiende | 8 min |
 

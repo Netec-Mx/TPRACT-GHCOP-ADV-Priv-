@@ -68,17 +68,19 @@ EOF
 # empiezan sobre el escenario publicado. Ademas, el directorio de entregables del propio
 # laboratorio y, en 2.4 y 3.4, los artefactos que el laboratorio pide crear. Los activos
 # del 2.4 no se tocan al reiniciar otro laboratorio: son del participante.
+# Desde el 3.4, cada laboratorio restaura tambien .github/instructions/, para que una
+# instruccion creada en el 2.4 no se aplique a los laboratorios siguientes.
 rutas_del_laboratorio() {
     case "$1" in
         lab-1-4) echo "escenario labs/cap1/lab-1-4-practica-guiada/entregables" ;;
         lab-1-5) echo "escenario labs/cap1/lab-1-5-analisis-componente/entregables" ;;
         lab-2-4) echo "escenario labs/cap2/lab-2-4-agente-o-instruccion/entregables .github/agents .github/instructions" ;;
-        lab-3-4) echo "escenario labs/cap3/lab-3-4-mcp-local/entregables .vscode/mcp.json mcp" ;;
-        lab-4-4) echo "escenario labs/cap4/lab-4-4-documentacion/entregables" ;;
-        lab-5-1) echo "escenario docs/proyecto docs/arquitectura/decisiones scripts/integracion scripts/integracion-local.sh .github/workflows CHANGELOG.md" ;;
-        lab-5-2) echo "escenario" ;;
-        lab-5-3) echo "scripts/integracion scripts/integracion-local.sh .github/workflows docs/proyecto/pull-request.md" ;;
-        lab-5-4) echo "escenario docs/proyecto docs/arquitectura/decisiones scripts/integracion scripts/integracion-local.sh .github/workflows CHANGELOG.md" ;;
+        lab-3-4) echo "escenario labs/cap3/lab-3-4-mcp-local/entregables .vscode/mcp.json mcp .github/instructions" ;;
+        lab-4-4) echo "escenario labs/cap4/lab-4-4-documentacion/entregables .github/instructions" ;;
+        lab-5-1) echo "escenario docs/proyecto docs/arquitectura/decisiones scripts/integracion scripts/integracion-local.sh .github/workflows CHANGELOG.md .github/instructions" ;;
+        lab-5-2) echo "escenario .github/instructions" ;;
+        lab-5-3) echo "scripts/integracion scripts/integracion-local.sh .github/workflows docs/proyecto/pull-request.md .github/instructions" ;;
+        lab-5-4) echo "escenario docs/proyecto docs/arquitectura/decisiones scripts/integracion scripts/integracion-local.sh .github/workflows CHANGELOG.md .github/instructions" ;;
         *) return 1 ;;
     esac
 }
