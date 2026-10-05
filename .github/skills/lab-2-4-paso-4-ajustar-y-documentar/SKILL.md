@@ -15,13 +15,14 @@ equipo lo use sin preguntar.
    Los que ya existían son `analista`, `tester`, `documentador`, `revisor`,
    `refactorizador`, `java`, `dotnet` y `arquitectura-bian`. Si dudas, el del participante
    es el que aparece como nuevo en `git status`.
-2. Pregunta al participante, en una sola pregunta, qué falló en la prueba del paso 3. Si
-   no falló nada, dilo y pasa al punto 4.
-3. Corrige solo lo que falló.
-4. Revisa que `description` diga para qué sirve el artefacto y cuándo usarlo, en una
-   oración que alguien que no estuvo en el taller entienda.
-5. Si es un agente, agrega al final del cuerpo una sección «Cómo usarlo» con un ejemplo
-   de pedido de una línea.
+2. Pregunta al participante, en una sola pregunta, qué falló en las pruebas del paso 3. Si
+   no falló nada, dilo y pasa al punto 5.
+3. Corrige solo lo que falló, nada más.
+4. Si alguna prueba falló porque Copilot no usó el artefacto, revisa también `description`:
+   que diga para qué sirve el artefacto y cuándo usarlo, en una oración que alguien que no
+   estuvo en el taller entienda. Si las pruebas no fallaron por eso, no la toques.
+5. Si es un agente y no tiene una sección «Cómo usarlo», agrégala al final del cuerpo con un
+   ejemplo de pedido de una línea. Es documentación para otro integrante, no una corrección.
 
 # Restricciones
 
