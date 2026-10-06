@@ -766,12 +766,12 @@ index 0000000..3eaa58f
 +    }
 +}
 diff --git a/scripts/integracion/stack.txt b/scripts/integracion/stack.txt
-index 82ef4fb..ecda53a 100644
+index ce8fa14..392c765 100644
 --- a/scripts/integracion/stack.txt
 +++ b/scripts/integracion/stack.txt
-@@ -6,4 +6,4 @@
- #
- # Cambia la ultima linea y confirma el cambio. La lee scripts/integracion-local.sh y la lee
- # el workflow de .github/workflows/.
+@@ -7,4 +7,4 @@
+ # Reemplaza la linea activa, la ultima, y confirma el cambio. Tiene que quedar una sola
+ # linea sin comentar: con dos, el pipeline falla y dice cual dejar. La lee
+ # scripts/integracion-local.sh y la lee el workflow de .github/workflows/.
 -ambos
 +java

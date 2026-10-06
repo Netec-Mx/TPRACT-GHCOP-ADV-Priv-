@@ -23,7 +23,10 @@ nada más hasta que responda.
    la diferencia y cuánto aporta cada uno. Si la diferencia tiene más de una causa,
    sepáralas: para cada una, qué transacciones la producen, cuánto suma y qué regla de
    `escenario/README.md` está en juego. No te detengas en la causa más grande: la suma de
-   las causas tiene que dar la diferencia completa, al centavo.
+   las causas tiene que dar la diferencia completa, al centavo. Diagnostica con los scripts
+   del taller, la ejecución de la liquidación y comandos de lectura de una línea, como
+   `grep` o `awk` sobre los datos y las salidas. No crees scripts ni programas de
+   diagnóstico: si necesitas una cuenta, hazla en un comando.
 4. Explica por separado cada causa con su monto y los comercios afectados, aunque las
    pruebas ya hayan dejado alguna en evidencia. Una prueba que falla muestra un caso, no
    cuánto suma la causa ni a quién más afecta. Si la conciliación da cero porque el reporte
@@ -46,8 +49,12 @@ nada más hasta que responda.
    queda corregido con la misma corrección: no propongas reescribirlo. Si el reporte calcula
    por su cuenta, la conciliación queda en cero al corregir la liquidación. Si la corrección
    exige algo que las instrucciones del repositorio prohíben salvo pedido explícito, como
-   cambiar un tipo de dato o una forma de redondear, dilo y muestra qué regla toca. Espera
-   la aprobación del participante y recién entonces aplícala.
+   cambiar un tipo de dato o una forma de redondear, dilo y muestra qué regla toca. Para
+   cada causa, propón de una vez la corrección completa que la deja en cero, no una parte:
+   si la causa es de punto flotante, cada comisión exacta, la suma exacta por comercio y un
+   solo redondeo al final, medio hacia arriba. Pide una sola aprobación por causa, no
+   aprobaciones sucesivas que amplían el alcance. Espera la aprobación del participante y
+   recién entonces aplícala.
 7. La corrección cambia la liquidación de algún periodo a propósito. Muestra qué periodos y
    qué comercios cambian, y actualiza en `scripts/integracion/liquidacion-esperada.sha256`
    solo los hashes de esos periodos. Explica al participante que ese cambio se justifica en

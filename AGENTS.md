@@ -130,6 +130,8 @@ remoto y la necesidad de que todos los participantes obtengan resultados compara
   imagen de la máquina virtual.
 - En Windows, los scripts del taller se ejecutan con Git Bash, `bash scripts/...`, también
   cuando la terminal del agente es PowerShell. Python no es parte del ambiente.
+- Los archivos temporales de diagnóstico van en la carpeta temporal del sistema, fuera del
+  repositorio. No se borran archivos del repositorio.
 
 Si vas a proponer un paso que exija descargar algo o escribir un prompt largo a mano,
 no sirve en este contexto.

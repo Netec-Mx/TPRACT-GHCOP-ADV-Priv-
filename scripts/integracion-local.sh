@@ -22,7 +22,7 @@
 
 set -u
 
-readonly VERSION_SCRIPT="1.2.0"
+readonly VERSION_SCRIPT="1.1.0"
 
 # Orden de los pasos. El workflow tiene que llamarlos en este mismo orden.
 readonly PASOS=(java dependencias-java dotnet dependencias-dotnet equivalencia)
@@ -53,8 +53,25 @@ Codigo de salida: 0 si todo pasa, 1 si algun paso falla, 2 si un argumento no es
 EOF
 }
 
+# Lineas activas de stack.txt: sin comentarios, sin \r, sin espacios y sin lineas vacias.
+lineas_stack() {
+    grep -v '^[[:space:]]*#' "$ARCHIVO_STACK" 2>/dev/null \
+        | tr -d '\r' | sed 's/[[:space:]]//g' | grep -v '^$'
+}
+
+# Escribe el stack declarado. Si hay mas de una linea activa, explica cual dejar y falla.
 stack_declarado() {
-    grep -v '^[[:space:]]*#' "$ARCHIVO_STACK" 2>/dev/null | tr -d '\r[:space:]' | grep -v '^$' | tail -1
+    local lineas cantidad
+    lineas=$(lineas_stack)
+    cantidad=$(printf '%s' "$lineas" | grep -c .)
+    if [ "$cantidad" -gt 1 ]; then
+        printf 'scripts/integracion/stack.txt tiene %s lineas activas: %s.
+' \
+            "$cantidad" "$(printf '%s' "$lineas" | paste -sd ',' - | sed 's/,/, /g')" >&2
+        printf 'Deja una sola, la del stack que elegiste (ambos, java o dotnet), y confirma el cambio.\n' >&2
+        return 1
+    fi
+    printf '%s' "$lineas"
 }
 
 usa() {
@@ -185,7 +202,9 @@ while [ $# -gt 0 ]; do
     esac
 done
 
-[ -n "$stack" ] || stack="$(stack_declarado)"
+if [ -z "$stack" ]; then
+    stack="$(stack_declarado)" || exit 2
+fi
 [ -n "$stack" ] || stack="ambos"
 case "$stack" in
     ambos|java|dotnet) ;;

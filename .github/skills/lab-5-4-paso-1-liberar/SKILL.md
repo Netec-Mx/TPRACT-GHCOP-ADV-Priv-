@@ -30,7 +30,13 @@ Este paso tiene dos turnos. En el primero no escribes ningún archivo.
 5. Sigue la skill `pasarela-notas-de-version` con el número confirmado. Las notas de versión
    van en `docs/proyecto/notas-de-version-<versión>.md`. La sección de montos tiene que
    explicar, en lenguaje de negocio, por qué cambia la liquidación de junio y para qué
-   comercios, con los montos antes y después obtenidos de una ejecución.
+   comercios, con los montos antes y después.
+   Arma la tabla de montos con dos ejecuciones de la liquidación de junio: la actual y la de
+   antes de la corrección. La de antes se compila en una carpeta temporal fuera del
+   repositorio, con `git archive <commit anterior a la corrección> escenario | tar -x -C
+   <carpeta>` en Git Bash. Compara las dos salidas comercio por comercio, total de comisiones y neto, y
+   di si cada monto sube o baja según el signo de la diferencia, después menos antes. No lo
+   deduzcas de la descripción del cambio.
 6. Anota en el registro de tiempos la hora de término de Liberación.
 7. Propón el commit y espera la confirmación del participante.
 

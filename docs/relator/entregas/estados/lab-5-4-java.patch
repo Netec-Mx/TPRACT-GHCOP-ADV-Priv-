@@ -1,8 +1,8 @@
 diff --git a/.github/workflows/integracion-continua.yml b/.github/workflows/integracion-continua.yml
-index af88601..0dcb7f0 100644
+index d821c9c..dc6476c 100644
 --- a/.github/workflows/integracion-continua.yml
 +++ b/.github/workflows/integracion-continua.yml
-@@ -113,3 +113,5 @@ jobs:
+@@ -119,3 +119,5 @@ jobs:
            dotnet-version: ${{ env.VERSION_DOTNET }}
        - name: Liquidar los tres periodos y comparar
          run: bash scripts/integracion-local.sh --paso equivalencia
@@ -986,7 +986,7 @@ index 0000000..3eaa58f
 +    }
 +}
 diff --git a/scripts/integracion-local.sh b/scripts/integracion-local.sh
-index d4a337d..94ea530 100755
+index d531d33..cbfca1a 100755
 --- a/scripts/integracion-local.sh
 +++ b/scripts/integracion-local.sh
 @@ -25,7 +25,7 @@ set -u
@@ -998,7 +998,7 @@ index d4a337d..94ea530 100755
  
  readonly PERIODOS=(2026-04 2026-05 2026-06)
  
-@@ -160,6 +160,48 @@ paso_equivalencia() {
+@@ -177,6 +177,48 @@ paso_equivalencia() {
      [ "$fallas" -eq 0 ]
  }
  
@@ -1047,7 +1047,7 @@ index d4a337d..94ea530 100755
  correr() {
      case "$1" in
          java)                paso_java ;;
-@@ -167,6 +209,7 @@ correr() {
+@@ -184,6 +226,7 @@ correr() {
          dotnet)              paso_dotnet ;;
          dependencias-dotnet) paso_dependencias_dotnet ;;
          equivalencia)        paso_equivalencia ;;
@@ -1066,12 +1066,12 @@ index aa861f1..5f00685 100644
 -61f2c13fed35a2ea2f0189dcc30e78227325bee57765baa9b1c31cff94e432eb  2026-06
 +cd1466305e636d89e4f5af11421a98f97fc75f9dc677083caee8aed83a8c498a  2026-06
 diff --git a/scripts/integracion/stack.txt b/scripts/integracion/stack.txt
-index 82ef4fb..ecda53a 100644
+index ce8fa14..392c765 100644
 --- a/scripts/integracion/stack.txt
 +++ b/scripts/integracion/stack.txt
-@@ -6,4 +6,4 @@
- #
- # Cambia la ultima linea y confirma el cambio. La lee scripts/integracion-local.sh y la lee
- # el workflow de .github/workflows/.
+@@ -7,4 +7,4 @@
+ # Reemplaza la linea activa, la ultima, y confirma el cambio. Tiene que quedar una sola
+ # linea sin comentar: con dos, el pipeline falla y dice cual dejar. La lee
+ # scripts/integracion-local.sh y la lee el workflow de .github/workflows/.
 -ambos
 +java

@@ -45,6 +45,9 @@ Para comparar el antes y el después de un cambio, guarda la salida de antes en 
 temporal fuera del repositorio, antes de cambiar nada, o compila una copia en una carpeta
 temporal. Nunca uses `git stash`, `git reset`, `git checkout` ni `git restore` para eso.
 
+Los archivos temporales de diagnóstico van en la carpeta temporal del sistema, fuera del
+repositorio. No borres archivos del repositorio.
+
 ## Convenciones del repositorio
 
 Todo el contenido va en español neutro. Los identificadores del código siguen la

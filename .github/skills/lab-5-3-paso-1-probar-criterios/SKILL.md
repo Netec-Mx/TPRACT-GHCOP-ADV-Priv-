@@ -21,9 +21,13 @@ nada más hasta que responda.
    comprobar con una prueba unitaria, escribe al menos una prueba en archivos nuevos del
    proyecto de pruebas del stack, con el estilo de las pruebas existentes. Los criterios con
    un valor esperado concreto, como el del límite de un tramo o el de un comercio cuya suma
-   termina en medio centavo, se prueban con ese valor exacto. Cada criterio tiene su prueba,
-   también el de formato: se prueba sobre la función que da formato a la salida, con un
-   caso de medio centavo y uno con miles. La comparación por hash de
+   termina en medio centavo, se prueban con ese valor exacto. La prueba del límite de un
+   tramo ejercita el cálculo que usa el reporte: si el reporte reutiliza el de la
+   liquidación, la prueba pasa por la liquidación, no por una clase auxiliar como la
+   calculadora de comisión del simulador. Que una clase auxiliar ya trate bien el límite no
+   cuenta: si la liquidación lo trata mal, la prueba tiene que fallar. Cada criterio tiene
+   su prueba, también el de formato: se prueba sobre la función que da formato a la salida,
+   con un caso de medio centavo y uno con miles. La comparación por hash de
    `scripts/verificar-reporte.sh` no reemplaza esa prueba. La prueba del criterio de
    conciliación ejecuta la liquidación y el reporte para el mismo periodo, con los datos del
    escenario, y compara el total del reporte con la suma del total de comisiones de la
@@ -54,3 +58,6 @@ Después, una tabla criterio por criterio con la prueba que lo cubre y su result
 Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
 No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
 vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.
+Aunque la herramienta que creó o editó el archivo ya muestre su contenido, cópialo igual en
+tu respuesta. No escribas «mostrado arriba», «contenido completo:» ni un encabezado sin el
+contenido debajo.

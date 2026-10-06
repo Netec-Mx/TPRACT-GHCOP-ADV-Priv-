@@ -43,7 +43,13 @@ jobs:
       - name: Leer scripts/integracion/stack.txt
         id: leer
         run: |
-          stack=$(grep -v '^[[:space:]]*#' scripts/integracion/stack.txt | tr -d '\r[:space:]' | grep -v '^$' | tail -1)
+          lineas=$(grep -v '^[[:space:]]*#' scripts/integracion/stack.txt | tr -d '\r' | sed 's/[[:space:]]//g' | grep -v '^$')
+          if [ "$(printf '%s' "$lineas" | grep -c .)" -gt 1 ]; then
+            echo "scripts/integracion/stack.txt tiene mas de una linea activa: $(printf '%s' "$lineas" | paste -sd ',' -)."
+            echo "Deja una sola, la del stack que elegiste (ambos, java o dotnet), y confirma el cambio."
+            exit 1
+          fi
+          stack="$lineas"
           case "$stack" in ambos|java|dotnet) ;; *) echo "Stack no valido: $stack"; exit 1 ;; esac
           echo "stack=$stack" >> "$GITHUB_OUTPUT"
 

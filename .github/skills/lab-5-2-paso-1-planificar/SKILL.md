@@ -27,6 +27,11 @@ nada más hasta que responda.
    refactorizarlo, el refactor va primero y cada paso de refactor se valida con
    `bash scripts/integracion-local.sh --paso equivalencia`, que compara la liquidación con
    los hashes esperados. Un refactor que cambia un solo byte de la liquidación está mal.
+   Si el reporte calcula la comisión por su cuenta, sin reutilizar el cálculo de la
+   liquidación, la historia y la especificación ya piden sumas exactas y un solo redondeo
+   al final: escribe en el plan que el código nuevo del reporte usa un tipo decimal exacto,
+   `BigDecimal` en Java o `decimal` en .NET, y no lo preguntes. El código existente del
+   escenario no cambia de tipo.
 5. Muestra el plan y pregunta al participante si lo aprueba o qué cambia. No implementes.
 6. Si el plan aprobado no sigue la alternativa que registra la decisión del 5.1, dilo y
    reescribe esa decisión para que diga lo que de verdad se va a construir, con sus

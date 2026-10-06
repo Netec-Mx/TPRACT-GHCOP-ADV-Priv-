@@ -4,6 +4,7 @@
 # misma salida. Con un solo stack, compila y prueba ese y compara su liquidacion con los
 # hashes esperados de liquidacion-esperada.sha256.
 #
-# Cambia la ultima linea y confirma el cambio. La lee scripts/integracion-local.sh y la lee
-# el workflow de .github/workflows/.
+# Reemplaza la linea activa, la ultima, y confirma el cambio. Tiene que quedar una sola
+# linea sin comentar: con dos, el pipeline falla y dice cual dejar. La lee
+# scripts/integracion-local.sh y la lee el workflow de .github/workflows/.
 ambos

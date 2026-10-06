@@ -25,7 +25,9 @@ Material de partida:
 1. Si no existe `docs/proyecto/registro-de-tiempos.md`, créalo a partir de la plantilla y
    anota la hora de inicio de Requerimientos, que obtienes con `date +%H:%M`, y
    `participante` en Origen.
-2. Escribe en la última línea de `scripts/integracion/stack.txt` el stack del participante.
+2. En `scripts/integracion/stack.txt`, reemplaza la línea activa, la última sin comentar,
+   por el stack del participante. No agregues otra línea: tiene que quedar una sola sin
+   comentar, o el pipeline falla.
 3. Sigue la skill `pasarela-historia-de-usuario` con la solicitud. Al listar las preguntas
    abiertas, incluye siempre qué transacciones y qué comercios entran al reporte, a qué
    tramo pertenece un monto que cae exactamente en el límite, en qué momento se redondea y
@@ -66,3 +68,6 @@ también `docs/proyecto/registro-de-tiempos.md` completo, con la hora que anotas
 Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
 No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
 vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.
+Aunque la herramienta que creó o editó el archivo ya muestre su contenido, cópialo igual en
+tu respuesta. No escribas «mostrado arriba», «contenido completo:» ni un encabezado sin el
+contenido debajo.

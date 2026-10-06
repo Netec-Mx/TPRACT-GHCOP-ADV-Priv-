@@ -30,8 +30,12 @@ decisión de negocio registrada. Son las fases de Revisión de código y Segurid
    esté en verde y que cada hash esperado que cambió tenga su causa. Marca solo las casillas
    que se cumplen y di por qué en las que no.
 6. Anota en el registro de tiempos la hora de término de Revisión de código y de Seguridad.
-7. Propón el commit y espera la confirmación del participante, por ejemplo
-   `git add -A && git commit -m "Pruebas, conciliacion y correccion del borde de tramo"`.
+7. Propón el commit y espera la confirmación del participante. Nombra los archivos y
+   carpetas que entran, los que cambiaron en los pasos 1 a 4, sin `git add -A` ni
+   `git add .`, para que no entre un archivo temporal. Por ejemplo,
+   `git add escenario docs scripts .github && git commit -m "Pruebas, conciliacion y correccion del borde de tramo"`.
+   Antes, revisa `git status`: si queda un archivo que no es parte del cambio, dilo y
+   déjalo fuera del commit.
 
 # Restricciones
 

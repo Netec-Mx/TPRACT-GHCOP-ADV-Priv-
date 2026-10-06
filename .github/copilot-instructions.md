@@ -34,6 +34,20 @@ Las reglas de negocio del dominio están en `escenario/README.md`. Cuando el có
 reglas no coinciden, dilo en tu respuesta, cita la regla y no cambies nada que no se haya
 pedido.
 
+## Lo que produces
+
+Cuando creas o modificas un archivo, escribe en el texto de tu respuesta su contenido
+completo, o el diff si es código, como Markdown o en un bloque de código. Aunque la
+herramienta que creó o editó el archivo ya muestre su contenido, cópialo igual. No basta con
+ejecutar `cat` o `git diff` ni con escribir «mostrado arriba» o un encabezado sin el
+contenido debajo.
+
+## Archivos temporales
+
+- Los archivos temporales de diagnóstico, como una salida guardada o un programa de prueba,
+  van en la carpeta temporal del sistema, fuera del repositorio.
+- No borres archivos del repositorio. Si dejaste un temporal dentro, dilo y déjalo.
+
 ## Verificación
 
 Los dos escenarios, Java y .NET, deben producir exactamente la misma salida. Después de

@@ -47,3 +47,6 @@ El participante lo revisa ahí antes de abrir el archivo.
 Escribe ese contenido en el texto de tu respuesta, como Markdown o en un bloque de código.
 No basta con ejecutar `cat` o `git diff` en la terminal ni con decir que ya se ve en la
 vista de una herramienta: el participante lo tiene que poder leer en tu respuesta.
+Aunque la herramienta que creó o editó el archivo ya muestre su contenido, cópialo igual en
+tu respuesta. No escribas «mostrado arriba», «contenido completo:» ni un encabezado sin el
+contenido debajo.

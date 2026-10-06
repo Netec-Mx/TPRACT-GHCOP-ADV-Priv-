@@ -22,7 +22,11 @@ Responda solo lo que pregunten.
 
 Criterio de decimales: un comercio cuya suma exacta termina en 5 en el tercer decimal; si
 no, que lo rehaga. Criterio de formato: montos con dos decimales, medio hacia arriba, regla
-9; se prueba en el 5.3. La decisión 0004 de referencia es del camino A.
+9. La decisión 0004 de referencia es del camino A.
+
+## 5.2, paso 1: el tipo del reporte
+
+Si pregunta el tipo: «Decimal exacto en el reporte nuevo».
 
 ## 5.3, paso 2: qué detectó cada cosa
 
@@ -38,7 +42,7 @@ Las causas del cálculo se corrigen en la liquidación, y un reporte que lo reut
 corregido con ella; un error propio del reporte, como un formato que redondea antes, en el
 reporte. La mínima: cada comisión exacta, suma exacta por comercio y un solo redondeo al
 final, medio hacia arriba. Si cambia solo el redondeo: que pruebe junio; le quedan centavos.
-Solo en su stack: el otro conserva la diferencia y queda fuera del alcance.
+Solo en su stack: el otro conserva la diferencia.
 
 **Si encuentra solo el borde** o **solo explica lo que fallan las pruebas**: pregunte cuánto
 suma cada causa y a quién afecta; sugiera recalcular con decimal exacto. Total 22,03: 22,00
@@ -52,5 +56,4 @@ Clave de ponerse al día: `quinua-condor-47`. Con su stack y laboratorio:
 bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47
 ```
 
-Pide `descartar` y deja el camino A. El 5.1 de cero:
-`bash scripts/reiniciar-lab.sh lab-5-1`.
+Pide `descartar` y deja el camino A.

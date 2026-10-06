@@ -22,7 +22,8 @@ guía. Lo propio de la máquina virtual, es decir ambiente, red, cuentas y hook,
   `git push`, borra archivos o toca `escenario/datos/`. Rechace también `git stash`,
   `git reset`, `git checkout` y `git restore`: para comparar antes y después, Copilot tiene
   que usar un archivo o una copia temporal. Después de rechazar, escriba «Sigue sin ese
-  comando». Las llamadas a herramientas MCP
+  comando». Si lo que rechazó fue un borrado, escriba en cambio «No borres archivos.
+  Déjalos donde están y sigue con el paso.» Las llamadas a herramientas MCP
   piden aprobación igual. Cuando Copilot edita archivos, al final aparecen **Keep** y
   **Undo**: elija **Keep**.
 - **Al terminar cada paso,** Copilot muestra en el chat lo que creó o modificó, completo, o
@@ -234,7 +235,7 @@ y confirme con `git add -A && git commit -m "Inicio del 5.2"`. El registro de ti
 
 | Paso | Escriba | Apruebe | Debe mostrar al terminar | Compare con | Tiempo |
 |---|---|---|---|---|---|
-| 1 | `/lab-5-2-paso-1-planificar java` | `date +%H:%M` y `bash scripts/proyecto/entregar.sh formato-del-reporte` | Un plan numerado con la validación de cada paso, el registro de tiempos y la pregunta de aprobación. Ningún archivo de código cambiado | Anote si reutiliza el cálculo de la liquidación (camino B) o calcula por su cuenta (camino A). Responda «apruebo». Si el plan no sigue la decisión del 5.1, la actualiza y la muestra | 10 min |
+| 1 | `/lab-5-2-paso-1-planificar java` | `date +%H:%M` y `bash scripts/proyecto/entregar.sh formato-del-reporte` | Un plan numerado con la validación de cada paso, el registro de tiempos y la pregunta de aprobación. Ningún archivo de código cambiado | Anote si reutiliza el cálculo de la liquidación (camino B) o calcula por su cuenta (camino A). Responda «apruebo». Si pregunta qué tipo usar, responda «Decimal exacto en el reporte nuevo». Si el plan no sigue la decisión del 5.1, la actualiza y la muestra | 10 min |
 | 2 | `/lab-5-2-paso-2-implementar-reporte java` | Compilación, `bash scripts/integracion-local.sh --paso equivalencia` | El diff completo, con los archivos nuevos completos, y la última validación en verde | Solo archivos del stack Java; `liquidacion-esperada.sha256` sin cambios | 20 min |
 | 3 | `/lab-5-2-paso-3-verificar-reporte java` | `bash scripts/verificar-reporte.sh java 2026-04`, `-05`, `-06` y `bash scripts/integracion-local.sh` | Tabla de comprobaciones y, si corresponde, «Pendiente para el 5.3». Propone el commit | Camino A: coincide en los tres periodos. Camino B: junio no coincide, es lo esperado y se resuelve en el 5.3; queda en «Hallazgos abiertos» del registro y en el mensaje del commit, sin causa | 8 min |
 

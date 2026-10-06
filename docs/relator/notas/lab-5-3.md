@@ -104,6 +104,22 @@ falla en junio y es lo esperado. El pipeline con un solo stack declarado no comp
 
 Suma 39. Quedan 6 para la puesta en común.
 
+En la prueba en Windows de SPEC-027, con Copilot y el material de SPEC-026, el agente tardó
+852, 580, 2705 y 235 segundos en los cuatro pasos del camino A: 73 minutos sin contar el
+tiempo de leer y aprobar. El paso 3 se alargó por los scripts de diagnóstico y por tres
+rondas de aprobación; desde SPEC-028 la skill pide diagnosticar con los scripts del taller y
+una sola aprobación por causa.
+
+**Corte al minuto 45.** Si al minuto 45 el pipeline no está en verde, corte el laboratorio.
+La sala sigue con el 5.4 desde el estado de referencia:
+
+```bash
+bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java <clave>
+```
+
+El paso 4 del 5.3, la revisión y la descripción del pull request, se puede completar como
+tarea posterior.
+
 ## Si alguien se atrasa
 
 Diga la clave de la hoja de respuestas y que ejecute, con su stack:
