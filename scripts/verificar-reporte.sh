@@ -16,7 +16,7 @@
 
 set -u
 
-readonly VERSION_SCRIPT="1.0.0"
+readonly VERSION_SCRIPT="1.1.0"
 
 raiz="$(cd "$(dirname "$0")/.." && pwd)"
 
@@ -44,10 +44,12 @@ EOF
 }
 
 calcular_hash() {
+    # Sin \r, igual que integracion-local.sh: en Windows, un fin de linea CRLF no es una
+    # diferencia del reporte.
     if command -v sha256sum >/dev/null 2>&1; then
-        sha256sum "$1" | cut -d' ' -f1
+        tr -d '\r' < "$1" | sha256sum | cut -d' ' -f1
     else
-        shasum -a 256 "$1" | cut -d' ' -f1
+        tr -d '\r' < "$1" | shasum -a 256 | cut -d' ' -f1
     fi
 }
 

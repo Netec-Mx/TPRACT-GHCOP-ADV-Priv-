@@ -55,3 +55,6 @@ convención de su lenguaje. Los comentarios y la documentación van en español.
 Los laboratorios se ejecutan en máquinas virtuales por escritorio remoto, sin descargas
 durante la clase. Las dependencias ya están instaladas en la imagen de la máquina. No
 propongas pasos que exijan descargar algo.
+
+En Windows, los scripts del taller se ejecutan con Git Bash, `bash scripts/...`, también
+cuando la terminal del agente es PowerShell. No uses Python: no es parte del ambiente.

@@ -66,5 +66,8 @@ Estas reglas vienen de la política de uso de IA de Pasarela Andina,
 ## Ambiente
 
 - Los scripts se ejecutan en Git Bash. No propongas PowerShell.
+- En Windows, los scripts del taller se ejecutan con Git Bash, `bash scripts/...`. Si tu
+  terminal es PowerShell, llama a Git Bash para ellos.
+- No uses Python: no es parte del ambiente.
 - No propongas pasos que descarguen dependencias. Todo está instalado en la máquina.
 - El único editor es Visual Studio Code.

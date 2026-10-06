@@ -128,6 +128,8 @@ remoto y la necesidad de que todos los participantes obtengan resultados compara
 - No se copia ni se pega entre ventanas. Todo se ejecuta dentro del editor.
 - Nada depende de descargas en tiempo de clase. Las dependencias van precargadas en la
   imagen de la máquina virtual.
+- En Windows, los scripts del taller se ejecutan con Git Bash, `bash scripts/...`, también
+  cuando la terminal del agente es PowerShell. Python no es parte del ambiente.
 
 Si vas a proponer un paso que exija descargar algo o escribir un prompt largo a mano,
 no sirve en este contexto.

@@ -22,7 +22,7 @@
 
 set -u
 
-readonly VERSION_SCRIPT="1.1.0"
+readonly VERSION_SCRIPT="1.2.0"
 
 # Orden de los pasos. El workflow tiene que llamarlos en este mismo orden.
 readonly PASOS=(java dependencias-java dotnet dependencias-dotnet equivalencia)
@@ -191,6 +191,24 @@ case "$stack" in
     ambos|java|dotnet) ;;
     *) printf 'Stack no valido: «%s». Usa ambos, java o dotnet.\n' "$stack" >&2; exit 2 ;;
 esac
+
+# En Git Bash sobre Windows, .NET escribe en la pagina de codigos de la consola y Java en
+# UTF-8; una razon social con «ñ» cambia el hash de la liquidacion .NET. Mientras corre el
+# pipeline, la consola usa UTF-8; al terminar vuelve a la pagina original.
+pagina_original=""
+case "$(uname -s 2>/dev/null)" in
+    MINGW*|MSYS*|CYGWIN*)
+        if command -v chcp.com >/dev/null 2>&1; then
+            pagina_original=$(chcp.com 2>/dev/null | tr -dc '0-9')
+            chcp.com 65001 > /dev/null 2>&1
+        fi
+        ;;
+esac
+restaurar_pagina() {
+    [ -n "$pagina_original" ] && chcp.com "$pagina_original" > /dev/null 2>&1
+    return 0
+}
+trap restaurar_pagina EXIT
 
 if [ "$accion" = "paso" ]; then
     correr "$paso"; rc=$?

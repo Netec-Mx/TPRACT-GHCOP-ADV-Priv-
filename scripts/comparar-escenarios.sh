@@ -14,7 +14,7 @@
 
 set -u
 
-readonly VERSION_SCRIPT="1.0.0"
+readonly VERSION_SCRIPT="1.1.0"
 
 # Lo unico que se permite normalizar es una marca de tiempo de generacion, si alguna vez
 # la salida llega a incluirla. Hoy no la incluye y la comparacion es literal. Cualquier
@@ -152,8 +152,23 @@ if [ -z "$temporal" ] || [ ! -d "$temporal" ]; then
     exit 2
 fi
 
+# En Git Bash sobre Windows, .NET escribe en la pagina de codigos de la consola, que en una
+# maquina en espanol es 850 o 437, mientras Java escribe en UTF-8. Una razon social con «ñ»
+# sale distinta en los dos y la comparacion falla sin que haya una diferencia de calculo.
+# Mientras corre el script, la consola usa UTF-8; al terminar vuelve a la pagina original.
+pagina_original=""
+case "$(uname -s 2>/dev/null)" in
+    MINGW*|MSYS*|CYGWIN*)
+        if command -v chcp.com >/dev/null 2>&1; then
+            pagina_original=$(chcp.com 2>/dev/null | tr -dc '0-9')
+            chcp.com 65001 > /dev/null 2>&1
+        fi
+        ;;
+esac
+
 limpiar() {
     [ -n "${temporal:-}" ] && [ -d "$temporal" ] && rm -rf "$temporal"
+    [ -n "$pagina_original" ] && chcp.com "$pagina_original" > /dev/null 2>&1
 }
 trap limpiar EXIT INT TERM
 
