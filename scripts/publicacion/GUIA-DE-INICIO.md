@@ -86,8 +86,15 @@ bash scripts/reiniciar-lab.sh lab-5-2
 ```
 
 El script muestra qué se va a perder y pide que escribas `si`. Si quieres conservar algo,
-haz `git commit` antes. Lo que construyes en el laboratorio 2.4 no se borra al reiniciar
-otro laboratorio.
+haz `git commit` antes: queda en el historial, aunque el archivo vuelva a su versión
+original.
+
+Lo que construyes en el laboratorio 2.4 corre suerte distinta según qué sea. Un agente, en
+`.github/agents/`, se conserva al reiniciar otro laboratorio. Una instrucción, en
+`.github/instructions/`, se conserva hasta el 3.4: desde ese laboratorio, el reinicio
+devuelve `.github/instructions/` a su punto de partida y la borra. Si quieres guardarla,
+cópiala fuera del repositorio antes de reiniciar. Reiniciar el propio 2.4 borra las dos
+cosas.
 
 En el capítulo 5 cada laboratorio continúa el anterior. Reiniciar el 5.1 devuelve todo el
 proyecto al punto de partida; el 5.2, solo el escenario; el 5.3, solo el pipeline y la
