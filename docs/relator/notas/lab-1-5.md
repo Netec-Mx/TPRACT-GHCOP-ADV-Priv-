@@ -93,7 +93,7 @@ Si el paso 5 falla, que reinicie con `bash scripts/reiniciar-lab.sh lab-1-5 --co
 
 `docs/relator/soluciones/lab-1-5/paso-5-extraer-retencion-java.patch` y
 `paso-5-extraer-retencion-dotnet.patch`. Verificadas sobre una copia limpia del repositorio
-de participantes. Un archivo modificado, compila, las 20 pruebas pasan y el comparador
+de participantes. Un archivo modificado, compila, las 21 pruebas pasan y el comparador
 termina en cero.
 
 Para mostrarla, desde la raíz de un repositorio en su punto de partida:

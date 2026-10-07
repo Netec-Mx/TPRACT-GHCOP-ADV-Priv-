@@ -30,8 +30,10 @@ public class UtilidadesFecha {
      * Se usa el constructor que solo recibe la configuracion regional. La zona horaria
      * sigue siendo la del sistema, igual que antes y sin mencionarla aqui: ese es un
      * comportamiento que este metodo conserva sin cambios.
+     *
+     * Visible en el paquete para que una prueba pueda fijar el reloj.
      */
-    private Calendar calendarioDeTrabajo() {
+    Calendar calendarioDeTrabajo() {
         return Calendar.getInstance(ConfiguracionRegional.REGION_DE_SALIDA);
     }
 
@@ -99,6 +101,7 @@ public class UtilidadesFecha {
         Calendar calendario = calendarioDeTrabajo();
         calendario.set(Calendar.YEAR, anio);
         calendario.set(Calendar.MONTH, mes - 1);
+        calendario.set(Calendar.DAY_OF_MONTH, 1);
         calendario.set(Calendar.DAY_OF_MONTH, calendario.getActualMaximum(Calendar.DAY_OF_MONTH));
         calendario.set(Calendar.HOUR_OF_DAY, 23);
         calendario.set(Calendar.MINUTE, 59);

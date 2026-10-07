@@ -135,7 +135,7 @@ su aprobación, así que el contracargo se descuenta en el periodo en que se apr
 - Solo si el comercio tiene fecha de afiliación (`calculo/CalculadoraLiquidacion.java:232`).
 - Se calculan los meses completos entre la afiliación y el inicio del periodo
   (`calculo/CalculadoraLiquidacion.java:234`). `mesesEntre` resta años y meses y descuenta uno
-  si el día del mes final es menor que el del inicial (`calculo/UtilidadesFecha.java:135-142`).
+  si el día del mes final es menor que el del inicial (`calculo/UtilidadesFecha.java:138-145`).
 - Si son menos de 6 (`calculo/CalculadoraLiquidacion.java:236`), la base es
   `totalTransado - totalComisiones - totalContracargos`, con las comisiones ya topadas
   (`calculo/CalculadoraLiquidacion.java:238`), y si es positiva la retención es el 5 % de esa
@@ -156,20 +156,18 @@ su aprobación, así que el contracargo se descuenta en el periodo en que se apr
 
 ## 9. Periodo
 
-- El inicio es el día 1 a las 00:00:00.000 (`calculo/UtilidadesFecha.java:77-89`) y el fin, el
-  último día del mes a las 23:59:59.000 (`calculo/UtilidadesFecha.java:95-107`). La
+- El inicio es el día 1 a las 00:00:00.000 (`calculo/UtilidadesFecha.java:79-91`) y el fin, el
+  último día del mes a las 23:59:59.000 (`calculo/UtilidadesFecha.java:97-111`). La
   comparación es inclusiva en los dos extremos (`calculo/CalculadoraLiquidacion.java:136`).
 - El calendario se crea con `Calendar.getInstance(ConfiguracionRegional.REGION_DE_SALIDA)`
-  (`calculo/UtilidadesFecha.java:35`), que fija la configuración regional y no la zona
+  (`calculo/UtilidadesFecha.java:37`), que fija la configuración regional y no la zona
   horaria. La propia clase lo advierte: la zona sigue siendo la del sistema
   (`util/ConfiguracionRegional.java:34-35`). Ninguna parte del cálculo fija America/Lima, aunque
   el comentario de `calculo/UtilidadesFecha.java:13-14` lo afirme.
-- `finDePeriodo` parte de la fecha actual del sistema, fija año y mes y pide el máximo del mes
-  con `getActualMaximum` antes de fijar el día (`calculo/UtilidadesFecha.java:99-102`). Si el
-  proceso corre un día 31 y el mes liquidado tiene 30 días, el calendario normaliza ese día 31
-  al mes siguiente y el fin del periodo queda en el día 1 del mes siguiente a las 23:59:59.
-  Reproducido con el mismo `Calendar` de Java 25: para 2026-04 calculado un 31 de octubre, el
-  fin queda en el 1 de mayo de 2026 a las 23:59:59.
+- `finDePeriodo` parte de un calendario con la fecha actual del sistema, fija año y mes, fija
+  el día 1 y recién entonces pide el máximo del mes con `getActualMaximum`
+  (`calculo/UtilidadesFecha.java:101-105`). Así el fin del periodo no depende del día en que se
+  ejecuta. La prueba `UtilidadesFechaTest` lo comprueba con el reloj fijado en un día 31.
 
 ## Contraste con las reglas declaradas
 
@@ -186,7 +184,7 @@ indica aparte.
 | 5 (`escenario/README.md:46-47`) | Contracargos aprobados en el periodo en que se aprueban | `APROBADO` con fecha dentro del periodo (`calculo/CalculadoraLiquidacion.java:213-222`); esa fecha es la de aprobación (`escenario/README.md:126`) | Coincide |
 | 6 (`escenario/README.md:48`) | Si el total supera el tope, se cobra el tope | `calculo/CalculadoraLiquidacion.java:202-205` | Coincide |
 | 7 (`escenario/README.md:49-50`) | Menos de seis meses de afiliación, retención del 5 % sobre el neto | Menos de 6 meses completos al inicio del periodo; 5 % sobre transado menos comisiones menos contracargos, si es positivo (`calculo/CalculadoraLiquidacion.java:234-241`) | Coincide, entendiendo «monto neto» como el neto antes de la retención |
-| 8 (`escenario/README.md:51-52`) | Del día 1 a las 00:00:00 al último día a las 23:59:59, en hora de Lima | Los límites horarios coinciden (`calculo/UtilidadesFecha.java:77-107`), pero se calculan en la zona del sistema (`calculo/UtilidadesFecha.java:35`, `util/ConfiguracionRegional.java:34-35`), y un día 31 el fin de un mes de 30 días se corre al día siguiente (`calculo/UtilidadesFecha.java:99-102`) | No coincide: el código no garantiza la hora de Lima |
+| 8 (`escenario/README.md:51-52`) | Del día 1 a las 00:00:00 al último día a las 23:59:59, en hora de Lima | Los límites horarios coinciden (`calculo/UtilidadesFecha.java:79-111`), pero se calculan en la zona del sistema (`calculo/UtilidadesFecha.java:37`, `util/ConfiguracionRegional.java:34-35`) | No coincide: el código no garantiza la hora de Lima |
 | 9 (`escenario/README.md:53`) | Todo monto a dos decimales, medio hacia arriba | `Math.round(x * 100.0) / 100.0` solo sobre los totales (`calculo/CalculadoraLiquidacion.java:246-249`, `calculo/CalculadoraLiquidacion.java:258`), en `double`; la comisión por transacción no se redondea (`calculo/CalculadoraLiquidacion.java:180-187`). `CM0011` sale con 137.82 donde el medio hacia arriba de 137.825 da 137.83 | No coincide |
 
 **Resumen.** Con el criterio del cierre, coinciden 7 reglas (1, 2, 3, 4, 5, 6 y 7) y no

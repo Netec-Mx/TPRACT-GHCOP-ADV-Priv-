@@ -945,7 +945,7 @@ grep -n "^TX000001;" escenario/datos/transacciones.txt
 
 #### Solución de referencia
 
-Está en el repositorio de construcción, en `docs/relator/soluciones/lab-1-5/paso-5-extraer-retencion-java.patch` y `paso-5-extraer-retencion-dotnet.patch`. Cada una cambia un solo archivo, compila, las 20 pruebas pasan y el comparador termina en cero.
+Está en el repositorio de construcción, en `docs/relator/soluciones/lab-1-5/paso-5-extraer-retencion-java.patch` y `paso-5-extraer-retencion-dotnet.patch`. Cada una cambia un solo archivo, compila, las 21 pruebas pasan y el comparador termina en cero.
 
 `git apply docs/relator/...` no sirve en el repositorio de participantes, porque ahí no existe `docs/relator/`. Ten una copia del repositorio de construcción en otra carpeta de la máquina, sin abrirla en el editor, y aplica el patch con su ruta desde la raíz del clon del participante.
 

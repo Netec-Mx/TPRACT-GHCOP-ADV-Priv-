@@ -15,7 +15,7 @@ He creado `labs/cap4/lab-4-4-documentacion/entregables/calculo-de-comisiones.md`
 
 Resultado del contraste con las 9 reglas de `escenario/README.md`:
 - **Coinciden 7**: reglas 1, 2, 4, 5, 6, 7 y 9.
-- **No coinciden, o coinciden solo en parte, 2**: la regla 3 (el tope del recargo por cuotas es 3.0 en `CalculadoraLiquidacion.java:173-175`, pero 3.5 en `CalculadoraComision.java:53-55`) y la regla 8 (el periodo usa la zona horaria del sistema, `UtilidadesFecha.java:35`, y no fija Lima).
+- **No coinciden, o coinciden solo en parte, 2**: la regla 3 (el tope del recargo por cuotas es 3.0 en `CalculadoraLiquidacion.java:173-175`, pero 3.5 en `CalculadoraComision.java:53-55`) y la regla 8 (el periodo usa la zona horaria del sistema, `UtilidadesFecha.java:37`, y no fija Lima).
 
 Observaciones fuera del alcance del paso, que no toqué:
 - El comentario de `PlanComisiones.java:9-10` dice que los tramos son acumulativos; el código aplica el porcentaje al monto completo y la regla 2 también. El código y el README mandan sobre el comentario.

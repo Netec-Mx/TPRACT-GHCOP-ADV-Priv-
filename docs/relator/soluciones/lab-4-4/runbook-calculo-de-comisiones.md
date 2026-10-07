@@ -86,7 +86,7 @@ código 2 (`scripts/comparar-escenarios.sh:10`).
    **Verificado.** 2026-10-07. `mvn -o -q clean package -DskipTests` terminó con código 0 y
    dejó `target/liquidacion-comercios.jar` (40015 bytes). `mvn clean package`, el comando
    de `escenario/README.md:62`, también terminó en `BUILD SUCCESS` sin red, con
-   `Tests run: 20, Failures: 0, Errors: 0, Skipped: 0`.
+   `Tests run: 21, Failures: 0, Errors: 0, Skipped: 0`.
 
 2. Ejecutar solo las pruebas, para separar una falla de compilación de una falla de prueba.
 
@@ -94,10 +94,11 @@ código 2 (`scripts/comparar-escenarios.sh:10`).
    mvn test
    ```
 
-   **Verificado.** 2026-10-07. `Tests run: 6` en `TransaccionTest`, `6` en `ComercioTest`,
-   `8` en `ValidadorFormatoTest`, total `Tests run: 20, Failures: 0, Errors: 0, Skipped: 0`
-   y `BUILD SUCCESS`. Que las pruebas pasen no dice nada sobre el cálculo: las tres clases
-   de prueba cubren el modelo y el validador de formato, no la liquidación.
+   **Verificado.** 2026-10-07. `Tests run: 1` en `UtilidadesFechaTest`, `6` en
+   `TransaccionTest`, `6` en `ComercioTest`, `8` en `ValidadorFormatoTest`, total
+   `Tests run: 21, Failures: 0, Errors: 0, Skipped: 0` y `BUILD SUCCESS`. Que las pruebas
+   pasen no dice nada sobre el cálculo: cubren el modelo, el validador de formato y el fin
+   del periodo, no la liquidación.
 
 3. Si el diagnóstico 3 mostró cambios en el escenario, devolver el código Java al estado
    publicado. Desde la raíz:
@@ -295,7 +296,7 @@ esperadas, el total de comisiones no coincide con el que se obtiene aplicando la
    **Si muestra otra cosa.** Un periodo distinto del que se quería revisar. Hay que tener
    en cuenta que la ventana se calcula en la zona horaria del sistema, no en la de Lima: el
    calendario se crea solo con la configuración regional
-   (`escenario/java/src/main/java/pe/pasarelaandina/calculo/UtilidadesFecha.java:34-35`).
+   (`escenario/java/src/main/java/pe/pasarelaandina/calculo/UtilidadesFecha.java:36-37`).
    En la verificación, ejecutar con `TZ=UTC` dio una salida idéntica a la de
    `America/Lima` para 2026-06, porque fechas y ventana se interpretan en la misma zona;
    eso no garantiza el mismo resultado con otros datos.
