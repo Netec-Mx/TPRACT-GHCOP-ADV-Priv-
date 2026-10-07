@@ -3,7 +3,7 @@
 
 # Lab 1.5 - Salida grabada de respaldo (escenario Java)
 
-Pasos 1 a 4 en modo Ask; paso 5 en modo Agent. Antes del laboratorio: `bash scripts/reiniciar-lab.sh lab-1-5 --si` (ya estaba en el punto de partida).
+Pasos 1 a 4 en modo Ask; paso 5 en modo Agent. Antes del laboratorio: `bash scripts/reiniciar-lab.sh lab-1-5 --confirmar` (ya estaba en el punto de partida).
 
 ## Paso 1 - `/lab-1-5-paso-1-inventario java`
 

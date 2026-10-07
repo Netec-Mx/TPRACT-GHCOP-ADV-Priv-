@@ -3,7 +3,7 @@
 
 # Lab 4.4 salida grabada de respaldo
 
-Nota sobre los segundos: son los medidos entre el inicio y el fin de los comandos de cada paso (lectura, escritura). No incluyen el tiempo de generación del texto. Sin llamadas MCP en este lab. Reinicio previo con `bash scripts/reiniciar-lab.sh lab-4-4 --si`: ya estaba en el punto de partida.
+Nota sobre los segundos: son los medidos entre el inicio y el fin de los comandos de cada paso (lectura, escritura). No incluyen el tiempo de generación del texto. Sin llamadas MCP en este lab. Reinicio previo con `bash scripts/reiniciar-lab.sh lab-4-4 --confirmar`: ya estaba en el punto de partida.
 
 ## Paso 1: `/lab-4-4-paso-1-documentar-reglas java`
 

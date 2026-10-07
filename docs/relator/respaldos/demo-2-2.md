@@ -19,6 +19,8 @@ tools: ['read', 'search']
 ## Paso 3. Agente Revisor
 Texto escrito: `Revisa FormateadorReporte.java y corrige lo que encuentres.`
 
+> **Ejemplo ilustrativo, no es una respuesta real de Copilot.**
+
 Respuesta del Revisor (herramientas: solo read y search):
 
 > No puedo corregir nada: mi rol es revisar y no tengo herramientas de edición ni de ejecución. Te dejo la revisión. Como no hay un cambio a revisar (el árbol está limpio), todo lo que encontré es código preexistente.
@@ -40,6 +42,8 @@ Respuesta del Revisor (herramientas: solo read y search):
 
 ## Paso 4. Agente Refactorizador
 Texto escrito: `En escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java extrae la cabecera de formatearDetalle a un método privado.`
+
+> **Ejemplo ilustrativo, no es una respuesta real de Copilot.**
 
 Respuesta del Refactorizador:
 
@@ -90,7 +94,7 @@ Salida real del comparador (código de salida 0):
 Diff real: se reemplazan las líneas 59-66 por `agregarCabeceraDetalle(texto, liquidacion);` y se agrega el método privado con ese mismo bloque antes de `monto`. Nada más.
 
 ## Paso 6. Restauración
-Comando: `bash scripts/reiniciar-lab.sh lab-1-4 --si`. Salida real (final):
+Comando: `bash scripts/reiniciar-lab.sh lab-1-4 --confirmar`. Salida real (final):
 ```
 == Esto se va a perder ==
     modificado   escenario/java/.../reporte/FormateadorReporte.java
@@ -105,5 +109,5 @@ Comando: `bash scripts/reiniciar-lab.sh lab-1-4 --si`. Salida real (final):
 - Paso 3: esperado tabla de hallazgos y ningún cambio; el agente no puede editar. Coincide; `git status` limpio (solo vm.sh).
 - Paso 4: esperado que diga archivo y bloque, aplique, compile, corra el comparador y mencione lo no tocado. Coincide; compilación sin salida (rc 0), comparador rc 0 con 554 líneas idénticas.
 - Paso 5: esperado un solo archivo; observado 1 file changed. Coincide.
-- Paso 6: esperado restauración con confirmación; el script se invoca con `--si` (en la demo real se responde `si`). Coincide, árbol limpio.
-- Observación sobre el guion: el paso 6 dice `bash scripts/reiniciar-lab.sh lab-1-4` y responder `si`; aquí se usó `--si` por no ser interactivo. El paso 5 dice "Git Bash" y `git diff --stat` solo muestra un archivo, correcto. Nota: el cuadro de hallazgos del Revisor y las frases de los agentes son simuladas; los resultados de comandos son reales.
+- Paso 6: esperado restauración; el script se invoca con `--confirmar`. Coincide, árbol limpio.
+- Observación sobre el guion: El paso 5 dice "Git Bash" y `git diff --stat` solo muestra un archivo, correcto. Nota: el cuadro de hallazgos del Revisor y las frases de los agentes son simuladas; los resultados de comandos son reales.

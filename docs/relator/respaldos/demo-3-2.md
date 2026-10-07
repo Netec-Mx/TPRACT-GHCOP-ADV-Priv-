@@ -56,7 +56,7 @@ Dato 1 (lista) respaldado por buscar_comercios; dato 2 (plan) por detalle_comerc
 
 ## Paso 6. Restaurar
 Hook: {"tool_name":"run_in_terminal","tool_input":{"command":"bash scripts/reiniciar-lab.sh lab-3-4"}} (no toca escenario/datos; no se ejecuto el hook previo a esta orden, equivalente a allow por regex).
-Comando real: bash scripts/reiniciar-lab.sh lab-3-4 --si
+Comando real: bash scripts/reiniciar-lab.sh lab-3-4 --confirmar
 Salida: "lab-3-4 listo para empezar"; se borra .vscode/mcp.json. git status: solo mcp-llamar.sh sin seguimiento (del simulador). Queda la carpeta .vscode vacia.
 
 ## Esperado contra observado
@@ -65,4 +65,4 @@ Salida: "lab-3-4 listo para empezar"; se borra .vscode/mcp.json. git status: sol
 - Paso 3: coincide; tres herramientas.
 - Paso 4: coincide: dos llamadas, dos aprobaciones. El "primero" es CM0006 por orden del archivo.
 - Paso 5: coincide.
-- Paso 6: el guion usa el comando sin --si; el script pide confirmacion (en simulacion se uso --si). Deja la carpeta .vscode vacia.
+- Paso 6: el guion y la simulacion usan --confirmar. Deja la carpeta .vscode vacia.

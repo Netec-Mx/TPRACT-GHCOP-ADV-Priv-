@@ -44,7 +44,7 @@
 Los hooks estaban en vista previa al armar el taller. Si el hook no corre en su máquina, es
 decir, si el agente modifica el archivo en el paso 1:
 
-1. Restaure con `bash scripts/reiniciar-lab.sh lab-1-4` y responda `si`.
+1. Restaure con `bash scripts/reiniciar-lab.sh lab-1-4 --confirmar`.
 2. Muestre `proteger-datos-escenario.json` y `proteger-datos-escenario.js` y explique qué
    hace.
 3. Muestre la ejecución grabada en [`../respaldos/demo-3-3.md`](../respaldos/demo-3-3.md).

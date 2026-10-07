@@ -7,6 +7,8 @@ Nota: los pasos 1 a 3 son respuestas simuladas del chat (redactadas a partir del
 ## Paso 1. Ask
 Escrito: `#file:escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java ¿Qué partes de formatearDetalle se podrían separar en métodos sin cambiar la salida?`
 
+> **Ejemplo ilustrativo, no es una respuesta real de Copilot.**
+
 Respuesta del chat (simulada):
 En `formatearDetalle` se pueden separar, sin cambiar la salida:
 1. La cabecera del detalle (líneas 59-66): separador, título con comercio y razón social, periodo, separador y fila de títulos de columnas.
@@ -20,6 +22,8 @@ Archivos cambiados: ninguno.
 ## Paso 2. /plan
 Escrito: `/plan extraer la cabecera de formatearDetalle a un método privado sin cambiar la salida`
 
+> **Ejemplo ilustrativo, no es una respuesta real de Copilot.**
+
 Respuesta (simulada; selector en Plan):
 Plan:
 1. Crear `private void agregarCabeceraDetalle(StringBuilder texto, Liquidacion liquidacion)` en `FormateadorReporte`, con las líneas 59-66 sin modificar su contenido ni orden.
@@ -30,6 +34,8 @@ Plan:
 Archivos cambiados: ninguno.
 
 ## Paso 3. Agent (Start Implementation)
+> **Ejemplo ilustrativo, no es una respuesta real de Copilot.**
+
 Respuesta (simulada): "Apliqué el plan: extraje la cabecera a `agregarCabeceraDetalle` y `formatearDetalle` ahora la invoca. No toqué nada más."
 Archivo modificado: escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java (editado de verdad).
 
@@ -95,7 +101,7 @@ Repositorio: /repo
 ```
 
 ## Paso 5. Restaurar (salida real)
-`bash vm.sh 'bash scripts/reiniciar-lab.sh lab-1-4 --si'` (exit 0):
+`bash vm.sh 'bash scripts/reiniciar-lab.sh lab-1-4 --confirmar'` (exit 0):
 ```
 == Punto de partida de lab-1-4 ==
   Referencia: punto-de-partida
@@ -115,4 +121,4 @@ Repositorio: /repo
 - Paso 2: esperado plan corto con paso de validación; observado igual (simulado).
 - Paso 3: esperado un único archivo con un método privado nuevo; observado igual.
 - Paso 4: esperado un archivo modificado y "Las salidas son identicas"; observado igual.
-- Paso 5: esperado restauración; observado igual. El script pide `si` y se usó `--si`; el guion no menciona esa bandera.
+- Paso 5: esperado restauración; observado igual, con `--confirmar`, como dice el guion.

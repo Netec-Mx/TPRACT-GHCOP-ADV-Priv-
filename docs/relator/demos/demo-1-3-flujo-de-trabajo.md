@@ -51,10 +51,8 @@ editor.
 5. Restaure el escenario:
 
    ```bash
-   bash scripts/reiniciar-lab.sh lab-1-4
+   bash scripts/reiniciar-lab.sh lab-1-4 --confirmar
    ```
-
-   Responda `si` cuando lo pida.
 
 ## Qué puede salir distinto
 

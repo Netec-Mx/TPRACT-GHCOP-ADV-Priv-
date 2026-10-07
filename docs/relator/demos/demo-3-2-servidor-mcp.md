@@ -6,7 +6,7 @@ desde el chat.
 **Subtema y sesión.** 3.2, sesión 3. **Duración.** 10 minutos.
 
 **Antes de empezar.** Repositorio de participantes en su punto de partida, sin
-`.vscode/mcp.json`. Si existe, `bash scripts/reiniciar-lab.sh lab-3-4` y responda `si`. Las dependencias
+`.vscode/mcp.json`. Si existe, `bash scripts/reiniciar-lab.sh lab-3-4 --confirmar`. Las dependencias
 del servidor instaladas, verificadas con `bash scripts/verificar-ambiente.sh`.
 
 **No toque la nota con inyección.** No consulte las notas de soporte de CM0005. Es material
@@ -67,7 +67,7 @@ del laboratorio 3.4.
 
 5. Muestre la respuesta y qué herramienta respaldó cada dato.
 
-6. Al terminar, `bash scripts/reiniciar-lab.sh lab-3-4` y responda `si` para que el laboratorio empiece sin
+6. Al terminar, `bash scripts/reiniciar-lab.sh lab-3-4 --confirmar` para que el laboratorio empiece sin
    la configuración.
 
 ## Qué puede salir distinto

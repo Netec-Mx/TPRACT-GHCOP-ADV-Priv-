@@ -319,7 +319,7 @@ Aritmética. Teoría 45 + 35 + 10 + 40 + 5 = 135. Laboratorio 45. Total 180. Con
 12,5 horas, el 3.1 en 30 minutos y sin la demostración 3.2: 155.
 
 **Antes de empezar.** En la máquina de proyección, borre `.vscode/mcp.json` si quedó de
-una prueba, con `bash scripts/reiniciar-lab.sh lab-3-4`. La demostración del 3.2 lo crea en
+una prueba, con `bash scripts/reiniciar-lab.sh lab-3-4 --confirmar`. La demostración del 3.2 lo crea en
 vivo. Confirme en el verificador que la sección «Servidor MCP local» está en verde en las
 máquinas de los participantes.
 
@@ -338,7 +338,7 @@ está deshabilitado. El verificador detecta los dos casos.
 | 1:00 | 30 | 30 | 4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | Laboratorio 4.4. Los pasos 3, Confluence, y 4, runbook, son opcionales y quedan fuera de los 30 minutos |
 | 1:30 | 45 | 45 | 5.1 Preparación del escenario integrador y criterios de evaluación | Laboratorio 5.1: Requerimientos, Estimación y Análisis y diseño. Abra proyectando [`CICLO-DE-VIDA.md`](../../CICLO-DE-VIDA.md) |
 | 2:15 | 45 | 45 | 5.2 Planeación de mejora, refactorización y validación incremental | Laboratorio 5.2: Desarrollo del reporte |
-| 3:00 | 45 | 45 | 5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión | Laboratorio 5.3: Pruebas, Integración continua, Mantención correctiva, Revisión y Seguridad. En la puesta en común, [`demos/demo-5-3-pipeline-en-github.md`](demos/demo-5-3-pipeline-en-github.md) desde su respaldo y el caso de clase 03 |
+| 3:00 | 45 | 45 | 5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión | Laboratorio 5.3: Pruebas, Integración continua, Mantención correctiva, Revisión y Seguridad. En la puesta en común, el caso de clase 03. La demostración [`demos/demo-5-3-pipeline-en-github.md`](demos/demo-5-3-pipeline-en-github.md) es opcional: acompaña el paso 5 opcional del laboratorio, desde su respaldo, si sobra tiempo |
 | 3:45 | 45 | 45 | 5.4 Laboratorio final: construcción de activos reutilizables para el equipo | Laboratorio 5.4: Liberación, Operación y soporte, Mantención evolutiva y cierre |
 | 4:30 | | | Fin | |
 
@@ -367,8 +367,8 @@ dice o entrega en todo el capítulo está en una página,
 para poner al día a quien se atrase.
 
 **Antes de empezar.** La hoja de respuestas y las notas de los cuatro laboratorios abiertas
-en su segunda pantalla. El respaldo de la demostración 5.3 y el caso de clase 03 listos
-para proyectar. No hay que instalar ni preparar nada más: el formato del reporte y el
+en su segunda pantalla. El caso de clase 03 listo para proyectar y, por si sobra tiempo en
+el paso 5 opcional del 5.3, el respaldo de la demostración 5.3. No hay que instalar ni preparar nada más: el formato del reporte y el
 incidente los entrega el repositorio.
 
 **Qué suele fallar.** `integracion-local.sh` tarda en la máquina virtual porque compila el
@@ -440,12 +440,14 @@ paso 3.
 **Reiniciar.** Desde la raíz del repositorio, en Git Bash:
 
 ```bash
-bash scripts/reiniciar-lab.sh lab-5-2
+bash scripts/reiniciar-lab.sh lab-5-2 --confirmar
 ```
 
-Muestra qué se va a perder y pide escribir `si`. Los commits del participante no se pierden.
-Los activos que el participante construyó en el 2.4 no se tocan al reiniciar otro
-laboratorio. En el capítulo 5 el reinicio sigue la historia: el 5.1 vuelve todo el proyecto
+Muestra qué se va a perder y lo descarta sin preguntar. Los commits del participante siguen en el
+historial. De lo que el participante construyó en el 2.4, un agente se conserva al
+reiniciar otro laboratorio; una instrucción se conserva hasta el 3.4, porque desde ahí el
+reinicio devuelve `.github/instructions/` a su punto de partida. Para guardarla, que la
+copie fuera del repositorio antes de reiniciar. En el capítulo 5 el reinicio sigue la historia: el 5.1 vuelve todo el proyecto
 al punto de partida, el 5.2 solo el escenario, el 5.3 solo el pipeline y la descripción del
 pull request, y el 5.4 no se reinicia.
 
@@ -596,7 +598,8 @@ de SPEC-015 se construyó con mediciones, no con promesas.
 **«¿Qué pasa si el pipeline no corre en la sala?»**
 El pipeline es `scripts/integracion-local.sh`, el mismo script que corre en GitHub, y no
 necesita red ni GitHub. Todo el capítulo 5 se hace en local. Lo que la sala no ve en vivo es
-Actions, y para eso está la demostración 5.3, que se presenta desde su respaldo grabado.
+Actions. Para eso está la demostración 5.3, opcional, que se presenta desde su respaldo
+grabado junto con el paso 5 opcional del laboratorio.
 
 **«¿Cambiar el hash esperado no es hacer trampa?»**
 Sería trampa sin causa. En el 5.3 el hash de junio cambia porque la corrección cambia lo

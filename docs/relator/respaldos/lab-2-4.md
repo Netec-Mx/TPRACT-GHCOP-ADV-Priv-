@@ -3,7 +3,7 @@
 
 # Lab 2.4 - Salida grabada de respaldo (tarea C, instrucción reutilizable)
 
-Todos los pasos en modo Agent. Antes del laboratorio: `bash scripts/reiniciar-lab.sh lab-2-4 --si` (ya estaba en el punto de partida).
+Todos los pasos en modo Agent. Antes del laboratorio: `bash scripts/reiniciar-lab.sh lab-2-4 --confirmar` (ya estaba en el punto de partida).
 
 ## Paso 1 - `/lab-2-4-paso-1-elegir-tarea`
 

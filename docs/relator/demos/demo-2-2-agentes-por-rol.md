@@ -42,7 +42,7 @@ editor.
 
 5. Muestre el diff en Git Bash con `git diff --stat`. Un solo archivo.
 
-6. Restaure con `bash scripts/reiniciar-lab.sh lab-1-4` y responda `si`.
+6. Restaure con `bash scripts/reiniciar-lab.sh lab-1-4 --confirmar`.
 
 ## Qué puede salir distinto
 

@@ -1,7 +1,8 @@
 > Salida real grabada en la verificación de SPEC-016, el 3 de octubre de 2026, corrida s16, stack Java, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
 
-> Grabado antes de SPEC-018, cuando el registro de cambios partía en 1.0.0. Desde SPEC-018 la
-> versión vigente es 1.4.0, la de `pom.xml`, y la respuesta de referencia es 1.5.0.
+> Se grabó cuando el registro de cambios partía en 1.0.0. Las versiones se corrigieron al
+> registro de cambios del punto de partida: la vigente es 1.4.0, la de `pom.xml`, y la
+> propuesta de referencia es 1.5.0.
 
 # Lab 5-4 salida grabada de respaldo
 
@@ -17,12 +18,12 @@ Inicio 1791047853, fin 1791047903 (50 s). Comandos de terminal del agente: 3 (`d
 
 ## Primera respuesta del agente
 
-Anoté Liberación a las **14:17**. Leí `CHANGELOG.md` (vigente 1.0.0), los tres commits de la
+Anoté Liberación a las **14:17**. Leí `CHANGELOG.md` (vigente 1.4.0), los tres commits de la
 rama, las decisiones 0004 y 0005 y `docs/proyecto/pull-request.md`. Ejecuté la liquidación de
 junio; coincide con la de la corrección del 5.3, cuyos montos de antes quedaron en la
 descripción del pull request.
 
-**Propongo la versión 1.1.0.**
+**Propongo la versión 1.5.0.**
 
 - **Menor**, porque se agrega una funcionalidad compatible: el reporte por medio de pago y la
   conciliación. Sin `--reporte-medios` el programa se invoca igual que antes.
@@ -30,15 +31,15 @@ descripción del pull request.
 - No es mayor: nada deja de funcionar para quien lo usa. Pero la corrección cambia montos de
   junio ya liquidados, y eso se declara en «Cambiado» y en la sección de montos de las notas.
 
-¿Confirmas 1.1.0?
+¿Confirmas 1.5.0?
 
 ## Respuesta del participante
 
-«Sí, 1.1.0.»
+«Sí, 1.5.0.»
 
 ## Segunda respuesta del agente
 
-**Entrada en `CHANGELOG.md`** (arriba de 1.0.0):
+**Entrada en `CHANGELOG.md`** (arriba de 1.4.0):
 
 - **Agregado:** el reporte con `--reporte-medios`, el paso `conciliacion` del pipeline y las
   pruebas del reporte.
@@ -47,7 +48,7 @@ descripción del pull request.
 - **Corregido:** el límite superior de tramo (decisión 0005) y el redondeo de la suma mensual
   (regla 9).
 
-**Notas de versión:** `docs/proyecto/notas-de-version-1.1.0.md`. La sección de montos, en
+**Notas de versión:** `docs/proyecto/notas-de-version-1.5.0.md`. La sección de montos, en
 lenguaje de negocio:
 
 | Comercio | Motivo | Comisión de junio | Neto a pagar |
@@ -66,7 +67,7 @@ reglas de liquidación». Los nombres de comercio son datos ficticios del escena
 Te propongo el commit:
 
 ```bash
-git add -A && git commit -m "Version 1.1.0: registro de cambios y notas de version"
+git add -A && git commit -m "Version 1.5.0: registro de cambios y notas de version"
 ```
 
 No creo etiquetas ni empujo. ¿Lo confirmas?
@@ -77,7 +78,7 @@ No creo etiquetas ni empujo. ¿Lo confirmas?
 
 ## Medición
 
-- Archivos: `CHANGELOG.md` (M), `docs/proyecto/notas-de-version-1.1.0.md` (nuevo),
+- Archivos: `CHANGELOG.md` (M), `docs/proyecto/notas-de-version-1.5.0.md` (nuevo),
   `docs/proyecto/registro-de-tiempos.md` (M).
 - Salida esperada: sí. Versión justificada, entrada del registro y notas con montos antes y
   después de una ejecución.
@@ -89,7 +90,7 @@ No creo etiquetas ni empujo. ¿Lo confirmas?
 # 5.4 paso 2: `/lab-5-4-paso-2-atender-incidente`
 
 Inicio 1791047925, fin 1791047979 (54 s). Comandos de terminal del agente: 4 (`date +%H:%M`,
-`entregar.sh incidente`, liquidación de junio con el código de la versión 1.0.0 extraído con
+`entregar.sh incidente`, liquidación de junio con el código de la versión 1.4.0 extraído con
 `git archive` del commit `5e06f23`, `grep` de las ventas de CM0001 en el límite).
 
 ## Respuesta del agente
@@ -102,13 +103,13 @@ S/ 727,34 a S/ 738,34 sin vender distinto ni cambiar de plan.
 confirmé. Que «si es un error, otros comercios deben estar igual» es una suposición: no es un
 error, pero sí hay otros comercios afectados.
 
-**Causa.** Comparé la liquidación de junio de la versión 1.0.0 con la de 1.1.0. CM0001 tiene dos
+**Causa.** Comparé la liquidación de junio de la versión 1.4.0 con la de 1.5.0. CM0001 tiene dos
 ventas exactamente en un límite de tramo de su plan Básico: TX002001 por S/ 500,00 (antes 2,9 %
 → 14,80; ahora 3,5 % → 17,80; +3,00) y TX002002 por S/ 2 000,00 (antes 2,5 % → 50,30; ahora
 2,9 % → 58,30; +8,00). Suman exactamente **S/ 11,00**. El cambio es intencional: `CHANGELOG.md`
-1.1.0, sección «Corregido», y la **decisión 0005**, que registra la respuesta del negocio: «el
+1.5.0, sección «Corregido», y la **decisión 0005**, que registra la respuesta del negocio: «el
 límite superior es inclusivo; 500 va al primer tramo, 2000 al segundo». Las notas de versión
-1.1.0 ya listan a CM0001 con esos montos.
+1.5.0 ya listan a CM0001 con esos montos.
 
 **Alcance**, verificado con las dos ejecuciones de junio (abril y mayo no cambian):
 
@@ -148,7 +149,7 @@ No recomiendo revertir la versión: el monto nuevo está respaldado por la decis
   `docs/proyecto/registro-de-tiempos.md` (M).
 - Salida esperada: sí. Causa citando la decisión, alcance con los otros cuatro comercios,
   respuesta sin promesas.
-- Restricciones: respetadas. Sin cambios de código ni datos. La versión 1.0.0 se compiló en una
+- Restricciones: respetadas. Sin cambios de código ni datos. La versión 1.4.0 se compiló en una
   carpeta de trabajo aparte, fuera del repositorio.
 
 

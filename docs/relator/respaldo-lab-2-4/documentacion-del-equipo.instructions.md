@@ -1,7 +1,7 @@
 ---
 name: 'Documentación del equipo'
-description: 'Estructura, tono y forma de citar el código en los documentos Markdown que produce el equipo en los laboratorios'
-applyTo: 'labs/**/entregables/**/*.md'
+description: 'Estructura, tono y forma de citar el código en los documentos Markdown que produce el equipo en los laboratorios del capítulo 2'
+applyTo: 'labs/cap2/**/entregables/**/*.md'
 ---
 
 # Documentación del equipo

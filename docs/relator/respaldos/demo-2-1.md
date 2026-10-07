@@ -8,8 +8,8 @@ Referencias: ninguna.
 Salida observada (`ls -a .github`): agents, copilot-instructions.md, hooks, instructions, skills.
 - agents/: analista, documentador, refactorizador, revisor, tester (.agent.md)
 - hooks/: proteger-datos-escenario.js y .json
-- instructions/: dotnet.instructions.md, java.instructions.md
-- skills/: 37 carpetas (35 de laboratorio lab-*, 2 de dominio: pasarela-reglas-de-negocio, pasarela-verificar-equivalencia)
+- instructions/: arquitectura-bian.instructions.md, dotnet.instructions.md, java.instructions.md
+- skills/: 44 carpetas (37 de laboratorio lab-*, 7 de dominio pasarela-*: analizar-incidente, estimar, historia-de-usuario, notas-de-version, registrar-decision, reglas-de-negocio y verificar-equivalencia). Contadas con `ls -d .github/skills/*/ | wc -l` y `ls -d .github/skills/lab-*/ | wc -l`.
 
 ## Paso 2 - Chat nuevo (Ask)
 Texto escrito:
@@ -53,7 +53,7 @@ Respuesta:
 ## Paso 5 - Skill de laboratorio
 Texto escrito: (ninguno)
 Contenido mostrado de .github/skills/lab-1-4-paso-1-prompt-vago/SKILL.md: encabezado con `name`, `description` y la línea `disable-model-invocation: true`; cuerpo "Pedido: Mejora este código" con enlaces a CalculadoraLiquidacion.java/.cs y restricciones.
-Verificación: `grep -L "disable-model-invocation: true"` sobre todas las skills solo devuelve las dos de dominio, es decir las 35 de laboratorio la tienen.
+Verificación: `grep -L "disable-model-invocation: true"` sobre todas las skills solo devuelve las siete de dominio, es decir las 37 de laboratorio la tienen.
 
 ## Paso 6 - Narrativa
 Sin acción en el chat.
@@ -66,4 +66,4 @@ Sin acción en el chat.
 | 3 | Coincide | |
 | 4 | Coincide | Plan PL01, tramo 500-2000, 2.9 %, leído de los datos. |
 | 5 | Coincide | |
-| 6 | Coincide | Comprobación: hay 35 skills lab, el guion dice treinta y cinco. |
+| 6 | Coincide | Hoy hay 37 skills de laboratorio. Los «treinta y cinco pasos» del guion son los que se rehicieron en la migración, una cifra de ese momento. |
