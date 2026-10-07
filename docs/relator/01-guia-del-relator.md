@@ -218,23 +218,47 @@ cliente tiene pausas dentro de la sesión, se recorta según lo indicado en cada
 En los bloques de exposición, el contenido de cada subtema está en
 [`teoria/`](teoria/00-indice.md). Esta guía fija dónde va cada cosa y cuánto dura.
 
+### Plan de 12,5 horas
+
+El kickoff de una hora ya se dictó, así que al curso le quedan 12,5 horas y el material está
+armado para 13,5. La agenda no cambia: es el documento contractual. El ajuste se hace aquí,
+quitando o acortando elementos opcionales de la exposición.
+
+| Elemento opcional | Ahorro | Por qué no se pierde contenido |
+|---|---|---|
+| Caso de clase del 1.2 | 10 min | El 1.5 trabaja el control de contexto |
+| Demostración 2.2 | 10 min | En el 2.4 se construye y prueba un agente |
+| Demostración 2.3 | 8 min | En el 2.4 se ve aplicarse una instrucción. La instrucción BIAN se muestra igual en la exposición |
+| Exposición del 3.1, de 45 a 30 min | 15 min | El 3.2 retoma la arquitectura |
+| Demostración 3.2 | 10 min | En el 3.4 cada participante configura y usa el mismo servidor |
+| Exposición del 4.3, de 20 a 10 min | 10 min | El paso de Confluence del 4.4 ya es opcional |
+| Demostración 5.3 del pipeline en GitHub | Queda para el laboratorio 5.3 | El paso 5 del 5.3 ya es opcional |
+
+El plan se aplica completo desde la primera sesión, no cuando el relator ya va atrasado.
+Ningún laboratorio pierde tiempo y ningún subtema del temario se omite. El corte del 5.3 al
+minuto 45 con `ponerse-al-dia.sh lab-5-4` se mantiene.
+
+Aritmética. 10 + 10 + 8 + 15 + 10 + 10 = 63 minutos menos. Las sesiones quedan en 170, 162,
+155 y 260 minutos: 747, 12 horas y 27 minutos. La columna «Min, plan 12,5 h» de cada tabla
+da los minutos con el plan; la columna «Min» y las horas de inicio son las del temario.
+
 ### Sesión 1. Capítulo 1, 180 minutos
 
-| Inicio | Min | Bloque | Material |
-|---|---|---|---|
-| 0:00 | 22 | 1.1 Prompts efectivos para desarrollo: objetivo, contexto, restricciones y salida esperada. Exposición | Teoría del subtema, que abre con el estado del arte de Copilot |
-| 0:22 | 8 | 1.1 Demostración del pedido pobre y el pedido bueno | [`demos/demo-1-1-pedido-pobre-y-pedido-bueno.md`](demos/demo-1-1-pedido-pobre-y-pedido-bueno.md) |
-| 0:30 | 12 | 1.2 Uso de contexto: archivos abiertos, selección de código, workspace y referencias específicas. Exposición | Teoría del subtema |
-| 0:42 | 8 | 1.2 Demostración de las referencias de contexto | [`demos/demo-1-2-referencias-de-contexto.md`](demos/demo-1-2-referencias-de-contexto.md) |
-| 0:50 | 10 | 1.2 Caso de clase de la configuración regional | Sección 7 de esta guía |
-| 1:00 | 20 | 1.3 Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar. Exposición | Teoría del subtema: las once fases del ciclo de vida, el ciclo corto dentro de cada una, el consumo de cada modo y la guía [`uso-responsable-de-tokens.md`](../gobierno/uso-responsable-de-tokens.md) |
-| 1:20 | 10 | 1.3 Demostración del flujo analizar, planear, implementar y validar | [`demos/demo-1-3-flujo-de-trabajo.md`](demos/demo-1-3-flujo-de-trabajo.md) |
-| 1:30 | 30 | 1.4 Práctica guiada: mejora incremental de prompts y uso de comandos del chat | Laboratorio 1.4 |
-| 2:00 | 60 | 1.5 Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | Laboratorio 1.5. El paso 4, la propuesta de mejora, es opcional y queda fuera de los 60 minutos |
-| 3:00 | | Fin | |
+| Inicio | Min | Min, plan 12,5 h | Bloque | Material |
+|---|---|---|---|---|
+| 0:00 | 22 | 22 | 1.1 Prompts efectivos para desarrollo: objetivo, contexto, restricciones y salida esperada. Exposición | Teoría del subtema, que abre con el estado del arte de Copilot |
+| 0:22 | 8 | 8 | 1.1 Demostración del pedido pobre y el pedido bueno | [`demos/demo-1-1-pedido-pobre-y-pedido-bueno.md`](demos/demo-1-1-pedido-pobre-y-pedido-bueno.md) |
+| 0:30 | 12 | 12 | 1.2 Uso de contexto: archivos abiertos, selección de código, workspace y referencias específicas. Exposición | Teoría del subtema |
+| 0:42 | 8 | 8 | 1.2 Demostración de las referencias de contexto | [`demos/demo-1-2-referencias-de-contexto.md`](demos/demo-1-2-referencias-de-contexto.md) |
+| 0:50 | 10 | 0 | 1.2 Caso de clase de la configuración regional | Sección 7 de esta guía |
+| 1:00 | 20 | 20 | 1.3 Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar. Exposición | Teoría del subtema: las once fases del ciclo de vida, el ciclo corto dentro de cada una, el consumo de cada modo y la guía [`uso-responsable-de-tokens.md`](../gobierno/uso-responsable-de-tokens.md) |
+| 1:20 | 10 | 10 | 1.3 Demostración del flujo analizar, planear, implementar y validar | [`demos/demo-1-3-flujo-de-trabajo.md`](demos/demo-1-3-flujo-de-trabajo.md) |
+| 1:30 | 30 | 30 | 1.4 Práctica guiada: mejora incremental de prompts y uso de comandos del chat | Laboratorio 1.4 |
+| 2:00 | 60 | 60 | 1.5 Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | Laboratorio 1.5. El paso 4, la propuesta de mejora, es opcional y queda fuera de los 60 minutos |
+| 3:00 | | | Fin | |
 
 Aritmética. Teoría 22 + 8 + 12 + 8 + 10 + 20 + 10 = 90. Laboratorio 30 + 60 = 90. Total
-180.
+180. Con el plan de 12,5 horas, sin el caso de clase del 1.2: 170.
 
 **Comandos del chat.** El objetivo del capítulo en el documento de Netec menciona
 `/workspace`, `/analyze` y `/plan`. Solo `/plan` existe hoy como comando. En la exposición
@@ -257,18 +281,19 @@ confianza.
 
 ### Sesión 2. Capítulo 2, 180 minutos
 
-| Inicio | Min | Bloque | Material |
-|---|---|---|---|
-| 0:00 | 35 | 2.1 Conceptos: agentes locales, skills, prompt files e instrucciones personalizadas. Exposición | Teoría del subtema |
-| 0:35 | 10 | 2.1 Demostración de la jerarquía de personalización y las skills | [`demos/demo-2-1-jerarquia-y-skills.md`](demos/demo-2-1-jerarquia-y-skills.md) |
-| 0:45 | 35 | 2.2 Diseño de agentes por rol: analista, tester, documentador, revisor y refactorizador. Exposición | Teoría del subtema |
-| 1:20 | 10 | 2.2 Demostración de los agentes de referencia | [`demos/demo-2-2-agentes-por-rol.md`](demos/demo-2-2-agentes-por-rol.md) |
-| 1:30 | 37 | 2.3 Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos. Exposición | Teoría del subtema, con la instrucción de arquitectura BIAN y [`bian-mapeo.md`](../arquitectura/bian-mapeo.md) |
-| 2:07 | 8 | 2.3 Demostración de las instrucciones por ruta, incluida la de arquitectura BIAN | [`demos/demo-2-3-instrucciones-por-ruta.md`](demos/demo-2-3-instrucciones-por-ruta.md) |
-| 2:15 | 45 | 2.4 Laboratorio: creación de un agente local o instrucción reutilizable para una tarea del equipo | Laboratorio 2.4, con cinco tareas, la E sobre el mapeo BIAN |
-| 3:00 | | Fin | |
+| Inicio | Min | Min, plan 12,5 h | Bloque | Material |
+|---|---|---|---|---|
+| 0:00 | 35 | 35 | 2.1 Conceptos: agentes locales, skills, prompt files e instrucciones personalizadas. Exposición | Teoría del subtema |
+| 0:35 | 10 | 10 | 2.1 Demostración de la jerarquía de personalización y las skills | [`demos/demo-2-1-jerarquia-y-skills.md`](demos/demo-2-1-jerarquia-y-skills.md) |
+| 0:45 | 35 | 35 | 2.2 Diseño de agentes por rol: analista, tester, documentador, revisor y refactorizador. Exposición | Teoría del subtema |
+| 1:20 | 10 | 0 | 2.2 Demostración de los agentes de referencia | [`demos/demo-2-2-agentes-por-rol.md`](demos/demo-2-2-agentes-por-rol.md) |
+| 1:30 | 37 | 37 | 2.3 Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos. Exposición | Teoría del subtema, con la instrucción de arquitectura BIAN y [`bian-mapeo.md`](../arquitectura/bian-mapeo.md) |
+| 2:07 | 8 | 0 | 2.3 Demostración de las instrucciones por ruta, incluida la de arquitectura BIAN | [`demos/demo-2-3-instrucciones-por-ruta.md`](demos/demo-2-3-instrucciones-por-ruta.md) |
+| 2:15 | 45 | 45 | 2.4 Laboratorio: creación de un agente local o instrucción reutilizable para una tarea del equipo | Laboratorio 2.4, con cinco tareas, la E sobre el mapeo BIAN |
+| 3:00 | | | Fin | |
 
-Aritmética. Teoría 35 + 10 + 35 + 10 + 37 + 8 = 135. Laboratorio 45. Total 180.
+Aritmética. Teoría 35 + 10 + 35 + 10 + 37 + 8 = 135. Laboratorio 45. Total 180. Con el plan
+de 12,5 horas, sin las demostraciones 2.2 y 2.3: 162.
 
 **Antes de empezar.** Revise que `.github/agents/`, `.github/instructions/` y
 `.github/skills/` estén en el punto de partida. Tenga a mano los tres archivos de
@@ -280,17 +305,18 @@ coincide.
 
 ### Sesión 3. Capítulo 3, 180 minutos
 
-| Inicio | Min | Bloque | Material |
-|---|---|---|---|
-| 0:00 | 45 | 3.1 Qué es MCP y cómo se relaciona con contexto, agentes y herramientas locales. Exposición | Teoría del subtema |
-| 0:45 | 35 | 3.2 Diferencia entre MCP local y MCP externo en ambientes restringidos. Exposición | Teoría del subtema |
-| 1:20 | 10 | 3.2 Demostración del servidor MCP local | [`demos/demo-3-2-servidor-mcp.md`](demos/demo-3-2-servidor-mcp.md) |
-| 1:30 | 40 | 3.3 Riesgos de seguridad: exposición de información, conectores no autorizados y fuga de contexto. Exposición | Teoría del subtema, incluida la exclusión de contenido y la [política de uso de IA](../gobierno/politica-uso-ia.md) |
-| 2:10 | 5 | 3.3 Demostración del hook, conectada a la regla 3 de la política | [`demos/demo-3-3-hook.md`](demos/demo-3-3-hook.md) |
-| 2:15 | 45 | 3.4 Laboratorio: diseño de un caso de uso de MCP local seguro con documentación técnica local | Laboratorio 3.4 |
-| 3:00 | | Fin | |
+| Inicio | Min | Min, plan 12,5 h | Bloque | Material |
+|---|---|---|---|---|
+| 0:00 | 45 | 30 | 3.1 Qué es MCP y cómo se relaciona con contexto, agentes y herramientas locales. Exposición | Teoría del subtema |
+| 0:45 | 35 | 35 | 3.2 Diferencia entre MCP local y MCP externo en ambientes restringidos. Exposición | Teoría del subtema |
+| 1:20 | 10 | 0 | 3.2 Demostración del servidor MCP local | [`demos/demo-3-2-servidor-mcp.md`](demos/demo-3-2-servidor-mcp.md) |
+| 1:30 | 40 | 40 | 3.3 Riesgos de seguridad: exposición de información, conectores no autorizados y fuga de contexto. Exposición | Teoría del subtema, incluida la exclusión de contenido y la [política de uso de IA](../gobierno/politica-uso-ia.md) |
+| 2:10 | 5 | 5 | 3.3 Demostración del hook, conectada a la regla 3 de la política | [`demos/demo-3-3-hook.md`](demos/demo-3-3-hook.md) |
+| 2:15 | 45 | 45 | 3.4 Laboratorio: diseño de un caso de uso de MCP local seguro con documentación técnica local | Laboratorio 3.4 |
+| 3:00 | | | Fin | |
 
-Aritmética. Teoría 45 + 35 + 10 + 40 + 5 = 135. Laboratorio 45. Total 180.
+Aritmética. Teoría 45 + 35 + 10 + 40 + 5 = 135. Laboratorio 45. Total 180. Con el plan de
+12,5 horas, el 3.1 en 30 minutos y sin la demostración 3.2: 155.
 
 **Antes de empezar.** En la máquina de proyección, borre `.vscode/mcp.json` si quedó de
 una prueba, con `bash scripts/reiniciar-lab.sh lab-3-4`. La demostración del 3.2 lo crea en
@@ -303,21 +329,21 @@ está deshabilitado. El verificador detecta los dos casos.
 
 ### Sesión 4. Capítulos 4 y 5, 270 minutos
 
-| Inicio | Min | Bloque | Material |
-|---|---|---|---|
-| 0:00 | 12 | 4.1 Uso de Copilot para documentación técnica y generación de Markdown. Exposición | Teoría del subtema |
-| 0:12 | 8 | 4.1 Demostración de la documentación contra la ejecución | [`demos/demo-4-1-documentacion-contra-ejecucion.md`](demos/demo-4-1-documentacion-contra-ejecucion.md) |
-| 0:20 | 20 | 4.2 Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting. Exposición | Teoría del subtema, con las tres decisiones de [`arquitectura/decisiones/`](../arquitectura/decisiones/README.md) |
-| 0:40 | 20 | 4.3 Buenas prácticas para preparar documentación compatible con Confluence. Exposición | Teoría del subtema |
-| 1:00 | 30 | 4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | Laboratorio 4.4. Los pasos 3, Confluence, y 4, runbook, son opcionales y quedan fuera de los 30 minutos |
-| 1:30 | 45 | 5.1 Preparación del escenario integrador y criterios de evaluación | Laboratorio 5.1: Requerimientos, Estimación y Análisis y diseño. Abra proyectando [`CICLO-DE-VIDA.md`](../../CICLO-DE-VIDA.md) |
-| 2:15 | 45 | 5.2 Planeación de mejora, refactorización y validación incremental | Laboratorio 5.2: Desarrollo del reporte |
-| 3:00 | 45 | 5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión | Laboratorio 5.3: Pruebas, Integración continua, Mantención correctiva, Revisión y Seguridad. En la puesta en común, [`demos/demo-5-3-pipeline-en-github.md`](demos/demo-5-3-pipeline-en-github.md) desde su respaldo y el caso de clase 03 |
-| 3:45 | 45 | 5.4 Laboratorio final: construcción de activos reutilizables para el equipo | Laboratorio 5.4: Liberación, Operación y soporte, Mantención evolutiva y cierre |
-| 4:30 | | Fin | |
+| Inicio | Min | Min, plan 12,5 h | Bloque | Material |
+|---|---|---|---|---|
+| 0:00 | 12 | 12 | 4.1 Uso de Copilot para documentación técnica y generación de Markdown. Exposición | Teoría del subtema |
+| 0:12 | 8 | 8 | 4.1 Demostración de la documentación contra la ejecución | [`demos/demo-4-1-documentacion-contra-ejecucion.md`](demos/demo-4-1-documentacion-contra-ejecucion.md) |
+| 0:20 | 20 | 20 | 4.2 Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting. Exposición | Teoría del subtema, con las tres decisiones de [`arquitectura/decisiones/`](../arquitectura/decisiones/README.md) |
+| 0:40 | 20 | 10 | 4.3 Buenas prácticas para preparar documentación compatible con Confluence. Exposición | Teoría del subtema |
+| 1:00 | 30 | 30 | 4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | Laboratorio 4.4. Los pasos 3, Confluence, y 4, runbook, son opcionales y quedan fuera de los 30 minutos |
+| 1:30 | 45 | 45 | 5.1 Preparación del escenario integrador y criterios de evaluación | Laboratorio 5.1: Requerimientos, Estimación y Análisis y diseño. Abra proyectando [`CICLO-DE-VIDA.md`](../../CICLO-DE-VIDA.md) |
+| 2:15 | 45 | 45 | 5.2 Planeación de mejora, refactorización y validación incremental | Laboratorio 5.2: Desarrollo del reporte |
+| 3:00 | 45 | 45 | 5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión | Laboratorio 5.3: Pruebas, Integración continua, Mantención correctiva, Revisión y Seguridad. En la puesta en común, [`demos/demo-5-3-pipeline-en-github.md`](demos/demo-5-3-pipeline-en-github.md) desde su respaldo y el caso de clase 03 |
+| 3:45 | 45 | 45 | 5.4 Laboratorio final: construcción de activos reutilizables para el equipo | Laboratorio 5.4: Liberación, Operación y soporte, Mantención evolutiva y cierre |
+| 4:30 | | | Fin | |
 
 Aritmética. Teoría del capítulo 4, 12 + 8 + 20 + 20 = 60. Laboratorio 4.4, 30. Capítulo 5,
-45 + 45 + 45 + 45 = 180. Total 270.
+45 + 45 + 45 + 45 = 180. Total 270. Con el plan de 12,5 horas, el 4.3 en 10 minutos: 260.
 
 **Recorte.** La sesión no tiene pausas en sus 270 minutos. El paso 3 del 4.4, Confluence, es
 opcional desde SPEC-026: si no hay tiempo, se muestra en pantalla. En el capítulo 5 los
