@@ -82,17 +82,16 @@ nada dice por qué.
 
 Pide a cada participante que haga esto al llegar.
 
-1. Abre la vista de Extensiones, `Ctrl+Shift+X`.
-2. Escribe `@builtin copilot` en el buscador.
-3. Selecciona **GitHub Copilot Chat**.
-4. Pulsa **Enable AI Features**. Con la interfaz en español dice **Habilitar
-   características de IA**. Si el botón es **Enable** o **Habilitar**, pulsa ese.
-5. Inicia sesión en GitHub desde el ícono de Copilot de la barra de estado, con la cuenta
-   que tiene la licencia.
-6. Cierra Visual Studio Code por completo antes de correr el verificador. El editor guarda
+1. Pasa el puntero sobre el ícono de Copilot de la barra de estado, abajo a la derecha.
+2. Elige **Use AI Features**.
+3. Inicia sesión con **Sign in to use Copilot**, con la cuenta de GitHub que tiene la
+   licencia.
+4. Cierra Visual Studio Code por completo antes de correr el verificador. El editor guarda
    ese estado en disco al cerrarse, no antes.
 
-`[CAPTURA PENDIENTE] Vista de Extensiones de Visual Studio Code con @builtin copilot en el buscador, GitHub Copilot Chat seleccionada y el botón Enable AI Features visible.`
+`[CAPTURA PENDIENTE] Barra de estado de Visual Studio Code con el puntero sobre el ícono de Copilot y el menú que ofrece Use AI Features.`
+
+`[CAPTURA PENDIENTE] Menú del ícono de Copilot de la barra de estado con la opción Sign in to use Copilot, después de habilitar las funciones de IA.`
 
 No dejes que nadie instale la extensión `GitHub.copilot` del marketplace. Está
 descontinuada y la instalación falla con un error que dice que `github.copilot-chat` es
@@ -289,15 +288,17 @@ no aparecen al escribir la barra, la carpeta está en modo restringido. Ver el a
 Desde la raíz, en Git Bash.
 
 ```bash
-bash scripts/reiniciar-lab.sh <lab>
+bash scripts/reiniciar-lab.sh <lab> --confirmar
 ```
 
-Muestra qué se va a perder y pide escribir `si`. Con `--confirmar` no pregunta. Los
-commits del participante no se pierden. Cada laboratorio restaura solo sus rutas. Los
-activos del 2.4 no se tocan al reiniciar otro laboratorio. En el capítulo 5 el 5.1 vuelve
-todo el proyecto al punto de partida, el 5.2 solo el escenario, el 5.3 solo el pipeline y
-la descripción del pull request. El 5.4 descarta todo el capítulo 5 y pide escribir
-`descartar`.
+Muestra qué se va a perder y lo descarta sin preguntar. Úsalo siempre con `--confirmar`.
+Los commits del participante siguen en el historial. Cada laboratorio restaura solo sus
+rutas. De lo que se construye en el 2.4, un agente se conserva al reiniciar otro
+laboratorio. Una instrucción se conserva hasta el 3.4, porque desde ahí el reinicio
+devuelve `.github/instructions/` a su punto de partida. Para guardarla hay que copiarla
+fuera del repositorio antes de reiniciar. En el capítulo 5 el 5.1 vuelve todo el proyecto
+al punto de partida, el 5.2 solo el escenario, el 5.3 solo el pipeline y la descripción del
+pull request. El 5.4 descarta todo el capítulo 5.
 
 Salida real con un cambio en la calculadora Java antes de reiniciar.
 
@@ -466,9 +467,7 @@ Si el repositorio está limpio, el segundo comando responde así.
 
 Ten en una segunda pantalla, sin proyectar, las notas `docs/relator/notas/lab-1-4.md` y `docs/relator/notas/lab-1-5.md`, los respaldos `docs/relator/respaldos/demo-1-1.md`, `demo-1-2.md`, `demo-1-3.md`, `lab-1-4.md` y `lab-1-5.md`, y el caso `docs/relator/casos-de-clase/caso-02-configuracion-regional.md` por si sobra tiempo.
 
-Lo que suele fallar al empezar es Copilot deshabilitado en un perfil nuevo, la sesión de GitHub iniciada con otra cuenta y las skills que no aparecen porque la carpeta no se abrió como espacio de trabajo de confianza. Para el primero, abre la vista de extensiones, busca `@builtin copilot`, selecciona **GitHub Copilot Chat** y pulsa **Enable AI Features**. El detalle está en `docs/02-troubleshooting.md`, sección 2.
-
-[CAPTURA PENDIENTE] Vista de extensiones de Visual Studio Code con el filtro `@builtin copilot`, la extensión GitHub Copilot Chat seleccionada y el botón Enable AI Features visible.
+Lo que suele fallar al empezar es Copilot deshabilitado en un perfil nuevo, la sesión de GitHub iniciada con otra cuenta y las skills que no aparecen porque la carpeta no se abrió como espacio de trabajo de confianza. Para el primero, pasa el puntero sobre el ícono de Copilot de la barra de estado, elige **Use AI Features** y después **Sign in to use Copilot**, como en «Qué revisar en la sala antes de la primera sesión».
 
 ### Exposición 1.1. Prompts efectivos para desarrollo, objetivo, contexto, restricciones y salida esperada
 
@@ -711,14 +710,12 @@ Guion en `docs/relator/demos/demo-1-3-flujo-de-trabajo.md`. Respaldo en `docs/re
 5. **Restaurar.** En Git Bash.
 
    ```bash
-   bash scripts/reiniciar-lab.sh lab-1-4
+   bash scripts/reiniciar-lab.sh lab-1-4 --confirmar
    ```
-
-   Escribe `si` cuando lo pida.
 
 #### Lo que se debe ver
 
-Pasos 1 a 3, salida grabada del respaldo. En ese respaldo las respuestas del chat de los pasos 1 a 3 son simuladas y el diff es real. El paso 1 da una lista de candidatos, con la cabecera de las líneas 59 a 66 como el más claro. El paso 2 da un plan de cuatro puntos que crea `agregarCabeceraDetalle`, no toca nada más y termina con la validación. El paso 3 modifica un solo archivo y agrega un método privado.
+Pasos 1 a 3, salida grabada del respaldo. En ese respaldo las respuestas del chat de los pasos 1 a 3 son ejemplos ilustrativos, marcados como tales, y el diff es real. El paso 1 da una lista de candidatos, con la cabecera de las líneas 59 a 66 como el más claro. El paso 2 da un plan de cuatro puntos que crea `agregarCabeceraDetalle`, no toca nada más y termina con la validación. El paso 3 modifica un solo archivo y agrega un método privado.
 
 [CAPTURA PENDIENTE] Chat en modo Plan con el plan de extracción de la cabecera y el botón Start Implementation visible.
 
@@ -759,7 +756,7 @@ Repositorio: /tmp/r
 
 En tu máquina la línea `Repositorio` muestra la ruta de tu clon. `git status` debe mostrar un solo archivo modificado, `FormateadorReporte.java`.
 
-Paso 5, salida real de `bash scripts/reiniciar-lab.sh lab-1-4` con `FormateadorReporte.java` modificado.
+Paso 5, salida real de `bash scripts/reiniciar-lab.sh lab-1-4 --confirmar` con `FormateadorReporte.java` modificado.
 
 ```
 
@@ -770,8 +767,6 @@ Paso 5, salida real de `bash scripts/reiniciar-lab.sh lab-1-4` con `FormateadorR
 == Esto se va a perder ==
   Cambios en archivos del repositorio, que vuelven a su version original:
     modificado   escenario/java/src/main/java/pe/pasarelaandina/reporte/FormateadorReporte.java
-
-  Escribe si para descartar estos cambios, cualquier otra cosa para cancelar: si
 
 == Restauracion ==
   [ OK ] lab-1-4 listo para empezar
@@ -851,10 +846,10 @@ Enunciado en `labs/cap1/lab-1-5-analisis-componente/README.md`. Notas en `docs/r
 Cada participante deja el punto de partida limpio desde Git Bash, en la raíz.
 
 ```bash
-bash scripts/reiniciar-lab.sh lab-1-5
+bash scripts/reiniciar-lab.sh lab-1-5 --confirmar
 ```
 
-Si el repositorio ya está limpio, responde esto.
+Si el repositorio ya está limpio, la salida es esta.
 
 ```
 
@@ -910,10 +905,42 @@ Con esa respuesta, la consecuencia del paso 3 es real. CM0031 aparece liquidado 
 - **El comparador termina en 1 en Git Bash sobre Windows con el código sin tocar** y la única diferencia es la `ñ` de «Breña». Es la página de códigos de la consola. El script la cambia solo a UTF-8 cuando corre en Git Bash. Si igual aparece, ejecuta `chcp.com 65001` en esa terminal y repite el comparador.
 - **El comparador tarda.** Compila los dos escenarios y puede tardar cerca de un minuto.
 
-Si hay tiempo en el paso 2, las notas proponen mostrar en vivo cómo desaparece una línea corrompiendo el monto de una transacción en `escenario/datos/transacciones.txt`. Hazlo tú, a mano, nunca con el agente, y restaura al terminar.
+Si hay tiempo en el paso 2, muestra en vivo cómo desaparece una línea. Hazlo tú, a mano en
+Git Bash, nunca con el agente. Desde la raíz del repositorio, compila y mira el total antes
+de tocar nada.
+
+```bash
+cd escenario/java && mvn -q clean package -DskipTests && cd ../..
+(cd escenario/java && java -jar target/liquidacion-comercios.jar 2026-06 ../datos) | grep -E "Transacciones (liquidadas|descartadas)" | tail -2
+```
+
+```
+  Transacciones descartadas: 0
+  Transacciones liquidadas  : 713
+```
+
+Corrompe el monto de la primera transacción, cambiando el cero de `8096.00` por la letra O,
+y vuelve a ejecutar.
+
+```bash
+sed -i "s/^TX000001;CM0004;8096.00;/TX000001;CM0004;8O96.00;/" escenario/datos/transacciones.txt
+grep -n "^TX000001;" escenario/datos/transacciones.txt
+(cd escenario/java && java -jar target/liquidacion-comercios.jar 2026-06 ../datos) | grep -E "Transacciones (liquidadas|descartadas)" | tail -2
+```
+
+```
+2:TX000001;CM0004;8O96.00;PEN;2026-06-18 16:32:34;BILLETERA_MOVIL;1;APROBADA;TN1GYZ
+  Transacciones descartadas: 0
+  Transacciones liquidadas  : 712
+```
+
+Una transacción menos y cero descartadas. La línea desapareció sin rastro. El hook no lo
+impide porque la edición la haces tú en la terminal, no el agente. Deja el archivo como
+estaba y comprueba que la línea vuelve a decir `8096.00`.
 
 ```bash
 bash scripts/reiniciar-lab.sh lab-1-5 --confirmar
+grep -n "^TX000001;" escenario/datos/transacciones.txt
 ```
 
 #### Solución de referencia
@@ -995,9 +1022,9 @@ Salida real con la solución Java aplicada.
   [ OK ] lab-1-5 listo para empezar
 ```
 
-Sin `--confirmar`, el script muestra lo mismo y pide escribir `si` antes de restaurar. Si un participante quiere ver la extracción terminada para seguir con la puesta en común, aplícale la solución de referencia en su máquina con el bloque de la sección anterior.
+Si un participante quiere ver la extracción terminada para seguir con la puesta en común, aplícale la solución de referencia en su máquina con el bloque de la sección anterior.
 
-Al cerrar el laboratorio, todos reinician con `bash scripts/reiniciar-lab.sh lab-1-5` y responden `si`. La sesión 2 empieza sobre el escenario publicado.
+Al cerrar el laboratorio, todos reinician con `bash scripts/reiniciar-lab.sh lab-1-5 --confirmar`. La sesión 2 empieza sobre el escenario publicado.
 
 #### Comandos del chat
 
@@ -1040,7 +1067,7 @@ Total 162 minutos.
   respaldos de las demostraciones, `docs/relator/respaldos/demo-2-1.md`, `demo-2-2.md` y
   `demo-2-3.md`, y el del laboratorio, `docs/relator/respaldos/lab-2-4.md`. Todo
   `docs/relator/` existe solo en el repositorio de construcción.
-- Ten a mano los tres archivos de `docs/relator/respaldo-lab-2-4/` y decide antes cómo los
+- Ten a mano los cinco archivos de `docs/relator/respaldo-lab-2-4/` y decide antes cómo los
   vas a entregar, por ejemplo por el canal de la clase. No están en el repositorio de
   participantes a propósito.
 - Con el plan de 12,5 horas, las demostraciones 2.2 y 2.3 no se hacen. Deja igual abiertos
@@ -1272,15 +1299,13 @@ la sala construye y prueba un agente. Si sobra tiempo, este es el guion breve.
 
 5. En Git Bash, `git diff --stat`. Debe mostrar un solo archivo, `FormateadorReporte.java`.
 
-6. Restaura y responde `si` cuando lo pida.
+6. Restaura.
 
    ```bash
-   bash scripts/reiniciar-lab.sh lab-1-4
+   bash scripts/reiniciar-lab.sh lab-1-4 --confirmar
    ```
 
-   Salida real con la confirmación dada de antemano con `--confirmar`. En la sala, sin la
-   opción, antes de la restauración aparece la pregunta «Escribe si para descartar estos
-   cambios».
+   Salida real.
 
    ```
 
@@ -1413,22 +1438,44 @@ Si sobra tiempo, este es el guion breve.
    `docs/arquitectura/bian-mapeo.md` y repite lo esencial de la exposición. El patrón
    apunta a documentos y no al código.
 
-5. Abre `AGENTS.md` en la raíz. Di «Este archivo no es de Visual Studio Code. Es un formato
+5. Muestra la instrucción BIAN aplicándose. Conversación nueva, modo **Agent**. Escribe
+   esto.
+
+   ```
+   Crea docs/proyecto/nota-arquitectura.md con un párrafo que explique en qué parte de la arquitectura vive el cálculo de comisiones de la liquidación.
+   ```
+
+   `arquitectura-bian.instructions.md` tiene que aparecer en las referencias, porque el
+   archivo cae en `docs/proyecto/**`. El párrafo nombra el dominio en inglés, como en el
+   mapeo, **Merchant Acquiring Facility**, y remite a `docs/arquitectura/bian-mapeo.md` en
+   lugar de copiar el estándar. Di «La misma instrucción que acabamos de leer, aplicada sola
+   porque el archivo cae en su ruta». Al terminar, en Git Bash, deja el repositorio como
+   estaba.
+
+   ```bash
+   bash scripts/reiniciar-lab.sh lab-5-1 --confirmar
+   ```
+
+   [CAPTURA PENDIENTE] Respuesta del chat en modo Agent que crea docs/proyecto/nota-arquitectura.md, con la lista de referencias desplegada mostrando `.github/instructions/arquitectura-bian.instructions.md` y el párrafo que nombra Merchant Acquiring Facility.
+
+6. Abre `AGENTS.md` en la raíz. Di «Este archivo no es de Visual Studio Code. Es un formato
    que leen varios agentes, incluida la línea de comandos de Copilot».
 
 #### Si falla
 
 - Si en una pregunta la instrucción por ruta no aparece en las referencias, pide un cambio
-  mínimo en el archivo y muéstrala ahí. Después restaura y responde `si`.
+  mínimo en el archivo y muéstrala ahí. Después restaura.
 
   ```bash
-  bash scripts/reiniciar-lab.sh lab-1-4
+  bash scripts/reiniciar-lab.sh lab-1-4 --confirmar
   ```
 
   La salida es la misma del paso 6 de la demostración 2.2, con el archivo que se haya
   modificado.
+- Si en el paso 5 la instrucción BIAN no aparece en las referencias, pide un cambio mínimo
+  al archivo recién creado y muéstrala ahí.
 - Si algo demora, usa `docs/relator/respaldos/demo-2-3.md`. Ese respaldo no grabó el paso
-  de la instrucción BIAN. Muéstrala abriendo los dos archivos.
+  5. Muestra la instrucción BIAN abriendo los dos archivos.
 
 ### Laboratorio 2.4. Creación de un agente local o instrucción reutilizable
 
@@ -1456,10 +1503,10 @@ o de convención y los agentes de referencia son roles técnicos sobre código.
 
 #### Antes de que la sala empiece
 
-Cada participante parte limpio desde la raíz, en Git Bash, y responde `si`.
+Cada participante parte limpio desde la raíz, en Git Bash.
 
 ```bash
-bash scripts/reiniciar-lab.sh lab-2-4
+bash scripts/reiniciar-lab.sh lab-2-4 --confirmar
 ```
 
 Si ya estaba en el punto de partida, la salida real es esta.
@@ -1618,12 +1665,14 @@ repositorio de construcción.
 | Archivo | Tarea | Dónde se guarda |
 |---|---|---|
 | `soporte-comercial.agent.md` | A | `.github/agents/` |
+| `redactor-pull-requests.agent.md` | B | `.github/agents/` |
 | `documentacion-del-equipo.instructions.md` | C | `.github/instructions/` |
+| `scripts-git-bash.instructions.md` | D | `.github/instructions/` |
 | `revisor-limites-bian.agent.md` | E | `.github/agents/` |
 
-Los dos agentes declaran solo `read` y `search` y traen la sección «Cómo usarlo». No hay
-respaldo para las tareas B y D. A quien eligió una de ellas, entrégale el del mismo tipo,
-el de la A si iba por agente o el de la C si iba por instrucción.
+Los tres agentes declaran solo `read` y `search` y traen la sección «Cómo usarlo». Las dos
+instrucciones tienen un `applyTo` acotado, `labs/cap2/**/entregables/**/*.md` la de la C y
+`scripts/**/*.sh` la de la D. Entrega a cada participante el de su tarea.
 
 Se aplica copiando el archivo, sin cambiar su nombre, a la carpeta indicada. Lo más simple
 es compartirlo por el canal de la clase y que el participante lo guarde desde el
@@ -1637,20 +1686,15 @@ Si al minuto 20 un participante no tiene un artefacto que funcione, entrégale e
 respaldo de su tipo como se describe arriba y que siga en el paso 3. Los pasos 3 y 4
 funcionan igual con el artefacto de respaldo.
 
-Si su repositorio quedó en un estado confuso, que reinicie primero, responda `si` y después
-guarde el respaldo.
-
-```bash
-bash scripts/reiniciar-lab.sh lab-2-4
-```
-
-Esta es la salida real cuando ya existían una instrucción y un entregable creados en el
-laboratorio, con la confirmación dada de antemano con `--confirmar`. Sin la opción, antes de
-la restauración aparece la pregunta «Escribe si para descartar estos cambios».
+Si su repositorio quedó en un estado confuso, que reinicie primero y después guarde el
+respaldo.
 
 ```bash
 bash scripts/reiniciar-lab.sh lab-2-4 --confirmar
 ```
+
+Esta es la salida real cuando ya existían una instrucción y un entregable creados en el
+laboratorio.
 
 ```
 
@@ -1668,16 +1712,19 @@ bash scripts/reiniciar-lab.sh lab-2-4 --confirmar
 ```
 
 Advierte que reiniciar el 2.4 borra el artefacto del participante, porque restaura
-`.github/agents/` y `.github/instructions/`. Si quiere conservarlo, que haga `git commit`
-antes.
+`.github/agents/` y `.github/instructions/`. Si quiere conservarlo, que lo copie fuera del
+repositorio antes.
 
 #### Al cerrar el laboratorio
 
-Los agentes que construyó la sala no se tocan al reiniciar otros laboratorios. Las
-instrucciones sí, porque desde el 3.4 el reinicio restaura `.github/instructions/` para que
-una instrucción del 2.4 no se aplique a los laboratorios siguientes. Dilo para que nadie se
-sorprenda en la sesión 3. El cierre que pide la guía de prueba es reiniciar el 2.4 y
-responder `si`. Avisa antes que eso borra el artefacto.
+Los agentes que construyó la sala se conservan al reiniciar otros laboratorios. Las
+instrucciones se conservan hasta el 3.4, porque desde ahí el reinicio devuelve
+`.github/instructions/` a su punto de partida, para que una instrucción del 2.4 no se
+aplique a los laboratorios siguientes. Dilo para que nadie se sorprenda en la sesión 3.
+Quien quiera guardar su instrucción, que la copie fuera del repositorio antes de reiniciar.
+El cierre que pide la guía de prueba es reiniciar el 2.4 con
+`bash scripts/reiniciar-lab.sh lab-2-4 --confirmar`. Avisa antes que eso borra el
+artefacto.
 
 ### Qué suele fallar en la sesión
 
@@ -1705,13 +1752,13 @@ Total 155 minutos.
 
 ### Antes de empezar la sesión
 
-En la máquina de proyección, deja el repositorio de participantes sin `.vscode/mcp.json`. Si quedó de una prueba, bórralo con el reinicio del laboratorio 3.4. En Git Bash, desde la raíz del repositorio, escribe el comando y responde `si` cuando lo pida.
+En la máquina de proyección, deja el repositorio de participantes sin `.vscode/mcp.json`. Si quedó de una prueba, bórralo con el reinicio del laboratorio 3.4. En Git Bash, desde la raíz del repositorio, escribe esto.
 
 ```bash
-bash scripts/reiniciar-lab.sh lab-3-4
+bash scripts/reiniciar-lab.sh lab-3-4 --confirmar
 ```
 
-Si lo lanzas desde un agente o sin terminal interactiva, usa `--confirmar`. Esta es la salida real con un `.vscode/mcp.json` sobrante.
+Esta es la salida real con un `.vscode/mcp.json` sobrante.
 
 ```
 $ bash scripts/reiniciar-lab.sh lab-3-4 --confirmar
@@ -1835,7 +1882,7 @@ Sí. En el plan de 12,5 horas no se hace y ahorra 10 minutos, porque en el labor
 
    Lee en voz alta los parámetros de cada diálogo de aprobación antes de pulsar **Allow**. Di que las herramientas no declaran `readOnlyHint` a propósito. Con esa anotación Visual Studio Code no pediría confirmación, pero la pone el propio servidor y la especificación de MCP la trata como una pista, no como una garantía.
 5. Muestra la respuesta y qué herramienta respaldó cada dato.
-6. Al terminar, `bash scripts/reiniciar-lab.sh lab-3-4` y responde `si`, para que el laboratorio empiece sin la configuración.
+6. Al terminar, `bash scripts/reiniciar-lab.sh lab-3-4 --confirmar`, para que el laboratorio empiece sin la configuración.
 
 #### Lo que se debe ver
 
@@ -1949,7 +1996,7 @@ El hook decide por la ruta de destino, no por el contenido. Reconoce las herrami
 
 Si el agente modifica el archivo en el paso 1, el hook no corrió en esa máquina.
 
-1. Restaura con `bash scripts/reiniciar-lab.sh lab-1-4` y responde `si`.
+1. Restaura con `bash scripts/reiniciar-lab.sh lab-1-4 --confirmar`.
 2. Muestra `proteger-datos-escenario.json` y `proteger-datos-escenario.js` y explica qué hace. La prueba en terminal de más arriba sirve para eso.
 3. Muestra la ejecución grabada en `docs/relator/respaldos/demo-3-3.md`.
 4. Di que es una función en vista previa y que por eso se verifica en cada ambiente. Revisa después `chat.useHooks` con el verificador.
@@ -2039,7 +2086,7 @@ En la salida grabada del respaldo dos riesgos quedan declarados como no mitigado
 
 #### Solución de referencia
 
-La referencia es `.vscode/mcp.json` del repositorio de construcción, cuyo contenido está en el paso 1. No llega al repositorio de participantes, porque el paso 1 consiste en crearla. Si un participante no la logra, díctale el contenido o pídele que cree el archivo con él desde el explorador. No hay un script que la aplique. El documento del paso 4 no tiene solución única. La salida grabada en `docs/relator/respaldos/lab-3-4.md` trae un caso de uso completo que sirve de contraste en la puesta en común.
+La referencia es `.vscode/mcp.json` del repositorio de construcción, cuyo contenido está en el paso 1. No llega al repositorio de participantes, porque el paso 1 consiste en crearla. Si un participante no la logra, díctale el contenido o pídele que cree el archivo con él desde el explorador. No hay un script que la aplique. El documento del paso 4 no tiene solución única. Como referencia tienes `docs/relator/soluciones/lab-3-4/caso-de-uso-mcp.md`, escrito sin Copilot, con cada afirmación citando archivo y línea, y la salida grabada en `docs/relator/respaldos/lab-3-4.md`. Úsalos de contraste en la puesta en común.
 
 #### Cómo poner al día a quien se atrase
 
@@ -2047,13 +2094,7 @@ Los pasos son independientes. Los pasos 3 y 4 leen el código del servidor y fun
 
 #### Cómo reiniciar
 
-Para empezar de nuevo, en Git Bash desde la raíz, escribe `bash scripts/reiniciar-lab.sh lab-3-4` y responde `si`. Borra `.vscode/mcp.json` y el entregable, y restaura `escenario`, `mcp` y `.github/instructions`. Los commits del participante y sus activos del 2.4 no se pierden. Sin terminal interactiva el script no pregunta y termina con este error, y hay que repetir con `--confirmar`.
-
-```
-  [FALLA] Hace falta confirmar y no hay una terminal interactiva. Repetir con --confirmar para descartar.
-```
-
-La salida real con `--confirmar` está en «Antes de empezar la sesión». Al cerrar el laboratorio, reinicia también para que la configuración no quede en la máquina.
+Para empezar de nuevo, en Git Bash desde la raíz, escribe `bash scripts/reiniciar-lab.sh lab-3-4 --confirmar`. Borra `.vscode/mcp.json` y el entregable, y restaura `escenario`, `mcp` y `.github/instructions`. Los commits del participante y sus agentes del 2.4 se conservan. Una instrucción del 2.4 se borra, así que quien quiera guardarla tiene que copiarla fuera del repositorio antes. La salida real está en «Antes de empezar la sesión». Al cerrar el laboratorio, reinicia también para que la configuración no quede en la máquina.
 
 ## Sesión 4. Capítulos 4 y 5
 
@@ -2300,11 +2341,11 @@ el respaldo, porque conecta con el 4.3.
 Cada participante parte del punto limpio, desde la raíz del repositorio, en Git Bash.
 
 ```bash
-bash scripts/reiniciar-lab.sh lab-4-4
+bash scripts/reiniciar-lab.sh lab-4-4 --confirmar
 ```
 
-El script muestra qué se va a perder y pide escribir `si`. Si el repositorio ya está en el
-punto de partida, lo dice y no pide nada.
+El script muestra qué se va a perder y lo descarta. Si el repositorio ya está en el punto de
+partida, lo dice.
 
 #### Qué tiene que obtener la sala
 
@@ -2427,10 +2468,13 @@ Nadie corrige el comentario. El enunciado exige que ningún comentario del códi
 No hay solución de referencia que se aplique con un comando. El laboratorio no modifica
 código, y cada documento depende de lo que el agente lea en ese momento.
 
-Como referencia para comparar está la salida grabada del respaldo,
-`docs/relator/respaldos/lab-4-4.md`, que existe solo en el repositorio de construcción. Trae
-los documentos completos de los pasos 1, 2 y 3 sobre el escenario Java. Proyéctala si a la
-sala no le funcionó el agente, y di que es una ejecución grabada.
+Como referencia para comparar tienes, en el repositorio de construcción, los documentos de
+`docs/relator/soluciones/lab-4-4/`, escritos sin Copilot y con cada afirmación citando
+archivo y línea. Son `calculo-de-comisiones.md` del paso 1, `decisiones.md` del paso 2 y
+`runbook-calculo-de-comisiones.md` del paso 4, con sus acciones ejecutadas de verdad. La
+salida grabada `docs/relator/respaldos/lab-4-4.md` trae además los pasos 1 a 3 hechos por un
+agente. Proyecta cualquiera de los dos si a la sala no le funcionó el agente, y di de dónde
+viene.
 
 #### Cómo poner al día a quien se atrase
 
@@ -2478,8 +2522,8 @@ que los copie fuera de `entregables/` antes. Los activos que construyó en el 2.
 
 ### Encuadre del capítulo 5, el laboratorio integrador
 
-El capítulo 5 no tiene subtemas de teoría. Sus cuatro bloques son laboratorios. Lo que usted
-dice al abrir cada uno sale de `docs/relator/teoria/5-0-encuadre-del-integrador.md` y dura
+El capítulo 5 no tiene subtemas de teoría. Sus cuatro bloques son laboratorios. Lo que tú
+dices al abrir cada uno sale de `docs/relator/teoria/5-0-encuadre-del-integrador.md` y dura
 pocos minutos, descontados del propio laboratorio.
 
 #### Qué tiene que quedar claro en la sala
@@ -2495,12 +2539,12 @@ pocos minutos, descontados del propio laboratorio.
   `scripts/integracion-local.sh`, el mismo script que corre en GitHub Actions.
 - En cada fase el agente produce y la persona verifica. La verificación es el trabajo que no
   se delega, y cada bloque tiene un punto donde se hace explícita.
-- En esta sala usted es el negocio. Las respuestas que da están en
+- En esta sala tú eres el negocio. Las respuestas que das están en
   `docs/relator/capitulo-5-hoja-de-respuestas.md`, y se dan solo cuando alguien pregunta.
 
 #### Cómo abrir cada bloque
 
-Abra cada laboratorio proyectando `CICLO-DE-VIDA.md` y señale en qué fila está la sala. Diga
+Abre cada laboratorio proyectando `CICLO-DE-VIDA.md` y señala en qué fila está la sala. Di
 cuál es la verificación del bloque con un ejemplo.
 
 | Bloque | Fases de `CICLO-DE-VIDA.md` | La verificación del bloque |
@@ -2510,7 +2554,7 @@ cuál es la verificación del bloque con un ejemplo.
 | 5.3 | Pruebas, Integración continua, Mantención correctiva, Revisión de código, Seguridad | El rojo se diagnostica hasta que las causas sumen la diferencia completa. Cambiar un hash o una prueba sin causa explicada es hacer trampa |
 | 5.4 | Liberación, Operación y soporte, Mantención evolutiva | Las notas de versión y la respuesta al incidente se revisan buscando montos inventados y promesas que nadie puede cumplir |
 
-No anticipe al abrir un bloque las decisiones de negocio que no están escritas. La del borde
+No anticipes al abrir un bloque las decisiones de negocio que no están escritas. La del borde
 de tramo, sobre todo, se entrega solo cuando alguien la pregunta.
 
 #### Los dos caminos y la decisión 0004
@@ -2524,17 +2568,17 @@ en el 5.2.
 | A | Calcula la comisión por su cuenta, con decimal exacto y las reglas de `escenario/README.md`, sin llamar a `CalculadoraLiquidacion` ni a `CalculadoraComision` | `verificar-reporte.sh` coincide en los tres periodos | La conciliación de junio falla por 22,03 |
 | B | Reutiliza el cálculo de comisión de la liquidación | `verificar-reporte.sh` no coincide en junio | Las pruebas del borde de tramo y del tercer decimal fallan. La conciliación da cero |
 
-No diga cuál es el bueno. Los dos llegan al mismo rojo en el 5.3 y a la misma corrección en
+No digas cuál es el bueno. Los dos llegan al mismo rojo en el 5.3 y a la misma corrección en
 la liquidación. La decisión 0004 de referencia, y la solución de referencia, son del camino A.
 Quien elige el camino B registra su alternativa y su consecuencia, que el reporte hereda las
 diferencias del cálculo de la liquidación.
 
 Cuidado con las letras. Las alternativas que propone el agente en el 5.1.3 llevan sus propias
 etiquetas y no coinciden con los nombres de los caminos. En una salida grabada, la
-alternativa que el agente llamó «A» reutilizaba la liquidación, es decir, el camino B. Fíjese
+alternativa que el agente llamó «A» reutilizaba la liquidación, es decir, el camino B. Fíjate
 en qué hace la alternativa, no en su letra.
 
-#### Lo que tiene abierto durante el capítulo
+#### Lo que tienes abierto durante el capítulo
 
 En la segunda pantalla, la hoja de respuestas y las notas de los cuatro laboratorios,
 `docs/relator/notas/lab-5-1.md` a `docs/relator/notas/lab-5-4.md`. Para proyectar, el caso de
@@ -2542,7 +2586,7 @@ clase 03, `docs/relator/casos-de-clase/caso-03-verificacion-obsoleta.md`. No hay
 nada. La especificación del formato y el incidente los entrega el propio repositorio con
 `scripts/proyecto/entregar.sh`.
 
-Avise antes de empezar que `integracion-local.sh` tarda en la máquina virtual porque compila
+Avisa antes de empezar que `integracion-local.sh` tarda en la máquina virtual porque compila
 el escenario. Así nadie piensa que se colgó.
 
 El capítulo 5 es el que más consume Copilot, y el 5.3 es el laboratorio más caro del taller.
@@ -2564,7 +2608,7 @@ plan de la organización.
 - Las métricas de uso de GitHub incluyen usuarios activos, fases de adopción, tasas de
   aceptación, líneas sugeridas, agregadas y eliminadas, y uso del chat y del agente. Se ven por
   empresa, organización, repositorio y usuario, por API, en un panel de 28 días y exportadas en
-  NDJSON. Repita tres advertencias. Los datos llegan con hasta dos días de desfase, los valores
+  NDJSON. Repite tres advertencias. Los datos llegan con hasta dos días de desfase, los valores
   de recursos distintos de la API no se comparan entre sí, y la fase de adopción se recalcula
   cada día.
 - Las métricas de GitHub miden uso. La línea base del laboratorio pide además resultado y
@@ -2577,7 +2621,7 @@ peligroso.
 
 #### Preguntas probables
 
-| Si preguntan | Responda |
+| Si preguntan | Responde |
 |---|---|
 | «¿Cuántos créditos trae nuestro plan?» | No se responde en clase. Está en la documentación de planes de GitHub y en la configuración de la organización. Por eso el documento del 5.4 deja el campo a completar |
 | «¿Las sugerencias en línea gastan créditos?» | Según la documentación de cobro vigente, en los planes pagos no. El chat y el agente sí |
@@ -2610,15 +2654,15 @@ en `labs/cap5/lab-5-1-preparacion/README.md`.
 
 #### Preparar
 
-Pida a cada participante que elija su stack. Desde la raíz del repositorio, en Git Bash.
+Pide a cada participante que elija su stack. Desde la raíz del repositorio, en Git Bash.
 
 ```bash
-bash scripts/reiniciar-lab.sh lab-5-1
+bash scripts/reiniciar-lab.sh lab-5-1 --confirmar
 git switch -c reporte-medios-de-pago
 ```
 
-Si hay algo que descartar, el script lo lista y pide escribir `si`. Esta es la salida real en
-un repositorio recién clonado, con `--confirmar` para no preguntar.
+Si hay algo que descartar, el script lo lista y lo descarta. Esta es la salida real en un
+repositorio recién clonado.
 
 ```
 $ bash scripts/reiniciar-lab.sh lab-5-1 --confirmar && git switch -c reporte-medios-de-pago
@@ -2647,14 +2691,14 @@ git add docs scripts/integracion/stack.txt && git commit -m "Historia, estimacio
 
 [CAPTURA PENDIENTE] Panel de chat de Visual Studio Code en modo Agent, después de `/lab-5-1-paso-1-historia-de-usuario java`, con la lista de preguntas abiertas del agente y su frase final pidiendo llevarlas al relator.
 
-#### Paso 1. Usted es el negocio
+#### Paso 1. Tú eres el negocio
 
 La solicitud del área comercial es ambigua a propósito. Solo dice que las anuladas no cuentan.
-El agente lista preguntas y se detiene. El participante se las trae a usted. Responda solo lo
-que le pregunten, con esta tabla. No responda por el participante las preguntas que el agente
-listó y que él no le trajo.
+El agente lista preguntas y se detiene. El participante te las trae a ti. Responde solo lo
+que te pregunten, con esta tabla. No respondas por el participante las preguntas que el agente
+listó y que él no te trajo.
 
-| Si preguntan | Responda |
+| Si preguntan | Responde |
 |---|---|
 | Qué transacciones entran | Aprobadas, en soles, monto mayor que cero, en el periodo |
 | Qué comercios entran | Activos y suspendidos con plan; no los dados de baja |
@@ -2672,22 +2716,22 @@ listó y que él no le trajo.
 | Cualquier otra cosa | «Pendiente» |
 
 La respuesta del borde se da aquí solo si alguien la pregunta. Si nadie la pregunta, aparece en
-el 5.3. Cuando la dé, dígala así. «Un monto que cae exactamente en el límite pertenece al tramo
+el 5.3. Cuando la des, dila así. «Un monto que cae exactamente en el límite pertenece al tramo
 inferior. El límite superior de cada tramo es inclusivo. 500 está en el primer tramo, 2000 en
-el segundo y 10000 en el tercero.» No la escriba en la pizarra ni en ningún archivo que vean
+el segundo y 10000 en el tercero.» No la escribas en la pizarra ni en ningún archivo que vean
 los participantes.
 
-Revise en la historia de cada participante estas tres cosas.
+Revisa en la historia de cada participante estas tres cosas.
 
 - **El criterio del borde**, con su cuenta. Por ejemplo, TX002001 de CM0001, plan PL01, 500,00
   en una cuota. 500,00 × 3,5 % + 0,30 = 17,80.
 - **El criterio del tercer decimal.** Tiene que ser un comercio cuya suma exacta termina en 5 en
   el tercer decimal. Los válidos son CM0011, 137,825 que redondea a 137,83; CM0016, 493,995 que
-  redondea a 494,00, y CM0025, 957,185 que redondea a 957,19. Si eligió otro, pídale que escriba
+  redondea a 494,00, y CM0025, 957,185 que redondea a 957,19. Si eligió otro, pídele que escriba
   «rehaz ese criterio».
 - **El criterio de formato.** Montos con dos decimales, medio hacia arriba, según la regla 9.
 
-En la puesta en común use estas cifras. Una historia tomada al pie de la letra, que solo
+En la puesta en común usa estas cifras. Una historia tomada al pie de la letra, que solo
 excluye las anuladas, difiere de las liquidaciones en 3 415,01 soles en abril, 4 065,43 en mayo
 y 2 521,97 en junio. Quien no preguntó por el alcance escribió un criterio que no concilia, y
 eso es parte de la clase.
@@ -2699,7 +2743,7 @@ mucho en Desarrollo y Pruebas y poco en Revisión. El registro de tiempos empiez
 compara en el 5.4. Si el agente pregunta por la experiencia, el participante puede responder
 «senior en Java, poca práctica con el agente».
 
-En el paso 3 no sugiera ninguna alternativa. Cualquiera sirve. Lo que elija decide el camino
+En el paso 3 no sugieras ninguna alternativa. Cualquiera sirve. Lo que elija decide el camino
 del 5.2. Quien elige reutilizar el cálculo de la liquidación tiene que dejar escrita la
 consecuencia, que el reporte hereda las diferencias de ese cálculo.
 
@@ -2710,10 +2754,10 @@ consecuencia, que el reporte hereda las diferencias de ese cálculo.
 - **El agente adelanta defectos.** Al final de la historia puede avisar que la liquidación trata
   el límite superior del tramo como exclusivo y que `CalculadoraComision` permite un recargo por
   cuotas de hasta 3,5 % cuando la regla dice 3 %. Son DEF-08 y DEF-03. Es un buen
-  comportamiento y conviene mostrarlo. Diga que está bien visto, que no se corrige ahora y que
-  el 5.3 lo va a confirmar con evidencia. No diga si es la causa de algo ni cuánto suma.
+  comportamiento y conviene mostrarlo. Di que está bien visto, que no se corrige ahora y que
+  el 5.3 lo va a confirmar con evidencia. No digas si es la causa de algo ni cuánto suma.
 - **`stack.txt` con dos líneas.** Copilot puede agregar `java` al final del archivo en lugar de
-  reemplazar la última línea. El pipeline lo detecta y dice cuál dejar. Pida al participante que
+  reemplazar la última línea. El pipeline lo detecta y dice cuál dejar. Pide al participante que
   borre la línea que sobra, deje solo la de su stack y confirme. Salida real con el archivo en
   ese estado.
 
@@ -2727,31 +2771,31 @@ consecuencia, que el reporte hereda las diferencias de ese cálculo.
   ```
 
 - **Solo alternativas que reutilizan el cálculo.** Si en el paso 3 el agente no ofrece la de
-  clases que calculan por su cuenta, el participante solo puede ir al camino B. Pídale que le
-  pida al agente esa alternativa también, para que la elección sea real. No le diga cuál elegir.
+  clases que calculan por su cuenta, el participante solo puede ir al camino B. Pídele que le
+  pida al agente esa alternativa también, para que la elección sea real. No le digas cuál elegir.
 - **El agente quiere borrar sus archivos temporales.** Se rechaza con **Skip**. Después el
   participante escribe «No borres archivos. Déjalos donde están y sigue con el paso.»
 - **El contenido no queda en la respuesta.** Copilot puede escribir «Contenido completo» y
   ejecutar `cat`, o decir que el archivo está «arriba». En el editor esa salida queda plegada.
-  Pida al participante que abra el archivo en el editor y lo revise ahí.
+  Pide al participante que abra el archivo en el editor y lo revise ahí.
 - **Comandos en PowerShell.** Si el agente usa la terminal de PowerShell, puede pedir
   `Get-Date` en lugar de `date +%H:%M`, o `Get-Content` en lugar de `cat`. Se aprueban igual si
   solo leen.
 - **Avisos de fin de línea en Windows.** Al confirmar puede aparecer «CRLF will be replaced by
   LF» por cada documento. Es esperado y no afecta.
-- **Estimación con precios.** La plantilla los excluye. Si aparecen, pida quitarlos.
+- **Estimación con precios.** La plantilla los excluye. Si aparecen, pide quitarlos.
 
 #### Solución de referencia
 
 En el repositorio de construcción, `docs/relator/soluciones/lab-5-1/`. La historia, con las
 respuestas a las preguntas abiertas, en `historia-de-referencia.md`; la estimación en
 `estimacion-de-referencia.md`, y la decisión de dónde vive el reporte en
-`decision-de-referencia.md`. Si alguien llega al 5.3 sin criterios, entréguele la historia de
+`decision-de-referencia.md`. Si alguien llega al 5.3 sin criterios, entrégale la historia de
 referencia.
 
 #### Poner al día a quien se atrase
 
-Quien no termina el 5.1 sigue con el 5.2 desde el estado de referencia. Diga la clave,
+Quien no termina el 5.1 sigue con el 5.2 desde el estado de referencia. Di la clave,
 `quinua-condor-47`, y que ejecute con su stack.
 
 ```bash
@@ -2824,7 +2868,7 @@ Control**. El paso 3 propone un commit como
 
 #### Qué observar en cada paso
 
-**Paso 1.** Mire si el plan reutiliza el cálculo de la liquidación o calcula por su cuenta. Eso
+**Paso 1.** Mira si el plan reutiliza el cálculo de la liquidación o calcula por su cuenta. Eso
 decide el camino. Si el plan no sigue la decisión 0004, el agente la actualiza y la muestra.
 
 **Paso 1, el tipo del reporte.** Si el agente pregunta qué tipo usar, la respuesta del negocio
@@ -2838,7 +2882,7 @@ escribe `BigDecimal` o `decimal` sin preguntar, no hay nada que responder.
 lógica de tramos, que está duplicada entre `CalculadoraComision` y `CalculadoraLiquidacion` con
 una diferencia de un carácter en el borde. Si el agente unifica eligiendo el borde inclusivo, la
 liquidación de junio cambia y `integracion-local.sh --paso equivalencia` la marca en rojo. Es
-lo que el paso tiene que mostrar. Diga «El refactor cambió lo que se le cobra a dos comercios.
+lo que el paso tiene que mostrar. Di «El refactor cambió lo que se le cobra a dos comercios.
 Un refactor no cambia comportamiento; si lo cambia, es una corrección, y una corrección se
 decide, se prueba y se libera aparte». El participante escribe «deshaz ese cambio y sigue sin
 refactorizar».
@@ -2846,7 +2890,7 @@ refactorizar».
 **Paso 3, los dos caminos.** En el camino A el reporte coincide en los tres periodos. En el
 camino B junio no coincide. Es lo esperado, queda como hallazgo abierto en el registro de
 tiempos y en el mensaje del commit, sin causa, y se resuelve en el 5.3. Si alguien del camino B
-pregunta por qué junio no coincide, diga que lo anote.
+pregunta por qué junio no coincide, di que lo anote.
 
 Lo que debe verse en el camino A, en la salida grabada del respaldo para .NET.
 
@@ -2867,19 +2911,19 @@ código 1. El total de junio del reporte es 36 615,31 contra 36 637,34 calculado
 
 - **Copilot adelanta la causa en el camino B.** Al ver que junio no coincide, puede recalcular y
   explicar que el borde exclusivo de la liquidación cobra menos de lo que espera el criterio.
-  Está bien visto. Diga que no se corrige ahora y que el 5.3 lo va a confirmar con evidencia,
+  Está bien visto. Di que no se corrige ahora y que el 5.3 lo va a confirmar con evidencia,
   junto con lo que todavía no se ve.
 - **Cambiar los hashes esperados para que el pipeline pase.** Está prohibido en este
   laboratorio. Cambiar un hash es una decisión de la mantención correctiva del 5.3.
 - **Tocar el otro escenario.** Cada participante trabaja en un solo stack. Si el diff toca el
-  otro, pida deshacer esos archivos.
+  otro, pide deshacer esos archivos.
 - **Implementar sin plan aprobado.** El paso 2 parte del plan del paso 1. Si alguien lo saltó,
   vuelve al paso 1.
 - **La compilación queda rota.** Quien rompió la compilación reinicia el 5.2 y sigue. Su
   historia del 5.1 no se pierde, porque el reinicio del 5.2 solo restaura el escenario.
 
   ```bash
-  bash scripts/reiniciar-lab.sh lab-5-2
+  bash scripts/reiniciar-lab.sh lab-5-2 --confirmar
   ```
 
 - **Comandos de git que modifican el árbol.** Se rechazan `git stash`, `git reset`,
@@ -2898,7 +2942,7 @@ bash <ruta del repositorio de construccion>/docs/relator/soluciones/funcionalida
 ```
 
 El parche se aplica sobre el escenario en su punto de partida. Si el participante ya tocó el
-escenario, primero `bash scripts/reiniciar-lab.sh lab-5-2`. En la sala es más simple
+escenario, primero `bash scripts/reiniciar-lab.sh lab-5-2 --confirmar`. En la sala es más simple
 `ponerse-al-dia.sh`, que no necesita el repositorio de construcción.
 
 #### Poner al día a quien se atrase
@@ -2923,7 +2967,7 @@ Modo **Agent**. 45 minutos. Fases de Pruebas, Integración continua, Mantención
 Revisión de código y Seguridad. Enunciado en `labs/cap5/lab-5-3-pruebas-y-revision/README.md`.
 
 Es el laboratorio más justo del taller. El agente puede tardar bastante más de 45 minutos,
-sobre todo en el paso 3. Tenga presente desde el inicio el corte al minuto 45, más abajo.
+sobre todo en el paso 3. Ten presente desde el inicio el corte al minuto 45, más abajo.
 
 #### Qué tiene que obtener la sala
 
@@ -2940,7 +2984,7 @@ sobre todo en el paso 3. Tenga presente desde el inicio el corte al minuto 45, m
 
 #### Preparar
 
-Nada que instalar. Recuerde a la sala que no se hace commit hasta el paso 4, porque la revisión
+Nada que instalar. Recuerda a la sala que no se hace commit hasta el paso 4, porque la revisión
 de Copilot revisa los cambios sin confirmar.
 
 Así queda el repositorio de quien entra al 5.3 desde el estado de referencia. Salida real, con
@@ -3013,7 +3057,7 @@ Las pruebas salen de los criterios del 5.1. En el camino A falla la prueba de co
 junio. En el camino B fallan las pruebas del borde de tramo y del tercer decimal, por ejemplo
 17,80 esperado contra 14,80 obtenido y 137,83 contra 137,82.
 
-Si alguien llega sin criterios, entréguele la historia de referencia,
+Si alguien llega sin criterios, entrégale la historia de referencia,
 `docs/relator/soluciones/lab-5-1/historia-de-referencia.md`.
 
 #### Paso 2. Qué detectó cada cosa
@@ -3033,7 +3077,7 @@ Lo que debe verse en el camino A, en la salida grabada del respaldo para .NET, r
 El texto exacto de cada línea depende de cómo escriba el agente el paso nuevo. Lo que importa
 es que junio falle por 22,03 y abril y mayo concilien.
 
-Proponga a toda la sala la pregunta del paso. ¿Qué detectó la conciliación y qué detectaron las
+Propón a toda la sala la pregunta del paso. ¿Qué detectó la conciliación y qué detectaron las
 pruebas, en qué periodos y por qué? La respuesta de la hoja es esta.
 
 | Camino | Qué detectó la conciliación | Qué detectaron las pruebas |
@@ -3055,7 +3099,7 @@ El agente tiene que separar dos causas.
 | **Total** | | | **22,03** |
 
 **La decisión del borde.** Cuando el agente se detenga y el participante le traiga la pregunta,
-y solo entonces, responda «Un monto que cae exactamente en el límite pertenece al tramo inferior.
+y solo entonces, responde «Un monto que cae exactamente en el límite pertenece al tramo inferior.
 El límite superior de cada tramo es inclusivo. 500 está en el primer tramo, 2000 en el segundo y
 10000 en el tercero.» Si ya la había pedido en el 5.1, el agente la toma de la historia y pide
 confirmarla.
@@ -3067,16 +3111,16 @@ confirmarla.
   se corrige en el reporte.
 - La corrección mínima suficiente es cada comisión exacta, suma exacta por comercio y un solo
   redondeo al final, medio hacia arriba.
-- Si el participante cambió solo el redondeo, pídale que pruebe junio con
+- Si el participante cambió solo el redondeo, pídele que pruebe junio con
   `bash scripts/verificar-reporte.sh java 2026-06`. Le quedan centavos.
 - La corrección es solo en su stack. El otro conserva la diferencia de junio, queda fuera del
   alcance y `pull-request.md` lo dice en «Alcance por stack».
 
 **Si encuentra solo el borde o solo explica lo que fallan las pruebas.** Corrige el borde, la
 diferencia baja de 22,03 a 0,03 y el pipeline sigue en rojo. O explica 3,00 y 0,01 de una
-prueba sin llegar al total. Pregunte cuánto suma cada causa y a quién afecta. No diga dónde
-están los tres centavos. Sugiera recalcular con decimal exacto el total de comisiones de los
-comercios que todavía difieren. Si se acaba el tiempo, entréguele la tabla de arriba, 22,00 de
+prueba sin llegar al total. Pregunta cuánto suma cada causa y a quién afecta. No digas dónde
+están los tres centavos. Sugiere recalcular con decimal exacto el total de comisiones de los
+comercios que todavía difieren. Si se acaba el tiempo, entrégale la tabla de arriba, 22,00 de
 borde en CM0001 y CM0007, y 0,03 de punto flotante en CM0011, CM0016 y CM0025.
 
 **El hash esperado.** La corrección cambia la liquidación de junio a propósito. El participante
@@ -3116,7 +3160,7 @@ al chat qué comentó la revisión y qué decidió con cada comentario.
 
 [CAPTURA PENDIENTE] Pestaña Problems con los comentarios de la revisión de Copilot sobre los cambios sin confirmar del 5.3.
 
-En `pull-request.md` revise que justifique el cambio del hash de junio, que enlace la decisión
+En `pull-request.md` revisa que justifique el cambio del hash de junio, que enlace la decisión
 0005 y que tenga «Alcance por stack». Las casillas que deben quedar sin marcar son la de que una
 persona revisó cada línea, hasta que el participante lo haga, y la del cambio en `.github/`
 revisado por otra persona.
@@ -3138,9 +3182,9 @@ El commit lo propone el paso, con las carpetas que entran y sin `git add -A`. Po
   el participante mire `git status` y agregue solo `escenario docs scripts .github`.
 - **Varias rondas de aprobación en el paso 3.** El agente puede pedir aprobación del redondeo y
   después una aprobación ampliada hasta llegar a la corrección mínima. Es parte del ejercicio,
-  pero consume el tiempo. Vigile el reloj.
+  pero consume el tiempo. Vigila el reloj.
 - **Atribuir los 22,00 a los medios centavos en el paso 2.** Es falso. Los 22,00 son el borde.
-  No lo corrija usted. El paso 3 lo separa bien.
+  No lo corrijas tú. El paso 3 lo separa bien.
 - **La conciliación da 22,00 en lugar de 22,03 en el camino A.** Pasa cuando el reporte quedó en
   `double` en el 5.2. Comparte el error de punto flotante de la liquidación y solo se ve el
   borde. Las pruebas de medio centavo fallan. El diagnóstico del paso 3 llega igual a las dos
@@ -3153,7 +3197,7 @@ El commit lo propone el paso, con las carpetas que entran y sin `git add -A`. Po
   de medio centavo. El diagnóstico del paso 3 encuentra igual las dos causas.
 - **Una afirmación falsa del agente.** En el paso 1 Copilot puede decir que la especificación
   técnica del 5.2 no existe. Existe, `docs/proyecto/backlog/formato-del-reporte.md`, y la entregó
-  el propio 5.2. Úsela en la puesta en común para mostrar por qué se verifica lo que dice el
+  el propio 5.2. Úsala en la puesta en común para mostrar por qué se verifica lo que dice el
   agente.
 - **Marcar por su cuenta «una persona revisó cada línea».** Esa casilla la marca el participante
   después de leer el diff. Si el agente la marcó, que la desmarque.
@@ -3172,8 +3216,8 @@ El commit lo propone el paso, con las carpetas que entran y sin `git add -A`. Po
 
 #### El corte al minuto 45
 
-Si al minuto 45 el pipeline no está en verde, corte el laboratorio. La sala sigue con el 5.4
-desde el estado de referencia. Diga la clave y que cada uno ejecute con su stack.
+Si al minuto 45 el pipeline no está en verde, corta el laboratorio. La sala sigue con el 5.4
+desde el estado de referencia. Di la clave y que cada uno ejecute con su stack.
 
 ```bash
 bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47
@@ -3181,18 +3225,18 @@ bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47
 
 Pide `descartar` y después se confirma con `git add -A && git commit -m "Inicio del 5.4"`. El
 paso 4 del 5.3, la revisión y la descripción del pull request, queda como tarea posterior. Si la
-sala viene atrasada, use `ponerse-al-dia.sh` en lugar de recortar pasos. Ningún paso del
+sala viene atrasada, usa `ponerse-al-dia.sh` en lugar de recortar pasos. Ningún paso del
 capítulo pasa a opcional salvo el 5.3.5, que ya lo era.
 
 La salida real del estado de referencia del 5.4 está en el laboratorio 5.4.
 
 #### Puesta en común
 
-Proyecte el caso de clase 03, `docs/relator/casos-de-clase/caso-03-verificacion-obsoleta.md`. A
+Proyecta el caso de clase 03, `docs/relator/casos-de-clase/caso-03-verificacion-obsoleta.md`. A
 veces lo que quedó viejo es la verificación y no el código. Un hash esperado es una
-verificación. Cierre con la pregunta del paso 2 y la tabla de qué detectó cada cosa.
+verificación. Cierra con la pregunta del paso 2 y la tabla de qué detectó cada cosa.
 
-Si alguien pregunta si cambiar el hash esperado no es hacer trampa, responda que sería trampa
+Si alguien pregunta si cambiar el hash esperado no es hacer trampa, responde que sería trampa
 sin causa. El hash de junio cambia porque la corrección cambia lo que se cobra a cinco
 comercios, por una decisión de negocio registrada. El cambio queda en el diff, la descripción
 del pull request lo justifica y alguien lo revisa. Lo que se prohíbe es cambiar un hash, o una
@@ -3230,7 +3274,7 @@ Java y el camino A en .NET.
 #### Si es opcional
 
 Sí. En el plan de 12,5 horas la demostración no tiene minutos propios. Queda para el paso 5
-opcional del laboratorio, `/lab-5-3-paso-5-opcional-github`. Úsela si alguien hace el paso 5, si
+opcional del laboratorio, `/lab-5-3-paso-5-opcional-github`. Úsala si alguien hace el paso 5, si
 la sala pregunta cómo se ve en GitHub o si sobra tiempo en la puesta en común. El guion está en
 `docs/relator/demos/demo-5-3-pipeline-en-github.md` y la corrida grabada en
 `docs/relator/respaldos/demo-5-3.md`.
@@ -3242,16 +3286,16 @@ red, copia propia en GitHub ni esperar a Actions. Se presenta desde el respaldo.
 
 #### Los pasos
 
-1. Abra el respaldo en «Primera corrida». Muestre la tabla de trabajos. Compilación, pruebas y
-   equivalencia en verde, conciliación en rojo. Diga «Es el mismo rojo que vieron en
+1. Abre el respaldo en «Primera corrida». Muestra la tabla de trabajos. Compilación, pruebas y
+   equivalencia en verde, conciliación en rojo. Di «Es el mismo rojo que vieron en
    `integracion-local.sh`. El pipeline es el mismo script; GitHub solo lo corre en otra
    máquina.»
-2. Muestre el registro de la conciliación. Abril y mayo concilian, junio no, por 2203 centavos
+2. Muestra el registro de la conciliación. Abril y mayo concilian, junio no, por 2203 centavos
    en los dos stacks.
-3. Pase a «Segunda corrida», después de empujar la corrección y el hash de junio. Todo en verde.
-   Diga «El cambio del hash de junio está en el diff del pull request, a la vista del revisor.
+3. Pasa a «Segunda corrida», después de empujar la corrección y el hash de junio. Todo en verde.
+   Di «El cambio del hash de junio está en el diff del pull request, a la vista del revisor.
    Por eso no es trampa, es una decisión que se revisa.»
-4. Muestre la sección «Revisión de Copilot». Es la misma revisión que la sala pidió en local con
+4. Muestra la sección «Revisión de Copilot». Es la misma revisión que la sala pidió en local con
    el botón de **Source Control**.
 
 #### Lo que se debe ver
@@ -3273,9 +3317,9 @@ que cada comentario se decide.
 
 #### Si falla
 
-La forma prevista es el respaldo, así que no depende de la red. Si usted la hace en vivo con una
+La forma prevista es el respaldo, así que no depende de la red. Si tú la haces en vivo con una
 copia propia en GitHub y Actions tarda, o la revisión de Copilot no está disponible en la
-cuenta, vuelva al respaldo y dígalo.
+cuenta, vuelve al respaldo y dilo.
 
 ---
 
@@ -3374,7 +3418,7 @@ Las notas tienen que explicar junio sin nombres de clases.
 
 #### Paso 2. El incidente
 
-No tiene que repartir nada. La skill ejecuta `scripts/proyecto/entregar.sh incidente`, que crea
+No tienes que repartir nada. La skill ejecuta `scripts/proyecto/entregar.sh incidente`, que crea
 el reclamo de CM0001 en `docs/proyecto/incidentes/`. El comercio dice que su comisión de junio
 subió de S/ 727.34 a S/ 738.34 sin vender distinto ni cambiar de plan.
 
@@ -3396,19 +3440,19 @@ ventas no cambiaron, que dos de ellas caían exactamente en el límite entre dos
 la regla confirmada y que la diferencia es de S/ 11.00. Si quiere revisar su contrato, su
 ejecutivo coordina con el área comercial. No promete ni descarta una devolución.
 
-Si alguien propone revertir la versión, pregunte qué decisión de negocio respalda el monto
+Si alguien propone revertir la versión, pregunta qué decisión de negocio respalda el monto
 nuevo y dónde está registrada.
 
 #### Pasos 3 y 4. La evolutiva y el cierre
 
 En el paso 3 la solicitud ya está en el backlog, `docs/proyecto/backlog/solicitud-evolutiva.md`,
-un filtro del reporte por categoría de comercio. No la proponga usted. Lo que vale observar es si
+un filtro del reporte por categoría de comercio. No la propongas tú. Lo que vale observar es si
 la estimación usa como dato el registro de tiempos real del ciclo y qué preguntas le haría al
 negocio.
 
-En el paso 4 se compara lo estimado con lo real. En la puesta en común pida a cada uno la fase
+En el paso 4 se compara lo estimado con lo real. En la puesta en común pide a cada uno la fase
 donde más se equivocó. Suele ser Requerimientos o Mantención, que dependen de personas y no del
-agente. Al abrir este paso use el marco de medición y presupuesto del encuadre. La pregunta de
+agente. Al abrir este paso usa el marco de medición y presupuesto del encuadre. La pregunta de
 cierre es si `medicion-y-presupuesto.md` deja los valores como campos a completar o los inventa.
 
 #### Desvíos que aparecieron en las pruebas y cómo resolverlos
@@ -3418,10 +3462,10 @@ cierre es si `medicion-y-presupuesto.md` deja los valores como campos a completa
   acepta.
 - **Notas de versión con el signo invertido.** Copilot puede escribir que la comisión de CM0001 y
   CM0007 baja 11,00, por ejemplo 749,34 → 738,34. Sube, de 727,34 a 738,34 y de 907,11 a 918,11.
-  Pida al participante que compare la tabla de sus notas con la del 5.3 o con una ejecución real
+  Pide al participante que compare la tabla de sus notas con la del 5.3 o con una ejecución real
   de la liquidación de junio, y que la corrija. Los tres cambios de un centavo suelen quedar
   bien.
-- **Un análisis que explica el monto con una sola transacción.** Son dos por comercio. Pida
+- **Un análisis que explica el monto con una sola transacción.** Son dos por comercio. Pide
   desglosar la diferencia por transacción y comprobar que la suma da los 11,00 reclamados.
 - **Una respuesta que promete devolver la diferencia o que decide que no corresponde.** Las dos
   son decisiones del negocio. Van como pregunta abierta en el análisis, no en la respuesta.
@@ -3452,9 +3496,8 @@ Pide `descartar` y después se confirma con `git add -A && git commit -m "Inicio
 salida real está en «Preparar». El paso 2 funciona con cualquier estado de la rama, porque el
 incidente se analiza con las notas de referencia.
 
-Respaldo de los cuatro pasos en `docs/relator/respaldos/lab-5-4.md`. Está grabado cuando el
-registro de cambios partía en 1.0.0 y por eso propone 1.1.0. Hoy la vigente es 1.4.0 y la
-respuesta de referencia es 1.5.0. Si lo proyecta, dígalo.
+Respaldo de los cuatro pasos en `docs/relator/respaldos/lab-5-4.md`. Propone 1.5.0 sobre la
+vigente 1.4.0, como el registro de cambios del punto de partida.
 
 #### Cómo volver al inicio al terminar el 5.4
 
@@ -3462,17 +3505,15 @@ Al cerrar el taller, o para ensayar de nuevo, se descarta todo el capítulo y se
 Desde la raíz del repositorio, en Git Bash.
 
 ```bash
-bash scripts/reiniciar-lab.sh lab-5-4
+bash scripts/reiniciar-lab.sh lab-5-4 --confirmar
 git switch main && git branch -D reporte-medios-de-pago
 ```
 
-El script advierte que el 5.4 no tiene punto de partida propio, lista lo que se pierde y pide
-escribir `descartar`. Salida real, con la lista de archivos completa. En esta captura la palabra
-`descartar` aparece en la primera línea, antes del aviso.
+El script advierte que el 5.4 no tiene punto de partida propio, lista lo que se pierde y lo
+descarta. Salida real, con la lista de archivos completa.
 
 ```
-$ bash scripts/reiniciar-lab.sh lab-5-4
-descartar
+$ bash scripts/reiniciar-lab.sh lab-5-4 --confirmar
 
 == Advertencia ==
   [AVISO] El laboratorio 5.4 no tiene punto de partida propio. Se trabaja sobre lo que dejaron los laboratorios 5.1 a 5.3.
@@ -3503,20 +3544,22 @@ descartar
     modificado   scripts/integracion/stack.txt
   [AVISO] Hay commits posteriores al punto de partida. Siguen en el historial, pero estas rutas vuelven a la version original.
 
-  Escribe descartar para perder el trabajo de todo el capitulo 5, cualquier otra cosa para cancelar: 
 == Restauracion ==
   [ OK ] lab-5-4 listo para empezar
 $ git switch main && git branch -D reporte-medios-de-pago
 Switched to branch 'main'
 Your branch is up to date with 'origin/main'.
-Deleted branch reporte-medios-de-pago (was 2b04b4a).
-$ git status --short
+Deleted branch reporte-medios-de-pago (was <hash>).
 ```
 
 La lista exacta depende de lo que haya hecho cada participante. Esta es la del estado de
-referencia del 5.4. Al final `git status --short` no muestra nada.
+referencia del 5.4. Después, `git status --short` no muestra nada.
 
 ## Anexo. Problemas del ambiente
+
+Los participantes tienen estos mismos problemas escritos para ellos en
+`docs/02-troubleshooting.md`, entradas 1 a 10. Remítelos ahí cuando puedan resolverlo
+solos.
 
 ### Finales de línea
 
@@ -3587,6 +3630,8 @@ scripts con `bash scripts/...` no debería aparecer.
   Anota cómo se lanzó el script, porque el cambio de página automático no se aplicó.
 - Si falla en otras líneas, la diferencia es real y se trata como en el laboratorio.
 
+`[CAPTURA PENDIENTE] Para el Product Owner. En la máquina virtual Windows, la terminal Git Bash integrada de Visual Studio Code después de ejecutar bash scripts/comparar-escenarios.sh, con el resumen «Escenarios equivalentes» y el código de salida 0, y a continuación chcp.com mostrando la página de códigos original restaurada.`
+
 ### PowerShell como terminal de Copilot en Windows
 
 #### Síntoma
@@ -3616,6 +3661,8 @@ es parte del ambiente.
 - Los participantes trabajan en la terminal de Git Bash de Visual Studio Code. Verifica en
   el ensayo qué terminal usa el modo agente en la máquina virtual.
 
+`[CAPTURA PENDIENTE] Para el Product Owner. En la máquina virtual Windows, Visual Studio Code con el chat en modo Agent ejecutando un comando, con el panel Terminal abierto, de modo que se vea si la terminal que abre el agente es Git Bash o PowerShell.`
+
 `[CAPTURA PENDIENTE] Chat de Copilot en modo Agent en Windows pidiendo aprobar un comando de PowerShell, con los botones Allow y Skip visibles.`
 
 ### Inicio de sesión de Copilot
@@ -3637,9 +3684,8 @@ cada vez que se reinicia la máquina virtual.
 
 #### Solución en sala
 
-- Perfil nuevo. Los pasos de «Sesión iniciada y Copilot habilitado». Si el botón dice
-  **Enable AI Features (Workspace)**, la desactivación viene de `.vscode/settings.json`. Ese
-  botón la revierte.
+- Perfil nuevo. Ícono de Copilot de la barra de estado, **Use AI Features** y después
+  **Sign in to use Copilot**, como en «Qué revisar en la sala antes de la primera sesión».
 - Cuenta equivocada. Ícono de **Accounts** en la barra lateral, cierra la sesión de GitHub
   e inicia con la cuenta que tiene la licencia.
 - Sesión que no persiste. Inicia de nuevo y avisa al responsable de la imagen. No se
@@ -3657,7 +3703,7 @@ CLI el texto es «You have exceeded your monthly quota» o «You've reached your
 usage limit for your plan». En Visual Studio Code la redacción puede cambiar. No hay aviso
 previo.
 
-`[CAPTURA PENDIENTE] Panel de chat de Visual Studio Code con el mensaje de cuota o límite de uso agotado.`
+`[CAPTURA PENDIENTE] Para el Product Owner. Panel de chat de Visual Studio Code con el mensaje exacto que aparece cuando la cuenta agota su cuota y su presupuesto adicional, con el texto completo legible.`
 
 #### Causa
 
@@ -3771,7 +3817,7 @@ no confía en el espacio de trabajo y por eso tampoco en sus servidores MCP ni e
   elige `pasarela-andina` y **Start Server**. El ícono de herramientas del chat debe listar
   `buscar_comercios`, `detalle_comercio` y `buscar_notas_soporte`.
 
-`[CAPTURA PENDIENTE] Ventana de Visual Studio Code en modo restringido, con el aviso en la barra superior y la opción para confiar en la carpeta.`
+`[CAPTURA PENDIENTE] Para el Product Owner. Visual Studio Code con la interfaz en español y la carpeta del repositorio abierta en modo restringido, con el aviso completo legible y la opción para confiar en la carpeta.`
 
 ### verificar-reporte con CRLF
 
@@ -3830,22 +3876,37 @@ fallaría igual en el 5.3.5.
 
 Cada captura está marcada en su lugar con `[CAPTURA PENDIENTE]`.
 
+### Las que tiene que comprobar el Product Owner en el editor
+
+Estas cinco no son solo una imagen. Hay que mirarlas en Visual Studio Code y, según lo que se vea, ajustar el guion.
+
+| Qué mirar | Sección |
+|---|---|
+| En la máquina virtual Windows, la terminal Git Bash integrada de Visual Studio Code después de ejecutar bash scripts/comparar-escenarios.sh, con el resumen «Escenarios equivalentes» y el código de salida 0, y a continuación chcp.com mostrando la página de códigos original restaurada | Anexo, Página de códigos en Git Bash |
+| En la máquina virtual Windows, Visual Studio Code con el chat en modo Agent ejecutando un comando, con el panel Terminal abierto, de modo que se vea si la terminal que abre el agente es Git Bash o PowerShell | Anexo, PowerShell como terminal de Copilot en Windows |
+| Panel de chat de Visual Studio Code con el mensaje exacto que aparece cuando la cuenta agota su cuota y su presupuesto adicional, con el texto completo legible | Anexo, Créditos agotados |
+| Visual Studio Code con la interfaz en español y la carpeta del repositorio abierta en modo restringido, con el aviso completo legible y la opción para confiar en la carpeta | Anexo, Carpeta no confiable o modo restringido |
+| El botón de Copilot Code Review del 5.3.4. Vista Source Control de Visual Studio Code con el puntero sobre CHANGES y el botón Copilot Code Review - Uncommitted Changes visible | Sesión 4, Laboratorio 5.3. Estrategia de pruebas, documentación Markdown y checklist de revisión |
+
+### Todas
+
 | Sección | Bloque | Qué debe mostrar |
 |---|---|---|
-| Antes del curso | Qué revisar en la sala antes de la primera sesión | Vista de Extensiones de Visual Studio Code con @builtin copilot en el buscador, GitHub Copilot Chat seleccionada y el botón Enable AI Features visible.` |
-| Antes del curso | Qué revisar en la sala antes de la primera sesión | Panel de terminal de Visual Studio Code con el menú desplegable junto al + abierto y la opción Git Bash resaltada.` |
-| Antes del curso | Cómo funciona el repositorio para el relator | Chat de Copilot con /lab-1-5 escrito en el cuadro de texto y la lista de autocompletado mostrando las skills del laboratorio 1.5.` |
-| Sesión 1. Capítulo 1 | Antes de empezar la sesión | Vista de extensiones de Visual Studio Code con el filtro `@builtin copilot`, la extensión GitHub Copilot Chat seleccionada y el botón Enable AI Features visible |
+| Antes del curso | Qué revisar en la sala antes de la primera sesión | Barra de estado de Visual Studio Code con el puntero sobre el ícono de Copilot y el menú que ofrece Use AI Features |
+| Antes del curso | Qué revisar en la sala antes de la primera sesión | Menú del ícono de Copilot de la barra de estado con la opción Sign in to use Copilot, después de habilitar las funciones de IA |
+| Antes del curso | Qué revisar en la sala antes de la primera sesión | Panel de terminal de Visual Studio Code con el menú desplegable junto al + abierto y la opción Git Bash resaltada |
+| Antes del curso | Cómo funciona el repositorio para el relator | Chat de Copilot con /lab-1-5 escrito en el cuadro de texto y la lista de autocompletado mostrando las skills del laboratorio 1.5 |
 | Sesión 1. Capítulo 1 | Demostración 1.1. El pedido pobre y el pedido bueno | Las dos conversaciones del chat lado a lado, a la izquierda la respuesta larga a «Mejora este código.» y a la derecha la tabla de dos filas con las líneas 59 a 66 y 76 a 82 |
-| Sesión 1. Capítulo 1 | Demostración 1.2. Las referencias de contexto | Respuesta del paso 3 de la demostración 1.2 con la lista de referencias desplegada, donde se ve solo `CalculadoraLiquidacion.java` |
-| Sesión 1. Capítulo 1 | Demostración 1.2. Las referencias de contexto | Respuesta del paso 4 con la lista de referencias desplegada, donde aparecen el README del escenario, archivos Java y `CalculadoraLiquidacion.cs` |
+| Sesión 1. Capítulo 1 | Demostración 1.2. Las referencias de contexto | Respuesta del paso 3 de la demostración 1.2 con la lista de referencias desplegada, donde se ve solo `CalculadoraLiquidacion.java |
+| Sesión 1. Capítulo 1 | Demostración 1.2. Las referencias de contexto | Respuesta del paso 4 con la lista de referencias desplegada, donde aparecen el README del escenario, archivos Java y `CalculadoraLiquidacion.cs |
 | Sesión 1. Capítulo 1 | Demostración 1.3. Analizar, planear, implementar y validar | Chat en modo Plan con el plan de extracción de la cabecera y el botón Start Implementation visible |
 | Sesión 1. Capítulo 1 | Demostración 1.3. Analizar, planear, implementar y validar | Vista de diff de `FormateadorReporte.java` después del paso 3, con la llamada a `agregarCabeceraDetalle` en lugar de la cabecera y el método privado nuevo al final |
 | Sesión 1. Capítulo 1 | Laboratorio 1.4. Práctica guiada, mejora incremental de prompts y uso de comandos del chat | `CalculadoraLiquidacion.java` con el método `procesarLiquidacionCompleta` seleccionado completo y `/explain` escrito en el chat en modo Ask |
 | Sesión 1. Capítulo 1 | Laboratorio 1.5. Análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | Chat en modo Agent durante el paso 5 del 1.5, con el pedido de aprobación de `bash scripts/comparar-escenarios.sh` y los botones Allow y Skip visibles |
-| Sesión 2. Capítulo 2 | Demostración 2.1. La jerarquía de personalización y las skills | Respuesta del chat en modo Ask a la pregunta del idioma de los commits, con la lista de referencias desplegada mostrando `.github/copilot-instructions.md` y `AGENTS.md` |
+| Sesión 2. Capítulo 2 | Demostración 2.1. La jerarquía de personalización y las skills | Respuesta del chat en modo Ask a la pregunta del idioma de los commits, con la lista de referencias desplegada mostrando `.github/copilot-instructions.md` y `AGENTS.md |
 | Sesión 2. Capítulo 2 | Demostración 2.2. Los agentes por rol | Selector de modo del chat desplegado con los cinco agentes del repositorio, Analista, Tester, Documentador, Revisor y Refactorizador |
-| Sesión 2. Capítulo 2 | Demostración 2.3. Las instrucciones por ruta | Respuesta del chat en modo Agent a la pregunta sobre las pruebas de FormateadorReporte.java, con la lista de referencias desplegada mostrando `.github/instructions/java.instructions.md` |
+| Sesión 2. Capítulo 2 | Demostración 2.3. Las instrucciones por ruta | Respuesta del chat en modo Agent a la pregunta sobre las pruebas de FormateadorReporte.java, con la lista de referencias desplegada mostrando `.github/instructions/java.instructions.md |
+| Sesión 2. Capítulo 2 | Demostración 2.3. Las instrucciones por ruta | Respuesta del chat en modo Agent que crea docs/proyecto/nota-arquitectura.md, con la lista de referencias desplegada mostrando `.github/instructions/arquitectura-bian.instructions.md` y el párrafo que nombra Merchant Acquiring Facility |
 | Sesión 2. Capítulo 2 | Laboratorio 2.4. Creación de un agente local o instrucción reutilizable | Respuesta de la prueba 1 del paso 3 del laboratorio 2.4, con la lista de referencias desplegada mostrando la instrucción nueva del participante en `.github/instructions/` y el archivo `retencion-garantia.md` creado en el explorador |
 | Sesión 2. Capítulo 2 | Laboratorio 2.4. Creación de un agente local o instrucción reutilizable | Selector de agentes del chat con el agente nuevo del participante, por ejemplo «Soporte comercial», junto a los cinco agentes de referencia |
 | Sesión 3. Capítulo 3 | Demostración 3.2. El servidor MCP local | Paleta de comandos con `MCP: List Servers` abierto y el servidor `pasarela-andina` en estado iniciado |
@@ -3860,6 +3921,8 @@ Cada captura está marcada en su lugar con `[CAPTURA PENDIENTE]`.
 | Sesión 4. Capítulos 4 y 5 | Laboratorio 5.1. Preparación del escenario integrador y criterios de evaluación | Respuesta del agente en el paso 3 del 5.1 con la tabla de tres alternativas (método en la clase de cálculo, clases que reutilizan el cálculo, clases que calculan por su cuenta) y la pregunta de cuál elige |
 | Sesión 4. Capítulos 4 y 5 | Laboratorio 5.3. Estrategia de pruebas, documentación Markdown y checklist de revisión | Vista Source Control de Visual Studio Code con el puntero sobre CHANGES y el botón Copilot Code Review - Uncommitted Changes visible |
 | Sesión 4. Capítulos 4 y 5 | Laboratorio 5.3. Estrategia de pruebas, documentación Markdown y checklist de revisión | Pestaña Problems con los comentarios de la revisión de Copilot sobre los cambios sin confirmar del 5.3 |
-| Anexo. Problemas del ambiente | PowerShell como terminal de Copilot en Windows | Chat de Copilot en modo Agent en Windows pidiendo aprobar un comando de PowerShell, con los botones Allow y Skip visibles.` |
-| Anexo. Problemas del ambiente | Créditos agotados | Panel de chat de Visual Studio Code con el mensaje de cuota o límite de uso agotado.` |
-| Anexo. Problemas del ambiente | Carpeta no confiable o modo restringido | Ventana de Visual Studio Code en modo restringido, con el aviso en la barra superior y la opción para confiar en la carpeta.` |
+| Anexo. Problemas del ambiente | Página de códigos en Git Bash | En la máquina virtual Windows, la terminal Git Bash integrada de Visual Studio Code después de ejecutar bash scripts/comparar-escenarios.sh, con el resumen «Escenarios equivalentes» y el código de salida 0, y a continuación chcp.com mostrando la página de códigos original restaurada |
+| Anexo. Problemas del ambiente | PowerShell como terminal de Copilot en Windows | En la máquina virtual Windows, Visual Studio Code con el chat en modo Agent ejecutando un comando, con el panel Terminal abierto, de modo que se vea si la terminal que abre el agente es Git Bash o PowerShell |
+| Anexo. Problemas del ambiente | PowerShell como terminal de Copilot en Windows | Chat de Copilot en modo Agent en Windows pidiendo aprobar un comando de PowerShell, con los botones Allow y Skip visibles |
+| Anexo. Problemas del ambiente | Créditos agotados | Panel de chat de Visual Studio Code con el mensaje exacto que aparece cuando la cuenta agota su cuota y su presupuesto adicional, con el texto completo legible |
+| Anexo. Problemas del ambiente | Carpeta no confiable o modo restringido | Visual Studio Code con la interfaz en español y la carpeta del repositorio abierta en modo restringido, con el aviso completo legible y la opción para confiar en la carpeta |
