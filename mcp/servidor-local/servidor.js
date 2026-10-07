@@ -1,14 +1,14 @@
 // Servidor MCP local de consulta sobre los comercios de Pasarela Andina.
 //
-// Transporte por entrada y salida estandar, sin ninguna conexion de red. Solo lectura:
+// Transporte por entrada y salida estandar. El codigo no abre conexiones de red. Solo lectura:
 // las tres herramientas consultan archivos y ninguna escribe, borra ni ejecuta nada.
 //
 // Los comercios y los planes se leen de escenario/datos sin modificarlos. Las notas de
 // soporte viven en mcp/datos, fuera del escenario, porque cualquier cambio en los datos
 // del escenario altera los resultados de los laboratorios.
 //
-// Se lanza con el modelo de permisos de Node, que solo autoriza lectura del directorio
-// del repositorio. La configuracion del cliente se explica en mcp/README.md.
+// Se lanza con permisos de Node: solo lee el repositorio, no escribe ni lanza procesos.
+// Esos permisos no limitan la red. La configuracion del cliente esta en mcp/README.md.
 
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';

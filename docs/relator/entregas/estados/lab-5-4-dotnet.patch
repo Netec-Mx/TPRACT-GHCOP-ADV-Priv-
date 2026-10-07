@@ -93,12 +93,12 @@ index 0000000..c745c20
 +
 +El pipeline local en verde, con la conciliación en cero en los tres periodos.
 diff --git a/docs/arquitectura/decisiones/README.md b/docs/arquitectura/decisiones/README.md
-index 30114c9..e353539 100644
+index 17fe59f..da0edd0 100644
 --- a/docs/arquitectura/decisiones/README.md
 +++ b/docs/arquitectura/decisiones/README.md
 @@ -8,6 +8,8 @@ archivo, numeradas en orden.
  | [0001](0001-dos-implementaciones-con-salida-identica.md) | Implementar el escenario en Java y en .NET con salida idéntica | Aceptada |
- | [0002](0002-servidor-mcp-local-de-solo-lectura.md) | Usar un servidor MCP local, de solo lectura y sin red | Aceptada |
+ | [0002](0002-servidor-mcp-local-de-solo-lectura.md) | Usar un servidor MCP local, de solo lectura y sin conexiones de red | Aceptada |
  | [0003](0003-hook-de-proteccion-de-datos.md) | Proteger los datos del escenario con un hook | Aceptada |
 +| [0004](0004-ubicacion-del-reporte.md) | El reporte por medio de pago vive en clases propias | Aceptada |
 +| [0005](0005-limite-superior-inclusivo.md) | El límite superior de cada tramo es inclusivo | Aceptada |

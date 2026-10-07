@@ -202,7 +202,7 @@ Ninguna herramienta escribe, borra, abre red ni lanza procesos. El código solo 
 
 Controles técnicos que lo sostienen:
 
-- Proceso local por entrada y salida estándar, sin conexión de red (`servidor.js:3`, `servidor.js:148`;
+- Proceso local por entrada y salida estándar, cuyo código no abre conexiones de red (`servidor.js:3`, `servidor.js:148`;
   `mcp/README.md`, sección «Cómo se ejecuta»).
 - Modelo de permisos de Node: `node --permission --allow-fs-read=.` limita la lectura al repositorio e
   impide escribir, lanzar procesos y cargar complementos nativos (`mcp/README.md`, sección «Cómo se

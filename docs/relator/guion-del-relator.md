@@ -1830,7 +1830,7 @@ El material está en `docs/relator/teoria/3-2-mcp-local-y-externo.md`. La exposi
 
 #### Qué tiene que quedar claro
 
-Lo que separa un servidor local de uno externo es el transporte. Uno local se lanza como subproceso y habla por entrada y salida estándar, sin red. Uno externo recibe pedidos HTTP y los datos cruzan el perímetro. El taller usa uno local porque el ambiente no tiene salida a internet garantizada, porque nadie más puede hablarle y porque el proceso corre con el modelo de permisos de Node, que solo le deja leer el repositorio. Local no es automáticamente seguro. Un servidor local puede ejecutar código arbitrario y `.vscode/mcp.json` es una instrucción de ejecutar un programa, así que se revisa como un script de despliegue. Un caso de uso defendible responde cuatro cosas. Qué datos expone, qué herramientas registra, qué riesgos tiene y por qué es defendible.
+Lo que separa un servidor local de uno externo es el transporte. Uno local se lanza como subproceso y habla por entrada y salida estándar, sin puerto de red. Uno externo recibe pedidos HTTP y los datos cruzan el perímetro. El taller usa uno local porque el ambiente no tiene salida a internet garantizada, porque nadie más puede hablarle y porque el proceso corre con el modelo de permisos de Node, que solo le deja leer el repositorio y le impide escribir y lanzar procesos. Esos permisos no restringen la red. Que el servidor no salga a internet depende de su código, que no abre conexiones, y se comprueba leyéndolo. Para impedir la red a nivel de sistema hace falta una regla de firewall o un contenedor sin red, y eso queda como recomendación para un uso real. Local no es automáticamente seguro. Un servidor local puede ejecutar código arbitrario y `.vscode/mcp.json` es una instrucción de ejecutar un programa, así que se revisa como un script de despliegue. Un caso de uso defendible responde cuatro cosas. Qué datos expone, qué herramientas registra, qué riesgos tiene y por qué es defendible.
 
 Las cuatro preguntas que ordenan la exposición son a dónde van los datos, quién se autentica, qué código corre y dónde, y qué necesita la red. Cierra con los tres controles del ambiente restringido. La política de la organización sobre servidores MCP, el aislamiento del proceso y la salida a la red.
 
@@ -1857,7 +1857,7 @@ Sí. En el plan de 12,5 horas no se hace y ahorra 10 minutos, porque en el labor
 
 #### Pasos
 
-1. Abre `mcp/README.md`. Muestra las tres herramientas y el comando de arranque con `--permission --allow-fs-read=.`. Di que es un proceso local, por entrada y salida estándar, sin red y de solo lectura, y que lo impone el modelo de permisos de Node, no una promesa del código.
+1. Abre `mcp/README.md`. Muestra las tres herramientas y el comando de arranque con `--permission --allow-fs-read=.`. Di que es un proceso local, por entrada y salida estándar y de solo lectura. El modelo de permisos de Node le impide escribir y lanzar procesos. La red no la restringe. Que no abra conexiones lo garantiza su código, y se comprueba leyéndolo.
 2. Desde el explorador de archivos, crea la carpeta `.vscode` si no existe y dentro el archivo `mcp.json` con este contenido.
 
    ```json

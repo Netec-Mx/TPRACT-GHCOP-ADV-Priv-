@@ -193,7 +193,7 @@ Suma: 8 + 8 + 8 + 12 = 36 minutos. Holgura: 45 − 36 = 9 minutos.
 **Contenido mínimo del documento del paso 4.** En riesgos, al menos la inyección indirecta
 a través de datos que devuelve una herramienta, la ejecución de herramientas sin
 aprobación, y la exclusión de contenido que se trata en el subtema 3.3. En la defensa ante
-seguridad, que el servidor corre como proceso local, que no tiene salida a internet y qué
+seguridad, que el servidor corre como proceso local, que su código no abre conexiones de red, que los permisos de Node no lo garantizan y qué
 controla el participante antes de aprobar cada llamada.
 
 **Independencia.** Los pasos 3 y 4 leen el código del servidor, que está en el

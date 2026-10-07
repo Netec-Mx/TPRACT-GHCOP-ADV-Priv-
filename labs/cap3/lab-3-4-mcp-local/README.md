@@ -2,7 +2,7 @@
 
 ## Objetivo del laboratorio
 
-Configurar un servidor MCP local que corre sin salida a internet, aprobar y usar sus
+Configurar un servidor MCP local, cuyo código no abre conexiones de red, aprobar y usar sus
 herramientas desde el chat, y documentar el caso de uso con lo que haría falta para
 presentarlo a un área de seguridad.
 

@@ -1,4 +1,4 @@
-# 0002. Servidor MCP local, de solo lectura y sin red
+# 0002. Servidor MCP local, de solo lectura y sin conexiones de red
 
 | Campo | Valor |
 |---|---|
@@ -25,7 +25,9 @@ MCP local puede ejecutar código arbitrario en la máquina.
 - **Sin MCP, el agente lee los archivos directamente.** Más simple. No enseña el protocolo
   ni su modelo de aprobación.
 - **Servidor local por entrada y salida estándar, con permisos acotados por el proceso.** Sin
-  red, sin puerto abierto y con una restricción que no depende del código del servidor.
+  puerto abierto. Los permisos de Node restringen la escritura y los procesos sin depender
+  del código del servidor. La red no la restringen: que no haya conexiones depende del
+  código.
 
 ## Decisión
 
@@ -39,6 +41,10 @@ imagen de la máquina virtual.
 ## Consecuencias
 
 - El servidor funciona sin red, en cualquier sistema donde corra Node.
+- El servidor no abre conexiones de red porque su código no las tiene, y se comprueba
+  leyendo el código. Los permisos de Node impiden escribir archivos y lanzar procesos, no
+  la red. Para impedirla a nivel de sistema hace falta una regla de firewall o un
+  contenedor sin red, que se recomienda en un uso real.
 - Ningún otro programa de la máquina ni de la red puede hablarle al servidor.
 - Cada llamada pide aprobación en Visual Studio Code, lo que permite leer los parámetros
   antes de enviarlos.

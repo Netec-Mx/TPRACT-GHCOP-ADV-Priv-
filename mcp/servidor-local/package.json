@@ -2,7 +2,7 @@
   "name": "pasarela-andina-mcp-local",
   "version": "1.0.0",
   "private": true,
-  "description": "Servidor MCP local de consulta sobre los comercios de Pasarela Andina. Solo lectura, transporte por proceso, sin red.",
+  "description": "Servidor MCP local de consulta sobre los comercios de Pasarela Andina. Solo lectura, transporte por proceso, sin conexiones de red en su codigo.",
   "type": "module",
   "main": "servidor.js",
   "engines": {

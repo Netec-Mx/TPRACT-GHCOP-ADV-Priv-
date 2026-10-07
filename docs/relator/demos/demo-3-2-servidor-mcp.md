@@ -1,6 +1,6 @@
 # Demostración 3.2. El servidor MCP local
 
-**Objetivo.** Arrancar un servidor MCP local sin red, aprobar sus herramientas y consultarlo
+**Objetivo.** Arrancar un servidor MCP local, que no abre conexiones de red, aprobar sus herramientas y consultarlo
 desde el chat.
 
 **Subtema y sesión.** 3.2, sesión 3. **Duración.** 10 minutos.
@@ -17,8 +17,10 @@ del laboratorio 3.4.
 1. Abra `mcp/README.md`. Muestre las tres herramientas y el comando de arranque con
    `--permission --allow-fs-read=.`.
 
-   Diga: «Proceso local, entrada y salida estándar, sin red, solo lectura. El modelo de
-   permisos de Node lo impone, no es una promesa del código.»
+   Diga: «Proceso local, entrada y salida estándar, solo lectura. El modelo de permisos de
+   Node le impide escribir y lanzar procesos, pero no restringe la red. Que no abra
+   conexiones lo garantiza su código, y se comprueba leyéndolo. Para cerrar la red de
+   verdad hace falta un firewall o un contenedor sin red.»
 
 2. Cree la carpeta `.vscode` si no existe y, dentro, el archivo `mcp.json` con este
    contenido, desde el explorador de archivos.

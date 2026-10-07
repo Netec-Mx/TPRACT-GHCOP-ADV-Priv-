@@ -6,7 +6,7 @@ archivo, numeradas en orden.
 | Número | Decisión | Estado |
 |---|---|---|
 | [0001](0001-dos-implementaciones-con-salida-identica.md) | Implementar el escenario en Java y en .NET con salida idéntica | Aceptada |
-| [0002](0002-servidor-mcp-local-de-solo-lectura.md) | Usar un servidor MCP local, de solo lectura y sin red | Aceptada |
+| [0002](0002-servidor-mcp-local-de-solo-lectura.md) | Usar un servidor MCP local, de solo lectura y sin conexiones de red | Aceptada |
 | [0003](0003-hook-de-proteccion-de-datos.md) | Proteger los datos del escenario con un hook | Aceptada |
 
 Para registrar una decisión nueva, copie [`plantilla.md`](plantilla.md) con el número

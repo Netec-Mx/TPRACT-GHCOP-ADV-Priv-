@@ -24,9 +24,13 @@ secciones obligatorias, en este orden:
      herramienta.
    - Ejecución de herramientas sin revisión de quien usa el chat.
    - Contenido del repositorio que no debería llegar al contexto de Copilot.
-4. **Por qué es defendible.** Qué controles técnicos lo sostienen: proceso local, sin
-   red, permisos de Node y aprobación de cada llamada. Qué tendría que cambiar para que
-   deje de serlo.
+4. **Por qué es defendible.** Qué controles técnicos lo sostienen: proceso local, un
+   código que no abre conexiones de red, permisos de Node que impiden escribir y lanzar
+   procesos, y aprobación de cada llamada. Qué tendría que cambiar para que deje de serlo.
+
+Los permisos de Node no restringen la red. Que el servidor no salga a internet depende de
+su código, y se comprueba leyéndolo. Inclúyelo en la sección de riesgos, con la mitigación
+para un uso real: una regla de firewall o un contenedor sin red.
 
 Si en el paso 2 el participante observó algo inesperado en una respuesta del agente,
 pregúntale qué fue e inclúyelo en la sección de riesgos como evidencia.

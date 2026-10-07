@@ -55,7 +55,7 @@ rechaza la escritura antes de que ocurra. La lectura está permitida.
 ### 4. Fuentes externas solo aprobadas
 
 Solo se conectan servidores MCP aprobados por el equipo. En este repositorio, el único es el
-servidor local `pasarela-andina`, de solo lectura y sin red. Cada llamada se aprueba leyendo
+servidor local `pasarela-andina`, de solo lectura y sin conexiones de red en su código. Cada llamada se aprueba leyendo
 sus parámetros. No se usa la aprobación permanente con herramientas que traen texto de
 terceros.
 

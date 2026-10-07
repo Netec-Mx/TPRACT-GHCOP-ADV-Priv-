@@ -35,7 +35,12 @@ node --permission --allow-fs-read=. mcp/servidor-local/servidor.js
 
 `--permission` activa el modelo de permisos de Node. Con `--allow-fs-read=.` el proceso
 solo puede leer archivos del repositorio. No puede escribir en disco, lanzar otros
-procesos ni cargar complementos nativos. El servidor no usa red y no abre conexiones.
+procesos ni cargar complementos nativos. Ese modelo no restringe la red.
+
+El servidor no abre conexiones de red porque su código no las tiene, y eso se comprueba
+leyendo `servidor.js` y sus dependencias. Para impedir la red a nivel de sistema hace falta
+una regla de firewall o un contenedor sin red. En un uso real, con datos reales, se
+recomienda agregarla.
 
 Lanzado a mano, el proceso queda esperando mensajes del protocolo en su entrada
 estándar. Es lo esperado. Quien lo usa es el cliente, en este caso Visual Studio Code.

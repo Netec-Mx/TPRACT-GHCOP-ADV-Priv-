@@ -93,6 +93,18 @@ en `escenario/datos/` (`.github/hooks/proteger-datos-escenario.js:1-3`) y deja p
 herramientas de este servidor (`.github/hooks/proteger-datos-escenario.js:102-107`); no
 revisa lo que devuelven.
 
+**Salida a la red.**
+Evidencia: el modelo de permisos de Node, `node --permission --allow-fs-read=.`
+(`mcp/README.md:33`), impide escribir en disco y lanzar procesos (`mcp/README.md:36-38`),
+pero no restringe la red. En la verificación, un proceso lanzado con esos permisos pudo
+intentar una conexión TCP. Que el servidor no salga a internet depende de que su código no
+abra conexiones (`mcp/servidor-local/servidor.js:13-18`), como dice el README
+(`mcp/README.md:40-43`).
+Mitigación: parcial. Lo sostienen el código y sus dependencias, fijadas con versión exacta
+(`mcp/servidor-local/package.json:12-13`), y se comprueba leyéndolos. Para impedir la red a
+nivel de sistema hace falta una regla de firewall o un contenedor sin red, que se
+recomienda en un uso real.
+
 ## 4. Por qué es defendible
 
 Controles técnicos que lo sostienen:
@@ -100,11 +112,12 @@ Controles técnicos que lo sostienen:
 - **Proceso local.** Transporte por entrada y salida estándar
   (`mcp/servidor-local/servidor.js:148`), lanzado por el cliente con `node` y
   `${workspaceFolder}` como directorio de trabajo (`.vscode/mcp.json` del paso 1).
-- **Sin red.** El código no importa módulos de red (`mcp/servidor-local/servidor.js:13-18`).
-  Es una propiedad del código, no del permiso: en la verificación con Node 24.21, un proceso
-  lanzado con `--permission --allow-fs-read=.` pudo intentar una conexión TCP. La ausencia de
-  red se sostiene revisando el código y las dependencias, fijadas con versión exacta
-  (`mcp/servidor-local/package.json:12-13`).
+- **Código sin conexiones de red.** El código no importa módulos de red
+  (`mcp/servidor-local/servidor.js:13-18`). Es una propiedad del código, no del permiso: un
+  proceso lanzado con `--permission --allow-fs-read=.` puede intentar una conexión TCP. Se
+  sostiene revisando el código y las dependencias, fijadas con versión exacta
+  (`mcp/servidor-local/package.json:12-13`). Para un uso real, una regla de firewall o un
+  contenedor sin red la impiden a nivel de sistema.
 - **Permisos de Node.** `node --permission --allow-fs-read=.` (`mcp/README.md:33`) impide
   escribir en disco, lanzar procesos y cargar complementos nativos (`mcp/README.md:36-38`).
   Comprobado: escribir un archivo y ejecutar un proceso fallan con `ERR_ACCESS_DENIED`.

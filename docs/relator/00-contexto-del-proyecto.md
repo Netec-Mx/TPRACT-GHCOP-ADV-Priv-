@@ -119,8 +119,9 @@ nombre `lab-`, restringida a invocación explícita. El diseño está en
 del dominio, con prefijo `pasarela-`, en `.github/`. `ls .github/agents .github/skills`
 los lista.
 
-**El servidor MCP.** `mcp/servidor-local/`, de solo lectura, sin red, lanzado con el modelo
-de permisos de Node.
+**El servidor MCP.** `mcp/servidor-local/`, de solo lectura, sin conexiones de red en su
+código, lanzado con el modelo de permisos de Node, que impide escribir y lanzar procesos
+pero no restringe la red.
 
 **Los scripts.**
 

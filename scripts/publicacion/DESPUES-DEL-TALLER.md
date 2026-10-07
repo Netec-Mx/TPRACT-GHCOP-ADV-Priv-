@@ -13,7 +13,7 @@ siguientes.
 | Agentes por rol | `.github/agents/` | Analista, tester, documentador, revisor y refactorizador, con herramientas acotadas |
 | Skills | `.github/skills/` | Tareas repetibles que se invocan por nombre. Las `pasarela-` son ejemplos de dominio |
 | Hook | `.github/hooks/` | Un control que bloquea acciones del agente antes de que ocurran |
-| Servidor MCP | `mcp/` | Ejemplo de acceso a datos internos por un proceso local, sin red y de solo lectura |
+| Servidor MCP | `mcp/` | Ejemplo de acceso a datos internos por un proceso local, de solo lectura y sin conexiones de red en su código |
 | Tu agente o instrucción | `.github/agents/` o `.github/instructions/` | Lo que construiste en el laboratorio 2.4 |
 | Entregables | `labs/*/*/entregables/` | Documentos de los laboratorios de los capítulos 1 a 4 |
 | El ciclo de vida | `CICLO-DE-VIDA.md` y `docs/proyecto/` | La historia, la estimación, el registro de tiempos, el pull request, las notas de versión y el incidente del capítulo 5 |
