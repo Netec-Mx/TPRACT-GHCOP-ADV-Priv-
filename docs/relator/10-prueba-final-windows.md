@@ -475,3 +475,42 @@ Encendida y sin borrar. Con todo lo instalado, la shell de SSH en Git Bash y el 
 
 La sesión de Copilot CLI sigue iniciada, con el token en texto plano en
 `C:\Users\taller\.copilot\config.json`; se borra con `copilot logout`.
+
+## Verificación del camino .NET sin Copilot
+
+Agregado por SPEC-029, el 6 de octubre de 2026. Sin Copilot y sin créditos, sobre clones
+temporales del repositorio de participantes publicado en `1169720`, con el material de
+SPEC-028. Se declaró `dotnet` en `scripts/integracion/stack.txt`, se aplicaron en orden los
+estados de `ponerse-al-dia.sh` del 5.2, el 5.3 y el 5.4 con su commit, y después de cada uno
+se corrió `bash scripts/integracion-local.sh`.
+
+Dos plataformas:
+
+- **Linux, en el Mac.** La imagen de los gates, `taller-gates:1f32e813cf7e`, sin red. El Mac
+  tiene solo el SDK de .NET 8 y el escenario apunta a `net10.0`, así que no se corrió
+  directamente en macOS. 59 s.
+- **Windows.** La VM por SSH, en Git Bash, con la página de códigos 437. 225 s.
+
+| Estado | Paso | Linux | Windows |
+|---|---|---|---|
+| Inicio del 5.2 | .NET, compilar y probar | Pasa | Pasa |
+| | Equivalencia, tres periodos | Pasa | Pasa |
+| Inicio del 5.3 | .NET, compilar y probar | Pasa | Pasa |
+| | Equivalencia, tres periodos | Pasa | Pasa |
+| | `verificar-reporte.sh dotnet`, 2026-04, 05 y 06 | Coincide | Coincide |
+| Inicio del 5.4 | .NET, compilar y probar | Pasa | Pasa |
+| | Equivalencia, tres periodos | Pasa | Pasa |
+| | Conciliación, tres periodos | Pasa | Pasa |
+
+En los tres estados los pasos de Java se omiten por el stack declarado, los de dependencias
+son informativos y el pipeline termina en cero. La página de códigos de la consola volvió a
+437 al terminar.
+
+**1.5.5 en .NET.** La solución de referencia,
+`soluciones/lab-1-5/paso-5-extraer-retencion-dotnet.patch`, aplicada sobre el punto de
+partida, cambia un solo archivo, `CalculadoraLiquidacion.cs`, y `comparar-escenarios.sh`
+termina en cero en las dos plataformas.
+
+No se pudo verificar sin Copilot que un participante de .NET llegue a esos estados por su
+cuenta. Lo que queda comprobado es que el camino .NET tiene solución de referencia en cada
+laboratorio y que los scripts del taller la validan en Linux y en Windows.
