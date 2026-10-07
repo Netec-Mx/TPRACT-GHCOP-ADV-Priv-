@@ -446,3 +446,10 @@ Lo que sí cambia al pegar en Confluence, aunque no se pueda corregir en el arch
 - Las abreviaturas `Liq`, `Com`, `Plan` y `Fecha` de la introducción son una convención del documento y no se
   vinculan con los archivos.
 - Las citas de línea (`Liq:164`) quedan como texto y pierden vigencia si el código cambia.
+
+## Paso 4: `/lab-4-4-paso-4-generar-runbook java`
+
+No se grabó con Copilot. El respaldo de este paso es
+[`../soluciones/lab-4-4/runbook-calculo-de-comisiones.md`](../soluciones/lab-4-4/runbook-calculo-de-comisiones.md),
+escrito sin Copilot, con cada acción verificada ejecutada en una copia limpia del
+repositorio de participantes.

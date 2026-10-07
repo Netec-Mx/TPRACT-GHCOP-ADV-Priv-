@@ -67,7 +67,10 @@ corresponda a su tipo. Están solo en el repositorio de construcción, en
 `docs/relator/respaldo-lab-2-4/`:
 
 - `soporte-comercial.agent.md`, para la tarea A. Se guarda en `.github/agents/`.
+- `redactor-pull-requests.agent.md`, para la tarea B. Se guarda en `.github/agents/`.
 - `documentacion-del-equipo.instructions.md`, para la tarea C. Se guarda en
+  `.github/instructions/`.
+- `scripts-git-bash.instructions.md`, para la tarea D. Se guarda en
   `.github/instructions/`.
 - `revisor-limites-bian.agent.md`, para la tarea E. Se guarda en `.github/agents/`. Para
   probarlo, la primera prueba del paso 3 describe un cambio hipotético sobre archivos del

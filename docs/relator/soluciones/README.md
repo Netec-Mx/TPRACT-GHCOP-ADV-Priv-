@@ -7,6 +7,9 @@ a aplicar en cada corrida.
 | Laboratorio | Dónde | Qué contiene |
 |---|---|---|
 | 1.5 | `lab-1-5/paso-5-extraer-retencion-{java,dotnet}.patch` | Retención de garantía extraída a un método |
+| 2.4 | `../respaldo-lab-2-4/` | Un artefacto por tarea: agentes de las tareas A, B y E, instrucciones de las tareas C y D |
+| 3.4 | `lab-3-4/caso-de-uso-mcp.md` | Documento del paso 4, escrito sin Copilot |
+| 4.4 | `lab-4-4/` | Documentos de los pasos 1, 2 y 4: reglas, decisión y runbook, escritos sin Copilot |
 | 5.1 | `lab-5-1/` | Historia de referencia con las respuestas del negocio, estimación y decisión |
 | 5.2 | `funcionalidad-reporte/reporte-{java,dotnet}.patch`, con `lab-5-2/README.md` | El reporte por medio de pago, camino A, y los dos caminos |
 | 5.3 | `lab-5-3/` y `funcionalidad-reporte/correccion-{java,dotnet}.patch` | Conciliación en el pipeline, mantención correctiva y hash de junio |

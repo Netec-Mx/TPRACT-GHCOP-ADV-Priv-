@@ -12,9 +12,44 @@ Análisis y mejora de un componente Java/.NET. 60 minutos.
 | 4 | Propuestas variadas. La más frecuente es extraer el cálculo de comisión |
 | 5 | Extracción de la retención de garantía a un método propio, con el comparador en cero |
 
-En el paso 2, si hay tiempo, muestre en vivo cómo desaparece una línea. Corrompa el monto
-de una transacción en `escenario/datos/transacciones.txt`, ejecute el escenario y compare
-el total de transacciones. Después restaure con `bash scripts/reiniciar-lab.sh lab-1-5`.
+En el paso 2, si hay tiempo, muestre en vivo cómo desaparece una línea. En Git Bash, desde
+la raíz del repositorio, compile y mire el total antes de tocar nada:
+
+```bash
+cd escenario/java && mvn -q clean package -DskipTests && cd ../..
+(cd escenario/java && java -jar target/liquidacion-comercios.jar 2026-06 ../datos) | grep -E "Transacciones (liquidadas|descartadas)" | tail -2
+```
+
+```
+  Transacciones descartadas: 0
+  Transacciones liquidadas  : 713
+```
+
+Corrompa el monto de la primera transacción, cambiando el cero de `8096.00` por la letra O,
+y vuelva a ejecutar:
+
+```bash
+sed -i "s/^TX000001;CM0004;8096.00;/TX000001;CM0004;8O96.00;/" escenario/datos/transacciones.txt
+grep -n "^TX000001;" escenario/datos/transacciones.txt
+(cd escenario/java && java -jar target/liquidacion-comercios.jar 2026-06 ../datos) | grep -E "Transacciones (liquidadas|descartadas)" | tail -2
+```
+
+```
+2:TX000001;CM0004;8O96.00;PEN;2026-06-18 16:32:34;BILLETERA_MOVIL;1;APROBADA;TN1GYZ
+  Transacciones descartadas: 0
+  Transacciones liquidadas  : 712
+```
+
+Una transacción menos y cero descartadas: la línea desapareció sin rastro. El hook no lo
+impide porque la edición la hace usted en la terminal, no el agente. Deje el archivo como
+estaba:
+
+```bash
+bash scripts/reiniciar-lab.sh lab-1-5 --confirmar
+grep -n "^TX000001;" escenario/datos/transacciones.txt
+```
+
+La última línea tiene que volver a decir `8096.00`.
 
 **Comercio suspendido.** Las reglas de `escenario/README.md` no dicen si un comercio
 suspendido se liquida, a propósito. En el paso 3 aparece que `buscarComerciosActivos`
@@ -52,7 +87,7 @@ corregirlo queda fuera del alcance del laboratorio.
 ## Si alguien se atrasa
 
 Que salte al paso 5. No depende de los anteriores, porque la zona a extraer está fijada.
-Si el paso 5 falla, que reinicie con `bash scripts/reiniciar-lab.sh lab-1-5` y lo repita.
+Si el paso 5 falla, que reinicie con `bash scripts/reiniciar-lab.sh lab-1-5 --confirmar` y lo repita.
 
 ## Solución de referencia
 
