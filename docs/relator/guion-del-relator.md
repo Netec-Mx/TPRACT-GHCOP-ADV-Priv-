@@ -335,12 +335,12 @@ el trabajo anterior. Para eso está este script, que deja el estado de referenci
 del 5.2, el 5.3 o el 5.4 en el stack del participante.
 
 ```bash
-bash scripts/proyecto/ponerse-al-dia.sh <lab-5-2|lab-5-3|lab-5-4> <java|dotnet> <clave> [--confirmo-descartar]
+bash scripts/proyecto/ponerse-al-dia.sh <lab-5-2|lab-5-3|lab-5-4> <java|dotnet> <clave> --confirmo-descartar
 ```
 
 Los estados van cifrados. La clave está en `docs/relator/capitulo-5-hoja-de-respuestas.md`,
 sección «Si alguien se atrasa», y es `quinua-condor-47`. Dila en voz alta solo cuando haga
-falta. Sin `--confirmo-descartar` el script pide escribir `descartar`. Después el
+falta. Úsalo siempre con `--confirmo-descartar`, que descarta sin preguntar. Después el
 participante revisa con `git status` y confirma los cambios en su rama.
 
 Para empezar el 5.1 desde cero no hace falta clave. Se usa `bash scripts/reiniciar-lab.sh
@@ -423,7 +423,7 @@ mismos.
 La regla tiene tres partes. El plan se aplica completo desde la primera sesión, no cuando ya
 vas atrasado. Ningún laboratorio pierde tiempo y ningún subtema se omite. El corte del 5.3
 al minuto 45 se mantiene. Si a esa altura el pipeline no está en verde, la sala sigue con
-`bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 <stack> <clave>` y el paso 4 del 5.3
+`bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 <stack> <clave> --confirmo-descartar` y el paso 4 del 5.3
 queda como tarea posterior.
 
 Son 63 minutos menos. Las sesiones quedan en 170, 162, 155 y 260 minutos.
@@ -2799,31 +2799,27 @@ Quien no termina el 5.1 sigue con el 5.2 desde el estado de referencia. Di la cl
 `quinua-condor-47`, y que ejecute con su stack.
 
 ```bash
-bash scripts/proyecto/ponerse-al-dia.sh lab-5-2 java quinua-condor-47
+bash scripts/proyecto/ponerse-al-dia.sh lab-5-2 java quinua-condor-47 --confirmo-descartar
 ```
 
-El script pide escribir `descartar`. Después el participante confirma con
-`git add -A && git commit -m "Inicio del 5.2"`. Le deja una historia, una estimación y una
-decisión de referencia, y el registro de tiempos con el 5.1 marcado como `referencia`. Salida
-real. En esta captura la palabra `descartar` que escribe el participante aparece en la primera
-línea, antes del aviso.
+Después el participante confirma con `git add -A && git commit -m "Inicio del 5.2"`. Le deja
+una historia, una estimación y una decisión de referencia, y el registro de tiempos con el 5.1
+marcado como `referencia`. Salida real.
 
 ```
-$ bash scripts/proyecto/ponerse-al-dia.sh lab-5-2 java quinua-condor-47
-descartar
+$ bash scripts/proyecto/ponerse-al-dia.sh lab-5-2 java quinua-condor-47 --confirmo-descartar
 == Ponerse al dia: inicio de lab-5-2, stack java ==
   [AVISO] Se descarta todo el trabajo del capitulo 5 que haya en este repositorio:
           escenario docs/proyecto docs/arquitectura/decisiones scripts/integracion scripts/integracion-local.sh .github/workflows CHANGELOG.md
   [AVISO] Los commits siguen en el historial; los archivos vuelven al estado de referencia.
-
-  Escribe descartar para continuar, cualquier otra cosa para cancelar:   [ OK ] Listo para empezar el lab-5-2 con java.
+  [ OK ] Listo para empezar el lab-5-2 con java.
   Revisa los cambios con git status y confirmalos en tu rama antes de seguir.
 ```
 
 Si la clave está mal escrita, no cambia nada.
 
 ```
-$ bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-48
+$ bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-48 --confirmo-descartar
 La clave no es correcta. No se modifico nada.
 ```
 
@@ -2950,10 +2946,10 @@ escenario, primero `bash scripts/reiniciar-lab.sh lab-5-2 --confirmar`. En la sa
 Quien no termina el 5.2 sigue con el 5.3 desde el estado de referencia, que es el camino A.
 
 ```bash
-bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47
+bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47 --confirmo-descartar
 ```
 
-Pide `descartar` y después se confirma con `git add -A && git commit -m "Inicio del 5.3"`. La
+Después se confirma con `git add -A && git commit -m "Inicio del 5.3"`. La
 salida real de ese comando está en el laboratorio 5.3.
 
 Respaldo de los dos caminos en `docs/relator/respaldos/lab-5-2.md`. El camino B está grabado en
@@ -3220,10 +3216,10 @@ Si al minuto 45 el pipeline no está en verde, corta el laboratorio. La sala sig
 desde el estado de referencia. Di la clave y que cada uno ejecute con su stack.
 
 ```bash
-bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47
+bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47 --confirmo-descartar
 ```
 
-Pide `descartar` y después se confirma con `git add -A && git commit -m "Inicio del 5.4"`. El
+Después se confirma con `git add -A && git commit -m "Inicio del 5.4"`. El
 paso 4 del 5.3, la revisión y la descripción del pull request, queda como tarea posterior. Si la
 sala viene atrasada, usa `ponerse-al-dia.sh` en lugar de recortar pasos. Ningún paso del
 capítulo pasa a opcional salvo el 5.3.5, que ya lo era.
@@ -3260,7 +3256,7 @@ parches queda en verde.
 #### Poner al día a quien se atrase
 
 Quien no terminó el 5.2 entra al 5.3 con
-`bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47`, escribe `descartar` y
+`bash scripts/proyecto/ponerse-al-dia.sh lab-5-3 java quinua-condor-47 --confirmo-descartar` y
 confirma con `git add -A && git commit -m "Inicio del 5.3"`. Le deja el camino A. La salida real
 está más arriba, en «Preparar».
 
@@ -3343,7 +3339,7 @@ el cierre del ciclo. Enunciado en `labs/cap5/lab-5-4-laboratorio-final/README.md
 #### Preparar
 
 El 5.4 no se reinicia. Continúa sobre lo que dejaron el 5.1 al 5.3 en la rama de cada
-participante. Quien viene del corte del 5.3 entra con `ponerse-al-dia.sh lab-5-4`. Salida real
+participante. Quien viene del corte del 5.3 entra con `ponerse-al-dia.sh lab-5-4` y `--confirmo-descartar`. Salida real
 de ese estado con el pipeline completo, en verde, y la compilación de Maven recortada.
 
 ```
@@ -3489,10 +3485,10 @@ exportación en CSV, sirven si alguien termina antes.
 #### Poner al día a quien se atrase
 
 ```bash
-bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47
+bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47 --confirmo-descartar
 ```
 
-Pide `descartar` y después se confirma con `git add -A && git commit -m "Inicio del 5.4"`. La
+Después se confirma con `git add -A && git commit -m "Inicio del 5.4"`. La
 salida real está en «Preparar». El paso 2 funciona con cualquier estado de la rama, porque el
 incidente se analiza con las notas de referencia.
 
@@ -3720,7 +3716,7 @@ capítulo 5, donde el 5.3 solo puede costar cientos de créditos.
    laboratorio que esté haciendo la sala.
 
 ```bash
-bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47
+bash scripts/proyecto/ponerse-al-dia.sh lab-5-4 java quinua-condor-47 --confirmo-descartar
 ```
 
 4. Pide al administrador que suba el presupuesto adicional. Si la organización no lo

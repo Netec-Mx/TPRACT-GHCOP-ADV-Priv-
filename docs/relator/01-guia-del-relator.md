@@ -236,7 +236,7 @@ quitando o acortando elementos opcionales de la exposición.
 
 El plan se aplica completo desde la primera sesión, no cuando el relator ya va atrasado.
 Ningún laboratorio pierde tiempo y ningún subtema del temario se omite. El corte del 5.3 al
-minuto 45 con `ponerse-al-dia.sh lab-5-4` se mantiene.
+minuto 45 con `ponerse-al-dia.sh lab-5-4 <stack> <clave> --confirmo-descartar` se mantiene.
 
 Aritmética. 10 + 10 + 8 + 15 + 10 + 10 = 63 minutos menos. Las sesiones quedan en 170, 162,
 155 y 260 minutos: 747, 12 horas y 27 minutos. La columna «Min, plan 12,5 h» de cada tabla
@@ -354,7 +354,7 @@ sala viene atrasada, use `ponerse-al-dia.sh` en lugar de recortar pasos.
 El 5.3 es el laboratorio más justo del taller. En la prueba en Windows de SPEC-027, con
 Copilot, el agente trabajó 73 minutos en el 5.3 del camino A, sin contar el tiempo de leer y
 aprobar; el paso 3 solo, 45. Si al minuto 45 el pipeline no está en verde, corte: la sala
-sigue con `ponerse-al-dia.sh lab-5-4` y el paso 4 del 5.3 queda como tarea posterior. El
+sigue con `ponerse-al-dia.sh lab-5-4 <stack> <clave> --confirmo-descartar` y el paso 4 del 5.3 queda como tarea posterior. El
 detalle está en [`notas/lab-5-3.md`](notas/lab-5-3.md).
 
 **El capítulo 5 es una sola historia.** Cada participante elige un stack y trabaja en una
