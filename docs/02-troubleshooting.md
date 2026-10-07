@@ -100,18 +100,16 @@ de usuario o en la del espacio de trabajo.
 
 ### Solución
 
-1. Abrir la vista de Extensiones (`Ctrl+Shift+X`; en macOS, `Cmd+Shift+X`).
-2. Escribir `@builtin copilot` en el buscador.
-3. Seleccionar **GitHub Copilot Chat**.
-4. Pulsar **Enable AI Features** (**Habilitar características de IA** con la interfaz en
-   español). Si el botón que aparece es **Enable** (**Habilitar**), pulsar ese.
-5. Si no hay sesión iniciada, iniciarla desde el icono de Copilot de la barra de estado.
+1. Pasar el puntero sobre el ícono de Copilot de la barra de estado.
+2. Elegir **Use AI Features**.
+3. Iniciar sesión con **Sign in to use Copilot**, con la cuenta de GitHub que tiene la
+   licencia.
 
-Si en el paso 4 el botón que aparece es **Enable AI Features (Workspace)** (**Habilitar
-características de IA (área de trabajo)**), la desactivación viene del archivo
-`.vscode/settings.json` del repositorio, que fija `"chat.disableAIFeatures": true`. El
-ajuste del espacio de trabajo prevalece sobre el de usuario. Ese botón lo cambia a
-`false`; también se puede borrar la línea del archivo.
+El ajuste `chat.disableAIFeatures` no debe quedar en `true`. Si sigue en `true` después del
+paso 2, buscarlo en la configuración (`Ctrl+,`; en macOS, `Cmd+,`) y dejar la casilla
+desmarcada. Si la desactivación viene del archivo `.vscode/settings.json` del repositorio,
+que fija `"chat.disableAIFeatures": true`, ese ajuste del espacio de trabajo prevalece sobre
+el de usuario: se borra la línea del archivo.
 
 ### Cómo confirmarlo
 

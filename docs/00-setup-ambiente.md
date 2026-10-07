@@ -130,18 +130,14 @@ iniciada y el ambiente parece correcto.
 
 Para habilitarla:
 
-1. Abrir la vista de Extensiones (`Ctrl+Shift+X`; en macOS, `Cmd+Shift+X`).
-2. Escribir `@builtin copilot` en el buscador. El filtro `@builtin` muestra las extensiones
-   integradas, que no aparecen en la lista normal.
-3. Seleccionar **GitHub Copilot Chat**.
-4. Pulsar **Enable AI Features**. Con la interfaz en español el botón dice **Habilitar
-   características de IA**. Si el botón que aparece es **Enable** (**Habilitar**), pulsar
-   ese: el efecto es el mismo.
-5. Iniciar sesión en GitHub desde el icono de Copilot de la barra de estado.
+1. Pasar el puntero sobre el ícono de Copilot de la barra de estado.
+2. Elegir **Use AI Features**.
+3. Iniciar sesión con **Sign in to use Copilot**, con la cuenta de GitHub que tiene la
+   licencia.
 
-El botón del paso 4 no hace más que cambiar el ajuste `chat.disableAIFeatures` a `false`.
-Se puede hacer también desde la configuración (`Ctrl+,`; en macOS, `Cmd+,`), buscando ese ajuste y dejando la
-casilla desmarcada.
+El ajuste `chat.disableAIFeatures` no debe quedar en `true`, ni en la configuración de
+usuario ni en la del espacio de trabajo. Si quedó así, se cambia desde la configuración
+(`Ctrl+,`; en macOS, `Cmd+,`), buscando ese ajuste y dejando la casilla desmarcada.
 
 Después, **cerrar Visual Studio Code por completo** antes de ejecutar el script de
 verificación. El editor no escribe el estado de las extensiones en disco en el momento en

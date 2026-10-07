@@ -537,16 +537,13 @@ confirmacion_en_el_chat() {
 registrar_indicaciones_funciones_ia() {
     atajos_vscode
     indicaciones_funciones_ia="Como habilitar las funciones de IA en Visual Studio Code:
-  1. Abrir la vista de Extensiones ($atajo_extensiones).
-  2. Escribir @builtin copilot en el buscador.
-  3. Seleccionar GitHub Copilot Chat.
-  4. Pulsar \"Enable AI Features\" (\"Habilitar características de IA\" con la interfaz
-     en espanol). Si el boton que aparece es \"Enable\" (\"Habilitar\"), pulsar ese.
-  5. Iniciar sesion en GitHub desde el icono de Copilot de la barra de estado.
-  6. Cerrar Visual Studio Code por completo y volver a ejecutar este script. El editor
+  1. Pasar el puntero sobre el icono de Copilot de la barra de estado.
+  2. Elegir \"Use AI Features\".
+  3. Iniciar sesion con \"Sign in to use Copilot\", con la cuenta que tiene la licencia.
+  4. Cerrar Visual Studio Code por completo y volver a ejecutar este script. El editor
      no guarda este estado en disco en el momento, pero si al cerrarse.
-Alternativa para el paso 4: Configuracion ($atajo_configuracion), buscar chat.disableAIFeatures y
-dejar la casilla desmarcada."
+El ajuste chat.disableAIFeatures no debe quedar en true. Si sigue asi, Configuracion
+($atajo_configuracion), buscar chat.disableAIFeatures y dejar la casilla desmarcada."
 }
 
 # Dice si Visual Studio Code esta abierto: 0 si lo esta, 1 si no, 2 si no se puede saber.

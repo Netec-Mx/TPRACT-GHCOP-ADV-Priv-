@@ -57,14 +57,12 @@ pregunta, escriba `si` y pulse Intro.
 ### A1. Copilot Chat está habilitado
 
 1. Abra Visual Studio Code.
-2. En la barra lateral izquierda, haga clic en el ícono de **Extensions**, el de los cuatro
-   cuadrados.
-3. En el cuadro de búsqueda de extensiones escriba `@builtin copilot`.
-4. Busque **GitHub Copilot Chat**. Si tiene un botón **Enable** o una opción para activar
-   las funciones de inteligencia artificial, haga clic en ella. Si Visual Studio Code pide
-   recargar, acepte con **Reload**.
+2. Pase el puntero sobre el ícono de Copilot de la barra de estado, abajo a la derecha.
+3. Si aparece **Use AI Features**, elíjalo. Después inicie sesión con **Sign in to use
+   Copilot**. Si Visual Studio Code pide recargar, acepte con **Reload**.
 
-- [ ] **Esperado:** GitHub Copilot Chat aparece habilitada, sin botón **Enable**.
+- [ ] **Esperado:** el menú del ícono de Copilot ya no ofrece **Use AI Features** y el ajuste
+      `chat.disableAIFeatures` no está en `true`.
 - Observado: ______________________________________________
 
 ### A2. La sesión de GitHub es RoSilva26

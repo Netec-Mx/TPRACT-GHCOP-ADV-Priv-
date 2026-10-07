@@ -114,8 +114,8 @@ Running builtin chat extension enablement migration
 Disabling builtin chat extension as chat set up is not completed
 ```
 
-Se resuelve en el panel de extensiones, con el filtro `@builtin copilot`, pulsando
-**Enable AI Features** o **Enable** sobre GitHub Copilot Chat.
+Se resuelve pasando el puntero sobre el ícono de Copilot de la barra de estado, eligiendo
+**Use AI Features** y después **Sign in to use Copilot**.
 
 El verificador buscaba con `code --list-extensions`, que no lista las extensiones
 integradas. Habría reprobado esta máquina con Copilot deshabilitado, y también con Copilot

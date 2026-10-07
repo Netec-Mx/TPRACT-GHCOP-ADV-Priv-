@@ -115,16 +115,9 @@ Fecha: 2026-10-05 16:05:14
     - Funciones de IA de Visual Studio Code deshabilitadas, Copilot no va a sugerir ni responder: el perfil todavia no registra el estado de las extensiones, Visual Studio Code nunca se cerro con este perfil
 
   Como habilitar las funciones de IA en Visual Studio Code:
-    1. Abrir la vista de Extensiones (Ctrl+Shift+X).
-    2. Escribir @builtin copilot en el buscador.
-    3. Seleccionar GitHub Copilot Chat.
-    4. Pulsar "Enable AI Features" ("Habilitar características de IA" con la interfaz
-       en espanol). Si el boton que aparece es "Enable" ("Habilitar"), pulsar ese.
-    5. Iniciar sesion en GitHub desde el icono de Copilot de la barra de estado.
-    6. Cerrar Visual Studio Code por completo y volver a ejecutar este script. El editor
-       no guarda este estado en disco en el momento, pero si al cerrarse.
-  Alternativa para el paso 4: Configuracion (Ctrl+,), buscar chat.disableAIFeatures y
-  dejar la casilla desmarcada.
+    [Seis pasos de la version de entonces del verificador, con el panel de extensiones.
+     Se reemplazaron por los de la barra de estado: Use AI Features y Sign in to use
+     Copilot.]
 
   Revisa docs/00-setup-ambiente.md para los pasos de instalacion.
 ```
