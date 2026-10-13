@@ -14,10 +14,13 @@ es el resultado de cada paso, debe coincidir.
 | Respaldo | Estado |
 |---|---|
 | [lab-1-4.md](lab-1-4.md) | Completo |
+| [lab-1-4-dotnet.md](lab-1-4-dotnet.md) | Completo, Copilot real, .NET |
 | [lab-1-5.md](lab-1-5.md) | Completo. El comparador del paso 5 está al final, ejecución real |
+| [lab-1-5-dotnet.md](lab-1-5-dotnet.md) | Completo, Copilot real, .NET |
 | [lab-2-4.md](lab-2-4.md) | Completo, tarea C |
 | [lab-3-4.md](lab-3-4.md) | Completo. El agente no obedeció la nota con inyección |
 | [lab-4-4.md](lab-4-4.md) | Pasos 1 a 3 grabados; el paso 4 remite al runbook de referencia de `../soluciones/lab-4-4/` |
+| [lab-4-4-dotnet.md](lab-4-4-dotnet.md) | Completo, Copilot real, .NET |
 | [lab-5-1.md](lab-5-1.md) | Completo, SPEC-016, Java |
 | [lab-5-2.md](lab-5-2.md) | Completo, SPEC-016, con los dos caminos: B en Java y A en .NET |
 | [lab-5-3.md](lab-5-3.md) | Completo, SPEC-016, con los dos caminos, cada uno sobre su 5.2 |
