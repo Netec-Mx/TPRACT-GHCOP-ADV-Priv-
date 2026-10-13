@@ -23,13 +23,18 @@ es el resultado de cada paso, debe coincidir.
 | [lab-5-3.md](lab-5-3.md) | Completo, SPEC-016, con los dos caminos, cada uno sobre su 5.2 |
 | [lab-5-4.md](lab-5-4.md) | Completo, SPEC-016, Java |
 | [demo-1-1.md](demo-1-1.md) | Completo |
+| [demo-1-1-dotnet.md](demo-1-1-dotnet.md) | Completo, Copilot real, .NET |
 | [demo-1-2.md](demo-1-2.md) | Completo |
+| [demo-1-2-dotnet.md](demo-1-2-dotnet.md) | Completo, Copilot real, .NET |
 | [demo-1-3.md](demo-1-3.md) | Completo, Copilot real, Java |
+| [demo-1-3-dotnet.md](demo-1-3-dotnet.md) | Completo, Copilot real, .NET |
 | [demo-2-1.md](demo-2-1.md) | Completo |
 | [demo-2-2.md](demo-2-2.md) | Completo, Copilot real, Java |
+| [demo-2-2-dotnet.md](demo-2-2-dotnet.md) | Completo, Copilot real, .NET |
 | [demo-2-3.md](demo-2-3.md) | Completo |
 | [demo-3-2.md](demo-3-2.md) | Completo, Copilot real, Java |
 | [demo-3-3.md](demo-3-3.md) | Completo, Copilot real, Java |
 | [demo-4-1.md](demo-4-1.md) | Completo, Copilot real, Java |
+| [demo-4-1-dotnet.md](demo-4-1-dotnet.md) | Completo, Copilot real, .NET |
 
 La demostración 5.3 tiene su respaldo en [demo-5-3.md](demo-5-3.md), grabado en GitHub Actions. Incluye la revisión de Copilot del pull request, con su texto real.
