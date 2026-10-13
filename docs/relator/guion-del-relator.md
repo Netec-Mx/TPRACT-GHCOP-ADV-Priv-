@@ -3642,7 +3642,7 @@ scripts con `bash scripts/...` no debería aparecer.
   Anota cómo se lanzó el script, porque el cambio de página automático no se aplicó.
 - Si falla en otras líneas, la diferencia es real y se trata como en el laboratorio.
 
-`[CAPTURA PENDIENTE] Para el Product Owner. En la máquina virtual Windows, la terminal Git Bash integrada de Visual Studio Code después de ejecutar bash scripts/comparar-escenarios.sh, con el resumen «Escenarios equivalentes» y el código de salida 0, y a continuación chcp.com mostrando la página de códigos original restaurada.`
+`[CAPTURA PENDIENTE] En la máquina virtual Windows, la terminal Git Bash integrada de Visual Studio Code después de ejecutar bash scripts/comparar-escenarios.sh, con el resumen «Escenarios equivalentes» y el código de salida 0, y a continuación chcp.com mostrando la página de códigos original restaurada.`
 
 ### PowerShell como terminal de Copilot en Windows
 
@@ -3673,7 +3673,7 @@ es parte del ambiente.
 - Los participantes trabajan en la terminal de Git Bash de Visual Studio Code. Verifica en
   el ensayo qué terminal usa el modo agente en la máquina virtual.
 
-`[CAPTURA PENDIENTE] Para el Product Owner. En la máquina virtual Windows, Visual Studio Code con el chat en modo Agent ejecutando un comando, con el panel Terminal abierto, de modo que se vea si la terminal que abre el agente es Git Bash o PowerShell.`
+`[CAPTURA PENDIENTE] En la máquina virtual Windows, Visual Studio Code con el chat en modo Agent ejecutando un comando, con el panel Terminal abierto, de modo que se vea si la terminal que abre el agente es Git Bash o PowerShell.`
 
 `[CAPTURA PENDIENTE] Chat de Copilot en modo Agent en Windows pidiendo aprobar un comando de PowerShell, con los botones Allow y Skip visibles.`
 
@@ -3715,7 +3715,7 @@ CLI el texto es «You have exceeded your monthly quota» o «You've reached your
 usage limit for your plan». En Visual Studio Code la redacción puede cambiar. No hay aviso
 previo.
 
-`[CAPTURA PENDIENTE] Para el Product Owner. Panel de chat de Visual Studio Code con el mensaje exacto que aparece cuando la cuenta agota su cuota y su presupuesto adicional, con el texto completo legible.`
+`[CAPTURA PENDIENTE] Panel de chat de Visual Studio Code con el mensaje exacto que aparece cuando la cuenta agota su cuota y su presupuesto adicional, con el texto completo legible.`
 
 #### Causa
 
@@ -3829,7 +3829,7 @@ no confía en el espacio de trabajo y por eso tampoco en sus servidores MCP ni e
   elige `pasarela-andina` y **Start Server**. El ícono de herramientas del chat debe listar
   `buscar_comercios`, `detalle_comercio` y `buscar_notas_soporte`.
 
-`[CAPTURA PENDIENTE] Para el Product Owner. Visual Studio Code con la interfaz en español y la carpeta del repositorio abierta en modo restringido, con el aviso completo legible y la opción para confiar en la carpeta.`
+`[CAPTURA PENDIENTE] Visual Studio Code con la interfaz en español y la carpeta del repositorio abierta en modo restringido, con el aviso completo legible y la opción para confiar en la carpeta.`
 
 ### verificar-reporte con CRLF
 
@@ -3888,7 +3888,7 @@ fallaría igual en el 5.3.5.
 
 Cada captura está marcada en su lugar con `[CAPTURA PENDIENTE]`.
 
-### Las que tiene que comprobar el Product Owner en el editor
+### Las que hay que comprobar en el editor
 
 Estas cinco no son solo una imagen. Hay que mirarlas en Visual Studio Code y, según lo que se vea, ajustar el guion.
 

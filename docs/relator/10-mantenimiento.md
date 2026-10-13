@@ -17,7 +17,7 @@ Studio Code en el medio.
 2. Para cada punto, leer la fuente y compararla con lo que suponen los archivos que
    dependen de él.
 3. Correr `bash scripts/gates.sh` en el repositorio de construcción.
-4. Si algo cambió, corregir por spec, republicar con `bash scripts/publicar-taller.sh
+4. Si algo cambió, corregir el material, republicar con `bash scripts/publicar-taller.sh
    --publicar https://github.com/RodrigoMSB/github-copilot-netec-taller.git --reemplazar`
    y repetir en la máquina virtual los bloques A y B de
    [`07-protocolo-prueba-vm.md`](07-protocolo-prueba-vm.md).
