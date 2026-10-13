@@ -118,17 +118,19 @@ Esta es una salida real con `--sin-red`, en un contenedor Linux con Java 25, .NE
 
 ```
 Verificacion de ambiente, taller de GitHub Copilot
-Script version 2.3.0
+Script version 2.4.0
 Entorno: Linux
 Sistema: Linux 6.10.14-linuxkit
 Shell: 5.2.21(1)-release
-Fecha: 2026-10-06 20:01:23
+Fecha: 2026-10-13 12:52:19
 
 == Herramientas obligatorias ==
   [ OK ] Git 2.43.0 (minimo 2.40)
   [ OK ] JDK 25.0.4 (minimo 21)
+  [ OK ] Compilador de Java 25.0.4 (minimo 21)
+  [ OK ] Apache Maven 3.9.16 (minimo 3.9)
   [ OK ] SDK de .NET 10.0.401 (minimo 10.0)
-  [ OK ] Node.js 24.21.0 (minimo 22)
+  [ OK ] Node.js 24.21.0 (minimo 22.13)
   [FALLA] Visual Studio Code no esta instalado o no esta en el PATH (se requiere 1.116 o superior)
 
 == GitHub Copilot en Visual Studio Code ==
@@ -146,9 +148,6 @@ Fecha: 2026-10-06 20:01:23
   [ OK ] Dependencia del servidor MCP @modelcontextprotocol/server 2.1.0
   [ OK ] Dependencia del servidor MCP zod 4.6.5
   [ OK ] El servidor MCP arranca y lista sus tres herramientas
-
-== Herramientas recomendadas ==
-  [ OK ] Apache Maven 3.9.16 (minimo 3.9)
 
 == Conectividad ==
   Omitida por --sin-red

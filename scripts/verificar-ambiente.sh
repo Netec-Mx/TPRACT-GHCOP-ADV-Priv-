@@ -20,7 +20,7 @@ set -u
 # Version del script y requisitos minimos
 # ---------------------------------------------------------------------------
 
-readonly VERSION_SCRIPT="2.3.0"
+readonly VERSION_SCRIPT="2.4.0"
 
 # Piso exigido por herramienta. Es el minimo con el que el taller es viable, no lo que se
 # solicita para la imagen de la maquina virtual. La distincion entre ambos esta explicada
@@ -28,7 +28,7 @@ readonly VERSION_SCRIPT="2.3.0"
 readonly MIN_GIT="2.40"
 readonly MIN_JDK="21"
 readonly MIN_DOTNET="10.0"
-readonly MIN_NODE="22"
+readonly MIN_NODE="22.13"
 readonly MIN_MAVEN="3.9"
 
 # Visual Studio Code 1.116 (abril de 2026) es la primera version que trae GitHub Copilot
@@ -968,6 +968,8 @@ printf 'Fecha: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')"
 titulo "Herramientas obligatorias"
 verificar_herramienta "Git" "git" "$MIN_GIT" "si" git --version
 verificar_herramienta "JDK" "java" "$MIN_JDK" "si" java -version
+verificar_herramienta "Compilador de Java" "javac" "$MIN_JDK" "si" javac -version
+verificar_herramienta "Apache Maven" "mvn" "$MIN_MAVEN" "si" mvn --version
 verificar_herramienta "SDK de .NET" "dotnet" "$MIN_DOTNET" "si" dotnet --version
 verificar_herramienta "Node.js" "node" "$MIN_NODE" "si" node --version
 
@@ -988,9 +990,6 @@ verificar_hook_datos || true
 
 titulo "Servidor MCP local"
 verificar_servidor_mcp || true
-
-titulo "Herramientas recomendadas"
-verificar_herramienta "Apache Maven" "mvn" "$MIN_MAVEN" "no" mvn --version
 
 if [ "$comprobar_red" -eq 1 ]; then
     if ! command -v curl >/dev/null 2>&1; then

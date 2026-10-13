@@ -43,14 +43,12 @@ puede seguir el taller sin quedar fuera.
 | Herramienta | Versión mínima | Para qué se usa |
 |---|---|---|
 | Git | 2.40 | Clonar el repositorio y los laboratorios de revisión. Aporta además Git Bash, el intérprete de los scripts en Windows |
-| JDK | 21 (LTS) | Escenario Java |
+| JDK | 21 (LTS) | Escenario Java. Se comprueban `java` y `javac`, porque un JRE no compila |
+| Apache Maven | 3.9 | Compila y prueba el escenario Java, y lo usan los scripts del taller |
 | SDK de .NET | 10.0 (LTS) | Escenario .NET, que apunta a `net10.0` |
-| Node.js | 22 (LTS) | Servidor MCP local del capítulo 3, y lectura del perfil del editor en el script de verificación |
+| Node.js | 22.13 | Ejecuta el hook de protección de datos de `.github/hooks/`, el servidor MCP local del capítulo 3 y la lectura del perfil del editor en el script de verificación. Desde 22.13 entiende la bandera `--permission` con la que se lanza el servidor MCP |
 | Visual Studio Code | 1.116 | IDE principal del taller. Es la primera versión que trae GitHub Copilot integrado |
 | curl | Cualquiera | Comprobación de conectividad. Viene con Git para Windows, macOS y Linux |
-
-Apache Maven 3.9 se comprueba como recomendado en este punto del proyecto. Pasará a
-obligatorio cuando el escenario Java lo necesite de verdad.
 
 ### 2.2 Versiones solicitadas para la imagen de la máquina virtual
 
@@ -60,12 +58,12 @@ meses del fin de soporte.
 
 | Herramienta | Versión solicitada |
 |---|---|
-| Git para Windows | Última estable |
-| JDK | 25 (LTS), última estable |
-| Apache Maven | 3.9.11 o superior |
-| SDK de .NET | 10.0 (LTS), última estable |
-| Node.js | 24 (LTS), última estable |
-| Visual Studio Code | Última estable |
+| Git para Windows | 2.55.0, con Git Bash |
+| JDK | 25.0.4.1 (LTS), con `JAVA_HOME` apuntando a él |
+| Apache Maven | 3.9.16 |
+| SDK de .NET | 10.0.401 (LTS) |
+| Node.js | 24.21.0 (LTS). El mínimo que acepta el script es 22.13 |
+| Visual Studio Code | 1.140 |
 
 Solo se necesita el stack del lenguaje que usará cada participante, pero si la imagen es
 única para todo el grupo debe traer ambos.
@@ -168,12 +166,14 @@ el mismo. No hay nada que resolver: la extensión no hace falta.
 
 ### Otras extensiones
 
-Deben venir instaladas en la imagen, no instalarse en clase.
+Son recomendadas, no obligatorias. Ningún laboratorio depende de ellas y el script de
+verificación no las comprueba, pero facilitan leer y navegar el código en el editor. Si se
+usan, deben venir instaladas en la imagen, no instalarse en clase.
 
-| Extensión | Identificador |
-|---|---|
-| Extension Pack for Java | `vscjava.vscode-java-pack` |
-| C# Dev Kit | `ms-dotnettools.csdevkit` |
+| Extensión | Identificador | Estado |
+|---|---|---|
+| Extension Pack for Java | `vscjava.vscode-java-pack` | Recomendada |
+| C# Dev Kit | `ms-dotnettools.csdevkit` | Recomendada |
 
 Quien trabaje en Visual Studio 2022 o IntelliJ IDEA necesita el plugin de Copilot
 equivalente ya instalado y con sesión iniciada.
