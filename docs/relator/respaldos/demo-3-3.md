@@ -1,36 +1,85 @@
-segundos: 13
+> Salida real de GitHub Copilot CLI 1.0.96 con Claude Sonnet 5.5, grabada el 12 de octubre
+> de 2026 en la máquina virtual Windows del taller, sobre una copia limpia del repositorio de
+> participantes. Se grabó en la CLI, no en Visual Studio Code. El hook es el mismo archivo del
+> repositorio y la CLI lo ejecuta antes de cada herramienta. El paso 4 se ejecutó en Git Bash
+> de la misma máquina.
 
-> Actualizado en SPEC-011-B. El hook imprime ahora el mensaje con tildes. Las salidas
-> estándar y de error del paso 1 son las del hook corregido, ejecutado de nuevo con la misma
-> entrada.
+# Demo 3.3. El hook que protege los datos (escenario Java)
 
-# Demo 3.3 simulada
+Una sola conversación, en modo Agent, con permiso de edición.
 
 ## Paso 1
-Texto: Agrega una transacción de prueba al final de escenario/datos/transacciones.txt.
-Modo Agent. El agente decide editar con editFiles.
-Hook: printf '%s' '{"tool_name":"editFiles","tool_input":{"files":["escenario/datos/transacciones.txt"]}}' | node .github/hooks/proteger-datos-escenario.js
-Salida estandar:
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/."},"permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/."}
-Error estandar: Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.
-Codigo de salida: 2 -> accion NO realizada.
-Intento alterno por terminal (echo "TX_PRUEBA" >> escenario/datos/transacciones.txt): mismo bloqueo, exit 2, no ejecutado.
-Respuesta del chat (simulada): "No pude agregar la transacción: un hook del repositorio bloqueó la edición con el mensaje «Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.» Si necesitas una transacción de prueba, puedo proponerte el texto de la línea para que la agregues tú o usar otro archivo fuera de escenario/datos/."
+
+Escrito: `Agrega una transacción de prueba al final de escenario/datos/transacciones.txt.`
+
+Copilot leyó las últimas líneas del archivo, cargó la skill `pasarela-reglas-de-negocio`,
+revisó el encabezado y el final de línea, e intentó editar el archivo. El hook corrió antes de
+la edición y la negó. La edición no llegó a pedir aprobación. Lo que registró la CLI:
+
+```
+Denied by preToolUse hook from ".github_hooks_proteger-datos-escenario.json" (hook errored)
+Error: Hook command failed with code 1
+Stderr: Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.
+```
+
+Después corrió `git --no-pager diff --stat`, que salió vacío. Respuesta:
+
+> No pude agregar la transacción. Un hook del repositorio, `.github/hooks/proteger-datos-escenario.json`, bloqueó la edición de `escenario/datos/transacciones.txt`. No intento rodearlo, así que el archivo quedó sin cambios.
+>
+> La skill de reglas de negocio también indica no modificar `escenario/datos/`, porque otros resultados dependen de esos datos.
+>
+> Esta es la línea que habría agregado, con el formato del archivo:
+>
+> ```
+> TX002038;CM0011;100.00;PEN;2026-06-24 10:00:00;TARJETA_DEBITO;1;APROBADA;TEST01
+> ```
+>
+> Si necesitas el cambio, desactiva o ajusta el hook tú mismo y dime que continúe. También puedo dejar la línea en un archivo fuera de `escenario/datos/`.
 
 ## Paso 2
-Texto: ¿Cuántas transacciones tiene escenario/datos/transacciones.txt?
-Hook para lectura (readFile) exit 0; para run_in_terminal "wc -l escenario/datos/transacciones.txt" exit 0.
-Comando: wc -l -> 2038; el archivo tiene encabezado (id;idComercio;monto;moneda;fechaHora;medioPago;cuotas;estado;codigoAutorizacion).
-Respuesta del chat: "El archivo tiene 2.037 transacciones (2.038 líneas, contando la fila de encabezado)."
+
+Escrito: `¿Cuántas transacciones tiene escenario/datos/transacciones.txt?`
+
+Respondió con lo que ya había leído en el paso 1, sin usar herramientas:
+
+> El archivo tiene 2037 transacciones: 2038 líneas, de las cuales una es el encabezado. No agregué ninguna, así que el conteo no cambió.
 
 ## Paso 3
-Se muestra .github/hooks/proteger-datos-escenario.json (hooks.PreToolUse con type command, command "node .github/hooks/proteger-datos-escenario.js", timeout 10).
+
+`.github/hooks/proteger-datos-escenario.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "node .github/hooks/proteger-datos-escenario.js",
+        "timeout": 10
+      }
+    ]
+  }
+}
+```
 
 ## Paso 4
-git status: "On branch main / Untracked files: mcp-llamar.sh / nothing added to commit but untracked files present". Tras el bloqueo, transacciones.txt sigue con 2038 lineas y sin cambios. No es "limpio" literal por el archivo mcp-llamar.sh del simulador (no existiria en la maquina real).
+
+`git status`:
+
+```
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+`wc -l escenario/datos/transacciones.txt`: `2038`.
 
 ## Esperado contra observado
-- Paso 1: coincide en la sustancia, pero el mensaje real carece de tildes ("estan", "Ningun") y el guion cita «Los datos del escenario están protegidos y no se pueden modificar» (con tilde, y el mensaje real agrega una segunda oracion). Diferencia menor, visible en pantalla.
-- Paso 2: coincide; el guion no da la cifra; es 2037 (no 2038 lineas).
+
+- Paso 1: coincide. El agente intentó editar y recibió el bloqueo con el mensaje del hook. La
+  CLI lo presenta como un hook que falló y agrega el texto del hook. El agente no intentó otra
+  vía y ofreció la línea para que la agregue una persona.
+- Paso 2: coincide, 2037 transacciones más el encabezado.
 - Paso 3: coincide.
-- Paso 4: coincide salvo el archivo del simulador. No fue necesario el plan alternativo.
+- Paso 4: coincide, árbol limpio. No fue necesario el plan alternativo.

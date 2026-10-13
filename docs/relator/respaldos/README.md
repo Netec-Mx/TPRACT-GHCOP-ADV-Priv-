@@ -4,10 +4,12 @@ Una salida completa por laboratorio y por demostración. Si el agente se demora,
 falla o se agota la cuota, el relator abre el respaldo correspondiente, lo muestra y sigue.
 Diga a la sala que es una ejecución grabada.
 
-Las salidas se grabaron el 1 de octubre de 2026 con un agente de verificación que simula a
-Copilot sobre una copia limpia del repositorio de participantes. No son salidas de Copilot.
-Lo que Copilot responda en clase puede tener otra redacción y otro orden. Lo que importa,
-que es el resultado de cada paso, debe coincidir.
+Hay dos clases de respaldo. Los que dicen «Copilot real» se grabaron con GitHub Copilot CLI
+en la máquina virtual Windows del taller, sobre una copia limpia del repositorio de
+participantes, y su primera línea dice cómo. Los demás se grabaron el 1 de octubre de 2026 con
+un agente de verificación que simula a Copilot y no son salidas de Copilot. En los dos casos,
+lo que Copilot responda en clase puede tener otra redacción y otro orden. Lo que importa, que
+es el resultado de cada paso, debe coincidir.
 
 | Respaldo | Estado |
 |---|---|
@@ -22,12 +24,12 @@ que es el resultado de cada paso, debe coincidir.
 | [lab-5-4.md](lab-5-4.md) | Completo, SPEC-016, Java |
 | [demo-1-1.md](demo-1-1.md) | Completo |
 | [demo-1-2.md](demo-1-2.md) | Completo |
-| [demo-1-3.md](demo-1-3.md) | Completo. Comandos ejecutados en la imagen de gates |
+| [demo-1-3.md](demo-1-3.md) | Completo, Copilot real, Java |
 | [demo-2-1.md](demo-2-1.md) | Completo |
-| [demo-2-2.md](demo-2-2.md) | Completo. Compilación y comparador ejecutados en la imagen de gates |
+| [demo-2-2.md](demo-2-2.md) | Completo, Copilot real, Java |
 | [demo-2-3.md](demo-2-3.md) | Completo |
-| [demo-3-2.md](demo-3-2.md) | Completo |
-| [demo-3-3.md](demo-3-3.md) | Completo |
-| [demo-4-1.md](demo-4-1.md) | Completo |
+| [demo-3-2.md](demo-3-2.md) | Completo, Copilot real, Java |
+| [demo-3-3.md](demo-3-3.md) | Completo, Copilot real, Java |
+| [demo-4-1.md](demo-4-1.md) | Completo, Copilot real, Java |
 
 La demostración 5.3 tiene su respaldo en [demo-5-3.md](demo-5-3.md), grabado en GitHub Actions. Incluye la revisión de Copilot del pull request, con su texto real.

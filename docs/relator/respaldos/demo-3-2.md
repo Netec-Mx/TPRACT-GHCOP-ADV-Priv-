@@ -1,68 +1,128 @@
-segundos: 32
+> Salida real de GitHub Copilot CLI 1.0.96 con Claude Sonnet 5.5, grabada el 12 de octubre
+> de 2026 en la máquina virtual Windows del taller, sobre una copia limpia del repositorio de
+> participantes, con las dependencias del servidor instaladas. Se grabó en la CLI, no en
+> Visual Studio Code. La CLI no arranca el servidor desde `.vscode/mcp.json`: se le pasó la
+> misma definición, con el mismo comando y los mismos permisos, por `--additional-mcp-config`.
+> Los comandos de los pasos 1, 2 y 6 se ejecutaron en Git Bash de la misma máquina.
 
-# Demo 3.2 simulada
+# Demo 3.2. El servidor MCP local (escenario Java)
 
 ## Paso 1. Abrir mcp/README.md
-Texto mostrado: tabla de tres herramientas (buscar_comercios, detalle_comercio, buscar_notas_soporte) y comando de arranque:
-`node --permission --allow-fs-read=. mcp/servidor-local/servidor.js`
-(el README dice "Ninguna herramienta escribe, borra ni ejecuta nada").
+
+Tabla de herramientas del README:
+
+```
+| Herramienta | Qué devuelve | Parámetros |
+|---|---|---|
+| `buscar_comercios` | Hasta 20 comercios con su identificador, razón social, categoría y estado | `texto`, `estado`, `categoria`, todos opcionales |
+| `detalle_comercio` | Los datos de un comercio y los de su plan de comisiones | `idComercio`, con formato `CM` y cuatro dígitos |
+| `buscar_notas_soporte` | Notas de las áreas de soporte, afiliaciones y riesgos | `idComercio` y `texto`, opcionales |
+```
+
+Comando de arranque, línea 33 del README:
+
+```
+node --permission --allow-fs-read=. mcp/servidor-local/servidor.js
+```
 
 ## Paso 2. Crear .vscode/mcp.json
-Hook antes de la edicion: {"tool_name":"editFiles","tool_input":{"files":[".vscode/mcp.json"]}} -> exit 0 (permitido). (Nota: lo ejecute despues de crear el archivo por orden de operaciones; resultado igual.)
-Contenido creado exactamente como el guion. La carpeta .vscode no existia y hubo que crearla.
 
-## Paso 3. MCP: List Servers / Start Server
-Comando: bash mcp-llamar.sh (sin args). Salida (exit 0):
-```
-{"result":{"tools":[{"name":"buscar_comercios","title":"Buscar comercios","description":"Busca comercios afiliados por texto en la razón social o el identificador, y opcionalmente por estado o categoría. Devuelve como máximo 20 resultados. Solo lectura.","inputSchema":{"type":"object","$schema":"https://json-schema.org/draft/2020-12/schema","properties":{"texto":{"description":"Texto a buscar en la razón social o el identificador","type":"string","maxLength":100},"estado":{"type":"string","enum":["ACTIVO","SUSPENDIDO","DE_BAJA"]},"categoria":{"description":"Categoría de negocio, por ejemplo RESTAURANTE","type":"string","maxLength":40}}}},{"name":"detalle_comercio","title":"Detalle de un comercio","description":"Devuelve los datos de un comercio y los de su plan de comisiones, con monto fijo, tope mensual y tramos. Solo lectura.","inputSchema":{"type":"object","$schema":"https://json-schema.org/draft/2020-12/schema","properties":{"idComercio":{"type":"string","pattern":"^CM\\d{4}$","description":"Identificador del comercio, por ejemplo CM0005"}},"required":["idComercio"]}},{"name":"buscar_notas_soporte","title":"Buscar notas de soporte","description":"Busca notas de soporte por comercio o por texto. Las notas las escriben las áreas de soporte, afiliaciones y riesgos. Solo lectura.","inputSchema":{"type":"object","$schema":"https://json-schema.org/draft/2020-12/schema","properties":{"idComercio":{"type":"string","pattern":"^CM\\d{4}$"},"texto":{"type":"string","maxLength":100}}}}]},"jsonrpc":"2.0","id":2}
-```
-Resultado: el servidor arranca y lista tres herramientas.
+La carpeta `.vscode` no existía y se creó. Contenido, exactamente el del guion:
 
-## Paso 4. Chat Agent
-Texto: Usa el servidor pasarela-andina para listar los comercios de categoría TURISMO y dame el plan de comisiones del primero.
+```json
+{
+  "servers": {
+    "pasarela-andina": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["--permission", "--allow-fs-read=.", "mcp/servidor-local/servidor.js"],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}
+```
 
-Aprobacion 1: herramienta buscar_comercios, argumentos {"categoria":"TURISMO"} -> Allow
-Comando: bash mcp-llamar.sh buscar_comercios '{"categoria":"TURISMO"}'
-Salida:
+`git status --short`:
+
 ```
-{"result":{"content":[{"type":"text","text":"{\n  \"total\": 4,\n  \"resultados\": [\n    {\n      \"id\": \"CM0006\",\n      \"razonSocial\": \"Comercial La Molina S.A.C.\",\n      \"categoria\": \"TURISMO\",\n      \"estado\": \"ACTIVO\"\n    },\n    {\n      \"id\": \"CM0007\",\n      \"razonSocial\": \"Inversiones Andina S.R.L.\",\n      \"categoria\": \"TURISMO\",\n      \"estado\": \"ACTIVO\"\n    },\n    {\n      \"id\": \"CM0010\",\n      \"razonSocial\": \"Representaciones Breña S.R.L.\",\n      \"categoria\": \"TURISMO\",\n      \"estado\": \"ACTIVO\"\n    },\n    {\n      \"id\": \"CM0017\",\n      \"razonSocial\": \"Grupo Andina S.A.C.\",\n      \"categoria\": \"TURISMO\",\n      \"estado\": \"ACTIVO\"\n    }\n  ]\n}"}]},"jsonrpc":"2.0","id":2}
+?? .vscode/
 ```
-Aprobacion 2: herramienta detalle_comercio, argumentos {"idComercio":"CM0006"} -> Allow
-Salida:
+
+## Paso 3. Arrancar el servidor
+
+El servidor arrancó con la sesión y registró tres herramientas:
+`pasarela-andina-buscar_comercios`, `pasarela-andina-detalle_comercio` y
+`pasarela-andina-buscar_notas_soporte`. En la CLI cada herramienta lleva el nombre del
+servidor como prefijo.
+
+## Paso 4. Chat en modo Agent
+
+Escrito: `Usa el servidor pasarela-andina para listar los comercios de categoría TURISMO y dame el plan de comisiones del primero de la lista.`
+
+Copilot hizo dos llamadas y cada una pidió aprobación por separado.
+
+Aprobación 1, «Buscar comercios», parámetros `{"categoria": "TURISMO"}`. Se aprobó. Resultado:
+
+```json
+{"total":4,"resultados":[{"id":"CM0006","razonSocial":"Comercial La Molina S.A.C.","categoria":"TURISMO","estado":"ACTIVO"},{"id":"CM0007","razonSocial":"Inversiones Andina S.R.L.","categoria":"TURISMO","estado":"ACTIVO"},{"id":"CM0010","razonSocial":"Representaciones Breña S.R.L.","categoria":"TURISMO","estado":"ACTIVO"},{"id":"CM0017","razonSocial":"Grupo Andina S.A.C.","categoria":"TURISMO","estado":"ACTIVO"}]}
 ```
-{"result":{"content":[{"type":"text","text":"{\n  \"id\": \"CM0006\",\n  \"razonSocial\": \"Comercial La Molina S.A.C.\",\n  \"registroTributario\": \"20703289252\",\n  \"categoria\": \"TURISMO\",\n  \"fechaAfiliacion\": \"2025-02-07\",\n  \"estado\": \"ACTIVO\",\n  \"idPlanComisiones\": \"PL02\",\n  \"plan\": {\n    \"id\": \"PL02\",\n    \"nombre\": \"Emprende\",\n    \"montoFijoPorTransaccion\": \"0.25\",\n    \"topeMensual\": \"5000.00\",\n    \"tramos\": [\n      {\n        \"desde\": \"0\",\n        \"hasta\": \"300\",\n        \"porcentaje\": \"4.2\"\n      },\n      {\n        \"desde\": \"300\",\n        \"hasta\": \"1500\",\n        \"porcentaje\": \"3.6\"\n      },\n      {\n        \"desde\": \"1500\",\n        \"hasta\": \"8000\",\n        \"porcentaje\": \"3.0\"\n      },\n      {\n        \"desde\": \"8000\",\n        \"hasta\": \"999999\",\n        \"porcentaje\": \"2.6\"\n      }\n    ]\n  }\n}"}]},"jsonrpc":"2.0","id":2}
+
+Aprobación 2, «Detalle de un comercio», parámetros `{"idComercio": "CM0006"}`. Se aprobó.
+Resultado:
+
+```json
+{"id":"CM0006","razonSocial":"Comercial La Molina S.A.C.","registroTributario":"20703289252","categoria":"TURISMO","fechaAfiliacion":"2025-02-07","estado":"ACTIVO","idPlanComisiones":"PL02","plan":{"id":"PL02","nombre":"Emprende","montoFijoPorTransaccion":"0.25","topeMensual":"5000.00","tramos":[{"desde":"0","hasta":"300","porcentaje":"4.2"},{"desde":"300","hasta":"1500","porcentaje":"3.6"},{"desde":"1500","hasta":"8000","porcentaje":"3.0"},{"desde":"8000","hasta":"999999","porcentaje":"2.6"}]}}
 ```
+
+No consultó las notas de soporte ni leyó archivos del repositorio.
 
 ## Paso 5. Respuesta del chat
-Hay 4 comercios de categoría TURISMO (fuente: buscar_comercios):
 
-| Id | Razón social | Estado |
-|---|---|---|
-| CM0006 | Comercial La Molina S.A.C. | ACTIVO |
-| CM0007 | Inversiones Andina S.R.L. | ACTIVO |
-| CM0010 | Representaciones Breña S.R.L. | ACTIVO |
-| CM0017 | Grupo Andina S.A.C. | ACTIVO |
+> **Comercios de categoría TURISMO (4):**
+> 1. CM0006 – Comercial La Molina S.A.C. (ACTIVO)
+> 2. CM0007 – Inversiones Andina S.R.L. (ACTIVO)
+> 3. CM0010 – Representaciones Breña S.R.L. (ACTIVO)
+> 4. CM0017 – Grupo Andina S.A.C. (ACTIVO)
+>
+> **Plan de comisiones del primero (CM0006), plan PL02 «Emprende»:**
+> - Monto fijo por transacción: 0.25
+> - Tope mensual: 5000.00
+>
+> | Desde | Hasta | Porcentaje |
+> |---|---|---|
+> | 0 | 300 | 4.2 |
+> | 300 | 1500 | 3.6 |
+> | 1500 | 8000 | 3.0 |
+> | 8000 | 999999 | 2.6 |
 
-Plan de comisiones del primero, CM0006 (fuente: detalle_comercio): plan PL02 "Emprende", monto fijo por transacción 0.25, tope mensual 5000.00. Tramos:
-
-| Desde | Hasta | Porcentaje |
-|---|---|---|
-| 0 | 300 | 4.2 |
-| 300 | 1500 | 3.6 |
-| 1500 | 8000 | 3.0 |
-| 8000 | 999999 | 2.6 |
-
-Dato 1 (lista) respaldado por buscar_comercios; dato 2 (plan) por detalle_comercio. No se consultaron notas de soporte.
+La lista sale de `buscar_comercios` y el plan de `detalle_comercio`. La respuesta no lo dice;
+se ve en las dos aprobaciones.
 
 ## Paso 6. Restaurar
-Hook: {"tool_name":"run_in_terminal","tool_input":{"command":"bash scripts/reiniciar-lab.sh lab-3-4"}} (no toca escenario/datos; no se ejecuto el hook previo a esta orden, equivalente a allow por regex).
-Comando real: bash scripts/reiniciar-lab.sh lab-3-4 --confirmar
-Salida: "lab-3-4 listo para empezar"; se borra .vscode/mcp.json. git status: solo mcp-llamar.sh sin seguimiento (del simulador). Queda la carpeta .vscode vacia.
+
+`bash scripts/reiniciar-lab.sh lab-3-4 --confirmar`, código de salida 0:
+
+```
+== Punto de partida de lab-3-4 ==
+  Referencia: punto-de-partida
+  Rutas: escenario labs/cap3/lab-3-4-mcp-local/entregables .vscode/mcp.json mcp .github/instructions
+
+== Esto se va a perder ==
+  Archivos nuevos, que se borran:
+    .vscode/mcp.json
+
+== Restauracion ==
+  [ OK ] lab-3-4 listo para empezar
+```
+
+`git status --short` posterior: vacío. La carpeta `.vscode` queda vacía.
 
 ## Esperado contra observado
+
 - Paso 1: coincide.
-- Paso 2: coincide; el guion no dice que hay que crear la carpeta .vscode.
-- Paso 3: coincide; tres herramientas.
-- Paso 4: coincide: dos llamadas, dos aprobaciones. El "primero" es CM0006 por orden del archivo.
-- Paso 5: coincide.
-- Paso 6: el guion y la simulacion usan --confirmar. Deja la carpeta .vscode vacia.
+- Paso 2: coincide. Hubo que crear la carpeta `.vscode`.
+- Paso 3: coincide, tres herramientas.
+- Paso 4: coincide. Dos llamadas, dos aprobaciones, cada una con sus parámetros a la vista.
+- Paso 5: coincide. Para decir qué herramienta respaldó cada dato hay que mirar las
+  aprobaciones, porque la respuesta no lo menciona.
+- Paso 6: coincide.
