@@ -1,7 +1,6 @@
 # Estimación de referencia: reporte de comisiones por medio de pago
 
-Solo para el relator. Construida con las mediciones reales de SPEC-015, que están en la
-bitácora: un agente construyó el reporte en 184 s en Java y 126 s en .NET, y la mantención
+Solo para el relator. Construida con mediciones reales: un agente construyó el reporte en 184 s en Java y 126 s en .NET, y la mantención
 correctiva en 64 s y 80 s, con 7 a 9 comandos cada vez. Esos son minutos de agente. Los
 minutos de persona son la referencia de los laboratorios del capítulo 5, que asignan el
 tiempo a leer, decidir y revisar. Los minutos «sin IA» son un supuesto, marcado como tal.
@@ -24,8 +23,8 @@ Un solo stack.
 | Mantención evolutiva | 30 | 8 | 1 | Estimar el cambio siguiente con el registro real del ciclo |
 | **Total** | **575** | **135** | **14** | |
 
-Créditos y minutos de integración continua: cantidades a completar con el plan vigente. La
-corrida real de SPEC-015 consumió 3 minutos de Actions por corrida del pipeline base.
+Créditos y minutos de integración continua: cantidades a completar con el plan vigente. Una
+corrida real consumió 3 minutos de Actions por corrida del pipeline base.
 
 La lección que vale la pena sacar en sala: la IA reduce mucho el desarrollo y la redacción,
 poco la revisión, y nada las preguntas al negocio.

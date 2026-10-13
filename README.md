@@ -89,33 +89,6 @@ Si el script reporta requisitos faltantes, revisa [docs/00-setup-ambiente.md](do
 antes de continuar. Los problemas conocidos y su solución están en
 [docs/02-troubleshooting.md](docs/02-troubleshooting.md).
 
-## Plan de construcción del repositorio
-
-El repositorio se construye por specs numerados. Esta tabla dice qué falta y en qué orden
-llega, para que quien lo retome más adelante no tenga que reconstruir el contexto.
-
-| Spec | Contenido | Estado |
-|---|---|---|
-| SPEC-001 a SPEC-001-C | Estructura, verificador de ambiente y sus correcciones | Cerrado |
-| SPEC-002 y SPEC-002-A | Escenario Java | Cerrado |
-| SPEC-003 a SPEC-003-B | Escenario .NET y equivalencia | Cerrado |
-| SPEC-004 | Prompt files, solo la calibración | Absorbido por SPEC-009 |
-| SPEC-005 y SPEC-006 | Activos de referencia y servidor MCP | Absorbidos por SPEC-009 |
-| SPEC-007 | Guía general del relator | Absorbido por SPEC-011 |
-| SPEC-008 | Realineación al temario contratado | Cerrado |
-| SPEC-009 | Construcción completa de los nueve laboratorios | Cerrado por SPEC-010 |
-| SPEC-010 | Cierre de SPEC-009, hook de protección de datos, .NET 10 y protocolo de prueba | Cerrado |
-| SPEC-010-A | Infraestructura de construcción versionada | Cerrado |
-| SPEC-011 y SPEC-011-B | Guía del relator, demostraciones, material del participante y correcciones | Ejecutado, pendiente de prueba en la máquina virtual |
-| SPEC-010 a SPEC-018 | README de cada laboratorio | Absorbidos por SPEC-009 |
-
-SPEC-010 a SPEC-018 conservan su correspondencia con los laboratorios, en el orden de la
-tabla de [`labs/README.md`](labs/README.md), aunque su trabajo se ejecute dentro de
-SPEC-009. SPEC-012 corresponde a `lab-2-4-agente-o-instruccion`.
-
-Cada archivo marcador del repositorio declara en su interior que lo es y nombra el spec
-que lo completa.
-
 ## Mapa del repositorio
 
 | Ruta | Contenido |

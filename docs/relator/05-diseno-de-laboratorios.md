@@ -2,7 +2,7 @@
 
 Descomposición de los nueve laboratorios en pasos invocables. Cada paso es una skill de
 `.github/skills/`, con nombre `lab-` más el laboratorio y el paso, restringida a invocación
-explícita. Hasta SPEC-008 los pasos se diseñaron como prompt files. SPEC-009 los migró a
+explícita. Los pasos se diseñaron primero como prompt files y después se migraron a
 skills, ver HALLAZGO-06 en [`03-hallazgos.md`](03-hallazgos.md).
 
 > **Documento del relator.** Los participantes ven el enunciado de su laboratorio, no este
@@ -47,7 +47,7 @@ Aritmética de la tabla, para que se pueda revisar sin recalcular:
   4.4 y el paso 5 del 5.3, no se cuentan.
 - Suma estimada: 25 + 54 + 37 + 36 + 28 + 35 + 38 + 39 + 38 = 330.
 - Holgura: 5 + 6 + 8 + 9 + 2 + 10 + 7 + 6 + 7 = 60, que es 390 − 330. Las estimaciones del
-  capítulo 5 son de diseño; la medición de SPEC-016 está en `08-verificacion-de-skills.md`.
+  capítulo 5 son de diseño.
 
 Una skill de laboratorio por paso, más la variante del paso 2 del `lab-2-4`, que tiene una
 skill para agente y otra para instrucción. La lista vigente sale de
@@ -174,8 +174,8 @@ repositorio real.
 **Objetivo.** Configurar un servidor MCP local, usar sus herramientas desde el chat y
 documentar el caso de uso de forma que se pueda presentar a un área de seguridad.
 
-**Defectos que ejercita.** Ninguno. El material es el servidor MCP local que construye
-SPEC-009.
+**Defectos que ejercita.** Ninguno. El material es el servidor MCP local de
+`mcp/servidor-local/`.
 
 **Dependencia externa.** Este laboratorio necesita el servidor MCP local. Los pasos
 quedan definidos aquí, pero sus skills no se pueden probar de extremo a extremo hasta
@@ -231,7 +231,7 @@ el mejor ejemplo del taller sobre por qué la documentación generada se revisa.
 
 ## Capítulo 5. El ciclo de vida completo
 
-Desde SPEC-016 el capítulo 5 recorre las once fases de `CICLO-DE-VIDA.md` con una sola
+El capítulo 5 recorre las once fases de `CICLO-DE-VIDA.md` con una sola
 historia, el reporte de comisiones por medio de pago. Cada participante elige un stack y
 trabaja en una rama local; GitHub es un paso opcional. La verdad funcional está en
 `funcionalidad-reporte.md` y lo que dice el relator, en `capitulo-5-hoja-de-respuestas.md`.
@@ -289,7 +289,7 @@ Cada defecto queda ejercitado por el camino obligatorio de al menos un laborator
 | DEF-09 | 1.5 paso 3 | Contraste de nombres, con CM0031 suspendido y liquidado |
 | DEF-10 | 4.4 paso 1 | La documentación derivada del código contradice el comentario de los tramos |
 
-DEF-03 y DEF-04 pasaron al 4.4 en SPEC-016, cuando el capítulo 5 dejó de inventariar riesgos.
+DEF-03 y DEF-04 se trabajan en el 4.4, porque el capítulo 5 no inventaría riesgos.
 Las dos verificaciones del 4.4 documentaron la diferencia del tope del recargo y el contraste
 de la regla 8. DEF-02, DEF-03 y DEF-08 vuelven a aparecer en el 5.2 si el plan del
 participante refactoriza o reutiliza la calculadora de comisión.
@@ -308,7 +308,7 @@ para uno de los dos stacks, se duplica y se justifica.
 
 ## Latencia medida en la máquina virtual
 
-La validación sobre la máquina virtual real, registrada en SPEC-001-C, mostró una latencia
+La validación sobre la máquina virtual real mostró una latencia
 aceptable:
 
 - Las sugerencias cortas en línea responden con rapidez suficiente para trabajar.
@@ -323,10 +323,10 @@ la puesta en común.
 
 ## Lo que este diseño deja pendiente
 
-**lab-3-4 depende del servidor MCP local.** Sus cuatro pasos están definidos, pero no se
-pueden probar de extremo a extremo hasta que el servidor exista (SPEC-009).
+**lab-3-4 depende del servidor MCP local.** Sus cuatro pasos están definidos, y se prueban
+de extremo a extremo con ese servidor.
 
-**lab-2-4 se cruza con los activos de referencia.** SPEC-009 construye los artefactos de
+**lab-2-4 se cruza con los activos de referencia.** El repositorio trae los artefactos de
 personalización del repositorio del taller, y el laboratorio hace que el participante
 produzca el suyo. No es un conflicto, pero las skills de este laboratorio no deben
 entregar la respuesta ya escrita, y el agente y la instrucción de referencia que usa quien

@@ -4,8 +4,6 @@ Documento del relator. Es la verdad funcional de la historia que el capítulo 5 
 punta a punta, y la fuente de la solución de referencia, del oráculo y de la conciliación.
 Nada de lo que está aquí llega al repositorio de participantes.
 
-Definido en SPEC-015 con la enmienda SPEC-015-A.
-
 ## Qué es
 
 Un reporte por periodo que muestra cuánto aporta cada medio de pago a las comisiones que
@@ -146,7 +144,7 @@ calculadas con decimal exacto, las comisiones de CM0011, CM0016 y CM0025 suman 1
 son TX002037, TX002035 y TX002036.
 
 El análisis completo, con las cinco variantes acumulativas que separan cada causa, se hizo
-antes de SPEC-015-A. Partiendo de la liquidación actual: decimal exacto suma 0,03 en junio;
+antes de fijar esta definición. Partiendo de la liquidación actual: decimal exacto suma 0,03 en junio;
 el borde inclusivo suma 22,00 en junio; ninguno cambia abril ni mayo. No queda diferencia
 sin explicar.
 

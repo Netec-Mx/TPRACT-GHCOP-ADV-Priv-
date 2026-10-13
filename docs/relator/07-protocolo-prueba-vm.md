@@ -1,8 +1,7 @@
 # Protocolo de prueba en la máquina virtual
 
-Documento para el Product Owner. Se sigue en la máquina virtual de prueba de Netec, con la
-cuenta de GitHub `RoSilva26`. Corresponde a SPEC-010. Desde SPEC-017 cubre solo lo propio de
-la máquina virtual: ambiente, red, cuentas y hook. Los laboratorios se prueban después con
+Documento para quien prepara la máquina virtual. Se sigue en la máquina virtual de prueba de
+Netec, con la cuenta de GitHub `RoSilva26`. Cubre solo lo propio de la máquina virtual: ambiente, red, cuentas y hook. Los laboratorios se prueban después con
 [`guia-prueba-humana.md`](guia-prueba-humana.md).
 
 ## Antes de empezar, tres advertencias

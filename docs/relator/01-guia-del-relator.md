@@ -114,14 +114,11 @@ mecanismos son los mismos y que el taller usa un solo editor para que todos vean
 |---|---|
 | `00-contexto-del-proyecto.md` | Contexto del proyecto, para quien lo mantiene |
 | `01-guia-del-relator.md` | Este documento |
-| `03-hallazgos.md` | Lo que se aprendió construyendo el material, con sus reglas |
+| `03-hallazgos.md` | Problemas conocidos del material, con sus reglas |
 | `04-defectos-plantados.md` | Catálogo de los diez defectos y comportamientos no planificados |
 | `05-diseno-de-laboratorios.md` | Diseño de los pasos de cada laboratorio |
 | `07-protocolo-prueba-vm.md` | Prueba de la máquina virtual: ambiente, red, cuentas y hook |
 | `guia-prueba-humana.md` | Prueba y ensayo de los nueve laboratorios con Copilot real |
-| `08-verificacion-de-skills.md` | Registro de la verificación de skills y demostraciones |
-| `09-bitacora-de-construccion.md` | Por qué el repositorio es como es |
-| `09-prueba-copilot-cli.md` | Prueba de los laboratorios con GitHub Copilot CLI, SPEC-023 |
 | `10-mantenimiento.md` | Qué revisar antes de cada dictado |
 | `notas/` | Notas por laboratorio y del hook |
 | `capitulo-5-hoja-de-respuestas.md` | Todo lo que el relator dice o entrega en el capítulo 5, en una página |
@@ -346,13 +343,13 @@ Aritmética. Teoría del capítulo 4, 12 + 8 + 20 + 20 = 60. Laboratorio 4.4, 30
 45 + 45 + 45 + 45 = 180. Total 270. Con el plan de 12,5 horas, el 4.3 en 10 minutos: 260.
 
 **Recorte.** La sesión no tiene pausas en sus 270 minutos. El paso 3 del 4.4, Confluence, es
-opcional desde SPEC-026: si no hay tiempo, se muestra en pantalla. En el capítulo 5 los
+opcional: si no hay tiempo, se muestra en pantalla. En el capítulo 5 los
 pasos se encadenan y ninguno pasa a opcional, salvo el 5.3.5, que ya lo era. El 5.3 queda en
 39 de 45 minutos, el 87 %, por encima del margen de 85 % que usa el resto del taller; si la
 sala viene atrasada, use `ponerse-al-dia.sh` en lugar de recortar pasos.
 
-El 5.3 es el laboratorio más justo del taller. En la prueba en Windows de SPEC-027, con
-Copilot, el agente trabajó 73 minutos en el 5.3 del camino A, sin contar el tiempo de leer y
+El 5.3 es el laboratorio más justo del taller. En una prueba en Windows con Copilot, el
+agente trabajó 73 minutos en el 5.3 del camino A, sin contar el tiempo de leer y
 aprobar; el paso 3 solo, 45. Si al minuto 45 el pipeline no está en verde, corte: la sala
 sigue con `ponerse-al-dia.sh lab-5-4 <stack> <clave> --confirmo-descartar` y el paso 4 del 5.3 queda como tarea posterior. El
 detalle está en [`notas/lab-5-3.md`](notas/lab-5-3.md).
@@ -415,9 +412,8 @@ los demás los grabó un agente de verificación que simula a Copilot.
 ### Consumo de Copilot en el taller
 
 Un recorrido completo de los nueve laboratorios con Copilot y el modelo por defecto consumió
-unos 1.900 créditos de IA, en 74 solicitudes premium. Es la medición de la prueba con Copilot
-CLI del 4 de octubre de 2026, en [`09-prueba-copilot-cli.md`](09-prueba-copilot-cli.md); en
-esa prueba la cuota mensual de la cuenta se agotó a mitad del capítulo 5, sin aviso previo.
+unos 1.900 créditos de IA, en 74 solicitudes premium. Es la medición de una prueba con Copilot
+CLI del 4 de octubre de 2026; en esa prueba la cuota mensual de la cuenta se agotó a mitad del capítulo 5, sin aviso previo.
 
 | Laboratorio | Créditos de IA |
 |---|---|
@@ -618,7 +614,7 @@ Como rango, sí; como compromiso, no. El 5.1 estima y el 5.4 compara con el regi
 tiempos real, fase por fase. La IA acorta mucho el desarrollo y la redacción, poco la
 revisión y nada las preguntas al negocio. Lo que hace confiable una estimación con IA es lo
 mismo que sin IA: supuestos escritos y comparación con lo real. La estimación de referencia
-de SPEC-015 se construyó con mediciones, no con promesas.
+del taller se construyó con mediciones, no con promesas.
 
 **«¿Qué pasa si el pipeline no corre en la sala?»**
 El pipeline es `scripts/integracion-local.sh`, el mismo script que corre en GitHub, y no

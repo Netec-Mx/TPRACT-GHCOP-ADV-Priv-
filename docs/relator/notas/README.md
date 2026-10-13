@@ -43,6 +43,6 @@ horas, el tiempo de trabajo real es menor y hay que recortar desde el inicio.
 El único recorte definido es el del capítulo 4: el paso 3 del 4.4, Confluence, se muestra en
 pantalla en lugar de hacerlo, y se recuperan 8 minutos.
 
-El capítulo 5 se rehízo en SPEC-016 como un solo recorrido del ciclo de vida. Qué pasos pasan
+El capítulo 5 es un solo recorrido del ciclo de vida. Qué pasos pasan
 a opcionales se decide después de la prueba en la máquina virtual, con la medición de tiempos
 de cada paso. Hasta entonces no tiene recortes definidos.

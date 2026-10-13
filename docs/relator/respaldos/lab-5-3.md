@@ -1,10 +1,10 @@
-> Salida real grabada en la verificación de SPEC-016, el 3 de octubre de 2026, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
+> Salida real grabada en una verificación el 3 de octubre de 2026, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
 
 # Lab 5-3 salida grabada de respaldo
 
 Hay dos grabaciones, una por cada camino del 5.2. Muestre la que corresponda a lo que eligió el participante.
 
-## Camino B: el reporte reutiliza el cálculo de la liquidación (corrida s16, Java)
+## Camino B: el reporte reutiliza el cálculo de la liquidación (Java)
 
 ---
 
@@ -362,7 +362,7 @@ git add -A && git commit -m "Pruebas, conciliacion y correccion del borde de tra
 `/lab-5-3-paso-5-opcional-github`: no aplica. El participante no tiene copia en GitHub.
 
 
-## Camino A: el reporte calcula por su cuenta con decimal exacto (corrida s16-a, .NET)
+## Camino A: el reporte calcula por su cuenta con decimal exacto (.NET)
 
 ---
 

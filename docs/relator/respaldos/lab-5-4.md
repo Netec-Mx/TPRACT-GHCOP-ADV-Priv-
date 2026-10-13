@@ -1,4 +1,4 @@
-> Salida real grabada en la verificación de SPEC-016, el 3 de octubre de 2026, corrida s16, stack Java, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
+> Salida real grabada en una verificación el 3 de octubre de 2026, stack Java, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
 
 > Se grabó cuando el registro de cambios partía en 1.0.0. Las versiones se corrigieron al
 > registro de cambios del punto de partida: la vigente es 1.4.0, la de `pom.xml`, y la

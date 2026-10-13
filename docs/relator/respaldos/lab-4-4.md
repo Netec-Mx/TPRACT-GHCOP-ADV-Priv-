@@ -134,7 +134,7 @@ Resumen: coinciden 7 reglas (1, 2, 4, 5, 6, 7, 9). No coinciden o coinciden solo
 
 ## Paso 2: `/lab-4-4-paso-2-documentar-decisiones`
 
-Grabado en SPEC-015, después de reescribir el paso. Segundos: 73. Archivos leídos: el índice
+Grabado después de reescribir el paso. Segundos: 73. Archivos leídos: el índice
 de `docs/arquitectura/decisiones/`, la plantilla, `pom.xml`, los dos `.csproj` y
 `escenario/README.md`.
 

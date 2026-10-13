@@ -1,7 +1,7 @@
 # Hallazgos
 
-Registro de defectos encontrados durante la construcción de este repositorio y de las
-reglas que se derivan de ellos.
+Registro de defectos encontrados en el material del taller y de las reglas que se derivan
+de ellos.
 
 Esto no es una bitácora de cambios. Solo entra aquí lo que enseñó algo que conviene no
 volver a aprender por las malas. Cada entrada termina con una regla, porque un hallazgo
@@ -13,10 +13,10 @@ sin regla derivada se lee una vez y no cambia nada.
 
 | Campo | Valor |
 |---|---|
-| Detectado en | SPEC-001, prueba de falla deliberada |
+| Detectado en | Prueba de falla deliberada del verificador |
 | Componente | Script de verificación de ambiente, comprobación de conectividad |
 | Severidad | Alta. El script certificaba como aptos ambientes sin acceso a GitHub Copilot |
-| Estado | Corregido en SPEC-001. El componente afectado se eliminó en SPEC-001-B |
+| Estado | Corregido. El componente afectado se eliminó después |
 
 ### Qué pasaba
 
@@ -80,7 +80,7 @@ falso positivo por un falso negativo:
   ok    no-existe-este-dominio-del-taller.invalid  -> inalcanzable  TLD invalido
 ```
 
-En SPEC-001-B el proyecto estandarizó en un script único y la implementación en PowerShell
+Después el proyecto estandarizó en un script único y la implementación en PowerShell
 se eliminó. El hallazgo se conserva igual, porque la lección no depende del lenguaje.
 
 ### Reglas derivadas
@@ -113,7 +113,7 @@ probarla al revés.
 
 | Campo | Valor |
 |---|---|
-| Detectado en | SPEC-002, revisión automática posterior al commit `171478c` |
+| Detectado en | Revisión automática del escenario Java, no solicitada |
 | Componente | Escenario Java completo |
 | Severidad | Ninguna en cuanto a seguridad. Alta en cuanto a riesgo de proceso |
 | Estado | Sin corrección. Los hallazgos son intencionales y el código quedó intacto |
@@ -215,14 +215,14 @@ sin que nadie se lo pida.
 
 | Campo | Valor |
 |---|---|
-| Detectado en | SPEC-003, antes de escribir el escenario .NET |
+| Detectado en | Antes de escribir el escenario .NET |
 | Componente | Equivalencia entre los dos escenarios |
 | Severidad | Alta si no se controla. Rompe la comparación sin que nada falle |
 | Estado | Resuelto en `Util/CompatibilidadJava.cs` del escenario .NET |
 
 ### Qué pasaba
 
-SPEC-003 advertía sobre una divergencia conocida: `Math.Round` de .NET usa redondeo
+Se conocía de antemano una divergencia: `Math.Round` de .NET usa redondeo
 bancario y `Math.round` de Java no. Al medirlo apareció una **segunda** divergencia que no
 estaba prevista y que es más difícil de ver, porque no está en el cálculo sino en la
 impresión.
@@ -253,7 +253,7 @@ misma que produce `Double.toString`. Para 137.825 esa representación es exactam
 Ninguno de los dos está mal. Responden preguntas distintas: Java formatea el número que el
 programador escribió, .NET formatea el número que la máquina guardó.
 
-Lo mismo ocurre con el redondeo aritmético, por el motivo que el spec ya anticipaba:
+Lo mismo ocurre con el redondeo aritmético, por el motivo que ya se conocía:
 `Math.Round(v, 2)` redondea al par más cercano en los puntos medios.
 
 ### Corrección aplicada
@@ -316,10 +316,10 @@ lenguaje a otro sin decirle que la salida tiene que coincidir exactamente.
 
 | Campo | Valor |
 |---|---|
-| Detectado en | SPEC-003, al probar el comportamiento bajo distintas culturas |
+| Detectado en | Prueba del comportamiento bajo distintas culturas |
 | Componente | Escenario Java, impresión de montos |
 | Severidad | Alta para el dictado. Rompe la comparación en clase |
-| Estado | **Corregido en SPEC-003-A.** Se aprobó la opción 1 |
+| Estado | **Corregido.** Se aprobó la opción 1 |
 
 ### Qué pasa
 
@@ -348,8 +348,8 @@ cada formateo. Verificado bajo `es_ES`, `de_DE`, `fr_FR` y `ru_RU`: el checksum 
 El escenario **Java no tiene ninguna de esas tres protecciones**.
 
 O sea que en una máquina virtual en español el participante Java vería `S/ 26074,08` y el
-participante .NET `S/ 26074.08`, sobre los mismos datos. Es exactamente el escenario que
-SPEC-003 quiere evitar: la clase se desvía a depurar la diferencia.
+participante .NET `S/ 26074.08`, sobre los mismos datos. Es exactamente lo que la
+equivalencia entre escenarios quiere evitar: la clase se desvía a depurar la diferencia.
 
 ### Alcance real, mayor de lo que parecía
 
@@ -434,7 +434,7 @@ Al verificar que el cambio no había tocado DEF-04 escribí que los checksums ba
 zonas horarias debían ser distintos, y salieron iguales. La afirmación estaba mal.
 
 Compilé el código anterior al cambio y comprobé que **ya se comportaba igual**: la zona
-horaria no altera la salida de este escenario, ni antes ni después de SPEC-003-A.
+horaria no altera la salida de este escenario, ni antes ni después de fijar la configuración regional.
 
 La razón es que el parseo de las fechas de las transacciones y el cálculo de los límites
 del periodo usan los dos la zona por defecto, de modo que se desplazan juntos y se
@@ -482,10 +482,10 @@ El episodio completo, con las cuatro salidas literales, está preparado para cla
 
 | Campo | Valor |
 |---|---|
-| Detectado en | Validación del Product Owner sobre la máquina virtual del cliente |
+| Detectado en | Validación sobre la máquina virtual del cliente |
 | Componente | Script de verificación de ambiente, comprobación de Copilot en Visual Studio Code |
 | Severidad | Alta. Reprobaba toda máquina y no detectaba la única falla real que tenía la del cliente |
-| Estado | Corregido en SPEC-001-C |
+| Estado | Corregido |
 
 ### Qué pasaba
 
@@ -517,17 +517,17 @@ editor. Era lo único que había que detectar.
 
 ### Cómo llegó ahí
 
-La comprobación nació en SPEC-001 como aviso, no como falla. SPEC-001-B la convirtió en
-falla, con el argumento razonable de que un puesto con el editor y sin Copilot no sirve
-para el taller. SPEC-001-B se escribió el 11 de septiembre de 2026, casi cinco meses
-**después** de que Copilot pasara a venir integrado.
+La comprobación nació como aviso, no como falla. Después se convirtió en falla, con el
+argumento razonable de que un puesto con el editor y sin Copilot no sirve para el taller.
+Ese cambio se hizo el 11 de septiembre de 2026, casi cinco meses **después** de que Copilot
+pasara a venir integrado.
 
 O sea que el criterio no quedó obsoleto con el tiempo: nació obsoleto. Se escribió con lo
 que se sabía de Copilot, no con lo que Copilot era ese día, y nadie lo contrastó con la
 documentación vigente.
 
-Hubo una segunda oportunidad de verlo y también se perdió. En SPEC-004-A, la instrucción
-de calibración para el Product Owner dice que el verificador «hoy reprueba por estas dos
+Hubo una segunda oportunidad de verlo y también se perdió. Una instrucción de calibración
+posterior decía que el verificador «hoy reprueba por estas dos
 extensiones, y no es un falso positivo». Era un falso positivo. Se afirmó sin comprobarlo.
 
 ### Por qué la máquina llegó con Copilot deshabilitado
@@ -669,18 +669,18 @@ La evidencia preparada para proyectar está en
 
 | Campo | Valor |
 |---|---|
-| Detectado en | SPEC-008, verificación de los comandos del chat en la documentación vigente |
+| Detectado en | Verificación de los comandos del chat en la documentación vigente |
 | Componente | Pasos invocables de los nueve laboratorios, diseñados como prompt files |
 | Severidad | Alta. Treinta y cuatro pasos dependían de un mecanismo que Visual Studio Code anunció que va a quitar |
-| Estado | Corregido en SPEC-009. Los pasos son skills y los prompt files de calibración se eliminaron |
+| Estado | Corregido. Los pasos son skills y los prompt files de calibración se eliminaron |
 
 ### Qué pasaba
 
-El diseño de laboratorios de SPEC-004 descomponía cada laboratorio en pasos invocables y
+El primer diseño de laboratorios descomponía cada laboratorio en pasos invocables y
 cada paso era un prompt file en `.github/prompts/`. Se escribieron dos como calibración y
 el resto esperaba a que la calibración cerrara.
 
-Al verificar en SPEC-008 qué comandos del chat existían, la página de prompt files de
+Al verificar qué comandos del chat existían, la página de prompt files de
 Visual Studio Code, actualizada el 16 de septiembre de 2026, decía lo siguiente.
 
 - Los prompt files están descontinuados para las sesiones Agent Host, que no los cargan.
@@ -739,7 +739,7 @@ discute que Copilot cambia más rápido que la documentación interna de cualqui
 
 | Campo | Valor |
 |---|---|
-| Detectado en | SPEC-011, grabación de las salidas de respaldo de los laboratorios |
+| Detectado en | Grabación de las salidas de respaldo de los laboratorios |
 | Componente | Regla 8 de `escenario/README.md`, periodo en hora de Lima |
 | Severidad | Ninguna para el material. Es material de clase |
 | Estado | Registrado. No se corrige |
@@ -755,7 +755,7 @@ mismo código.
   garantía»**, porque el código usa la zona del sistema de forma consistente y en una
   máquina configurada en Lima el resultado es correcto.
 
-En SPEC-009 se había observado otra variante en el 4.4, con la regla 8 entre las que
+Antes se había observado otra variante en el 4.4, con la regla 8 entre las que
 coinciden con matices.
 
 Las dos lecturas son defendibles. Cambió el contexto del pedido. En el 4.4 la pregunta era
@@ -771,7 +771,7 @@ clasificación tiene que estar escrito en el pedido.
 
 ### Dónde aplica esto en el taller
 
-En el 4.4. Desde SPEC-016 el 5.1 ya no clasifica reglas: escribe una historia de usuario.
+En el 4.4. El 5.1 ya no clasifica reglas: escribe una historia de usuario.
 La observación de arriba sobre el 5.1 queda como registro de la versión anterior. Si dos
 participantes clasifican distinto la regla 8 en el 4.4, no es un error de ninguno. Es la ocasión de
 preguntar qué criterio usó cada uno y cuál pondría el equipo por escrito.
@@ -780,10 +780,10 @@ preguntar qué criterio usó cada uno y cuál pondría el equipo por escrito.
 
 | Campo | Valor |
 |---|---|
-| Detectado en | SPEC-014, verificación como agente del laboratorio 4.4, paso 4 |
+| Detectado en | Verificación como agente del laboratorio 4.4, paso 4 |
 | Componente | `escenario/README.md`, sección «Cómo se ejecuta», ejemplo de Java con periodo y directorio |
 | Severidad | Baja. Un participante que copiara el ejemplo vería una liquidación vacía |
-| Estado | Corregido en SPEC-015, con autorización expresa como única excepción a no tocar `escenario/` |
+| Estado | Corregido, con autorización expresa como única excepción a no tocar `escenario/` |
 
 ### Qué pasó
 
@@ -807,15 +807,15 @@ escenario no cambiaron.
 
 | Campo | Valor |
 |---|---|
-| Detectado en | SPEC-016, al publicar hashes esperados de la liquidación |
+| Detectado en | Publicación de los hashes esperados de la liquidación |
 | Componente | `04-defectos-plantados.md`, DEF-04 |
 | Severidad | Media. Un relator que contara el efecto en clase no podría mostrarlo |
-| Estado | Corregido en SPEC-016-B. El código y los datos no cambiaron |
+| Estado | Corregido. El código y los datos no cambiaron |
 
 ### Qué pasó
 
 El catálogo decía que `TX002005`, del 30 de junio a las 23:59:00, quedaba fuera del periodo en
-una máquina al este de Lima. La nota de SPEC-003-A de este mismo documento ya había mostrado
+una máquina al este de Lima. La nota sobre la configuración regional de este mismo documento ya había mostrado
 que la zona horaria no cambia la salida, pero el catálogo no se actualizó.
 
 ### Verificación
@@ -840,7 +840,7 @@ correctas.
 | Detectado en | Primera prueba humana con Copilot real, 3 de octubre de 2026, en macOS |
 | Componente | `scripts/verificar-ambiente.sh`, comprobación de las funciones de IA |
 | Severidad | Media. Un participante al que le dicen que algo está roto cuando funciona deja de confiar en el resto del diagnóstico |
-| Estado | Corregido en SPEC-017 |
+| Estado | Corregido |
 
 ### Qué pasó
 
@@ -910,14 +910,14 @@ transacciones, y la segunda causa, el punto flotante, que no se ve leyendo el c�
 ### Qué responde el relator
 
 Que está bien visto, que no se corrige ahora y que el 5.3 lo va a confirmar con evidencia.
-Está en las notas del 5.1. Estuvo también en la hoja de respuestas hasta SPEC-022, que lo
-pasó a las notas por espacio.
+Está en las notas del 5.1. Estuvo también en la hoja de respuestas, y pasó a las notas
+por espacio.
 
 ## HALLAZGO-12. La liquidación acepta el mes 13 y liquida enero del año siguiente
 
 | Campo | Valor |
 |---|---|
-| Detectado en | Corrida s17 de SPEC-017, por un agente de verificación |
+| Detectado en | Un agente de verificación |
 | Componente | Escenario, lectura del periodo en la clase ejecutable |
 | Severidad | Baja. Ningún laboratorio usa un periodo inválido |
 | Estado | Aceptado como hallazgo libre. No se corrige, porque el escenario no se toca |
@@ -932,5 +932,5 @@ el 01/01/2027. El periodo no se valida y el calendario desborda el mes al año s
 No es uno de los diez defectos del catálogo ni un comportamiento no planificado registrado
 allí, y el escenario no se toca. Si un participante lo encuentra, el relator dice que está
 bien visto, que no es parte del ejercicio y que no se corrige en el taller. Está en las notas
-del 5.3. Estuvo también en la hoja de respuestas hasta SPEC-021, que lo pasó a las notas para
-dejar lugar al criterio de formato.
+del 5.3. Estuvo también en la hoja de respuestas, y pasó a las notas para dejar lugar
+al criterio de formato.

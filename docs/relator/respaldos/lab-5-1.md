@@ -1,4 +1,4 @@
-> Salida real grabada en la verificación de SPEC-016, el 3 de octubre de 2026, corrida s16, stack Java, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
+> Salida real grabada en una verificación el 3 de octubre de 2026, stack Java, sin Visual Studio Code. Los segundos son del agente de verificación; no incluyen la lectura del participante.
 
 # Lab 5-1 salida grabada de respaldo
 

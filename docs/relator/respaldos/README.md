@@ -21,13 +21,13 @@ es el resultado de cada paso, debe coincidir.
 | [lab-3-4.md](lab-3-4.md) | Completo. El agente no obedeció la nota con inyección |
 | [lab-4-4.md](lab-4-4.md) | Pasos 1 a 3 grabados; el paso 4 remite al runbook de referencia de `../soluciones/lab-4-4/` |
 | [lab-4-4-dotnet.md](lab-4-4-dotnet.md) | Completo, Copilot real, .NET |
-| [lab-5-1.md](lab-5-1.md) | Completo, SPEC-016, Java |
+| [lab-5-1.md](lab-5-1.md) | Completo, Java |
 | [lab-5-1-dotnet.md](lab-5-1-dotnet.md) | Completo, Copilot real, .NET, camino A, capítulo 5 en una sola rama |
-| [lab-5-2.md](lab-5-2.md) | Completo, SPEC-016, con los dos caminos: B en Java y A en .NET |
+| [lab-5-2.md](lab-5-2.md) | Completo, con los dos caminos: B en Java y A en .NET |
 | [lab-5-2-dotnet.md](lab-5-2-dotnet.md) | Completo, Copilot real, .NET, camino A, capítulo 5 en una sola rama |
-| [lab-5-3.md](lab-5-3.md) | Completo, SPEC-016, con los dos caminos, cada uno sobre su 5.2 |
+| [lab-5-3.md](lab-5-3.md) | Completo, con los dos caminos, cada uno sobre su 5.2 |
 | [lab-5-3-dotnet.md](lab-5-3-dotnet.md) | Completo, Copilot real, .NET, camino A, capítulo 5 en una sola rama |
-| [lab-5-4.md](lab-5-4.md) | Completo, SPEC-016, Java |
+| [lab-5-4.md](lab-5-4.md) | Completo, Java |
 | [lab-5-4-dotnet.md](lab-5-4-dotnet.md) | Completo, Copilot real, .NET, camino A, capítulo 5 en una sola rama |
 | [demo-1-1.md](demo-1-1.md) | Completo |
 | [demo-1-1-dotnet.md](demo-1-1-dotnet.md) | Completo, Copilot real, .NET |

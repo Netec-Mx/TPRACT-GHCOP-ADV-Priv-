@@ -80,7 +80,7 @@ GitHub lo que la sala hizo en local. Se presenta desde el respaldo grabado.
 **El redondeo en .NET.** `dotnet.instructions.md` pide que todo `Math.Round` indique
 `MidpointRounding.AwayFromZero` y que los montos `double` de la liquidación pasen por
 `CompatibilidadJava`. La corrección en `decimal` redondea con `Math.Round` y ese argumento, y
-cumple la instrucción. Hasta SPEC-016-B la regla prohibía `Math.Round` sin más, y los agentes
+cumple la instrucción. Antes la regla prohibía `Math.Round` sin más, y los agentes
 de verificación chocaban con ella.
 
 **Un solo stack.** Quien corrige solo su stack deja al otro distinto: `comparar-escenarios.sh`
@@ -104,10 +104,10 @@ falla en junio y es lo esperado. El pipeline con un solo stack declarado no comp
 
 Suma 39. Quedan 6 para la puesta en común.
 
-En la prueba en Windows de SPEC-027, con Copilot y el material de SPEC-026, el agente tardó
+En una prueba en Windows con Copilot, el agente tardó
 852, 580, 2705 y 235 segundos en los cuatro pasos del camino A: 73 minutos sin contar el
 tiempo de leer y aprobar. El paso 3 se alargó por los scripts de diagnóstico y por tres
-rondas de aprobación; desde SPEC-028 la skill pide diagnosticar con los scripts del taller y
+rondas de aprobación; ahora la skill pide diagnosticar con los scripts del taller y
 una sola aprobación por causa.
 
 **Corte al minuto 45.** Si al minuto 45 el pipeline no está en verde, corte el laboratorio.

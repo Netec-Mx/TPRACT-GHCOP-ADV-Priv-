@@ -1,20 +1,16 @@
 # Contexto del proyecto
 
-Documento de entrada para quien toma el proyecto, sea ejecutor, relator o arquitecto. Los
-specs lo citan por esta ruta. Reemplaza al `CONTEXTO-MOCITO.md` que citaban specs
-anteriores y que nunca existió en el repositorio. Actualizado al cierre de SPEC-010-A, el
-1 de octubre de 2026.
+Documento de entrada para quien mantiene el material o lo dicta.
 
-## Qué se está construyendo
+## Qué es el taller
 
 El material de un taller práctico de GitHub Copilot de 13,5 horas, en cuatro sesiones,
 para un equipo de desarrolladores senior Java y .NET de un banco en Perú. Lo contrató
 Netec con el cliente. Los participantes ya usan Copilot a diario y notan cualquier
 imprecisión técnica.
 
-El Product Owner construyó el material y dictó la sesión de apertura, que ya se realizó.
-El resto del taller lo dicta otro relator, que no participó en la construcción. Todo lo que
-ese relator necesite saber tiene que estar escrito en `docs/relator/`.
+La sesión de apertura ya se realizó. El resto del taller lo dicta otro relator, y todo lo
+que ese relator necesita saber está escrito en `docs/relator/`.
 
 El temario es el contratado por Netec, con cinco capítulos y 810 minutos, de los cuales 390
 son práctica en nueve laboratorios. La tabla está en el `README.md` de la raíz.
@@ -23,7 +19,7 @@ son práctica en nueve laboratorios. La tabla está en el `README.md` de la raí
 
 | Repositorio | Para quién | Contenido |
 |---|---|---|
-| `RodrigoMSB/github-copilot-netec` | Construcción y relator | Todo, incluido `docs/relator/`, los specs ejecutados y las herramientas |
+| `RodrigoMSB/github-copilot-netec` | Construcción y relator | Todo, incluido `docs/relator/` y las herramientas |
 | `RodrigoMSB/github-copilot-netec-taller` | Participantes | Instantánea de un solo commit generada con `scripts/publicar-taller.sh` |
 
 Los dos son privados. El de participantes se genera desde una lista de inclusión,
@@ -36,47 +32,11 @@ participantes, porque GitHub no ofrece solo lectura en repositorios de cuenta pe
 ruleset, `sin-push-directo-a-main`, le bloquea push, borrado y reescritura de `main`. El
 propietario lo puede saltar, y así funciona la republicación.
 
-## Roles
+## Los gates
 
-**Rodrigo, Product Owner.** Decide. Aprueba y cierra specs. Carga secretos y tokens
-directamente, nunca pasan por el chat. No opera git ni GitHub. Trabaja desde un Mac y
-prueba en la máquina virtual de Netec.
-
-**El Arquitecto.** Escribe los specs con sus criterios de aceptación. No ejecuta.
-
-**Mocito, el ejecutor.** Ejecuta los specs. Maneja git, GitHub y la infraestructura.
-Entrega un informe al terminar cada spec. Las decisiones de producto no son suyas. Las de
-implementación sí, cuando el spec no las fija.
-
-## Cómo se trabaja
-
-Los specs son la única forma válida de instrucción. Se numeran SPEC-001, SPEC-002 y así,
-y las enmiendas llevan sufijo de letra. Un spec a la vez. El siguiente no se abre hasta que
-el Product Owner cierra el anterior.
-
-Cada spec trae criterios de aceptación con casillas. El informe empieza diciendo si algo
-quedó sin cumplir.
-
-Reglas duras. Mirar antes de tocar. Verificar en la documentación vigente en lugar de
-suponer. Si el spec es ambiguo, preguntar antes de inventar. No borrar nada sin que el spec
-lo ordene. Advertir antes de toda operación irreversible. Los secretos no pasan por el
-chat.
-
-Principios de construcción. Lo obligatorio se defiende con scripts que fallan con código
-distinto de cero. Un gate no vale hasta que se demuestra que puede fallar, y se prueba en
-los dos sentidos, porque también puede reprobar algo correcto.
-
-Un commit por fase o por sección del spec, con mensaje que lo cite.
-
-## El entorno de construcción
-
-El repositorio de construcción vive en `/Users/rodrigosilva/GITHUB-COPILOT/github-copilot-netec`,
-en el Mac del Product Owner. En esa máquina no hay Copilot ni se puede operar Visual Studio
-Code de forma interactiva. Hay Docker.
-
-El Mac tiene SDK de .NET 8 y JDK 21, que no alcanzan para el escenario actual. Los gates se
-corren con `bash scripts/gates.sh`, que usa la imagen de `herramientas/Dockerfile` con las
-versiones de la máquina virtual y sin red.
+Los gates se corren con `bash scripts/gates.sh`, que usa la imagen de
+`herramientas/Dockerfile` con las versiones de la máquina virtual y sin red. La máquina donde
+se corren solo necesita Docker.
 
 ## El ambiente del taller
 
@@ -85,9 +45,7 @@ Máquinas virtuales Windows en Azure Lab Services, provistas por Netec, con JDK 
 único editor. Git Bash es el único intérprete de scripts. No hay PowerShell en el proyecto.
 
 La máquina virtual de prueba usa la cuenta `RoSilva26`, con Copilot en plan gratuito y
-cuota limitada. El Product Owner la controla desde un Mac por escritorio remoto y las
-combinaciones de teclas no llegan. Toda instrucción para él se escribe con el mouse y los
-menús. La latencia es aceptable.
+cuota limitada. La latencia es aceptable.
 
 En clase no se descarga nada. La imagen de la máquina virtual se prepara con las
 dependencias del servidor MCP y la caché de Maven y NuGet, según
@@ -134,9 +92,8 @@ pero no restringe la red.
 | `publicar-taller.sh` | Genera y publica el repositorio de participantes | No |
 | `gates.sh` | Corre todos los gates en Docker, sin red | No |
 
-**La documentación del relator.** Todo `docs/relator/`. La bitácora de construcción, en
-`09-bitacora-de-construccion.md`, explica por qué el repositorio es como es. La guía de
-mantenimiento, en `10-mantenimiento.md`, dice qué revisar antes de cada dictado.
+**La documentación del relator.** Todo `docs/relator/`. La guía de mantenimiento, en
+`10-mantenimiento.md`, dice qué revisar antes de cada dictado.
 
 ## Errores ya cometidos que no hay que repetir
 
@@ -158,20 +115,3 @@ mantenimiento, en `10-mantenimiento.md`, dice qué revisar antes de cada dictado
 - Un agente de verificación lanzado desde el repositorio de construcción recibe su
   `AGENTS.md`, que enumera los defectos. Las pruebas con agentes se hacen sobre una copia
   del repositorio de participantes, y en la máquina virtual solo se abre ese repositorio.
-
-## Plan de numeración
-
-| Spec | Contenido | Estado |
-|---|---|---|
-| SPEC-001 a SPEC-001-C | Estructura, verificador de ambiente y sus correcciones | Cerrado |
-| SPEC-002 y SPEC-002-A | Escenario Java | Cerrado |
-| SPEC-003 a SPEC-003-B | Escenario .NET y equivalencia | Cerrado |
-| SPEC-004 y SPEC-004-A | Diseño de laboratorios y calibración | Absorbido por SPEC-009 |
-| SPEC-005 y SPEC-006 | Activos de referencia y servidor MCP | Absorbidos por SPEC-009 |
-| SPEC-007 | Guía general del relator | Pendiente |
-| SPEC-008 | Realineación al temario contratado | Cerrado |
-| SPEC-009 | Construcción completa de los nueve laboratorios | Cerrado por SPEC-010 |
-| SPEC-010 | Cierre de SPEC-009, hook, .NET 10 y protocolo de prueba | Ejecutado |
-| SPEC-010-A | Infraestructura de construcción versionada | Este documento |
-
-Pendiente de ejecutar en la máquina virtual: `docs/relator/07-protocolo-prueba-vm.md`.

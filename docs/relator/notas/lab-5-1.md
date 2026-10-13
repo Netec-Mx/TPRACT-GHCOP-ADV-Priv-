@@ -66,5 +66,5 @@ con las respuestas a las preguntas abiertas, también está en
 
 ## Solución de referencia
 
-En `../soluciones/lab-5-1/`: la historia, la estimación construida con las mediciones de
-SPEC-015 y la decisión de dónde vive el reporte.
+En `../soluciones/lab-5-1/`: la historia, la estimación construida con mediciones reales
+y la decisión de dónde vive el reporte.

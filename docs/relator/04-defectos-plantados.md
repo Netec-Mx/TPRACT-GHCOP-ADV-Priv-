@@ -6,8 +6,7 @@
 El código de `escenario/` tiene defectos introducidos a propósito. Este documento dice
 cuáles son, dónde están exactamente y qué laboratorio se apoya en cada uno.
 
-Las ubicaciones corresponden a la implementación Java de SPEC-002. La implementación .NET
-de SPEC-003 replica los mismos diez defectos en los archivos equivalentes.
+Las ubicaciones corresponden a la implementación Java. La implementación .NET replica los mismos diez defectos en los archivos equivalentes.
 
 ## Mapeo entre los dos escenarios
 
@@ -389,7 +388,7 @@ recorren los tramos buscando uno que contenga el monto. Un monto negativo no cae
 ninguno, y el método devuelve el último tramo de la lista como valor por omisión. Con el
 plan PL01, un monto de -50.00 recibe 2,1 %, el porcentaje más bajo.
 
-Lo encontró la verificación de SPEC-009 al probar el borde inferior en el laboratorio 5.3.
+Lo encontró una verificación al probar el borde inferior en el laboratorio 5.3.
 Los datos de ejemplo no tienen montos negativos, así que no cambia ninguna salida.
 
 Si un participante lo encuentra, la respuesta es que es un comportamiento real del sistema

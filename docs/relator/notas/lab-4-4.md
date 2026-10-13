@@ -20,7 +20,7 @@ trabaja en el 5.3. Si aparece aquí, se anota y se deja para ese laboratorio.
 
 El paso 2 registra una decisión técnica que el repositorio todavía no tiene documentada: el
 escenario no usa frameworks ni dependencias de ejecución, solo dependencias de prueba. Se
-eligió en SPEC-015 por tres razones. Se observa en el código, en `pom.xml` y en los dos
+eligió por tres razones. Se observa en el código, en `pom.xml` y en los dos
 `.csproj`. Ninguna de las tres decisiones de `docs/arquitectura/decisiones/` la cubre; antes
 el paso pedía la configuración regional y la compatibilidad de redondeo, que la decisión 0001
 ya contiene y el participante tiene a la vista. Y no revela ningún defecto del catálogo.
@@ -60,7 +60,7 @@ clasificaciones, el criterio tiene que estar escrito en el pedido. Ver HALLAZGO-
 | 3, opcional | Fuera del tiempo | 55 s de agente |
 | 4, opcional | Fuera del tiempo | 156 s de agente y unas 18 aprobaciones. Se estiman 8 a 12 minutos de participante |
 
-En la verificación el agente documentó los tramos como no acumulativos, desde el código, y señaló el comentario. Con Copilot puede salir distinto. Desde SPEC-026 los pasos obligatorios son el 1 y el 2: 10 + 10 = 20 de 30, el 67 %. El paso
+En la verificación el agente documentó los tramos como no acumulativos, desde el código, y señaló el comentario. Con Copilot puede salir distinto. Los pasos obligatorios son el 1 y el 2: 10 + 10 = 20 de 30, el 67 %. El paso
 3, Confluence, y el 4, el runbook, son opcionales. Si la sesión viene con tiempo, haga el 3
 o muéstrelo en pantalla: conecta con el subtema 4.3.
 

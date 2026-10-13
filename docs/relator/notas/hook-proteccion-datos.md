@@ -36,7 +36,7 @@ hooks para bloquear acciones del agente antes de que ocurran. Este es uno de ver
   por los argumentos que nombran archivos, y los comandos de terminal por patrones como `rm`,
   `mv`, `sed -i` o una redirección hacia la carpeta, tramo por tramo. Un comando que escribe
   por un camino que el patrón no reconoce puede pasar.
-- Hasta SPEC-024 revisaba también el contenido: en la prueba con Copilot CLI bloqueó el caso
+- Antes revisaba también el contenido: en la prueba con Copilot CLI bloqueó el caso
   de uso del 3.4 y la descripción del pull request del 5.3 porque citaban la ruta, y Copilot
   tuvo que reformular las citas. Ahora esos casos pasan.
 - Funciona igual en Visual Studio Code y en Copilot CLI: lee las dos formas de entrada,

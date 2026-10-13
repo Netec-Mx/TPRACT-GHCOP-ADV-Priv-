@@ -1,7 +1,7 @@
 # Solución de referencia del laboratorio 5.2
 
 Solo para el relator. El reporte de referencia está en
-`../funcionalidad-reporte/`, construido en SPEC-015. Para
+`../funcionalidad-reporte/`. Para
 poner al día a un participante atrasado, desde la raíz de su clon:
 
 ```bash
