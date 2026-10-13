@@ -465,7 +465,7 @@ Si el repositorio está limpio, el segundo comando responde así.
   [ OK ] Ya esta en el punto de partida. No hay nada que descartar.
 ```
 
-Ten en una segunda pantalla, sin proyectar, las notas `docs/relator/notas/lab-1-4.md` y `docs/relator/notas/lab-1-5.md`, los respaldos `docs/relator/respaldos/demo-1-1.md`, `demo-1-2.md`, `demo-1-3.md`, `lab-1-4.md` y `lab-1-5.md`, y el caso `docs/relator/casos-de-clase/caso-02-configuracion-regional.md` por si sobra tiempo.
+Ten en una segunda pantalla, sin proyectar, las notas `docs/relator/notas/lab-1-4.md` y `docs/relator/notas/lab-1-5.md`, los respaldos `docs/relator/respaldos/demo-1-1.md`, `demo-1-2.md`, `demo-1-3.md`, `lab-1-4.md` y `lab-1-5.md`, con su versión `-dotnet` si la sala es .NET, y el caso `docs/relator/casos-de-clase/caso-02-configuracion-regional.md` por si sobra tiempo.
 
 Lo que suele fallar al empezar es Copilot deshabilitado en un perfil nuevo, la sesión de GitHub iniciada con otra cuenta y las skills que no aparecen porque la carpeta no se abrió como espacio de trabajo de confianza. Para el primero, pasa el puntero sobre el ícono de Copilot de la barra de estado, elige **Use AI Features** y después **Sign in to use Copilot**, como en «Qué revisar en la sala antes de la primera sesión».
 
@@ -497,7 +497,7 @@ Cita la documentación de Visual Studio Code tal cual. El código generado puede
 
 ### Demostración 1.1. El pedido pobre y el pedido bueno
 
-Guion en `docs/relator/demos/demo-1-1-pedido-pobre-y-pedido-bueno.md`. Respaldo en `docs/relator/respaldos/demo-1-1.md`. 8 minutos. **No es opcional** en el plan de 12,5 horas.
+Guion en `docs/relator/demos/demo-1-1-pedido-pobre-y-pedido-bueno.md`. Respaldo Java en `docs/relator/respaldos/demo-1-1.md` y respaldo .NET, grabado con Copilot, en `docs/relator/respaldos/demo-1-1-dotnet.md`. 8 minutos. **No es opcional** en el plan de 12,5 horas.
 
 #### Qué preparar
 
@@ -540,7 +540,7 @@ Salida grabada del respaldo. El primer pedido produce una lista larga y dispersa
 
 - Si el pedido pobre sale razonable, pregunta si dos personas de la sala obtendrían lo mismo con ese pedido. Esa es la diferencia que importa.
 - Si propone cambiar `double` por otro tipo, no lo comentes como defecto. Di que el pedido no le dio ningún límite.
-- Si el chat demora, sigue con `docs/relator/respaldos/demo-1-1.md` y di que es una ejecución grabada.
+- Si el chat demora, sigue con `docs/relator/respaldos/demo-1-1.md`, o `demo-1-1-dotnet.md` en .NET, y di que es una ejecución grabada.
 
 ### Exposición 1.2. Uso de contexto, archivos abiertos, selección de código, workspace y referencias específicas
 
@@ -574,7 +574,7 @@ Di con naturalidad que el temario menciona `/workspace` y que hoy no existe como
 
 ### Demostración 1.2. Las referencias de contexto
 
-Guion en `docs/relator/demos/demo-1-2-referencias-de-contexto.md`. Respaldo en `docs/relator/respaldos/demo-1-2.md`. 8 minutos. **No es opcional** en el plan de 12,5 horas.
+Guion en `docs/relator/demos/demo-1-2-referencias-de-contexto.md`. Respaldo Java en `docs/relator/respaldos/demo-1-2.md` y respaldo .NET, grabado con Copilot, en `docs/relator/respaldos/demo-1-2-dotnet.md`. 8 minutos. **No es opcional** en el plan de 12,5 horas.
 
 #### Qué preparar
 
@@ -626,7 +626,7 @@ Salida grabada del respaldo.
 #### Si falla o sale distinto
 
 - Si en el paso 1 el modelo encuentra la respuesta solo, muestra en las referencias qué leyó y pregunta si eso pasaría igual en un repositorio de mil clases.
-- Si el chat demora, sigue con `docs/relator/respaldos/demo-1-2.md`.
+- Si el chat demora, sigue con `docs/relator/respaldos/demo-1-2.md`, o `demo-1-2-dotnet.md` en .NET.
 
 ### Caso de clase 1.2. La configuración regional
 
@@ -673,7 +673,7 @@ Cierra diciendo que el capítulo 5 recorre las once fases con una sola historia.
 
 ### Demostración 1.3. Analizar, planear, implementar y validar
 
-Guion en `docs/relator/demos/demo-1-3-flujo-de-trabajo.md`. Respaldo en `docs/relator/respaldos/demo-1-3.md`. 10 minutos. **No es opcional** en el plan de 12,5 horas.
+Guion en `docs/relator/demos/demo-1-3-flujo-de-trabajo.md`. Respaldo Java en `docs/relator/respaldos/demo-1-3.md` y respaldo .NET en `docs/relator/respaldos/demo-1-3-dotnet.md`, los dos grabados con Copilot. 10 minutos. **No es opcional** en el plan de 12,5 horas.
 
 #### Qué preparar
 
@@ -715,7 +715,7 @@ Guion en `docs/relator/demos/demo-1-3-flujo-de-trabajo.md`. Respaldo en `docs/re
 
 #### Lo que se debe ver
 
-Pasos 1 a 3, salida grabada del respaldo. En ese respaldo las respuestas del chat de los pasos 1 a 3 son ejemplos ilustrativos, marcados como tales, y el diff es real. El paso 1 da una lista de candidatos, con la cabecera de las líneas 59 a 66 como el más claro. El paso 2 da un plan de cuatro puntos que crea `agregarCabeceraDetalle`, no toca nada más y termina con la validación. El paso 3 modifica un solo archivo y agrega un método privado.
+Pasos 1 a 3, salida grabada del respaldo, con Copilot. El paso 1 da cuatro candidatos y separa la cabecera en encabezado y fila de títulos. El paso 2 deja la sesión en modo Plan, propone `agregarCabeceraDetalle` con el comparador como validación y pregunta si la fila de títulos entra en la cabecera. Desde el modo Plan no implementa. Hay que pasar a **Agent**, que es lo que hace **Start Implementation**. El paso 3 guarda la salida de antes en la carpeta temporal, modifica un solo archivo, agrega un método privado y corre el comparador.
 
 [CAPTURA PENDIENTE] Chat en modo Plan con el plan de extracción de la cabecera y el botón Start Implementation visible.
 
@@ -777,12 +777,12 @@ Paso 5, salida real de `bash scripts/reiniciar-lab.sh lab-1-4 --confirmar` con `
 - Si el agente toca algo más que la cabecera, muéstralo en el diff. Es el motivo del paso de validación.
 - Si el comparador falla, mejor todavía. La validación detectó un cambio de comportamiento antes de que llegara a un pull request.
 - Si el agente pide `git stash`, `git reset`, `git checkout` o `git restore` para comparar antes y después, recházalo con **Skip** y escribe «Sigue sin ese comando».
-- Si algo demora, sigue con `docs/relator/respaldos/demo-1-3.md`.
+- Si algo demora, sigue con `docs/relator/respaldos/demo-1-3.md`, o `demo-1-3-dotnet.md` en .NET.
 - No olvides el paso 5. El laboratorio 1.4 empieza sobre el escenario publicado.
 
 ### Laboratorio 1.4. Práctica guiada, mejora incremental de prompts y uso de comandos del chat
 
-Enunciado en `labs/cap1/lab-1-4-practica-guiada/README.md`. Notas en `docs/relator/notas/lab-1-4.md`. Respaldo en `docs/relator/respaldos/lab-1-4.md`. 30 minutos. Modo **Ask**, todo en **una misma conversación**. Ningún paso modifica archivos.
+Enunciado en `labs/cap1/lab-1-4-practica-guiada/README.md`. Notas en `docs/relator/notas/lab-1-4.md`. Respaldo Java en `docs/relator/respaldos/lab-1-4.md` y respaldo .NET, grabado con Copilot, en `docs/relator/respaldos/lab-1-4-dotnet.md`. 30 minutos. Modo **Ask**, todo en **una misma conversación**. Ningún paso modifica archivos.
 
 #### Qué escribe la sala
 
@@ -827,7 +827,7 @@ El objeto de observación es el método largo de la clase de cálculo. La sala s
 
 #### Solución de referencia
 
-No hay. El laboratorio no modifica código y el resultado es una conversación. Si el chat demora, proyecta `docs/relator/respaldos/lab-1-4.md` y di que es una ejecución grabada.
+No hay. El laboratorio no modifica código y el resultado es una conversación. Si el chat demora, proyecta `docs/relator/respaldos/lab-1-4.md`, o `lab-1-4-dotnet.md` en .NET, y di que es una ejecución grabada.
 
 #### Quien se atrasa
 
@@ -839,7 +839,7 @@ bash scripts/reiniciar-lab.sh lab-1-4 --confirmar
 
 ### Laboratorio 1.5. Análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat
 
-Enunciado en `labs/cap1/lab-1-5-analisis-componente/README.md`. Notas en `docs/relator/notas/lab-1-5.md`. Respaldo en `docs/relator/respaldos/lab-1-5.md`. Soluciones en `docs/relator/soluciones/lab-1-5/`. 60 minutos. Pasos 1 a 4 en modo **Ask** y paso 5 en modo **Agent**. **El paso 4 es opcional** y queda fuera de los 60 minutos.
+Enunciado en `labs/cap1/lab-1-5-analisis-componente/README.md`. Notas en `docs/relator/notas/lab-1-5.md`. Respaldo Java en `docs/relator/respaldos/lab-1-5.md` y respaldo .NET, grabado con Copilot, en `docs/relator/respaldos/lab-1-5-dotnet.md`. Soluciones en `docs/relator/soluciones/lab-1-5/`. 60 minutos. Pasos 1 a 4 en modo **Ask** y paso 5 en modo **Agent**. **El paso 4 es opcional** y queda fuera de los 60 minutos.
 
 #### Preparar
 
@@ -996,7 +996,7 @@ Repositorio: /tmp/r
 
 Con el patch .NET, `git status --short` muestra en cambio `M escenario/dotnet/LiquidacionComercios/Calculo/CalculadoraLiquidacion.cs`.
 
-Si el agente no responde, proyecta el respaldo `docs/relator/respaldos/lab-1-5.md`, que trae los cinco pasos en Java con el diff del paso 5. En ese respaldo el comparador del paso 5 no corrió en la máquina de grabación. Al final del archivo está su salida real con la solución aplicada.
+Si el agente no responde, proyecta el respaldo `docs/relator/respaldos/lab-1-5.md`, que trae los cinco pasos en Java con el diff del paso 5. En ese respaldo el comparador del paso 5 no corrió en la máquina de grabación. Al final del archivo está su salida real con la solución aplicada. En .NET proyecta `docs/relator/respaldos/lab-1-5-dotnet.md`, grabado con Copilot, con el diff del paso 5 y el comparador en cero.
 
 #### Reiniciar y poner al día
 
@@ -1250,8 +1250,9 @@ porque las definiciones de herramientas entran al contexto.
 
 ### Demostración 2.2. Los agentes por rol
 
-Guion `docs/relator/demos/demo-2-2-agentes-por-rol.md`. Respaldo
-`docs/relator/respaldos/demo-2-2.md`.
+Guion `docs/relator/demos/demo-2-2-agentes-por-rol.md`. Respaldo Java en
+`docs/relator/respaldos/demo-2-2.md` y respaldo .NET en
+`docs/relator/respaldos/demo-2-2-dotnet.md`, los dos grabados con Copilot.
 
 #### Si es opcional
 
@@ -1281,9 +1282,9 @@ la sala construye y prueba un agente. Si sobra tiempo, este es el guion breve.
    Revisa FormateadorReporte.java y corrige lo que encuentres.
    ```
 
-   Debe entregar una tabla de hallazgos y ningún cambio. En el respaldo dice que no puede
-   corregir porque no tiene herramientas de edición, y clasifica como «Descartar» los
-   problemas preexistentes por estar fuera del alcance. Muestra `git status --short`
+   Debe entregar una tabla de hallazgos y ningún cambio. En el respaldo dice que su rol no
+   edita y que no puede ejecutar comandos, y clasifica como «Descartar» los problemas
+   preexistentes por estar fuera del alcance. Muestra `git status --short`
    vacío en Git Bash.
 
 4. Elige **Refactorizador**. Escribe.
@@ -1295,7 +1296,9 @@ la sala construye y prueba un agente. Si sobra tiempo, este es el guion breve.
    Debe decir qué archivo y qué bloque va a tocar, aplicar el cambio, compilar y correr el
    comparador. Al final menciona lo que vio y no tocó, como los montos en `double` y los
    literales repetidos. Di «Fíjense en la última parte. Vio cosas y no las corrigió. Está
-   escrito en su archivo».
+   escrito en su archivo». En los respaldos aplicó, compiló y corrió el comparador, pero no
+   anunció el bloque antes ni listó lo que no tocó. Si pasa en clase, pregunta a la sala qué
+   le pediría un revisor. En .NET puede tardar varios minutos.
 
 5. En Git Bash, `git diff --stat`. Debe mostrar un solo archivo, `FormateadorReporte.java`.
 
@@ -1326,10 +1329,9 @@ la sala construye y prueba un agente. Si sobra tiempo, este es el guion breve.
 - Si el refactorizador no corre el comparador, señálalo como lo que un revisor humano
   tendría que pedir.
 - Si toca algo fuera del bloque, muéstralo. Es la razón de revisar el diff.
-- Si algo demora, usa `docs/relator/respaldos/demo-2-2.md`. Ojo, las frases de los agentes
-  en ese respaldo son simuladas. Lo real son las salidas de comandos, la compilación, el
-  comparador con 554 líneas idénticas y el `git diff --stat` de un archivo. Dilo así si lo
-  proyectas.
+- Si algo demora, usa `docs/relator/respaldos/demo-2-2.md` o, en .NET,
+  `docs/relator/respaldos/demo-2-2-dotnet.md`. Los dos son salidas reales de Copilot. Traen
+  además el mismo pedido al agente general, que sí intentó editar, para comparar.
 
 ### Exposición 2.3. Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos
 
@@ -1896,7 +1898,7 @@ El servidor queda iniciado y el ícono de herramientas del chat muestra `buscar_
 
 - Si el servidor no arranca, revisa que la carpeta sea de confianza y que el verificador esté en verde.
 - Si el agente lee los archivos en lugar de usar las herramientas, pídele explícitamente que use el servidor.
-- Si algo demora, presenta la salida grabada en `docs/relator/respaldos/demo-3-2.md` y di que es una ejecución grabada.
+- Si algo demora, presenta la salida grabada con Copilot en `docs/relator/respaldos/demo-3-2.md` y di que es una ejecución grabada. Sirve para los dos stacks.
 
 ### Exposición 3.3. Riesgos de seguridad, exposición de información, conectores no autorizados y fuga de contexto
 
@@ -1998,7 +2000,7 @@ Si el agente modifica el archivo en el paso 1, el hook no corrió en esa máquin
 
 1. Restaura con `bash scripts/reiniciar-lab.sh lab-1-4 --confirmar`.
 2. Muestra `proteger-datos-escenario.json` y `proteger-datos-escenario.js` y explica qué hace. La prueba en terminal de más arriba sirve para eso.
-3. Muestra la ejecución grabada en `docs/relator/respaldos/demo-3-3.md`.
+3. Muestra la ejecución grabada con Copilot en `docs/relator/respaldos/demo-3-3.md`. Sirve para los dos stacks.
 4. Di que es una función en vista previa y que por eso se verifica en cada ambiente. Revisa después `chat.useHooks` con el verificador.
 
 ### Laboratorio 3.4. Diseño de un caso de uso de MCP local seguro con documentación técnica local
@@ -2151,8 +2153,9 @@ hiciera en algún momento.
 
 ### Demostración 4.1. La documentación contra la ejecución
 
-Guion en `docs/relator/demos/demo-4-1-documentacion-contra-ejecucion.md`. Respaldo en
-`docs/relator/respaldos/demo-4-1.md`. No es opcional en el plan de 12,5 horas. Dura 8
+Guion en `docs/relator/demos/demo-4-1-documentacion-contra-ejecucion.md`. Respaldo Java en
+`docs/relator/respaldos/demo-4-1.md` y respaldo .NET en
+`docs/relator/respaldos/demo-4-1-dotnet.md`, los dos grabados con Copilot. No es opcional en el plan de 12,5 horas. Dura 8
 minutos.
 
 #### Qué preparar antes
@@ -2198,6 +2201,10 @@ En el chat, la respuesta del respaldo describe el método, explica que resta un 
 día final es menor que el inicial y predice 0, 1, 5 y -1. Es salida grabada del respaldo
 `docs/relator/respaldos/demo-4-1.md`. Tu pantalla puede variar en la redacción.
 
+Con una sala .NET el pedido usa `UtilidadesFecha.cs` y `MesesEntre`, y el paso 2 se ejecuta
+con `dotnet fsi` en lugar de `jshell`. El comando y su salida están en
+`docs/relator/respaldos/demo-4-1-dotnet.md`. Da los mismos cuatro resultados.
+
 En la terminal, la salida real es esta.
 
 ```
@@ -2225,7 +2232,8 @@ comando antes de la clase para que el aviso no salga frente a la sala.
 - El documento dice 0 en el caso del 2026-03-10 al 2026-03-09. Es el mejor momento de la
   demostración. El código devuelve -1.
 - `jshell` no está disponible o el escenario no compila. Proyecta
-  `docs/relator/respaldos/demo-4-1.md` y di que es una ejecución grabada.
+  `docs/relator/respaldos/demo-4-1.md`, o `demo-4-1-dotnet.md` en .NET, y di que es una
+  ejecución grabada.
 
 La idea que cierra la demostración es que la documentación generada se verifica contra la
 ejecución, no contra el texto. En el 4.4 la sala lo va a tener que hacer sin que nadie le
@@ -2322,7 +2330,8 @@ del espacio del equipo es la que manda.
 ### Laboratorio 4.4. Generación breve de documentación Markdown para un proyecto Java o .NET
 
 Enunciado en `labs/cap4/lab-4-4-documentacion/README.md`. Notas en
-`docs/relator/notas/lab-4-4.md`. Respaldo en `docs/relator/respaldos/lab-4-4.md`. Dura 30
+`docs/relator/notas/lab-4-4.md`. Respaldo Java en `docs/relator/respaldos/lab-4-4.md` y respaldo
+.NET, grabado con Copilot, en `docs/relator/respaldos/lab-4-4-dotnet.md`. Dura 30
 minutos. Todos los pasos van en modo **Agent**.
 
 | Paso | Qué escribe el participante | Tiempo |
@@ -2473,7 +2482,8 @@ Como referencia para comparar tienes, en el repositorio de construcción, los do
 archivo y línea. Son `calculo-de-comisiones.md` del paso 1, `decisiones.md` del paso 2 y
 `runbook-calculo-de-comisiones.md` del paso 4, con sus acciones ejecutadas de verdad. La
 salida grabada `docs/relator/respaldos/lab-4-4.md` trae además los pasos 1 a 3 hechos por un
-agente. Proyecta cualquiera de los dos si a la sala no le funcionó el agente, y di de dónde
+agente, y `docs/relator/respaldos/lab-4-4-dotnet.md` los cuatro pasos en .NET hechos por
+Copilot. Proyecta cualquiera de los dos si a la sala no le funcionó el agente, y di de dónde
 viene.
 
 #### Cómo poner al día a quien se atrase
@@ -2824,7 +2834,8 @@ La clave no es correcta. No se modifico nada.
 ```
 
 Respaldo del laboratorio, con los tres pasos grabados en Java, en
-`docs/relator/respaldos/lab-5-1.md`.
+`docs/relator/respaldos/lab-5-1.md`. El respaldo .NET, grabado con Copilot por el camino A,
+está en `docs/relator/respaldos/lab-5-1-dotnet.md`.
 
 ---
 
@@ -2953,7 +2964,8 @@ Después se confirma con `git add -A && git commit -m "Inicio del 5.3"`. La
 salida real de ese comando está en el laboratorio 5.3.
 
 Respaldo de los dos caminos en `docs/relator/respaldos/lab-5-2.md`. El camino B está grabado en
-Java y el camino A en .NET.
+Java y el camino A en .NET. Hay además un respaldo .NET del camino A grabado con Copilot, en
+`docs/relator/respaldos/lab-5-2-dotnet.md`, que sigue al de `lab-5-1-dotnet.md` en la misma rama.
 
 ---
 
@@ -3261,7 +3273,9 @@ confirma con `git add -A && git commit -m "Inicio del 5.3"`. Le deja el camino A
 está más arriba, en «Preparar».
 
 Respaldo de los dos caminos en `docs/relator/respaldos/lab-5-3.md`. El camino B está grabado en
-Java y el camino A en .NET.
+Java y el camino A en .NET. Hay además un respaldo .NET del camino A grabado con Copilot, en
+`docs/relator/respaldos/lab-5-3-dotnet.md`, completo y sin el corte. Trae la revisión de
+Copilot de los cambios sin confirmar, hecha desde la CLI.
 
 ---
 
@@ -3493,7 +3507,9 @@ salida real está en «Preparar». El paso 2 funciona con cualquier estado de la
 incidente se analiza con las notas de referencia.
 
 Respaldo de los cuatro pasos en `docs/relator/respaldos/lab-5-4.md`. Propone 1.5.0 sobre la
-vigente 1.4.0, como el registro de cambios del punto de partida.
+vigente 1.4.0, como el registro de cambios del punto de partida. El respaldo .NET, grabado con
+Copilot por el camino A, está en `docs/relator/respaldos/lab-5-4-dotnet.md`. También propone
+1.5.0.
 
 #### Cómo volver al inicio al terminar el 5.4
 

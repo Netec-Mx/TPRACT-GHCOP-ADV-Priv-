@@ -385,6 +385,31 @@ Si la espera pasa de un par de minutos, si la red se cae o si se agota la cuota,
 respaldo correspondiente de [`respaldos/`](respaldos/) y siga con esa salida. Cada
 laboratorio y cada demostración tiene uno. Diga a la sala que es una ejecución grabada.
 
+Use el respaldo del stack de la sala. «Copilot real» es una grabación con GitHub Copilot CLI;
+los demás los grabó un agente de verificación que simula a Copilot.
+
+| Demostración o laboratorio | Respaldo Java | Respaldo .NET |
+|---|---|---|
+| Demostración 1.1 | [`demo-1-1.md`](respaldos/demo-1-1.md) | [`demo-1-1-dotnet.md`](respaldos/demo-1-1-dotnet.md), Copilot real |
+| Demostración 1.2 | [`demo-1-2.md`](respaldos/demo-1-2.md) | [`demo-1-2-dotnet.md`](respaldos/demo-1-2-dotnet.md), Copilot real |
+| Demostración 1.3 | [`demo-1-3.md`](respaldos/demo-1-3.md), Copilot real | [`demo-1-3-dotnet.md`](respaldos/demo-1-3-dotnet.md), Copilot real |
+| Laboratorio 1.4 | [`lab-1-4.md`](respaldos/lab-1-4.md) | [`lab-1-4-dotnet.md`](respaldos/lab-1-4-dotnet.md), Copilot real |
+| Laboratorio 1.5 | [`lab-1-5.md`](respaldos/lab-1-5.md) | [`lab-1-5-dotnet.md`](respaldos/lab-1-5-dotnet.md), Copilot real |
+| Demostración 2.1 | [`demo-2-1.md`](respaldos/demo-2-1.md) | No hay; la demostración no depende del stack |
+| Demostración 2.2 | [`demo-2-2.md`](respaldos/demo-2-2.md), Copilot real | [`demo-2-2-dotnet.md`](respaldos/demo-2-2-dotnet.md), Copilot real |
+| Demostración 2.3 | [`demo-2-3.md`](respaldos/demo-2-3.md), con los dos stacks | El mismo; la demostración pregunta por un archivo de cada stack |
+| Laboratorio 2.4 | [`lab-2-4.md`](respaldos/lab-2-4.md) y [`respaldo-lab-2-4/`](respaldo-lab-2-4/) | No hay; los artefactos sirven para los dos stacks |
+| Demostración 3.2 | [`demo-3-2.md`](respaldos/demo-3-2.md), Copilot real | No hay; la demostración no depende del stack |
+| Demostración 3.3 | [`demo-3-3.md`](respaldos/demo-3-3.md), Copilot real | No hay; la demostración no depende del stack |
+| Laboratorio 3.4 | [`lab-3-4.md`](respaldos/lab-3-4.md) | No hay; el laboratorio no depende del stack |
+| Demostración 4.1 | [`demo-4-1.md`](respaldos/demo-4-1.md), Copilot real | [`demo-4-1-dotnet.md`](respaldos/demo-4-1-dotnet.md), Copilot real, con `dotnet fsi` en lugar de `jshell` |
+| Laboratorio 4.4 | [`lab-4-4.md`](respaldos/lab-4-4.md) | [`lab-4-4-dotnet.md`](respaldos/lab-4-4-dotnet.md), Copilot real |
+| Laboratorio 5.1 | [`lab-5-1.md`](respaldos/lab-5-1.md) | [`lab-5-1-dotnet.md`](respaldos/lab-5-1-dotnet.md), Copilot real, camino A |
+| Laboratorio 5.2 | [`lab-5-2.md`](respaldos/lab-5-2.md), camino B | [`lab-5-2.md`](respaldos/lab-5-2.md), camino A, y [`lab-5-2-dotnet.md`](respaldos/lab-5-2-dotnet.md), Copilot real, camino A |
+| Laboratorio 5.3 | [`lab-5-3.md`](respaldos/lab-5-3.md), camino B | [`lab-5-3.md`](respaldos/lab-5-3.md), camino A, y [`lab-5-3-dotnet.md`](respaldos/lab-5-3-dotnet.md), Copilot real, camino A |
+| Demostración 5.3 | [`demo-5-3.md`](respaldos/demo-5-3.md), grabada en GitHub Actions | La misma |
+| Laboratorio 5.4 | [`lab-5-4.md`](respaldos/lab-5-4.md) | [`lab-5-4-dotnet.md`](respaldos/lab-5-4-dotnet.md), Copilot real, camino A |
+
 ---
 
 ### Consumo de Copilot en el taller
