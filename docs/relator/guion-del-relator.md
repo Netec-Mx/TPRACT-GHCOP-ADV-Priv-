@@ -2185,12 +2185,14 @@ minutos.
    [CAPTURA PENDIENTE] Panel de chat de Visual Studio Code en modo Ask con la respuesta a la demostración 4.1, mostrando la tabla de cuatro casos de `mesesEntre` con su columna de resultado esperado.
 
 2. En Git Bash, ejecuta el método con los mismos casos.
-
+   
+   {% raw %}
    ```bash
    printf '%s\n' 'var u = new pe.pasarelaandina.calculo.UtilidadesFecha();' 'for (String[] c : new String[][]{{"2026-01-31","2026-02-28"},{"2026-01-15","2026-02-15"},{"2025-12-31","2026-06-01"},{"2026-03-10","2026-03-09"}}) System.out.println(c[0] + " -> " + c[1] + " = " + u.mesesEntre(u.parsearFecha(c[0]), u.parsearFecha(c[1])));' '/exit' | jshell -q --class-path escenario/java/target/classes
    ```
+   {% endraw %}
 
-3. Compara la tabla del documento con la salida, caso por caso. Di a la sala «El documento se
+4. Compara la tabla del documento con la salida, caso por caso. Di a la sala «El documento se
    escribió leyendo el código. La salida es lo que el código hace. Cuando no coinciden, manda
    la ejecución.»
 
