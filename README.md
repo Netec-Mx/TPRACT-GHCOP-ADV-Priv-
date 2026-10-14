@@ -14,7 +14,7 @@ Cada laboratorio corresponde a un bloque práctico del temario contratado, con s
 
 ## Capítulo 1: Prompt Engineering y uso eficiente de GitHub Copilot Chat
 
-### [1.4 Práctica guiada: mejora incremental de prompts y uso de comandos del chat](https://github.com/Netec-Mx/TPRACT-GHCOP-ADV-Priv-/blob/main/labs/cap1/lab-1-4-practica-guiada/README.md)
+### [1.4 Práctica guiada: mejora incremental de prompts y uso de comandos del chat](labs/cap1/lab-1-4-practica-guiada/README.md)
 
 - Descripción: Práctica guiada: mejora incremental de prompts y uso de comandos del chat.
 - ⏱️ Duración estimada: 30 min.
@@ -22,7 +22,7 @@ Cada laboratorio corresponde a un bloque práctico del temario contratado, con s
 - Identificador del laboratorio: `lab-1-4`.
 - Estado: Redactado.
 
-### [1.5 Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat](https://github.com/Netec-Mx/TPRACT-GHCOP-ADV-Priv-/blob/main/labs/cap1/lab-1-5-analisis-componente/README.md)
+### [1.5 Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat](labs/cap1/lab-1-5-analisis-componente/README.md)
 
 - Descripción: Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat.
 - ⏱️ Duración estimada: 60 min.
@@ -32,7 +32,7 @@ Cada laboratorio corresponde a un bloque práctico del temario contratado, con s
 
 ## Capítulo 2: Agentes locales, skills e instrucciones reutilizables
 
-### [2.4 Laboratorio: creación de un agente local o instrucción reutilizable para una tarea del equipo](https://github.com/Netec-Mx/TPRACT-GHCOP-ADV-Priv-/blob/main/labs/cap2/lab-2-4-agente-o-instruccion/README.md)
+### [2.4 Laboratorio: creación de un agente local o instrucción reutilizable para una tarea del equipo](labs/cap2/lab-2-4-agente-o-instruccion/README.md)
 
 - Descripción: Laboratorio: creación de un agente local o instrucción reutilizable para una tarea del equipo.
 - ⏱️ Duración estimada: 45 min.
@@ -42,7 +42,7 @@ Cada laboratorio corresponde a un bloque práctico del temario contratado, con s
 
 ## Capítulo 3: MCP local bajo restricciones corporativas
 
-### [3.4 Laboratorio: diseño de un caso de uso de MCP local seguro con documentación técnica local](https://github.com/Netec-Mx/TPRACT-GHCOP-ADV-Priv-/blob/main/labs/cap3/lab-3-4-mcp-local/README.md)
+### [3.4 Laboratorio: diseño de un caso de uso de MCP local seguro con documentación técnica local](labs/cap3/lab-3-4-mcp-local/README.md)
 
 - Descripción: Laboratorio: diseño de un caso de uso de MCP local seguro con documentación técnica local.
 - ⏱️ Duración estimada: 45 min.
@@ -52,7 +52,7 @@ Cada laboratorio corresponde a un bloque práctico del temario contratado, con s
 
 ## Capítulo 4: Documentación técnica con GitHub Copilot y Markdown
 
-### [4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET](https://github.com/Netec-Mx/TPRACT-GHCOP-ADV-Priv-/blob/main/labs/cap4/lab-4-4-documentacion/README.md)
+### [4.4 Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET](labs/cap4/lab-4-4-documentacion/README.md)
 
 - Descripción: Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET.
 - ⏱️ Duración estimada: 30 min.
@@ -62,7 +62,7 @@ Cada laboratorio corresponde a un bloque práctico del temario contratado, con s
 
 ## Capítulo 5: Laboratorio integrador Java/.NET
 
-### [5.1 Preparación del escenario integrador y criterios de evaluación](https://github.com/Netec-Mx/TPRACT-GHCOP-ADV-Priv-/blob/main/labs/cap5/lab-5-1-preparacion/README.md)
+### [5.1 Preparación del escenario integrador y criterios de evaluación](labs/cap5/lab-5-1-preparacion/README.md)
 
 - Descripción: Preparación del escenario integrador y criterios de evaluación.
 - ⏱️ Duración estimada: 45 min.
@@ -70,7 +70,7 @@ Cada laboratorio corresponde a un bloque práctico del temario contratado, con s
 - Identificador del laboratorio: `lab-5-1`.
 - Estado: Redactado.
 
-### [5.2 Planeación de mejora, refactorización y validación incremental](https://github.com/Netec-Mx/TPRACT-GHCOP-ADV-Priv-/blob/main/labs/cap5/lab-5-2-refactorizacion/README.md)
+### [5.2 Planeación de mejora, refactorización y validación incremental](labs/cap5/lab-5-2-refactorizacion/README.md)
 
 - Descripción: Planeación de mejora, refactorización y validación incremental.
 - ⏱️ Duración estimada: 45 min.
@@ -78,7 +78,7 @@ Cada laboratorio corresponde a un bloque práctico del temario contratado, con s
 - Identificador del laboratorio: `lab-5-2`.
 - Estado: Redactado.
 
-### [5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión](https://github.com/Netec-Mx/TPRACT-GHCOP-ADV-Priv-/blob/main/labs/cap5/lab-5-3-pruebas-y-revision/README.md)
+### [5.3 Estrategia de pruebas, documentación Markdown y checklist de revisión](labs/cap5/lab-5-3-pruebas-y-revision/README.md)
 
 - Descripción: Estrategia de pruebas, documentación Markdown y checklist de revisión.
 - ⏱️ Duración estimada: 45 min.
@@ -86,7 +86,7 @@ Cada laboratorio corresponde a un bloque práctico del temario contratado, con s
 - Identificador del laboratorio: `lab-5-3`.
 - Estado: Redactado.
 
-### [5.4 Laboratorio final: construcción de activos reutilizables para el equipo](https://github.com/Netec-Mx/TPRACT-GHCOP-ADV-Priv-/blob/main/labs/cap5/lab-5-4-laboratorio-final/README.md)
+### [5.4 Laboratorio final: construcción de activos reutilizables para el equipo](labs/cap5/lab-5-4-laboratorio-final/README.md)
 
 - Descripción: Laboratorio final: construcción de activos reutilizables para el equipo.
 - ⏱️ Duración estimada: 45 min.
