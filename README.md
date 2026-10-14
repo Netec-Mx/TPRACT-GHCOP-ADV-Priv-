@@ -1,134 +1,135 @@
-# Taller práctico de productividad avanzada con GitHub Copilot
+<img src="images/neteclogo (2).png" alt="logo" width="300"/>
 
-Repositorio de trabajo del taller dictado para Netec. Contiene el código base de los
-laboratorios, los artefactos de personalización de Copilot que construyen los
-participantes, un servidor MCP local de demostración y el material de apoyo del relator.
+# Laboratorios del taller
 
-**Duración total:** 13.5 horas (810 minutos), distribuidas en cuatro sesiones.
+## Plataforma de laboratorios
 
-## Contenido del taller
+Te damos la bienvenida a la plataforma de laboratorios del taller. Aquí podrás explorar diferentes tecnologías a través de prácticas guiadas y desarrollar tus habilidades con prompts, Copilot Chat, agentes locales, MCP local y documentación Markdown para proyectos Java o .NET.
 
-La estructura sigue el temario que Netec acordó con el cliente: su numeración, sus títulos y
-sus minutos.
+## Lista de laboratorios
 
-| Capítulo | Título | Duración | Sesión |
-|---|---|---|---|
-| 1 | Prompt Engineering y uso eficiente de GitHub Copilot Chat | 180 min | 1 |
-| 2 | Agentes locales, skills e instrucciones reutilizables | 180 min | 2 |
-| 3 | MCP local bajo restricciones corporativas | 180 min | 3 |
-| 4 | Documentación técnica con GitHub Copilot y Markdown | 90 min | 4 |
-| 5 | Laboratorio integrador Java/.NET | 180 min | 4 |
+Los nueve laboratorios prácticos, en el orden en que se dictan. Cada uno tiene su enunciado completo en el README de su directorio.
 
-De los 810 minutos, 420 son teoría y 390 son práctica, repartidos en nueve bloques
-prácticos. Cada bloque práctico corresponde a un laboratorio de [`labs/`](labs/README.md).
+Cada laboratorio corresponde a un bloque práctico del temario contratado, con su mismo número y su misma duración. Haz clic en los enlaces para comenzar.
 
-### Subtemas del temario contratado
+### [Práctica 1. Práctica guiada, mejora incremental de prompts y uso de comandos del chat](cap1/lab-1-4-practica-guiada/README.md)
 
-Títulos y minutos textuales del documento de Netec, Propuesta Temario 1. Son la única
-fuente de los planes de sesión de `docs/relator/01-guia-del-relator.md`.
+- Descripción: Práctica guiada, mejora incremental de prompts y uso de comandos del chat.
+- ⏱️ Duración estimada: 30 min.
+- Bloque del temario: 1.4.
+- Identificador del laboratorio: `lab-1-4`.
+- Estado: Redactado.
 
-| Subtema | Título | Min | Sesión |
-|---|---|---|---|
-| 1.1 | Prompts efectivos para desarrollo: objetivo, contexto, restricciones y salida esperada | 30 | 1 |
-| 1.2 | Uso de contexto: archivos abiertos, selección de código, workspace y referencias específicas | 30 | 1 |
-| 1.3 | Flujos de trabajo con Copilot Chat: analizar, planear, implementar y validar | 30 | 1 |
-| 1.4 | Práctica guiada: mejora incremental de prompts y uso de comandos del chat | 30 | 1 |
-| 1.5 | Laboratorio: análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat | 60 | 1 |
-| 2.1 | Conceptos: agentes locales, skills, prompt files e instrucciones personalizadas | 45 | 2 |
-| 2.2 | Diseño de agentes por rol: analista, tester, documentador, revisor y refactorizador | 45 | 2 |
-| 2.3 | Instrucciones reutilizables para proyectos Java, .NET y repositorios corporativos | 45 | 2 |
-| 2.4 | Laboratorio: creación de un agente local o instrucción reutilizable para una tarea del equipo | 45 | 2 |
-| 3.1 | Qué es MCP y cómo se relaciona con contexto, agentes y herramientas locales | 45 | 3 |
-| 3.2 | Diferencia entre MCP local y MCP externo en ambientes restringidos | 45 | 3 |
-| 3.3 | Riesgos de seguridad: exposición de información, conectores no autorizados y fuga de contexto | 45 | 3 |
-| 3.4 | Laboratorio: diseño de un caso de uso de MCP local seguro con documentación técnica local | 45 | 3 |
-| 4.1 | Uso de Copilot para documentación técnica y generación de Markdown | 20 | 4 |
-| 4.2 | Documentación de proyectos, endpoints, pruebas, decisiones técnicas y troubleshooting | 20 | 4 |
-| 4.3 | Buenas prácticas para preparar documentación compatible con Confluence | 20 | 4 |
-| 4.4 | Laboratorio: generación breve de documentación Markdown para un proyecto Java o .NET | 30 | 4 |
-| 5.1 | Preparación del escenario integrador y criterios de evaluación | 45 | 4 |
-| 5.2 | Planeación de mejora, refactorización y validación incremental | 45 | 4 |
-| 5.3 | Estrategia de pruebas, documentación Markdown y checklist de revisión | 45 | 4 |
-| 5.4 | Laboratorio final: construcción de activos reutilizables para el equipo | 45 | 4 |
+### [Práctica 2. Laboratorio, análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat](cap1/lab-1-5-analisis-componente/README.md)
 
-### Distribución por sesión
+- Descripción: Laboratorio, análisis y mejora de un componente Java/.NET usando prompts y Copilot Chat.
+- ⏱️ Duración estimada: 60 min.
+- Bloque del temario: 1.5.
+- Identificador del laboratorio: `lab-1-5`.
+- Estado: Redactado.
 
-| Sesión | Contenido | Duración |
-|---|---|---|
-| 1 | Capítulo 1 | 180 min |
-| 2 | Capítulo 2 | 180 min |
-| 3 | Capítulo 3 | 180 min |
-| 4 | Capítulos 4 y 5 | 270 min |
+### [Práctica 3. Laboratorio, creación de un agente local o instrucción reutilizable para una tarea del equipo](cap2/lab-2-4-agente-o-instruccion/README.md)
 
-## Inicio rápido
+- Descripción: Laboratorio, creación de un agente local o instrucción reutilizable para una tarea del equipo.
+- ⏱️ Duración estimada: 45 min.
+- Bloque del temario: 2.4.
+- Identificador del laboratorio: `lab-2-4`.
+- Estado: Redactado.
 
-Clona el repositorio y ejecuta el script de verificación de ambiente que corresponda a tu
-sistema operativo. El script solo diagnostica: no instala ni modifica nada.
+### [Práctica 4. Laboratorio, diseño de un caso de uso de MCP local seguro con documentación técnica local](cap3/lab-3-4-mcp-local/README.md)
 
-```bash
-git clone https://github.com/RodrigoMSB/github-copilot-netec.git
-cd github-copilot-netec
-```
+- Descripción: Laboratorio, diseño de un caso de uso de MCP local seguro con documentación técnica local.
+- ⏱️ Duración estimada: 45 min.
+- Bloque del temario: 3.4.
+- Identificador del laboratorio: `lab-3-4`.
+- Estado: Redactado.
 
-En macOS o Linux:
+### [Práctica 5. Laboratorio, generación breve de documentación Markdown para un proyecto Java o .NET](cap4/lab-4-4-documentacion/README.md)
 
-```bash
-bash scripts/verificar-ambiente.sh
-```
+- Descripción: Laboratorio, generación breve de documentación Markdown para un proyecto Java o .NET.
+- ⏱️ Duración estimada: 30 min.
+- Bloque del temario: 4.4.
+- Identificador del laboratorio: `lab-4-4`.
+- Estado: Redactado.
 
-En Windows, desde Git Bash:
+### [Práctica 6. Preparación del escenario integrador y criterios de evaluación](cap5/lab-5-1-preparacion/README.md)
 
-```bash
-bash scripts/verificar-ambiente.sh
-```
+- Descripción: Preparación del escenario integrador y criterios de evaluación.
+- ⏱️ Duración estimada: 45 min.
+- Bloque del temario: 5.1.
+- Identificador del laboratorio: `lab-5-1`.
+- Estado: Redactado.
 
-Git Bash viene incluido en Git para Windows, que ya es un requisito del ambiente. No hace
-falta instalar ningún intérprete adicional.
+### [Práctica 7. Planeación de mejora, refactorización y validación incremental](cap5/lab-5-2-refactorizacion/README.md)
 
-Si el script reporta requisitos faltantes, revisa [docs/00-setup-ambiente.md](docs/00-setup-ambiente.md)
-antes de continuar. Los problemas conocidos y su solución están en
-[docs/02-troubleshooting.md](docs/02-troubleshooting.md).
+- Descripción: Planeación de mejora, refactorización y validación incremental.
+- ⏱️ Duración estimada: 45 min.
+- Bloque del temario: 5.2.
+- Identificador del laboratorio: `lab-5-2`.
+- Estado: Redactado.
 
-## Mapa del repositorio
+### [Práctica 8. Estrategia de pruebas, documentación Markdown y checklist de revisión](cap5/lab-5-3-pruebas-y-revision/README.md)
 
-| Ruta | Contenido |
-|---|---|
-| `.github/` | Artefactos de personalización de Copilot: instrucciones, prompt files, agentes y skills |
-| `docs/` | Guía de ambiente y troubleshooting, que también reciben los participantes |
-| `docs/relator/` | Material del relator. Nunca llega al repositorio de participantes |
-| `escenario/` | Código base de los escenarios Java y .NET usados en los laboratorios |
-| `herramientas/` | Imagen de Docker de los gates, con las versiones de la máquina virtual |
-| `labs/` | Enunciados de los nueve laboratorios |
-| `mcp/` | Servidor MCP local de demostración |
-| `scripts/` | Scripts de verificación, reinicio y publicación. `scripts/publicacion/` tiene la lista de inclusión del repositorio de participantes |
+- Descripción: Estrategia de pruebas, documentación Markdown y checklist de revisión.
+- ⏱️ Duración estimada: 45 min.
+- Bloque del temario: 5.3.
+- Identificador del laboratorio: `lab-5-3`.
+- Estado: Redactado.
 
-## Gates
+### [Práctica 9. Laboratorio final, construcción de activos reutilizables para el equipo](cap5/lab-5-4-laboratorio-final/README.md)
 
-Desde la raíz del repositorio de construcción, con Docker:
+- Descripción: Laboratorio final, construcción de activos reutilizables para el equipo.
+- ⏱️ Duración estimada: 45 min.
+- Bloque del temario: 5.4.
+- Identificador del laboratorio: `lab-5-4`.
+- Estado: Redactado.
+
+## Duración total y estado de los laboratorios
+
+Tiempo total de laboratorio: 30 + 60 + 45 + 45 + 30 + 45 + 45 + 45 + 45 = 390 minutos de
+los 810 del taller.
+
+El estado pasa de Redactado a Listo cuando el laboratorio se probó de extremo a extremo
+sobre una máquina virtual equivalente a la de clase.
+
+## Uso de las skills y reinicio de laboratorios
+
+Cada paso de laboratorio es una skill de `.github/skills/`, con nombre `lab-` más el
+laboratorio y el paso. Se invoca escribiendo la barra y el nombre en el chat. Las skills de
+laboratorio no se cargan solas. Solo actúan cuando se las invoca.
+
+Para volver al punto de partida de un laboratorio:
 
 ```bash
-bash scripts/gates.sh
+bash scripts/reiniciar-lab.sh lab-5-2
 ```
 
-Corre sin red, dentro de la imagen de `herramientas/Dockerfile`, el verificador de
-ambiente, la validación de skills, el comparador de escenarios en los tres periodos, las
-pruebas de los dos escenarios y el gate de fugas. La máquina de construcción no necesita
-tener las versiones del taller instaladas. La primera vez construye la imagen y para eso
-necesita red.
+## Plantilla común
 
-## Repositorio de participantes
+Todos los enunciados siguen la misma estructura de seis secciones, en este orden:
 
-Este es el repositorio de construcción y del relator. Los participantes clonan otro,
-[`github-copilot-netec-taller`](https://github.com/RodrigoMSB/github-copilot-netec-taller),
-privado, que se genera desde este con `scripts/publicar-taller.sh`.
-Solo llega allá lo que figura en `scripts/publicacion/incluir.txt`, y el script se niega a
-publicar si encuentra material del relator en el contenido generado.
+1. Objetivo del laboratorio
+2. Duración
+3. Prerrequisitos
+4. Pasos
+5. Resultado esperado
+6. Criterios de revisión
 
-La prueba del material en la máquina virtual de Netec se hace siguiendo
-[`docs/relator/07-protocolo-prueba-vm.md`](docs/relator/07-protocolo-prueba-vm.md).
+## Restricciones del ambiente
 
-## Antes de tocar el código del escenario
+Los laboratorios se ejecutan por escritorio remoto sobre máquinas virtuales. La latencia
+medida es aceptable. Las sugerencias cortas responden rápido y solo las generaciones largas
+tardan algunos segundos. Aun así, ningún enunciado pide tipear prompts largos a mano,
+copiar y pegar entre ventanas, ni descargar nada durante la clase. Los prompts viven en
+archivos del repositorio y se invocan desde el editor, lo que además hace que doce
+participantes obtengan resultados comparables.
 
-El código de `escenario/` contiene defectos introducidos a propósito. Son el material de
-trabajo de los laboratorios, no errores por corregir. Lee [AGENTS.md](AGENTS.md) antes de
-pedirle a cualquier agente que trabaje sobre ese directorio.
+---
+
+## 📬 Contacto y más información
+
+Si tienes alguna pregunta o necesitas más detalles, no dudes en [contactarnos](mailto:soporte@netec.com). También puedes encontrar más recursos en nuestra [página](https://netec.com).
+
+---
+
+¡Gracias por visitar nuestra plataforma! No olvides revisar todos los laboratorios y comenzar tu viaje de aprendizaje hoy mismo.
