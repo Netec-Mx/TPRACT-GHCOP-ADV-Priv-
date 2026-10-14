@@ -54,6 +54,7 @@ Copilot leyó `UtilidadesFecha.java` y respondió:
 Salida de `jshell`, copiada tal cual. El eco de `jshell` queda pegado a la primera línea de
 resultado:
 
+{% raw %}
 ```
 jshell> var u = new pe.pasarelaandina.calculo.UtilidadesFecha();jshell> for (String[] c : new String[][]{{"2026-01-31","2026-02-28"},{"2026-01-15","2026-02-15"},{"2025-12-31",2026-01-31 -> 2026-02-28 = 0
 2026-01-15 -> 2026-02-15 = 1
@@ -61,6 +62,7 @@ jshell> var u = new pe.pasarelaandina.calculo.UtilidadesFecha();jshell> for (Str
 2026-03-10 -> 2026-03-09 = -1
 jshell>
 ```
+{% endraw %}
 
 Las cuatro líneas de resultado: 0, 1, 5 y -1.
 
