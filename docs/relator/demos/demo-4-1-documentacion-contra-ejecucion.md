@@ -24,9 +24,11 @@ laboratorio 4.4, que la sala no debe ver antes.
 
 2. En Git Bash, ejecute el método con los mismos casos.
 
+   {% raw %}
    ```bash
    printf '%s\n' 'var u = new pe.pasarelaandina.calculo.UtilidadesFecha();' 'for (String[] c : new String[][]{{"2026-01-31","2026-02-28"},{"2026-01-15","2026-02-15"},{"2025-12-31","2026-06-01"},{"2026-03-10","2026-03-09"}}) System.out.println(c[0] + " -> " + c[1] + " = " + u.mesesEntre(u.parsearFecha(c[0]), u.parsearFecha(c[1])));' '/exit' | jshell -q --class-path escenario/java/target/classes
    ```
+   {% endraw %}
 
    **Debería pasar.** Cuatro líneas con los resultados reales, que son 0, 1, 5 y -1. Antes
    de ellas, `jshell` repite las líneas que recibió. Señale solo las cuatro de resultados.
