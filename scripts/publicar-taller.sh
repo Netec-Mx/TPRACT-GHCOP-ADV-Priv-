@@ -15,6 +15,7 @@
 # Uso habitual:
 #   bash scripts/publicar-taller.sh                     genera en un directorio temporal y verifica
 #   bash scripts/publicar-taller.sh --destino DIR       genera en DIR y verifica
+#   bash scripts/publicar-taller.sh --local DIR         genera, verifica y crea el repositorio en DIR, sin push
 #   bash scripts/publicar-taller.sh --verificar DIR     solo corre el gate sobre DIR
 #   bash scripts/publicar-taller.sh --publicar URL      genera, verifica y publica en URL
 #
@@ -25,7 +26,7 @@
 
 set -u
 
-readonly VERSION_SCRIPT="1.0.0"
+readonly VERSION_SCRIPT="1.1.0"
 
 raiz="$(cd "$(dirname "$0")/.." && pwd)"
 readonly LISTA_INCLUSION="$raiz/scripts/publicacion/incluir.txt"
@@ -38,7 +39,9 @@ readonly LISTA_INCLUSION="$raiz/scripts/publicacion/incluir.txt"
 readonly PATRONES_FUGA=(
     'DEF-[0-9]'
     'HALLAZGO-[0-9]'
-    'SPEC-[0-9]'
+    # Cualquier referencia a una SPEC: SPEC-24, spec_24, spec24, Spec 24 o la palabra
+    # suelta. No coincide con especial, especifico ni respecto.
+    '(^|[^[:alpha:]])spec([-_ ]?[0-9]|s?([^[:alpha:]]|$))'
     'docs/relator'
     'guia-del-relator'
     '03-hallazgos'
@@ -83,6 +86,9 @@ contenga material del relator.
 Opciones:
   --destino DIR     Genera el contenido en DIR, que no debe existir o debe estar vacio.
                     Por omision, un directorio temporal nuevo.
+  --local DIR       Genera en DIR, verifica y deja DIR como repositorio de git con el
+                    commit unico y la etiqueta punto-de-partida, sin remotos ni push.
+                    DIR no debe existir o debe estar vacio.
   --verificar DIR   No genera nada. Solo corre el gate de fugas sobre DIR.
   --publicar URL    Genera, verifica y publica en el repositorio remoto URL como un
                     commit unico en la rama main.
@@ -194,6 +200,30 @@ generar() {
 # Publicacion
 # ---------------------------------------------------------------------------
 
+# Convierte el contenido generado en un repositorio de git con un commit unico en la rama
+# main y la etiqueta punto-de-partida. No configura remotos.
+crear_repositorio() {
+    local destino="$1"
+
+    local autor correo fecha
+    autor="$(cd "$raiz" && git config user.name)"
+    correo="$(cd "$raiz" && git config user.email)"
+    fecha="$(date +%Y-%m-%d)"
+
+    (
+        cd "$destino" &&
+        git init -q -b main &&
+        git add -A &&
+        git -c user.name="$autor" -c user.email="$correo" \
+            commit -q -m "Taller GitHub Copilot, material de participantes ($fecha)" &&
+        git -c user.name="$autor" -c user.email="$correo" \
+            tag -a punto-de-partida -m "Estado inicial de los laboratorios, usado por scripts/reiniciar-lab.sh"
+    ) || { falla "No se pudo crear el repositorio en $destino"; return 2; }
+
+    ok "Repositorio con un commit unico en la rama main y la etiqueta punto-de-partida"
+    return 0
+}
+
 publicar() {
     local destino="$1" url="$2" reemplazar="$3"
 
@@ -213,19 +243,10 @@ publicar() {
         return 2
     fi
 
-    local autor correo fecha
-    autor="$(cd "$raiz" && git config user.name)"
-    correo="$(cd "$raiz" && git config user.email)"
-    fecha="$(date +%Y-%m-%d)"
+    crear_repositorio "$destino" || return 2
 
     (
         cd "$destino" &&
-        git init -q -b main &&
-        git add -A &&
-        git -c user.name="$autor" -c user.email="$correo" \
-            commit -q -m "Taller GitHub Copilot, material de participantes ($fecha)" &&
-        git -c user.name="$autor" -c user.email="$correo" \
-            tag -a punto-de-partida -m "Estado inicial de los laboratorios, usado por scripts/reiniciar-lab.sh" &&
         if [ -n "$remoto" ]; then
             aviso "Reemplazando el contenido del remoto, autorizado con --reemplazar"
             git push -q --force "$url" main refs/tags/punto-de-partida
@@ -246,10 +267,12 @@ destino=""
 solo_verificar=""
 url=""
 reemplazar=0
+local_dir=""
 
 while [ $# -gt 0 ]; do
     case "$1" in
         --destino)    destino="${2:-}"; shift 2 ;;
+        --local)      local_dir="${2:-}"; shift 2 ;;
         --verificar)  solo_verificar="${2:-}"; shift 2 ;;
         --publicar)   url="${2:-}"; shift 2 ;;
         --reemplazar) reemplazar=1; shift ;;
@@ -268,6 +291,14 @@ if [ -n "$solo_verificar" ]; then
     exit 0
 fi
 
+if [ -n "$local_dir" ]; then
+    if [ -n "$destino" ] || [ -n "$url" ]; then
+        falla "--local no se combina con --destino ni con --publicar"
+        exit 2
+    fi
+    destino="$local_dir"
+fi
+
 if [ -z "$destino" ]; then
     destino="$(mktemp -d "${TMPDIR:-/tmp}/taller-XXXXXX")" || { falla "No se pudo crear el directorio temporal"; exit 2; }
 elif [ -e "$destino" ] && [ -n "$(ls -A "$destino" 2>/dev/null)" ]; then
@@ -282,6 +313,9 @@ verificar_fugas "$destino" || { falla "No se publica. Corregir las fugas y volve
 
 if [ -n "$url" ]; then
     publicar "$destino" "$url" "$reemplazar" || exit 2
+elif [ -n "$local_dir" ]; then
+    titulo "Repositorio local"
+    crear_repositorio "$destino" || exit 2
 fi
 
 titulo "Resumen"
