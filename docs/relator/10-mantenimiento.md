@@ -95,17 +95,23 @@ principal del escenario. Los hooks estaban en vista previa al construirlo.
 **Fuente.** https://code.visualstudio.com/docs/agent-customization/hooks y
 https://code.visualstudio.com/docs/agents/reference/hooks-reference.
 
-**Qué mirar.** Ubicación de los archivos, formato de la respuesta (`permissionDecision` y
-código de salida 2), el ajuste `chat.useHooks` y su valor por omisión, qué entorno ejecuta
-los hooks del espacio de trabajo y si se publicaron los nombres de las herramientas.
+**Qué mirar.** Ubicación de los archivos, formato de la respuesta (`hookSpecificOutput` con
+`permissionDecision` en `deny` y código de salida 0), el significado de cada código de
+salida, el ajuste `chat.useHooks` y su valor por omisión, qué entorno ejecuta los hooks del
+espacio de trabajo y si se publicaron los nombres de las herramientas. El hook no bloquea
+con el código 2 porque en Windows pasa por Windows PowerShell, que lo devuelve como 1, y con
+1 Visual Studio Code solo advierte. Si una versión nueva cambia cómo se ejecuta el hook en
+Windows, repetir la prueba con PowerShell de `notas/hook-proteccion-datos.md`.
 
 **Archivos que dependen.** `.github/hooks/proteger-datos-escenario.json` y `.js`,
-`scripts/verificar-ambiente.sh` (sección del hook), `docs/00-setup-ambiente.md`,
-`notas/hook-proteccion-datos.md`.
+`herramientas/probar-hook.sh`, `scripts/verificar-ambiente.sh` (sección del hook),
+`docs/00-setup-ambiente.md`, `notas/hook-proteccion-datos.md`, la demostración 3.3, su
+respaldo, el guion y la teoría del 3.3.
 
-**Gate.** `verificar-ambiente.sh` prueba el script del hook en los dos sentidos y reprueba
-`chat.useHooks` en `false`. No prueba que Visual Studio Code lo ejecute. Eso lo cubre el
-paso A5 del protocolo.
+**Gate.** `probar-hook.sh`, en los gates, exige código 0 en todos los casos y el JSON de
+denegación solo en los que bloquean. `verificar-ambiente.sh` prueba el script del hook en
+los dos sentidos y reprueba `chat.useHooks` en `false`. No prueba que Visual Studio Code lo
+ejecute. Eso lo cubre el paso A5 del protocolo.
 
 ## 5. Agentes personalizados
 

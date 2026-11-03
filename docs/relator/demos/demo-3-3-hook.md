@@ -42,13 +42,20 @@
 ## Plan alternativo
 
 Los hooks estaban en vista previa al armar el taller. Si el hook no corre en su máquina, es
-decir, si el agente modifica el archivo en el paso 1:
+decir, si el agente modifica el archivo en el paso 1 o Visual Studio Code solo muestra una
+advertencia del hook:
 
 1. Restaure con `bash scripts/reiniciar-lab.sh lab-1-4 --confirmar`.
 2. Muestre `proteger-datos-escenario.json` y `proteger-datos-escenario.js` y explique qué
    hace.
 3. Muestre la ejecución grabada en [`../respaldos/demo-3-3.md`](../respaldos/demo-3-3.md).
 4. Diga que es una función en vista previa y que por eso se verifica en cada ambiente.
+
+Si alguien pregunta cómo bloquea: el script responde un JSON con `permissionDecision` en
+`deny` y termina con código 0. No usa el código 2, que la documentación también acepta,
+porque en Windows Visual Studio Code ejecuta el hook a través de Windows PowerShell, que
+convierte el 2 en 1, y con 1 solo hay una advertencia. El detalle está en
+[`../notas/hook-proteccion-datos.md`](../notas/hook-proteccion-datos.md).
 
 ## La idea que se cierra
 

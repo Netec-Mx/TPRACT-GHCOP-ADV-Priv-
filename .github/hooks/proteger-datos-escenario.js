@@ -6,13 +6,22 @@
 // cambian segun el entorno que ejecute al agente, asi que se leen las dos formas
 // conocidas: tool_name y tool_input, o toolName y toolArgs.
 //
-// Para bloquear responde con permissionDecision deny, escribe el motivo en la salida de
-// error y termina con codigo 2, que Visual Studio Code trata como bloqueo. Para permitir
-// termina con codigo 0 sin escribir nada.
+// Para bloquear escribe en la salida estandar un JSON con permissionDecision deny y el
+// motivo, y termina con codigo 0. Para permitir termina con codigo 0 sin escribir nada.
+//
+// No se bloquea con el codigo 2. En Windows, Visual Studio Code ejecuta el hook a traves de
+// Windows PowerShell, que devuelve 1 cuando el proceso termina con 2. Con 1, Visual Studio
+// Code solo muestra una advertencia y la herramienta se ejecuta igual. Con 0 procesa la
+// salida estandar, y ahi la decision deny bloquea en cualquier sistema.
+//
+// El JSON lleva la decision dentro de hookSpecificOutput, como pide Visual Studio Code, y
+// tambien en el primer nivel, como la lee Copilot CLI. Los caracteres fuera de ASCII van
+// escapados (á) para que el motivo llegue intacto aunque la consola de Windows use
+// otra pagina de codigos.
 //
 // Fuente del formato: https://code.visualstudio.com/docs/agent-customization/hooks y
 // https://code.visualstudio.com/docs/agents/reference/hooks-reference, consultadas el
-// 30 de septiembre de 2026.
+// 3 de noviembre de 2026.
 
 'use strict';
 
@@ -121,7 +130,7 @@ process.stdin.on('end', () => {
     }
 
     if (decidir(evento) === 'deny') {
-        process.stdout.write(JSON.stringify({
+        const respuesta = JSON.stringify({
             hookSpecificOutput: {
                 hookEventName: 'PreToolUse',
                 permissionDecision: 'deny',
@@ -129,9 +138,10 @@ process.stdin.on('end', () => {
             },
             permissionDecision: 'deny',
             permissionDecisionReason: MENSAJE,
-        }) + '\n');
-        process.stderr.write(MENSAJE + '\n');
-        process.exit(2);
+        }).replace(/[\u0080-￿]/g, (c) => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'));
+        // Se sale al terminar de escribir, para no cortar la salida cuando es una tuberia.
+        process.stdout.write(respuesta + '\n', () => process.exit(0));
+        return;
     }
     process.exit(0);
 });

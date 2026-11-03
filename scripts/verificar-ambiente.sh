@@ -801,14 +801,19 @@ verificar_hook_datos() {
         return 1
     fi
 
-    printf '%s' '{"tool_name":"editFiles","tool_input":{"files":["escenario/datos/planes.txt"]}}' \
-        | (cd "$dir_repositorio" && node "$HOOK_SCRIPT" >/dev/null 2>&1)
+    # El hook termina siempre con codigo 0. Bloquea escribiendo un JSON con permissionDecision
+    # deny en la salida estandar, porque en Windows el codigo 2 llega como 1 a traves de
+    # Windows PowerShell y Visual Studio Code no bloquea.
+    salida_bloqueo=$(printf '%s' '{"tool_name":"editFiles","tool_input":{"files":["escenario/datos/planes.txt"]}}' \
+        | (cd "$dir_repositorio" && node "$HOOK_SCRIPT" 2>/dev/null))
     rc_bloqueo=$?
-    printf '%s' '{"tool_name":"editFiles","tool_input":{"files":["escenario/java/pom.xml"]}}' \
-        | (cd "$dir_repositorio" && node "$HOOK_SCRIPT" >/dev/null 2>&1)
+    salida_paso=$(printf '%s' '{"tool_name":"editFiles","tool_input":{"files":["escenario/java/pom.xml"]}}' \
+        | (cd "$dir_repositorio" && node "$HOOK_SCRIPT" 2>/dev/null))
     rc_paso=$?
-    if [ "$rc_bloqueo" -ne 2 ] || [ "$rc_paso" -ne 0 ]; then
-        falla "El hook de proteccion de datos no responde como se espera (bloqueo $rc_bloqueo, se esperaba 2; paso $rc_paso, se esperaba 0)"
+    if [ "$rc_bloqueo" -ne 0 ] || [ "$rc_paso" -ne 0 ] \
+        || ! printf '%s' "$salida_bloqueo" | grep -q '"permissionDecision":"deny"' \
+        || [ -n "$salida_paso" ]; then
+        falla "El hook de proteccion de datos no responde como se espera (bloqueo: codigo $rc_bloqueo, se esperaba 0 con permissionDecision deny; paso: codigo $rc_paso, se esperaba 0 sin salida)"
         return 1
     fi
     ok "El hook de proteccion de datos bloquea una edicion de prueba y deja pasar otra"

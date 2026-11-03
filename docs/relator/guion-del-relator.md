@@ -1964,25 +1964,23 @@ En el paso 1 el agente intenta editar y recibe el bloqueo con el mensaje «Los d
 
 [CAPTURA PENDIENTE] Chat en modo Agent con el intento de editar `escenario/datos/transacciones.txt` bloqueado y el mensaje del hook visible.
 
-Si quieres mostrar el hook sin el chat, o explicar qué decide, pruébalo en la terminal. Recibe la llamada en JSON por la entrada estándar. Esta es la salida real de una edición sobre los datos, que se rechaza con código 2.
+Si quieres mostrar el hook sin el chat, o explicar qué decide, pruébalo en la terminal. Recibe la llamada en JSON por la entrada estándar. Esta es la salida real de una edición sobre los datos. El hook la rechaza escribiendo un JSON con `permissionDecision` en `deny` y termina con código 0. Las tildes del motivo van escapadas, `\u00e1`, para que lleguen intactas aunque la consola de Windows use otra página de códigos.
 
 ```
 $ printf '{"tool_name":"editFiles","tool_input":{"files":["escenario/datos/planes.txt"]}}' | node .github/hooks/proteger-datos-escenario.js; echo $?
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/."},"permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/."}
-Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.
-2
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario est\u00e1n protegidos y no se pueden modificar. Ning\u00fan laboratorio requiere cambiar los archivos de escenario/datos/."},"permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario est\u00e1n protegidos y no se pueden modificar. Ning\u00fan laboratorio requiere cambiar los archivos de escenario/datos/."}
+0
 ```
 
 Un comando de terminal que escribe en la carpeta también se rechaza.
 
 ```
 $ printf '{"tool_name":"run_in_terminal","tool_input":{"command":"echo TX_PRUEBA >> escenario/datos/transacciones.txt"}}' | node .github/hooks/proteger-datos-escenario.js; echo $?
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/."},"permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/."}
-Los datos del escenario están protegidos y no se pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.
-2
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario est\u00e1n protegidos y no se pueden modificar. Ning\u00fan laboratorio requiere cambiar los archivos de escenario/datos/."},"permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario est\u00e1n protegidos y no se pueden modificar. Ning\u00fan laboratorio requiere cambiar los archivos de escenario/datos/."}
+0
 ```
 
-La lectura pasa, y también pasa crear un documento fuera de la carpeta aunque su contenido cite la ruta. Las dos terminan en 0 sin salida.
+La lectura pasa, y también pasa crear un documento fuera de la carpeta aunque su contenido cite la ruta. Las dos terminan en 0 sin salida. Lo que distingue el bloqueo es el JSON, no el código.
 
 ```
 $ printf '{"tool_name":"readFile","tool_input":{"filePath":"escenario/datos/planes.txt"}}' | node .github/hooks/proteger-datos-escenario.js; echo $?
@@ -1992,6 +1990,8 @@ $ printf '{"tool_name":"createFile","tool_input":{"filePath":"labs/cap3/lab-3-4-
 ```
 
 El hook decide por la ruta de destino, no por el contenido. Reconoce las herramientas por patrón, así que una forma de escribir que no esté en su lista puede pasar. Si no puede leer su entrada, deja pasar la acción. Funciona igual en Visual Studio Code y en Copilot CLI.
+
+Si alguien pregunta por qué no bloquea con el código 2, que la documentación también acepta: en Windows, Visual Studio Code ejecuta el hook a través de Windows PowerShell, y Windows PowerShell devuelve 1 cuando el proceso termina con 2. Con 1, Visual Studio Code solo muestra una advertencia y el agente edita igual. Con 0 procesa la salida estándar, y la decisión `deny` del JSON bloquea en Windows, macOS y Linux.
 
 #### Si falla
 

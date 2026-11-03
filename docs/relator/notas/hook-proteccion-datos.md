@@ -19,6 +19,36 @@ Code lo ejecuta antes de cada herramienta que el agente quiere usar. El script
 Al bloquear, el agente recibe el mensaje «Los datos del escenario están protegidos y no se
 pueden modificar. Ningún laboratorio requiere cambiar los archivos de escenario/datos/.».
 
+## Cómo bloquea
+
+El script termina siempre con código 0. Para bloquear escribe en la salida estándar un JSON
+con la decisión y el motivo; para dejar pasar no escribe nada.
+
+```json
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos..."},"permissionDecision":"deny","permissionDecisionReason":"Los datos del escenario están protegidos..."}
+```
+
+La decisión va dentro de `hookSpecificOutput`, que es lo que lee Visual Studio Code, y
+repetida en el primer nivel, que es lo que lee Copilot CLI. Las tildes van escapadas para
+que el motivo llegue intacto aunque la consola de Windows use otra página de códigos.
+
+**Por qué código 0 y no código 2.** La referencia de Visual Studio Code acepta las dos
+formas: el código 2 bloquea con el texto de la salida de error, y el código 0 procesa la
+salida estándar, donde `permissionDecision` en `deny` bloquea la herramienta. El hook usaba
+el código 2. En Windows, Visual Studio Code lo ejecuta a través de Windows PowerShell, que
+devuelve 1 cuando el proceso termina con 2. Con cualquier código distinto de 0 y de 2,
+Visual Studio Code solo muestra una advertencia y la herramienta se ejecuta: el agente
+editaba los datos igual. Lo reportó el relator en la máquina virtual Windows. Con código 0 y
+el JSON, el bloqueo no depende del intérprete que ejecute el hook.
+
+Para probarlo en Windows como lo ejecuta Visual Studio Code:
+
+```
+'{"tool_name":"editFiles","tool_input":{"files":["escenario/datos/planes.txt"]}}' | powershell -NoProfile -Command "node .github/hooks/proteger-datos-escenario.js"; $LASTEXITCODE
+```
+
+Tiene que mostrar el JSON de denegación y después `0`.
+
 ## Por qué existe
 
 Tres transacciones de `escenario/datos/transacciones.txt`, de TX002035 a TX002037, se
@@ -47,13 +77,13 @@ hooks para bloquear acciones del agente antes de que ocurran. Este es uno de ver
   datos si alguien los tocó.
 - Si la entrada del hook no se puede leer, deja pasar la acción, para no bloquear el trabajo
   del participante por una falla del hook.
-- La documentación de Visual Studio Code al 30 de septiembre de 2026 no dice qué intérprete
-  ejecuta el comando del hook en Windows ni lista los nombres exactos de las herramientas.
-  El script usa Node, que funciona desde cualquier intérprete, y reconoce los nombres por
-  patrón. Su funcionamiento con Copilot real se confirma en el bloque A del protocolo de
-  prueba de la máquina virtual.
+- La documentación de Visual Studio Code no lista los nombres exactos de las herramientas.
+  El script reconoce los nombres por patrón. En Windows el comando del hook pasa por Windows
+  PowerShell, que cambia el código de salida 2 por 1; por eso el bloqueo va en el JSON con
+  código 0, como se explica arriba. Su funcionamiento con Copilot real se confirma en el
+  bloque A del protocolo de prueba de la máquina virtual.
 
-Fuentes, consultadas el 30 de septiembre de 2026.
+Fuentes, consultadas el 3 de noviembre de 2026.
 
 - https://code.visualstudio.com/docs/agent-customization/hooks
 - https://code.visualstudio.com/docs/agents/reference/hooks-reference

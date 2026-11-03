@@ -3,6 +3,14 @@
 > participantes. Se grabó en la CLI, no en Visual Studio Code. El hook es el mismo archivo del
 > repositorio y la CLI lo ejecuta antes de cada herramienta. El paso 4 se ejecutó en Git Bash
 > de la misma máquina.
+>
+> Esta grabación es de la versión anterior del hook, que bloqueaba terminando con código 2.
+> En Windows ese código llegó como 1, y por eso la CLI dice «hook errored» y «failed with
+> code 1»: la CLI niega la herramienta cuando el hook falla, pero Visual Studio Code solo
+> muestra una advertencia y deja editar. La versión actual responde un JSON con
+> `permissionDecision` en `deny` y código 0, y bloquea en los dos entornos. Con ella, el
+> registro del paso 1 debería mostrar el motivo del hook como una denegación, no como un
+> error. Falta volver a grabar.
 
 # Demo 3.3. El hook que protege los datos (escenario Java)
 

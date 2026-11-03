@@ -150,6 +150,13 @@ Conviene proyectar el hook del repositorio. Son dos archivos en `.github/hooks/`
   terminal, y si apunta a `escenario/datos/` responde con una decisión de rechazo y un
   mensaje. Todo lo demás pasa.
 
+La decisión de rechazo es un JSON en la salida estándar, con `permissionDecision` en `deny`,
+y el script termina con código 0. La documentación también permite bloquear terminando con
+código 2, pero ese camino depende del intérprete: en Windows, Visual Studio Code ejecuta el
+hook a través de Windows PowerShell, que devuelve 1 en lugar de 2, y con 1 solo muestra una
+advertencia y la herramienta se ejecuta. Es un buen ejemplo de por qué un control se prueba
+en cada sistema donde se usa.
+
 La demostración pide al agente que agregue una línea a ese archivo de datos y muestra el
 bloqueo. Después pide leerlo y muestra que leer sí está permitido.
 
